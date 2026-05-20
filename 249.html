@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Nekjat Maratha Sadan · 1 rk · For Rent</title>
+  <style>
+    :root {
+      --body-bg:#0a1a17;--overlay:linear-gradient(to bottom,rgba(5,20,17,.18) 0%,rgba(5,20,17,.40) 32%,rgba(5,20,17,.84) 66%,rgba(5,20,17,.97) 100%);
+      --card-bg:rgba(255,255,255,.07);--card-border:rgba(255,255,255,.13);--text-primary:#fff;--text-secondary:rgba(255,255,255,.82);
+      --text-muted:rgba(255,255,255,.45);--text-label:rgba(255,255,255,.32);--chip-bg:rgba(255,255,255,.08);--chip-border:rgba(255,255,255,.12);
+      --chip-color:rgba(255,255,255,.82);--divider:rgba(255,255,255,.09);--tag-bg:rgba(255,255,255,.14);--tag-border:rgba(255,255,255,.25);
+      --tag-color:rgba(255,255,255,.92);--sub-tag-bg:rgba(255,255,255,.13);--sub-tag-border:rgba(255,255,255,.28);--link-border:rgba(255,255,255,.07);
+      --fade-right:rgba(10,26,23,.58);--toggle-bg:rgba(255,255,255,.12);--toggle-border:rgba(255,255,255,.22);--toggle-color:rgba(255,255,255,.80);
+      --sticky-bg:rgba(5,20,17,.88);--sticky-border:rgba(255,255,255,.08);
+    }
+    [data-theme="light"] {
+      --body-bg:#f0ece3;--overlay:linear-gradient(to bottom,rgba(240,236,227,.10) 0%,rgba(240,236,227,.32) 32%,rgba(240,236,227,.90) 66%,rgba(240,236,227,.98) 100%);
+      --card-bg:rgba(255,255,251,.82);--card-border:rgba(0,0,0,.09);--text-primary:#111;--text-secondary:rgba(20,20,20,.85);
+      --text-muted:rgba(20,20,20,.50);--text-label:rgba(20,20,20,.40);--chip-bg:rgba(0,0,0,.06);--chip-border:rgba(0,0,0,.11);
+      --chip-color:rgba(20,20,20,.82);--divider:rgba(0,0,0,.08);--tag-bg:rgba(0,0,0,.08);--tag-border:rgba(0,0,0,.18);
+      --tag-color:rgba(20,20,20,.88);--sub-tag-bg:rgba(0,0,0,.07);--sub-tag-border:rgba(0,0,0,.15);--link-border:rgba(0,0,0,.07);
+      --fade-right:rgba(240,236,227,.62);--toggle-bg:rgba(0,0,0,.08);--toggle-border:rgba(0,0,0,.18);--toggle-color:rgba(20,20,20,.70);
+      --sticky-bg:rgba(240,236,227,.92);--sticky-border:rgba(0,0,0,.08);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--body-bg);min-height:100vh;max-width:430px;margin:0 auto}
+    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('') center top/cover no-repeat;z-index:0}
+    .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s}
+    .scroll{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+    .sticky-bar{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:430px;z-index:60;background:var(--sticky-bg);border-bottom:1px solid var(--sticky-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:11px 18px 10px;transition:transform .25s ease}
+    .sticky-bar.visible{transform:translateX(-50%) translateY(0)}
+    .sticky-title{font-size:13px;font-weight:700;color:var(--text-primary);letter-spacing:-.2px}
+    .sticky-price{font-size:13px;font-weight:800;color:var(--text-primary)}
+    .toggle-anchor{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:0;z-index:50;pointer-events:none}
+    .theme-toggle{position:absolute;top:14px;right:14px;pointer-events:all;background:var(--toggle-bg);border:1px solid var(--toggle-border);border-radius:20px;padding:7px 16px;font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--toggle-color);cursor:pointer;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .2s,color .2s}
+    .hero{padding:52px 18px 24px}
+    .tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+    .tag{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:5px 12px;border-radius:20px;color:var(--tag-color);background:var(--tag-bg);border:1px solid var(--tag-border);backdrop-filter:blur(8px)}
+    .tag.highlight{color:#1a1000;background:rgba(255,217,60,.92);border-color:rgba(200,165,0,.55)}
+    .hero-title{font-size:30px;font-weight:800;color:var(--text-primary);line-height:1.15;letter-spacing:-.5px;margin-bottom:12px}
+    .sub-tag-row{display:flex;gap:7px;flex-wrap:wrap}
+    .sub-tag{font-size:11px;font-weight:600;padding:5px 13px;border-radius:20px;color:rgba(255,255,255,.95);background:var(--sub-tag-bg);border:1px solid var(--sub-tag-border);backdrop-filter:blur(8px)}
+    .sub-tag.gold{color:#ffd966;background:rgba(255,217,102,.14);border-color:rgba(255,217,102,.40)}
+    [data-theme="light"] .sub-tag.gold{color:#1a1000;background:rgba(255,217,60,.90);border-color:rgba(200,165,0,.55)}
+    .card{margin:0 12px 16px;border-radius:22px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+    .price-block{padding:15px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--divider)}
+    .price-left{display:flex;flex-direction:column;gap:3px}
+    .price-rent-row{display:flex;align-items:baseline;gap:4px}
+    .price-deposit{font-size:11.5px;color:var(--text-muted);letter-spacing:.1px}
+    .price-main{font-size:30px;font-weight:800;color:var(--text-primary);line-height:1;letter-spacing:-.5px}
+    .price-suffix{font-size:13px;color:var(--text-muted)}
+    .price-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+    .avail-pill{font-size:10.5px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:.3px;white-space:nowrap;color:var(--chip-color);background:var(--chip-bg);border:1px solid var(--chip-border)}
+    .rera-badge{background:rgba(72,199,142,.14);border:1px solid rgba(72,199,142,.35);color:#48c78e;font-size:9.5px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.4px;white-space:nowrap}
+    .photo-wrap{position:relative}
+    .photo-wrap::after{content:'';position:absolute;top:0;right:0;bottom:10px;width:40px;background:linear-gradient(to right,transparent,var(--fade-right));pointer-events:none}
+    .photo-count{position:absolute;bottom:20px;right:14px;z-index:2;background:rgba(0,0,0,.55);color:rgba(255,255,255,.85);font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.3px;pointer-events:none;backdrop-filter:blur(6px)}
+    .swipe-hint{position:absolute;bottom:20px;left:18px;z-index:2;display:flex;align-items:center;gap:4px;background:rgba(0,0,0,.45);color:rgba(255,255,255,.75);font-size:10px;font-weight:600;padding:3px 10px 3px 8px;border-radius:20px;pointer-events:none;backdrop-filter:blur(6px);animation:hintFade 3.5s ease forwards}
+    .swipe-hint-arrow{font-size:13px;animation:hintSlide 1.2s ease-in-out infinite}
+    @keyframes hintFade{0%{opacity:0}15%{opacity:1}70%{opacity:1}100%{opacity:0;pointer-events:none}}
+    @keyframes hintSlide{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+    .photo-strip{overflow-x:auto;display:flex;gap:8px;padding:14px 14px 38px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .photo-strip::-webkit-scrollbar{display:none}
+    .photo-thumb{flex-shrink:0;width:180px;height:265px;border-radius:12px;object-fit:cover;scroll-snap-align:start;cursor:pointer;transition:transform .15s;border:1px solid var(--chip-border)}
+    .photo-thumb:active{transform:scale(.96)}
+    .album-sep{flex-shrink:0;align-self:center;writing-mode:vertical-rl;transform:rotate(180deg);font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-label);padding:6px 2px}
+    .album-sep:first-child{display:none}
+    .details{padding:16px 18px;border-top:1px solid var(--divider);border-bottom:1px solid var(--divider)}
+    .sec-label{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label);margin-bottom:12px}
+    .chips{display:flex;flex-wrap:wrap;gap:7px}
+    .chip{font-size:12px;color:var(--chip-color);background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:8px;padding:6px 11px}
+    .chip.gold{color:#ffd966;background:rgba(255,217,102,.14);border-color:rgba(255,217,102,.40)}
+    .chip.incl{color:#48c78e;background:rgba(72,199,142,.10);border-color:rgba(72,199,142,.25)}
+    .chip.excl{color:rgba(255,130,110,.90);background:rgba(255,100,80,.08);border-color:rgba(255,100,80,.22)}
+    [data-theme="light"] .chip.gold{color:#1a1000;background:rgba(255,217,60,.90);border-color:rgba(200,165,0,.55)}
+    [data-theme="light"] .chip.incl{color:#1a6640;background:rgba(72,199,142,.15);border-color:rgba(72,199,142,.32)}
+    [data-theme="light"] .chip.excl{color:#9a2010;background:rgba(220,80,60,.09);border-color:rgba(220,80,60,.22)}
+    .terms-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:9px}
+    .terms-list li{font-size:12px;color:var(--text-secondary);line-height:1.5;padding-left:14px;position:relative}
+    .terms-list li::before{content:'•';position:absolute;left:0;color:var(--text-muted)}
+    .links{padding:16px 18px 4px;border-bottom:1px solid var(--divider)}
+    .link-row{display:flex;align-items:center;gap:13px;padding:12px 0;text-decoration:none;border-bottom:1px solid var(--link-border)}
+    .link-row:last-child{border-bottom:none}
+    .link-row:first-of-type{padding-top:0}
+    .l-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+    .li-green{background:rgba(72,199,142,.18)}.li-orange{background:rgba(255,167,38,.18)}.li-pink{background:rgba(240,98,146,.18)}.li-blue{background:rgba(66,165,245,.18)}
+    .l-text{flex:1}.l-name{font-size:13.5px;font-weight:600;color:var(--text-primary)}.l-sub{font-size:11px;color:var(--text-muted);margin-top:1px}
+    .l-arrow{font-size:16px;color:rgba(255,255,255,.22)}
+    .copy-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
+    .copy-label{font-size:12px;color:var(--text-muted)}
+    .copy-btn{background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:20px;padding:7px 16px;font-size:11.5px;font-weight:700;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s;letter-spacing:.2px}
+    .copy-btn:active{background:rgba(72,199,142,.14)}.copy-btn.copied{color:#48c78e;border-color:rgba(72,199,142,.35)}
+    .video-card{margin:0 12px 32px;border-radius:22px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+    .video-label{padding:14px 18px 10px;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label)}
+    .video-section{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
+    .video-section iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+    .lightbox{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.93);align-items:center;justify-content:center;max-width:430px;margin:0 auto}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:90%;max-height:82vh;border-radius:10px;object-fit:contain;pointer-events:none;user-select:none}
+    .lb-close{position:absolute;top:16px;right:16px;font-size:18px;color:rgba(255,255,255,.80);cursor:pointer;background:rgba(255,255,255,.12);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;z-index:102;border:1px solid rgba(255,255,255,.18)}
+    .lb-zone{position:absolute;top:0;bottom:0;width:42%;display:flex;align-items:center;z-index:101;cursor:pointer}
+    .lb-zone-prev{left:0;justify-content:flex-start;padding-left:10px}.lb-zone-next{right:0;justify-content:flex-end;padding-right:10px}
+    .lb-arrow{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:50%;font-size:20px;font-weight:300;color:rgba(255,255,255,.60);transition:background .12s,color .12s}
+    .lb-zone:active .lb-arrow{background:rgba(255,255,255,.22);color:#fff}
+    .lb-counter{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:12px;color:rgba(255,255,255,.45);pointer-events:none;white-space:nowrap}
+    /* Not Available Banner */
+    #unavailBanner{display:none;position:fixed;inset:0;z-index:200;background:rgba(10,26,23,.97);align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:32px 24px;backdrop-filter:blur(12px)}
+    .unavail-icon{font-size:56px;margin-bottom:18px}
+    .unavail-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
+    .unavail-sub{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:28px;max-width:280px;line-height:1.6}
+    .unavail-btn{background:rgba(72,199,142,.18);border:1px solid rgba(72,199,142,.40);color:#48c78e;padding:13px 28px;border-radius:24px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:.2px}
+    /* Browse Drawer */
+    #browseBtn{position:fixed;bottom:24px;right:16px;z-index:90;background:rgba(72,199,142,.92);border:none;border-radius:24px;padding:13px 20px;font-size:13px;font-weight:700;color:#0a1a17;cursor:pointer;box-shadow:0 4px 20px rgba(72,199,142,.35);backdrop-filter:blur(8px);letter-spacing:.2px}
+    #browseOverlay{display:none;position:fixed;inset:0;z-index:91;background:rgba(0,0,0,.5)}
+    #browseDrawer{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:430px;height:78vh;z-index:92;background:#0d2118;border-top:1px solid rgba(255,255,255,.12);border-radius:22px 22px 0 0;transition:transform .32s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;overflow:hidden}
+    #browseDrawer.open{transform:translate(-50%,0)}
+    .drawer-handle{width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:14px auto 12px;flex-shrink:0}
+    .drawer-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;text-align:center;margin-bottom:14px;flex-shrink:0}
+    .tab-row{display:flex;gap:6px;padding:0 14px 12px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+    .tab-row::-webkit-scrollbar{display:none}
+    .tab-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
+    .tab-btn.active{background:rgba(72,199,142,.2);border-color:rgba(72,199,142,.4);color:#48c78e}
+    .listings-scroll{flex:1;overflow-y:auto;padding:0 14px 24px}
+    .listing-card{display:flex;gap:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:14px;text-decoration:none;cursor:pointer}
+    .listing-card.current{border-color:rgba(72,199,142,.35);background:rgba(72,199,142,.07)}
+    .listing-thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0;background:rgba(255,255,255,.1)}
+    .listing-info{flex:1;display:flex;flex-direction:column;justify-content:center;gap:3px}
+    .listing-name{font-size:13px;font-weight:700;color:#fff}
+    .listing-meta{font-size:11px;color:rgba(255,255,255,.5)}
+    .listing-rent{font-size:14px;font-weight:800;color:#48c78e}
+    .listing-current-tag{font-size:10px;color:rgba(72,199,142,.8);font-weight:600;margin-top:2px}
+    .no-listings{text-align:center;color:rgba(255,255,255,.35);font-size:13px;padding:32px 0}
+  </style>
+</head>
+<body>
+
+<div id="unavailBanner">
+  <div class="unavail-icon">🏠</div>
+  <div class="unavail-title">Not Currently Available</div>
+  <div class="unavail-sub">This property has been rented or is no longer listed.</div>
+  <button class="unavail-btn" onclick="openBrowse()">Browse Available Flats →</button>
+</div>
+
+<div class="sticky-bar" id="stickyBar">
+  <span class="sticky-title">Nekjat Maratha Sadan · 1 rk</span>
+  <span class="sticky-price">₹0.3L / month</span>
+</div>
+
+<div class="toggle-anchor">
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Day</button>
+</div>
+
+<div class="bg"></div>
+
+<div class="scroll">
+  <div class="hero" id="hero">
+    <div class="tag-row">
+      <span class="tag highlight">For Rent</span>
+      <span class="tag">Lalbaug</span>
+    </div>
+    <div class="hero-title">Nekjat Maratha Sadan</div>
+    <div class="sub-tag-row">
+      <span class="sub-tag">1 rk</span>
+      <span class="sub-tag">275 carpet</span>
+      <span class="sub-tag gold">`Jain only`</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="price-block">
+      <div class="price-left">
+        <div class="price-rent-row">
+          <span class="price-main">&#8377;0.3L</span>
+          <span class="price-suffix">/ month</span>
+        </div>
+        
+      </div>
+      <div class="price-right">
+        <span class="avail-pill">Immediate</span>
+        <span class="rera-badge">&#10003; RERA Approved Society</span>
+      </div>
+    </div>
+
+    <div class="photo-wrap">
+      <div class="photo-strip" id="photoStrip">
+
+      </div>
+      <span class="photo-count">0 photos</span>
+      <div class="swipe-hint"><span class="swipe-hint-arrow">›</span> Swipe</div>
+    </div>
+
+    <div class="details">
+      <div class="sec-label">Property Details</div>
+      <div class="chips">
+        <span class="chip">1 rk</span>
+        <span class="chip">275 carpet</span>
+        <span class="chip">1 Washroom</span>
+        <span class="chip">Furnished Flat</span>
+        <span class="chip">No. Only bike parking Car Parkings</span>
+        <span class="chip">Vastu Flat</span>
+        <span class="chip">Jain Derasar nearby</span>
+        <span class="chip">Main Road Touch</span>
+        <span class="chip">Building with Lift</span>
+        <span class="chip gold">`Jain only`</span>
+      </div>
+    </div>
+
+    <div class="details">
+      <div class="sec-label">Tenant Preference</div>
+      <div class="chips">
+        <span class="chip">Jain only</span>
+        <span class="chip">Family ok</span>
+        <span class="chip">Bachelors ok</span>
+        <span class="chip">Pure only</span>
+      </div>
+    </div>
+
+    <div class="details">
+      <div class="sec-label">Furniture Included</div>
+      <div class="chips">
+        <span class="chip incl">Lights</span>
+        <span class="chip incl">Fans</span>
+        <span class="chip incl">Modular Kitchen</span>
+        <span class="chip incl">Washrooms done-up with Gysers</span>
+        <span class="chip incl">Curtains</span>
+        <span class="chip incl">Wardrobes</span>
+        <span class="chip incl">Beds with Matress</span>
+        <span class="chip incl">Sofa</span>
+        <span class="chip incl">TV with TV unit</span>
+        <span class="chip incl">shoe unit</span>
+        <span class="chip incl">Kitchen Electronics:  Gas</span>
+        <span class="chip incl">Fridge</span>
+      </div>
+    </div>
+
+
+    <div class="details">
+      <div class="sec-label">Notes</div>
+      <div class="chips">
+        <span class="chip">1 day prior notice for site visit</span>
+        <span class="chip">Tenant Profile needed for inspection</span>
+        <span class="chip">Commission is 1 rent</span>
+      </div>
+    </div>
+
+    <div class="details">
+      <div class="sec-label">Basic Terms</div>
+      <ul class="terms-list">
+        <li>Agreement cost will be 50:50 split between owner & tenant, Tenant has to deduct TDS as per govt. norms, Society Maintaince & Structural Repairs will be borne by owner, Utilities & Bills will be borne by Tenant, One time Moving charges / Shifting charges / Club House charges (if any) to be borne by Tenant</li>
+      </ul>
+    </div>
+
+    <div class="links">
+      <div class="sec-label">View Property</div>
+      <a class="link-row" href="https://maps.app.goo.gl/1bovo5uHc5eEB4SbA" target="_blank" rel="noopener">
+        <div class="l-icon li-blue">📍</div>
+        <div class="l-text"><div class="l-name">Location</div><div class="l-sub">Open in Google Maps</div></div>
+        <div class="l-arrow">›</div>
+      </a>
+    </div>
+
+    <div class="copy-row">
+      <span class="copy-label">Share this listing</span>
+      <button class="copy-btn" id="copyBtn" onclick="copyLink()">
+        <span>&#128279;</span> Copy Link
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+  <div class="lb-close" id="lbClose">&#10005;</div>
+  <div class="lb-zone lb-zone-prev" id="lbPrev"><div class="lb-arrow">&#8249;</div></div>
+  <img id="lbImg" src="" alt="" draggable="false">
+  <div class="lb-zone lb-zone-next" id="lbNext"><div class="lb-arrow">&#8250;</div></div>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<button id="browseBtn" onclick="openBrowse()">🏠 Browse Flats</button>
+<div id="browseOverlay" onclick="closeBrowse()"></div>
+<div id="browseDrawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-title">Available Flats</div>
+  <div class="tab-row" id="tabRow"></div>
+  <div class="listings-scroll" id="listingsScroll"></div>
+</div>
+
+<script>
+  const MY_SERIAL = 249;
+  const MY_BUCKET = "1 RK";
+  const BUCKET_ORDER = ["1 RK", "1 & 1.5 BHK", "2 & 2.5 BHK", "3 & 3.5 BHK", "4 & 4.5 BHK", "5 & 5.5 BHK"];
+  const photos = [];
+  let current = 0, allListings = [], activeBucket = MY_BUCKET;
+
+  // Lightbox
+  function setPhoto(i) {
+    document.getElementById('lbImg').src = photos[i];
+    document.getElementById('lbCounter').textContent = (i+1)+' / '+photos.length;
+  }
+  function openLightbox(i) { current=i; setPhoto(i); document.getElementById('lightbox').classList.add('open'); }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  function showPhoto(i) { current=Math.max(0,Math.min(i,photos.length-1)); setPhoto(current); }
+  document.getElementById('lbClose').addEventListener('click',e=>{e.stopPropagation();closeLightbox();});
+  document.getElementById('lbPrev').addEventListener('click',e=>{e.stopPropagation();showPhoto(current-1);});
+  document.getElementById('lbNext').addEventListener('click',e=>{e.stopPropagation();showPhoto(current+1);});
+  document.getElementById('lightbox').addEventListener('click',e=>{ if(e.target===document.getElementById('lightbox')||e.target===document.getElementById('lbImg'))closeLightbox(); });
+  let tsx=null;
+  document.getElementById('lightbox').addEventListener('touchstart',e=>{tsx=e.touches[0].clientX;},{passive:true});
+  document.getElementById('lightbox').addEventListener('touchend',e=>{if(tsx===null)return;const dx=e.changedTouches[0].clientX-tsx;tsx=null;if(Math.abs(dx)<35)return;dx<0?showPhoto(current+1):showPhoto(current-1);});
+
+  // Sticky header
+  const sBar=document.getElementById('stickyBar'),hero=document.getElementById('hero');
+  window.addEventListener('scroll',()=>{sBar.classList.toggle('visible',hero.getBoundingClientRect().bottom<0);},{passive:true});
+
+  // Theme
+  function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeToggle').textContent=d?'Night':'Day';}
+
+  // Copy link
+  function copyLink(){
+    const btn=document.getElementById('copyBtn'),url="https://soboflats.github.io/249.html";
+    navigator.clipboard.writeText(url).then(()=>{btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML='<span>&#128279;</span> Copy Link';btn.classList.remove('copied');},2200);})
+    .catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML='<span>&#128279;</span> Copy Link';btn.classList.remove('copied');},2200);});
+  }
+
+  // Browse drawer
+  function openBrowse(){document.getElementById('browseDrawer').classList.add('open');document.getElementById('browseOverlay').style.display='block';}
+  function closeBrowse(){document.getElementById('browseDrawer').classList.remove('open');document.getElementById('browseOverlay').style.display='none';}
+
+  function renderListings(bucket){
+    activeBucket=bucket;
+    const scroll=document.getElementById('listingsScroll');
+    const items=allListings.filter(l=>l.bucket===bucket);
+    if(!items.length){scroll.innerHTML='<div class="no-listings">No listings in this category</div>';return;}
+    scroll.innerHTML=items.map(l=>{
+      const isCur=l.serial===MY_SERIAL;
+      return `<a class="listing-card${isCur?' current':''}" href="${l.url}">
+        <img class="listing-thumb" src="${l.thumb||''}" alt="" loading="lazy">
+        <div class="listing-info">
+          <div class="listing-name">${l.project}</div>
+          <div class="listing-meta">${l.bhk}${l.carpet?' · '+l.carpet+' carpet':''}</div>
+          <div class="listing-rent">${l.rent_display}</div>
+          ${isCur?'<div class="listing-current-tag">← Viewing this</div>':''}
+        </div></a>`;
+    }).join('');
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.bucket===bucket));
+  }
+
+  function buildTabs(listings){
+    const tabRow=document.getElementById('tabRow');
+    const buckets=BUCKET_ORDER.filter(b=>listings.some(l=>l.bucket===b));
+    tabRow.innerHTML=buckets.map(b=>{
+      const cnt=listings.filter(l=>l.bucket===b).length;
+      return `<button class="tab-btn${b===activeBucket?' active':''}" data-bucket="${b}" onclick="renderListings('${b}')">${b} <span style="opacity:.5">(${cnt})</span></button>`;
+    }).join('');
+  }
+
+  fetch('./active.json?_='+Date.now())
+    .then(r=>r.json())
+    .then(data=>{
+      allListings=data.listings||[];
+      if(!allListings.map(l=>l.serial).includes(MY_SERIAL))
+        document.getElementById('unavailBanner').style.display='flex';
+      buildTabs(allListings);
+      const hasBucket=allListings.some(l=>l.bucket===MY_BUCKET);
+      renderListings(hasBucket?MY_BUCKET:(BUCKET_ORDER.find(b=>allListings.some(l=>l.bucket===b))||''));
+    })
+    .catch(()=>{document.getElementById('browseBtn').style.display='none';});
+</script>
+</body>
+</html>
