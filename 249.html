@@ -25,7 +25,7 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--body-bg);min-height:100vh;max-width:430px;margin:0 auto}
-    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('') center top/cover no-repeat;z-index:0}
+    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('./placeholder.png') center top/cover no-repeat;z-index:0}
     .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s}
     .scroll{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
     .sticky-bar{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:430px;z-index:60;background:var(--sticky-bg);border-bottom:1px solid var(--sticky-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:11px 18px 10px;transition:transform .25s ease}
@@ -182,7 +182,14 @@
       </div>
     </div>
 
-    
+    <div class="photo-wrap">
+      <div class="photo-strip" id="photoStrip">
+        <div class="album-sep">Flat Photos</div>
+        <img class="photo-thumb" src="./placeholder.png" onclick="openLightbox(0)" loading="lazy">
+      </div>
+      <span class="photo-count">1 photos</span>
+      <div class="swipe-hint"><span class="swipe-hint-arrow">›</span> Swipe</div>
+    </div>
 
     <div class="details">
       <div class="sec-label">Property Details</div>
@@ -191,7 +198,7 @@
         <span class="chip">275 carpet</span>
         <span class="chip">1 Washroom</span>
         <span class="chip">Furnished Flat</span>
-        <span class="chip">No. Only bike parking</span>
+        <span class="chip">No Car Parking. Only bike parking</span>
         <span class="chip">Vastu Flat</span>
         <span class="chip">Jain Derasar nearby</span>
         <span class="chip">Main Road Touch</span>
@@ -285,7 +292,7 @@
   const MY_SERIAL = 249;
   const MY_BUCKET = "1 RK";
   const BUCKET_ORDER = ["1 RK", "1 & 1.5 BHK", "2 & 2.5 BHK", "3 & 3.5 BHK", "4 & 4.5 BHK", "5 & 5.5 BHK"];
-  const photos = [];
+  const photos = ["./placeholder.png"];
   let current = 0, allListings = [], activeBucket = MY_BUCKET;
 
   // Lightbox
