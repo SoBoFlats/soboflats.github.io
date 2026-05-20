@@ -25,7 +25,7 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--body-bg);min-height:100vh;max-width:430px;margin:0 auto}
-    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('') center top/cover no-repeat;z-index:0}
+    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1280&q=80&auto=format&fit=crop') center top/cover no-repeat;z-index:0}
     .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s}
     .scroll{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
     .sticky-bar{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:430px;z-index:60;background:var(--sticky-bg);border-bottom:1px solid var(--sticky-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:11px 18px 10px;transition:transform .25s ease}
@@ -87,6 +87,8 @@
     .li-green{background:rgba(72,199,142,.18)}.li-orange{background:rgba(255,167,38,.18)}.li-pink{background:rgba(240,98,146,.18)}.li-blue{background:rgba(66,165,245,.18)}
     .l-text{flex:1}.l-name{font-size:13.5px;font-weight:600;color:var(--text-primary)}.l-sub{font-size:11px;color:var(--text-muted);margin-top:1px}
     .l-arrow{font-size:16px;color:rgba(255,255,255,.22)}
+    .map-embed-wrap{margin:0 0;border-top:1px solid var(--divider);overflow:hidden}
+    .map-iframe{display:block;width:100%;height:220px;border:none}
     .copy-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
     .copy-label{font-size:12px;color:var(--text-muted)}
     .copy-btn{background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:20px;padding:7px 16px;font-size:11.5px;font-weight:700;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s;letter-spacing:.2px}
@@ -158,12 +160,13 @@
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
       <span class="tag">Lalbaug</span>
+      <span class="tag" style="font-size:9px;opacity:.45;letter-spacing:.4px">ID: 249</span>
     </div>
     <div class="hero-title">Nekjat Maratha Sadan</div>
     <div class="sub-tag-row">
       <span class="sub-tag">1 rk</span>
       <span class="sub-tag">275 carpet</span>
-      <span class="sub-tag gold">`Jain only`</span>
+      <span class="sub-tag gold">Jain only</span>
     </div>
   </div>
 
@@ -174,11 +177,11 @@
           <span class="price-main">&#8377;0.3L</span>
           <span class="price-suffix">/ month</span>
         </div>
-        
+        <span class="price-deposit">Deposit: 6 months</span>
       </div>
       <div class="price-right">
         <span class="avail-pill">Immediately Available</span>
-        <span class="rera-badge">&#10003; RERA Approved Society</span>
+        
       </div>
     </div>
 
@@ -203,7 +206,7 @@
         <span class="chip">Jain Derasar nearby</span>
         <span class="chip">Main Road Touch</span>
         <span class="chip">Building with Lift</span>
-        <span class="chip gold">`Jain only`</span>
+        <span class="chip gold">Jain only</span>
       </div>
     </div>
 
@@ -214,7 +217,7 @@
         <span class="chip">Family ok</span>
         <span class="chip">Bachelors ok</span>
         <span class="chip">Pure veg only</span>
-        <span class="chip">Not Allowed</span>
+        <span class="chip">Pets Not Allowed</span>
         <span class="chip">12 months Rent together</span>
         <span class="chip">Online Registered Agrement only</span>
       </div>
@@ -252,7 +255,11 @@
     <div class="details">
       <div class="sec-label">Basic Terms</div>
       <ul class="terms-list">
-        <li>Agreement cost split 50:50 between owner & tenant, TDS deduction by Tenant as per govt. norms, Society Maintaince & Structural Repairs: Owner, Utilities & Bills: Tenant, Moving, Shifting & Club House charges (if any): Tenant</li>
+        <li>Agreement cost split 50:50 between owner & tenant</li>
+        <li>TDS deduction by Tenant as per govt. norms</li>
+        <li>Society Maintaince & Structural Repairs: Owner</li>
+        <li>Utilities & Bills: Tenant</li>
+        <li>Moving, Shifting & Club House charges (if any): Tenant</li>
       </ul>
     </div>
 
@@ -263,6 +270,11 @@
         <div class="l-text"><div class="l-name">Location</div><div class="l-sub">Open in Google Maps</div></div>
         <div class="l-arrow">›</div>
       </a>
+    </div>
+
+    <div class="map-embed-wrap">
+      <iframe class="map-iframe" src="https://maps.google.com/maps?q=18.9914124,72.8325748&z=17&output=embed" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     </div>
 
     <div class="copy-row">

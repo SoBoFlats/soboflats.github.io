@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-20T19:00:20.665531+00:00",
+  "updated_at": "2026-05-20T19:23:58.991693+00:00",
   "listings": [
     {
       "serial": 249,
@@ -7,8 +7,8 @@
       "bhk": "1 rk",
       "carpet": "275",
       "bucket": "1 RK",
-      "rent": 0.3,
-      "rent_display": "₹0.3L",
+      "rent": 0.0,
+      "rent_display": "₹30K* (₹30,000)L",
       "location": "Lalbaug",
       "url": "https://soboflats.github.io/249.html",
       "thumb": ""
