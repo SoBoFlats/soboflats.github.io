@@ -25,7 +25,7 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--body-bg);min-height:100vh;max-width:430px;margin:0 auto}
-    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('./placeholder.png') center top/cover no-repeat;z-index:0}
+    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('') center top/cover no-repeat;z-index:0}
     .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s}
     .scroll{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
     .sticky-bar{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:430px;z-index:60;background:var(--sticky-bg);border-bottom:1px solid var(--sticky-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:11px 18px 10px;transition:transform .25s ease}
@@ -177,7 +177,7 @@
         
       </div>
       <div class="price-right">
-        <span class="avail-pill">Immediate</span>
+        <span class="avail-pill">Immediately Available</span>
         <span class="rera-badge">&#10003; RERA Approved Society</span>
       </div>
     </div>
@@ -187,7 +187,7 @@
         <div class="album-sep">Flat Photos</div>
         <img class="photo-thumb" src="./placeholder.png" onclick="openLightbox(0)" loading="lazy">
       </div>
-      <span class="photo-count">1 photos</span>
+      <span class="photo-count">1 photo</span>
       <div class="swipe-hint"><span class="swipe-hint-arrow">›</span> Swipe</div>
     </div>
 
@@ -213,7 +213,10 @@
         <span class="chip">Jain only</span>
         <span class="chip">Family ok</span>
         <span class="chip">Bachelors ok</span>
-        <span class="chip">Pure only</span>
+        <span class="chip">Pure veg only</span>
+        <span class="chip">Not Allowed</span>
+        <span class="chip">12 months Rent together</span>
+        <span class="chip">Online Registered Agrement only</span>
       </div>
     </div>
 
@@ -239,16 +242,17 @@
     <div class="details">
       <div class="sec-label">Notes</div>
       <div class="chips">
-        <span class="chip">1 day prior notice for site visit</span>
-        <span class="chip">Tenant Profile needed for inspection</span>
-        <span class="chip">Commission is 1 rent</span>
+        <span class="chip">1 day notice for visit</span>
+        <span class="chip">Tenant Profile required</span>
+        <span class="chip">MANDATE FLAT</span>
+        <span class="chip">1 month Commission</span>
       </div>
     </div>
 
     <div class="details">
       <div class="sec-label">Basic Terms</div>
       <ul class="terms-list">
-        <li>Agreement cost will be 50:50 split between owner & tenant, Tenant has to deduct TDS as per govt. norms, Society Maintaince & Structural Repairs will be borne by owner, Utilities & Bills will be borne by Tenant, One time Moving charges / Shifting charges / Club House charges (if any) to be borne by Tenant</li>
+        <li>Agreement cost split 50:50 between owner & tenant, TDS deduction by Tenant as per govt. norms, Society Maintaince & Structural Repairs: Owner, Utilities & Bills: Tenant, Moving, Shifting & Club House charges (if any): Tenant</li>
       </ul>
     </div>
 
