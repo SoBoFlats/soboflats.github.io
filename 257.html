@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Piramal Aranya · 3 BHK · For Rent</title>
+  <style>
+    /* ── Theme variables ── */
+    :root {
+      --body-bg: #0a1a17;
+      --overlay: linear-gradient(to bottom,
+        rgba(5,20,17,0.18) 0%,
+        rgba(5,20,17,0.40) 32%,
+        rgba(5,20,17,0.84) 66%,
+        rgba(5,20,17,0.97) 100%);
+      --card-bg: rgba(255,255,255,0.07);
+      --card-border: rgba(255,255,255,0.13);
+      --text-primary: #fff;
+      --text-secondary: rgba(255,255,255,0.82);
+      --text-muted: rgba(255,255,255,0.45);
+      --text-label: rgba(255,255,255,0.32);
+      --chip-bg: rgba(255,255,255,0.08);
+      --chip-border: rgba(255,255,255,0.12);
+      --chip-color: rgba(255,255,255,0.82);
+      --divider: rgba(255,255,255,0.09);
+      --tag-bg: rgba(255,255,255,0.14);
+      --tag-border: rgba(255,255,255,0.25);
+      --tag-color: rgba(255,255,255,0.92);
+      --sub-tag-bg: rgba(255,255,255,0.13);
+      --sub-tag-border: rgba(255,255,255,0.28);
+      --link-border: rgba(255,255,255,0.07);
+      --fade-right: rgba(10,26,23,0.58);
+      --toggle-bg: rgba(255,255,255,0.12);
+      --toggle-border: rgba(255,255,255,0.22);
+      --toggle-color: rgba(255,255,255,0.80);
+      --sticky-bg: rgba(5,20,17,0.88);
+      --sticky-border: rgba(255,255,255,0.08);
+    }
+
+    [data-theme="light"] {
+      --body-bg: #f0ece3;
+      --overlay: linear-gradient(to bottom,
+        rgba(240,236,227,0.10) 0%,
+        rgba(240,236,227,0.32) 32%,
+        rgba(240,236,227,0.90) 66%,
+        rgba(240,236,227,0.98) 100%);
+      --card-bg: rgba(255,255,251,0.82);
+      --card-border: rgba(0,0,0,0.09);
+      --text-primary: #111;
+      --text-secondary: rgba(20,20,20,0.85);
+      --text-muted: rgba(20,20,20,0.50);
+      --text-label: rgba(20,20,20,0.40);
+      --chip-bg: rgba(0,0,0,0.06);
+      --chip-border: rgba(0,0,0,0.11);
+      --chip-color: rgba(20,20,20,0.82);
+      --divider: rgba(0,0,0,0.08);
+      --tag-bg: rgba(0,0,0,0.08);
+      --tag-border: rgba(0,0,0,0.18);
+      --tag-color: rgba(20,20,20,0.88);
+      --sub-tag-bg: rgba(0,0,0,0.07);
+      --sub-tag-border: rgba(0,0,0,0.15);
+      --link-border: rgba(0,0,0,0.07);
+      --fade-right: rgba(240,236,227,0.62);
+      --toggle-bg: rgba(0,0,0,0.08);
+      --toggle-border: rgba(0,0,0,0.18);
+      --toggle-color: rgba(20,20,20,0.70);
+      --sticky-bg: rgba(240,236,227,0.92);
+      --sticky-border: rgba(0,0,0,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--body-bg);
+      min-height: 100vh;
+      max-width: 430px;
+      margin: 0 auto;
+    }
+
+    /* ── Background ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      max-width: 430px;
+      margin: 0 auto;
+      background: url('https://www.piramalrealty.com/images/aranya-day-elevetion-01.jpg')
+                  center top / cover no-repeat;
+      z-index: 0;
+    }
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--overlay);
+      transition: background 0.35s;
+    }
+
+    .scroll {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Sticky mini header (shows on scroll) ── */
+    .sticky-bar {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100%);
+      width: 100%;
+      max-width: 430px;
+      z-index: 60;
+      background: var(--sticky-bg);
+      border-bottom: 1px solid var(--sticky-border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 18px 10px;
+      transition: transform 0.25s ease;
+    }
+    .sticky-bar.visible { transform: translateX(-50%) translateY(0); }
+    .sticky-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.2px;
+    }
+    .sticky-price {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    /* ── Theme toggle ── */
+    .toggle-anchor {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      height: 0;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .theme-toggle {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      pointer-events: all;
+      background: var(--toggle-bg);
+      border: 1px solid var(--toggle-border);
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: var(--toggle-color);
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* ═══ HERO ═══ */
+    .hero { padding: 52px 18px 24px; }
+
+    .tag-row {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 20px;
+      color: var(--tag-color);
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      backdrop-filter: blur(8px);
+    }
+    .tag.highlight {
+      color: #1a1000;
+      background: rgba(255,217,60,0.92);
+      border-color: rgba(200,165,0,0.55);
+    }
+
+    .hero-title {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .sub-tag-row { display: flex; gap: 7px; flex-wrap: wrap; }
+    .sub-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 13px;
+      border-radius: 20px;
+      color: rgba(255,255,255,0.95);
+      background: var(--sub-tag-bg);
+      border: 1px solid var(--sub-tag-border);
+      backdrop-filter: blur(8px);
+    }
+    /* Dark: subtle gold glow. Light: solid yellow like "For Rent" */
+    .sub-tag.gold {
+      color: #ffd966;
+      background: rgba(255,217,102,0.14);
+      border-color: rgba(255,217,102,0.40);
+    }
+    [data-theme="light"] .sub-tag.gold {
+      color: #1a1000;
+      background: rgba(255,217,60,0.90);
+      border-color: rgba(200,165,0,0.55);
+    }
+
+    /* ═══ GLASS CARD ═══ */
+    .card {
+      margin: 0 12px 16px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    /* ─── Price block ─── */
+    .price-block {
+      padding: 15px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--divider);
+    }
+    .price-left { display: flex; flex-direction: column; gap: 3px; }
+    .price-rent-row { display: flex; align-items: baseline; gap: 4px; }
+    .price-deposit { font-size: 11.5px; color: var(--text-muted); letter-spacing: 0.1px; }
+    .price-main {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+      letter-spacing: -0.5px;
+    }
+    .price-suffix { font-size: 13px; color: var(--text-muted); }
+    .price-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+
+    /* "Immediately Available" — neutral chip style, no colour */
+    .avail-pill {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      color: var(--chip-color);
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+    }
+    .rera-badge {
+      background: rgba(72,199,142,0.14);
+      border: 1px solid rgba(72,199,142,0.35);
+      color: #48c78e;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+    }
+
+    /* ─── Photo strip ─── */
+    .photo-wrap { position: relative; }
+    .photo-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 10px;
+      width: 40px;
+      background: linear-gradient(to right, transparent, var(--fade-right));
+      pointer-events: none;
+    }
+
+    /* Photo count badge */
+    .photo-count {
+      position: absolute;
+      bottom: 20px;
+      right: 14px;
+      z-index: 2;
+      background: rgba(0,0,0,0.55);
+      color: rgba(255,255,255,0.85);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+      pointer-events: none;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Swipe hint */
+    .swipe-hint {
+      position: absolute;
+      bottom: 20px;
+      left: 18px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(0,0,0,0.45);
+      color: rgba(255,255,255,0.75);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 10px 3px 8px;
+      border-radius: 20px;
+      pointer-events: none;
+      backdrop-filter: blur(6px);
+      animation: hintFade 3.5s ease forwards;
+    }
+    .swipe-hint-arrow {
+      font-size: 13px;
+      animation: hintSlide 1.2s ease-in-out infinite;
+    }
+    @keyframes hintFade {
+      0%   { opacity: 0; }
+      15%  { opacity: 1; }
+      70%  { opacity: 1; }
+      100% { opacity: 0; pointer-events: none; }
+    }
+    @keyframes hintSlide {
+      0%,100% { transform: translateX(0); }
+      50%     { transform: translateX(4px); }
+    }
+
+    .photo-strip {
+      overflow-x: auto;
+      display: flex;
+      gap: 8px;
+      padding: 14px 14px 38px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .photo-strip::-webkit-scrollbar { display: none; }
+
+    .photo-thumb {
+      flex-shrink: 0;
+      width: 180px;
+      height: 265px;
+      border-radius: 12px;
+      object-fit: cover;
+      scroll-snap-align: start;
+      cursor: pointer;
+      transition: transform 0.15s;
+      border: 1px solid var(--chip-border);
+    }
+    .photo-thumb:active { transform: scale(0.96); }
+
+    .video-thumb-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 180px;
+      height: 265px;
+      scroll-snap-align: start;
+      cursor: pointer;
+    }
+    .video-thumb-wrap .photo-thumb {
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: unset;
+    }
+    .video-thumb-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.28);
+      pointer-events: none;
+    }
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.38);
+    }
+    .play-btn::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
+      border-left: 18px solid #1a1000;
+      margin-left: 3px;
+    }
+
+    .album-sep {
+      flex-shrink: 0;
+      align-self: center;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-label);
+      padding: 6px 2px;
+    }
+    .album-sep:first-child { display: none; }
+
+    /* ─── Details ─── */
+    .details {
+      padding: 16px 18px;
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+    }
+    .sec-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-label);
+      margin-bottom: 12px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip {
+      font-size: 12px;
+      color: var(--chip-color);
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      border-radius: 8px;
+      padding: 6px 11px;
+    }
+    /* Dark: soft gold glow; Light: solid yellow like For Rent tag */
+    .chip.gold {
+      color: #ffd966;
+      background: rgba(255,217,102,0.14);
+      border-color: rgba(255,217,102,0.40);
+    }
+    .terms-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .terms-list li {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      padding-left: 14px;
+      position: relative;
+    }
+    .terms-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+    }
+    .chip.incl {
+      color: #48c78e;
+      background: rgba(72,199,142,0.10);
+      border-color: rgba(72,199,142,0.25);
+    }
+    [data-theme="light"] .chip.incl {
+      color: #1a6640;
+      background: rgba(72,199,142,0.15);
+      border-color: rgba(72,199,142,0.32);
+    }
+    .chip.excl {
+      color: rgba(255,130,110,0.90);
+      background: rgba(255,100,80,0.08);
+      border-color: rgba(255,100,80,0.22);
+    }
+    [data-theme="light"] .chip.excl {
+      color: #9a2010;
+      background: rgba(220,80,60,0.09);
+      border-color: rgba(220,80,60,0.22);
+    }
+    [data-theme="light"] .chip.gold {
+      color: #1a1000;
+      background: rgba(255,217,60,0.90);
+      border-color: rgba(200,165,0,0.55);
+    }
+
+    /* ─── Links ─── */
+    .links { padding: 16px 18px 4px; border-bottom: 1px solid var(--divider); }
+    .link-row {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 12px 0;
+      text-decoration: none;
+      border-bottom: 1px solid var(--link-border);
+    }
+    .link-row:last-child { border-bottom: none; }
+    .link-row:first-of-type { padding-top: 0; }
+    .l-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .li-green  { background: rgba(72,199,142,0.18); }
+    .li-orange { background: rgba(255,167,38,0.18); }
+    .li-pink   { background: rgba(240,98,146,0.18); }
+    .li-blue   { background: rgba(66,165,245,0.18); }
+    .l-text { flex: 1; }
+    .l-name { font-size: 13.5px; font-weight: 600; color: var(--text-primary); }
+    .l-sub  { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+    .l-arrow { font-size: 16px; color: rgba(255,255,255,0.22); }
+
+    /* ─── Copy link row ─── */
+    .copy-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+    }
+    .copy-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .copy-btn {
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+      letter-spacing: 0.2px;
+    }
+    .copy-btn:active { background: rgba(72,199,142,0.14); }
+    .copy-btn.copied { color: #48c78e; border-color: rgba(72,199,142,0.35); }
+
+    /* ─── YouTube video card (bottom) ─── */
+    .video-card {
+      margin: 0 12px 32px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+    .video-label {
+      padding: 14px 18px 10px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-label);
+    }
+    .video-section {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+    .video-section iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ═══ LIGHTBOX ═══ */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.93);
+      align-items: center;
+      justify-content: center;
+      max-width: 430px;
+      margin: 0 auto;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 82vh;
+      border-radius: 10px;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+    }
+    .lb-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      font-size: 18px;
+      color: rgba(255,255,255,0.80);
+      cursor: pointer;
+      background: rgba(255,255,255,0.12);
+      border-radius: 50%;
+      width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 102;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .lb-zone {
+      position: absolute;
+      top: 0; bottom: 0; width: 42%;
+      display: flex; align-items: center;
+      z-index: 101; cursor: pointer;
+    }
+    .lb-zone-prev { left: 0; justify-content: flex-start; padding-left: 10px; }
+    .lb-zone-next { right: 0; justify-content: flex-end; padding-right: 10px; }
+    .lb-arrow {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 50%;
+      font-size: 20px; font-weight: 300;
+      color: rgba(255,255,255,0.60);
+      transition: background 0.12s, color 0.12s;
+    }
+    .lb-zone:active .lb-arrow { background: rgba(255,255,255,0.22); color: #fff; }
+    .lb-counter {
+      position: absolute;
+      bottom: 22px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    #lbVideo {
+      display: none;
+      max-width: 92%;
+      max-height: 82vh;
+      border-radius: 10px;
+      outline: none;
+      background: #000;
+    }
+    .lb-gp-link {
+      display: none;
+      position: absolute;
+      bottom: 52px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.80);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 13px;
+      text-decoration: none;
+      white-space: nowrap;
+      z-index: 103;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sticky mini header -->
+<div class="sticky-bar" id="stickyBar">
+  <span class="sticky-title">Piramal Aranya · 3 BHK</span>
+  <span class="sticky-price">&#8377;1.95L / month</span>
+</div>
+
+<!-- Theme toggle -->
+<div class="toggle-anchor">
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Day</button>
+</div>
+
+<div class="bg"></div>
+
+<div class="scroll">
+
+  <!-- Hero -->
+  <div class="hero" id="hero">
+    <div class="tag-row">
+      <span class="tag highlight">For Rent</span>
+      <span class="tag">Byculla (E)</span>
+    </div>
+    <div class="hero-title">Piramal Aranya,<br>Arav</div>
+    <div class="sub-tag-row">
+      <span class="sub-tag">3 BHK</span>
+      <span class="sub-tag">1100 carpet</span>
+      <span class="sub-tag gold">Everyone Welcome</span>
+    </div>
+  </div>
+
+  <!-- Main card -->
+  <div class="card">
+
+    <!-- Price -->
+    <div class="price-block">
+      <div class="price-left">
+        <div class="price-rent-row">
+          <span class="price-main">&#8377;1.95L</span>
+          <span class="price-suffix">/ month</span>
+        </div>
+        <span class="price-deposit">Deposit: 3 months</span>
+      </div>
+      <div class="price-right">
+        <span class="avail-pill">Immediately Available</span>
+        <span class="rera-badge">&#10003; RERA Approved Society</span>
+      </div>
+    </div>
+
+    <!-- Photo strip — 15 flat + 30 amenity = 45 photos (freshly scraped) -->
+    <div class="photo-wrap">
+      <div class="photo-strip" id="photoStrip">
+        <div class="album-sep">Flat Photos</div>
+        <div class="video-thumb-wrap" onclick="openLightbox(0)">
+          <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMklFxTMbjM_Wi-IbHLwNfWonnOuq24_FqAKYS7dy3RjWztUzTnWZBErs-TKLOL7RYqzzHWnUjH568GCMeyv47BzNTiqo5FGER1em6yaDSYGIFQ0D0Y=w1600" loading="lazy">
+          <div class="play-btn"></div>
+        </div>
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNQEdvHMEZiJKMm8WKtj55E-XI2rP8EyHo8-Rl4lr6EIBYPUgI1sJPY-pWWZWsq3SLUr-wgIFqXzvcfr-ae4P74UrXp4nEwuGOJSXDMByEFR8HWNO9M=w1600" onclick="openLightbox(1)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMew9ooQ9KpSumo0d8Cmu3jqlwaPa5ROOu2RLABgFALxsS8JFTqIds3B5_orNPpW44i_KAz66haH64w6CWqS5EAEQ8aBOESU3_xChEVqo_AqsbJ0zXF=w1600" onclick="openLightbox(2)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPqRSyUW1Ez92JVZDXN-LbUraO2J5hkBOWY8rNxRfxH2UBFQYf44DcDujRt91PYHj08qzD2o21-QWzlhM1GFRPVMFga0Ex-t_Uv48uWrRR8YOfNMx24=w1600" onclick="openLightbox(3)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMyzdpDL13FxQBAEkTOZOddvVuxD9eXQGU9Mszcg_JRVR6yWmrcDFXraUBtXPbnqhsZZ48Nz-fhWXxH5UIzg2DaRNAb3GroZhI-i4K0tmhTE36dJ_Nd=w1600" onclick="openLightbox(4)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczN6UeCN-3AijIbTyFkNeih7qdbADC3glSrL-63SbNvqy6ZmLZDyFZWXa8iPtdf2qIEEX3UNwiohBwGiXmHJ1UFzPYUpD8xUhgCtqLFR-f4-UE4uwEXv=w1600" onclick="openLightbox(5)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNX78Iaa06CcQJsPRdbjSTsN8pXFiCYwALA0I1XGo9cRQEt7ddpTwToKVLXw7PFYrpniJTCA_s1ydQxptmeO8FNQ5u--VH8o1ji4drogyfVl0FifAsk=w1600" onclick="openLightbox(6)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMhwNeKLt9Sw07iJPmOb_ORrzvP31z7PmeSurRZ4doWjUMDaTX7rRXQn5c7mAKgy_rV7y3KwiA3AdqTnNLxoVIIwnQYVXblCjEyFCU0faoXEMrL9UfS=w1600" onclick="openLightbox(7)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMP92qJOrt9o5BGQD1L7G8fQNsdBx6B-MWx2clEN3t2OBYk8PK3apzn0oKQkO44y2VtrtoWpTRyvrr_xaSRRghvTnj9hSMdJM9LxB2zYry5IeOoalIV=w1600" onclick="openLightbox(8)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMj9mAfvsbRziJEsPiKfXtvtCecmJ5Aq4qTE9p9F4jBvkc47cZc4cK_RiF_eim8C3zNj5jeDCh9eSY5dw1dNFxoTndD2qOGm65sVr3cgXPKLzKuq2Ez=w1600" onclick="openLightbox(9)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMz1zkkqbDuAtnfxzS4ZtAQQ4SYhatbgM8M9hJ5o8dQxTj35L7-yij1RnJFoOUfMAjGmfkVMMljMkqQ1LXVj_LmmvgNt0EUxn_6oWuc5vwh7GSZRDdJ=w1600" onclick="openLightbox(10)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczO7WdyRTSNaTXvbliEGmbkujOCp30XoI4WUR4SAlVlenHxuFP_AQCKJJQmH_tbJAidJGyXnE6KgHjJ1mB8BljXvai1Co0_GW684Z49w1K0-mTI4W3MP=w1600" onclick="openLightbox(11)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOvW6FdTB2j2o0ZDPBoeR-EXb89fEoECSEI1rnYrK7QLdm9teA4vv7Jiys_7C1Jvwk3Bdcvzhq0NX2pHMEVI1IPreo6J5Vp5bM_mu9oaleGwYNMvHHb=w1600" onclick="openLightbox(12)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOxxfAnqtJVXmdK1emKYKzpNZMgj4sQ6r-kDDsZe__Us8irRsEPUqgkcojQsAjM9ZnVxxZQ_GhHjeLFWyLufaby4N75KdgRwZlyzQn9v3L1ViwV1IgT=w1600" onclick="openLightbox(13)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMhloJJJkjT1ODC4JQYAzBV5ivsl0cyZe4-N3cvGJEdL4-fC2D77LdGKhUD6tPt_jl3Ytoow5PPozvceuFE1ujnj5UgWMlrDZrGjpW5dnPqF6PhW_p1=w1600" onclick="openLightbox(14)" loading="lazy">
+        <div class="album-sep">Amenities</div>
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOb9mMyelsmC4UFVPWIvoGnNC-jUv6MGEwRE2j9YAnJQ1VP1RVBRV2CClP3lvSNp5jWqlj7E8gOD0YnubHYqIXWK69dFi6jNh-6itbCKEz5PzLgOQQ=w1600" onclick="openLightbox(15)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMRTbdQlLmanz9PgvfK5HqSbmmAb469EFVX1GjQiVtFs6IoVpV8RIR3zNXGfng3DPYzf06MAC4dXPy6ZXHbeQSLAa9csGQSJS_wc89yQy7EV0KUpi0=w1600" onclick="openLightbox(16)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczM0MRk8wb-8J-sY1W4CuQ975m7wOrgVLgCLqiN_7UnUx55lAN9aYFEdjEYDgqgYk5pIT8K4NoEufpFlxKPSKNyaZVJT_As7-SejRnssZn5XyVKFYoM=w1600" onclick="openLightbox(17)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMqW4UOSQm6SyhfMuZDMs2ERYuZcBFRttrmdFkrkTKv3_ShaGJ0sMSSLCkTwnumJ9g44pM85V8G2YshDeqgihN4TfMmDzYuJIHLpjJwURbq8w4tQ00=w1600" onclick="openLightbox(18)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNuvwb9cDp1kwmm4pqcb7VncYNOxm-4_QPS1j3fSJQhGE-y2z1kYRvSIemmjN4dHNtzl7XzfarXjNyOykYVMw2lqQ_LvA0LvW0CZTKO_8socVjXi1s=w1600" onclick="openLightbox(19)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczM_n5W4MS2gAnw7SDM9_1pL3MKVEVh_sSfpM9EPwX5rUP6_YoxjTKOdGXlYFFcs_5qHTYfIq9cpTNmtaQkyH1EFUoUf8QiVZ0x7jr4MvxECsV2y-Wo=w1600" onclick="openLightbox(20)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOLmC0Px5HRO5vx5cXUvQkZQPZonJuqPhpkDQWe8IpNfpF0d1-ag6oKBU_LmAbpOhDui6VJu_ZFPEg_RZq_0702I1PWOTA-OJBYmOYRvMhidFx4T8w=w1600" onclick="openLightbox(21)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPmtNZHijQjqFVUq-zhmTrjXqM2qI2bXTWG5tp9wqDDh4YX20VqdiKff9jXpc6y2H4lwNy2mPg5HJFzV6BFcBt3XijSSQb9hKp0KlrlYuzsJjcVPiQ=w1600" onclick="openLightbox(22)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPYfir9DCqeNHzEmme-fSarZFSsY7-Dfx_wuCLdt-faGFR57DbKdf_hDvykIxDNJxs_cuPpkfENYpQDPWCbbC-uuzbWGdUznjyrpNIx9mtr5hPtugA=w1600" onclick="openLightbox(23)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNdtbOoS61bEP6rhwL-kLXaM3wLEicSmR9Hxq15IGu_sg05tA5y3gPO45kCM9hytSaX4rZxB5_T-mlQKzofY5l-9gXNQiGNE-psJW2AO-4_SP663Yk=w1600" onclick="openLightbox(24)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczN1xqFal6V-CWvLHFrCaadPkROVsVYIwb5VGSqiRB1F0lcVeSlDlHzpWtwaatjS2ZwxIE2cjLvMOrYI_axt97-rk1J5wLmst0hnzNgSpSPRGO9o1hs=w1600" onclick="openLightbox(25)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMSZIQjZXAYOws_JWlLVZXmaUA5CHQ4Jp9HI1PA0S1IF9Exv6B4q6x7mB-oMgy2uqaObQ-kslYMDgAhAm_x7f7a6eNW368RLQJJ8rCioM9LzYWthkc=w1600" onclick="openLightbox(26)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczO9MzddqF31doOOA2v9VnG__HgceXSc0jBR9VwkSTtYjRUXtqcqiyN32RQd3VgFEFpvjV-Bw3AwJfckIWftlwSuwSCwvzzn9aHOqJftCfd-KEdi0t4=w1600" onclick="openLightbox(27)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMF3DSsANkq9J3WvLRVNBBOIzR4ElDpMaqJDC4UOaw-vvZ-eoxpOvQtK9k2vpHZH1NMUgErrsQEmEcZwRC2EEcUci-Zh088cW1R5S8BIL5BZ_oP6c4=w1600" onclick="openLightbox(28)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMqi1PrdGxC79PXRcLYJhElESqY7mLyA_Pdmn4SR4gwlolc9SyL1nV4cFml3OSXyYxO-Bk4kZ8Ye9F6tyOP8wwhYykBuV94P6gtzHWP1ynmZaErbOk=w1600" onclick="openLightbox(29)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMjjnjr_BfByQ_yVw1iGO3IgW0IC-UxDaiFCWzcq3-7ufghovtaEWxze4bq7j52Gd2FAwWRQ0eBHWL_WJ7Ga2dG4gnqGQFqPQimeitmmpX8XHzYxso=w1600" onclick="openLightbox(30)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMrD-u4JriknYKjWUEAj8o5NvkWmBAokVhy7Bd8L-mSNEpUbolLhsQ5v6z1roEOnbnRg02Kqjj3m0I9Nx-_75_EZIsvDFbGWPsoSXSTw1hDo7C4IRs=w1600" onclick="openLightbox(31)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOw-vT5jWZvPOdD8M_ccS2kwGlhxGvgF3VOydyL80V18JFouAaEt_lsi8gXYoIaM6eDoH2_WuU0jL2P2In_mtOxJUfquz0G_mOsywSg6AtFHg_Qyqw=w1600" onclick="openLightbox(32)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPk1f7KlwXvVJ0m_zkyNYe9EyVtDNIg8QWcJf1zKODXatI6xSHjbC0lOStNnXPOrm-jwgAalUFSr7JzH-oWKd9j4ku62Rh9pvUj4VVv-DZP8gS0Orc=w1600" onclick="openLightbox(33)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNHjQGfe4PJxAKIudVsfaohYclw7CKH3dsKHQCIrHqbaWK9abD72Zayya2To603pukpg2QfBsc4jdLkxjThvgSLm5IhevLlsiKf_OP08CS8t4b335E=w1600" onclick="openLightbox(34)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMRNdz0rxMhaQuhAscWnh59NzVuFim7_FFvH6zPHW7D7JIuZfKAm2NRlbUd2bqjHwxKfHIWzuRGXEYg8We2fbt1fHycVpHLMNsMlr0DghfOd2Zt30o=w1600" onclick="openLightbox(35)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMIEviMRIgJyshdbSIYLYflypNAHABeYB3iDWcXsk_RpabiPgR-jP7g304USpC9swbkH7H1vwKTa7uu4UC84O56mn5CVvF6k7VzjU6TA6wF8ChJK9g=w1600" onclick="openLightbox(36)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOlhTdXme-YpL3XRt7xsx6MXs8fOsrSt9m9oSY8kvuvJmLHGJ2r8cpxFaXDZFtKcBNstOWvewHX6FJC6qFBtBPSbb7lURmodvkU7duV_IOQlri55A4=w1600" onclick="openLightbox(37)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMSdUNU3By8xMA90GWgM0-asackrut17eSpMvtBBSi99CyyqaKhrublR6oL9BAYH9_4WSjEPTJLU2DnD17bGl01tQeEVonXxL7LegAau-92OJ99-n8=w1600" onclick="openLightbox(38)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOxZec1E9PtoD4pwVc0NB3SMpNWuCM9mcBq4bqjH572WkTB0f5m6OS4_ySsd6m129k83uis5l9ry3ErrzWl8fQDIAMZfxpaP5CZb95P7phvaoZUA3k=w1600" onclick="openLightbox(39)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNbk0zBnHqgouS6zvJpQE9zsZZg6QGt9Ylp_Em_mQPK72uA6RywrIKVmYDtm_ZWXQp2OGP-8dq2VkTj5aJVh5lEpmhg77fcUB6exNtVfuNxafUKHoc=w1600" onclick="openLightbox(40)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMb2NqfAWlHvvIuzYhULSsKpgPq04PJajnayhFFMlhTxzCmdEhV9mwCnyrNHY1mXVUAOuNZgbnvdT842JvnomnJNAZbYTQpB-qCxSjwFvkmiNt9-Ys=w1600" onclick="openLightbox(41)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczP7VqRnvXdIR6HwLEnOy6_51FYLp4gsZ_fg7vVidCXDQoA-uDJxMNXqBOgGWMreMPTZPpdOXPJfIKm9YdJpZ1pBzRgkoAWw6nVcgCvOyYfCm9iuDmg=w1600" onclick="openLightbox(42)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPylO8QiFSlGybcCdxYGHS8cWte4SI2YzRFqEr0BAi7a8hfePcXwqH1W9gtfZ2PgVuFSsfjAp4n_eKZwv-1H2SY33LikJ2yMtKtEjp9m6Xf9MAKmd4=w1600" onclick="openLightbox(43)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNXYphzEA1Nwi4MUPDYnvyQpCqFDAGyl4MwvSQr8Si79FxLRiXOxj66Mpskb9n7qcmm5C0bxeqgvw0PAmcw8XlILjv8SxivmcL_FqqiWdXA-gDPk6E=w1600" onclick="openLightbox(44)" loading="lazy">
+      </div>
+      <span class="photo-count">45 photos</span>
+      <div class="swipe-hint"><span class="swipe-hint-arrow">›</span> Swipe</div>
+    </div>
+
+    <!-- Details chips -->
+    <div class="details">
+      <div class="sec-label">Property Details</div>
+      <div class="chips">
+        <span class="chip">3 BHK</span>
+        <span class="chip">1100 carpet</span>
+        <span class="chip">Balcony</span>
+        <span class="chip">3 Washrooms</span>
+        <span class="chip">Rani Baug &amp; open views</span>
+        <span class="chip">Furnished</span>
+        <span class="chip">2 Car Parkings</span>
+        <span class="chip">Brand New Flat</span>
+        <span class="chip">Vastu Flat</span>
+        <span class="chip">Good Light &amp; Ventilation</span>
+        <span class="chip">Dry Area in Kitchen</span>
+        <span class="chip">House-help washroom on floor</span>
+        <span class="chip">Gated Community with Amenities</span>
+        <span class="chip">Jain Derasar</span>
+        <span class="chip">Main Road Touch</span>
+        <span class="chip gold">Everyone Welcome</span>
+      </div>
+    </div>
+
+    <!-- Tenant Preference -->
+    <div class="details">
+      <div class="sec-label">Tenant Preference</div>
+      <div class="chips">
+        <span class="chip">Family ok</span>
+        <span class="chip">Bachelors ok</span>
+        <span class="chip">M ok</span>
+        <span class="chip">H ok</span>
+        <span class="chip">Non-Veg ok</span>
+        <span class="chip">Pets Allowed</span>
+        <span class="chip">12 months rent together</span>
+        <span class="chip">Online Registered Agreement</span>
+      </div>
+    </div>
+
+    <!-- Furniture Included -->
+    <div class="details">
+      <div class="sec-label">Furniture Included</div>
+      <div class="chips">
+        <span class="chip incl">Lights</span>
+        <span class="chip incl">Fans</span>
+        <span class="chip incl">AC</span>
+        <span class="chip incl">Modular Kitchen</span>
+        <span class="chip incl">Washrooms (Gysers, Mirrors, Glass Partition)</span>
+        <span class="chip incl">Curtains</span>
+        <span class="chip incl">Wardrobes</span>
+        <span class="chip incl">Beds with Mattress &amp; Side Table</span>
+        <span class="chip incl">Sofa with Coffee Table</span>
+        <span class="chip incl">Dining Table with Chairs</span>
+        <span class="chip incl">TV with TV Unit</span>
+        <span class="chip incl">Shoe Unit</span>
+        <span class="chip incl">Gas Stove</span>
+        <span class="chip incl">Fridge</span>
+        <span class="chip incl">Microwave</span>
+      </div>
+    </div>
+
+    <!-- Furniture Excluded -->
+    <div class="details">
+      <div class="sec-label">Furniture Excluded</div>
+      <div class="chips">
+        <span class="chip excl">Study Table</span>
+        <span class="chip excl">Hob &amp; Chimney</span>
+        <span class="chip excl">Water Purifier</span>
+        <span class="chip excl">Washing Machine</span>
+        <span class="chip excl">Dishwasher</span>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="details">
+      <div class="sec-label">Notes</div>
+      <div class="chips">
+        <span class="chip">1 day notice for visit</span>
+        <span class="chip">Tenant profile required</span>
+        <span class="chip">Keys with Me</span>
+        <span class="chip">Mandate Flat</span>
+        <span class="chip">1 month commission</span>
+      </div>
+    </div>
+
+    <!-- Basic Terms -->
+    <div class="details">
+      <div class="sec-label">Basic Terms</div>
+      <ul class="terms-list">
+        <li>Agreement cost split 50:50 between Owner &amp; Tenant</li>
+        <li>TDS deduction by Tenant as per govt. norms</li>
+        <li>Society maintenance &amp; structural repairs: Owner</li>
+        <li>Utilities &amp; bills: Tenant</li>
+        <li>Moving, shifting &amp; club house charges (if any): Tenant</li>
+      </ul>
+    </div>
+
+    <!-- Links -->
+    <div class="links">
+      <div class="sec-label">View Property</div>
+      <a class="link-row" href="https://photos.app.goo.gl/VRwTxiwQLCBxyEQe8" target="_blank" rel="noopener">
+        <div class="l-icon li-green">📸</div>
+        <div class="l-text">
+          <div class="l-name">Flat Photos</div>
+          <div class="l-sub">Interior &amp; room photos</div>
+        </div>
+        <div class="l-arrow">›</div>
+      </a>
+      <a class="link-row" href="https://photos.app.goo.gl/fYii4rDt8SGWEkoE7" target="_blank" rel="noopener">
+        <div class="l-icon li-orange">🏊</div>
+        <div class="l-text">
+          <div class="l-name">Amenities</div>
+          <div class="l-sub">Pool, gym, common areas</div>
+        </div>
+        <div class="l-arrow">›</div>
+      </a>
+      <a class="link-row" href="https://youtu.be/oh85OzeLxZY?si=QWq1JRonSSI45bhu" target="_blank" rel="noopener">
+        <div class="l-icon li-pink">▶️</div>
+        <div class="l-text">
+          <div class="l-name">Virtual Tour</div>
+          <div class="l-sub">Project walkthrough video</div>
+        </div>
+        <div class="l-arrow">›</div>
+      </a>
+      <a class="link-row" href="https://maps.app.goo.gl/yWAZmSjmf3Qnc3pp8" target="_blank" rel="noopener">
+        <div class="l-icon li-blue">📍</div>
+        <div class="l-text">
+          <div class="l-name">Location</div>
+          <div class="l-sub">Open in Google Maps</div>
+        </div>
+        <div class="l-arrow">›</div>
+      </a>
+    </div>
+
+    <!-- Copy link -->
+    <div class="copy-row">
+      <span class="copy-label">Share this listing</span>
+      <button class="copy-btn" id="copyBtn" onclick="copyLink()">
+        <span>&#128279;</span> Copy Link
+      </button>
+    </div>
+
+  </div><!-- /card -->
+
+  <!-- YouTube Virtual Tour — bottom of page -->
+  <div class="video-card">
+    <div class="video-label">Virtual Tour · Piramal Aranya</div>
+    <div class="video-section">
+      <iframe
+        src="https://www.youtube.com/embed/oh85OzeLxZY?playsinline=1&rel=0&modestbranding=1"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+</div><!-- /scroll -->
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-close" id="lbClose">&#10005;</div>
+  <div class="lb-zone lb-zone-prev" id="lbPrev"><div class="lb-arrow">&#8249;</div></div>
+  <img id="lbImg" src="" alt="" draggable="false">
+  <video id="lbVideo" controls playsinline preload="metadata"></video>
+  <a id="lbGpLink" class="lb-gp-link" href="https://photos.app.goo.gl/VRwTxiwQLCBxyEQe8" target="_blank" rel="noopener">&#9654; Open in Google Photos</a>
+  <div class="lb-zone lb-zone-next" id="lbNext"><div class="lb-arrow">&#8250;</div></div>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<script>
+  // ── Lightbox ──
+  const photos = Array.from(document.querySelectorAll('.photo-thumb')).map(i => i.src)
+  let current = 0
+
+  // video index → direct video URL (Google Photos =dv format)
+  const videoMap = {
+    0: photos[0].replace(/=[^=]+$/, '=dv')
+  }
+
+  function setMedia(idx) {
+    const lbImg = document.getElementById('lbImg')
+    const lbVideo = document.getElementById('lbVideo')
+    const lbGpLink = document.getElementById('lbGpLink')
+    const lbPrev = document.getElementById('lbPrev')
+    const lbNext = document.getElementById('lbNext')
+    if (videoMap[idx]) {
+      lbImg.style.display = 'none'
+      lbVideo.style.display = 'block'
+      if (lbVideo.src !== videoMap[idx]) lbVideo.src = videoMap[idx]
+      lbGpLink.style.display = 'block'
+      lbPrev.style.display = 'none'
+      lbNext.style.display = 'none'
+    } else {
+      lbVideo.pause()
+      lbVideo.style.display = 'none'
+      lbGpLink.style.display = 'none'
+      lbImg.style.display = 'block'
+      lbImg.src = photos[idx]
+      lbPrev.style.display = 'flex'
+      lbNext.style.display = 'flex'
+    }
+    document.getElementById('lbCounter').textContent = (idx + 1) + ' / ' + photos.length
+  }
+
+  function openLightbox(idx) {
+    current = idx
+    setMedia(idx)
+    document.getElementById('lightbox').classList.add('open')
+  }
+  function closeLightbox() {
+    document.getElementById('lbVideo').pause()
+    document.getElementById('lightbox').classList.remove('open')
+  }
+  function showPhoto(idx) {
+    current = Math.max(0, Math.min(idx, photos.length - 1))
+    setMedia(current)
+  }
+  document.getElementById('lbClose').addEventListener('click', e => { e.stopPropagation(); closeLightbox() })
+  document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); showPhoto(current - 1) })
+  document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); showPhoto(current + 1) })
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target === document.getElementById('lightbox') || e.target === document.getElementById('lbImg')) closeLightbox()
+  })
+  let touchStartX = null
+  const lb = document.getElementById('lightbox')
+  lb.addEventListener('touchstart', e => {
+    if (videoMap[current]) return  // don't swipe-navigate on video
+    touchStartX = e.touches[0].clientX
+  }, { passive: true })
+  lb.addEventListener('touchend', e => {
+    if (touchStartX === null) return
+    const dx = e.changedTouches[0].clientX - touchStartX
+    touchStartX = null
+    if (Math.abs(dx) < 35) return
+    if (dx < 0) showPhoto(current + 1)
+    else showPhoto(current - 1)
+  })
+
+  // ── Sticky header on scroll ──
+  const stickyBar = document.getElementById('stickyBar')
+  const hero = document.getElementById('hero')
+  window.addEventListener('scroll', () => {
+    const heroBottom = hero.getBoundingClientRect().bottom
+    stickyBar.classList.toggle('visible', heroBottom < 0)
+  }, { passive: true })
+
+  // ── Theme toggle ──
+  function toggleTheme() {
+    const html = document.documentElement
+    const isDark = html.getAttribute('data-theme') === 'dark'
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark')
+    document.getElementById('themeToggle').textContent = isDark ? 'Night' : 'Day'
+  }
+
+  // ── Copy link ──
+  function copyLink() {
+    const btn = document.getElementById('copyBtn')
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      btn.textContent = '✓ Copied!'
+      btn.classList.add('copied')
+      setTimeout(() => {
+        btn.innerHTML = '<span>&#128279;</span> Copy Link'
+        btn.classList.remove('copied')
+      }, 2200)
+    }).catch(() => {
+      // fallback
+      const ta = document.createElement('textarea')
+      ta.value = window.location.href
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      document.body.removeChild(ta)
+      btn.textContent = '✓ Copied!'
+      btn.classList.add('copied')
+      setTimeout(() => {
+        btn.innerHTML = '<span>&#128279;</span> Copy Link'
+        btn.classList.remove('copied')
+      }, 2200)
+    })
+  }
+</script>
+</body>
+</html>

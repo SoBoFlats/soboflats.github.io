@@ -1,0 +1,15 @@
+# Only HTML pages, active.json, and index.html belong here.
+# Everything else stays on your laptop.
+*.py
+*.js
+*.bat
+*.json
+!active.json
+*.log
+node_modules/
+sessions/
+credentials/
+temp_photos/
+media_cache.json
+catalog_data.json
+config.json
