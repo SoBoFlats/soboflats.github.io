@@ -119,7 +119,7 @@
     /* Lightbox */
     .lightbox{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.93);align-items:center;justify-content:center;max-width:430px;margin:0 auto}
     .lightbox.open{display:flex}
-    .lightbox img{max-width:90%;max-height:82vh;border-radius:10px;object-fit:contain;pointer-events:none;user-select:none}
+    .lightbox img{max-width:90%;max-height:82vh;border-radius:10px;object-fit:contain;user-select:none;transform-origin:center center;touch-action:none}
     .lb-close{position:absolute;top:16px;right:16px;font-size:18px;color:rgba(255,255,255,.80);cursor:pointer;background:rgba(255,255,255,.12);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;z-index:102;border:1px solid rgba(255,255,255,.18)}
     .lb-zone{position:absolute;top:0;bottom:0;width:42%;display:flex;align-items:center;z-index:101;cursor:pointer}
     .lb-zone-prev{left:0;justify-content:flex-start;padding-left:10px}.lb-zone-next{right:0;justify-content:flex-end;padding-right:10px}
@@ -204,7 +204,7 @@
     <div class="sub-tag-row">
       <span class="sub-tag">3.5 bhk</span>
       <span class="sub-tag">1800 carpet</span>
-      <span class="sub-tag gold">From June, Veg only, 12 months Rent together</span>
+      <span class="sub-tag gold">Veg Family only, 12 months Rent together</span>
     </div>
   </div>
 
@@ -218,7 +218,7 @@
         <span class="price-deposit">Deposit: 4 months</span>
       </div>
       <div class="price-right">
-        <span class="avail-pill">Immediately Available</span>
+        <span class="avail-pill">From June</span>
         <span class="rera-badge">&#10003; RERA Approved Society</span>
       </div>
     </div>
@@ -286,7 +286,7 @@
         <span class="chip">Gated community with Amenities</span>
         <span class="chip">Jain Derasar</span>
         <span class="chip">Main Road Touch</span>
-        <span class="chip gold">From June, Veg only, 12 months Rent together</span>
+        <span class="chip gold">Veg Family only, 12 months Rent together</span>
       </div>
     </div>
 
@@ -356,7 +356,7 @@
         <div class="l-text"><div class="l-name">Virtual Tour</div><div class="l-sub">Watch video walkthrough</div></div>
         <div class="l-arrow">›</div>
       </a>
-      <a class="link-row" href="https://maps.app.goo.gl/x6B9ZvT8wvVHa6tJ6" target="_blank" rel="noopener">
+      <a class="link-row" href="https://maps.app.goo.gl/991YYsMo48g2Bx7K8?g_st=ac" target="_blank" rel="noopener">
         <div class="l-icon li-blue">&#128205;</div>
         <div class="l-text"><div class="l-name">Location</div><div class="l-sub">Open in Google Maps</div></div>
         <div class="l-arrow">›</div>
@@ -395,7 +395,7 @@
         allowfullscreen></iframe>
     </div>
   </div>
-<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Monte South, T1</div><iframe class="map-iframe" src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&location=18.9733444,72.8319508&heading=210&pitch=10&fov=80&source=outdoor" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Monte South, T1</div><iframe class="map-iframe" src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&location=18.9732475,72.8325729&heading=210&pitch=10&fov=80&source=outdoor" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 
 <!-- Download Photos Modal -->
 <div id="dlModal" class="modal-overlay" onclick="if(event.target===this)closeModal('dlModal')">
@@ -468,20 +468,57 @@
   let current = 0, allListings = [], activeBucket = '__all__';
 
   // Lightbox
+  let lbScale=1,lbTx=0,lbTy=0;
+  const lbImg=document.getElementById('lbImg');
+  function lbApply(){lbImg.style.transform=`scale(${lbScale}) translate(${lbTx/lbScale}px,${lbTy/lbScale}px)`;}
+  function lbReset(){lbScale=1;lbTx=0;lbTy=0;lbApply();}
   function setPhoto(i) {
-    document.getElementById('lbImg').src = photos[i];
+    lbReset();
+    lbImg.src = photos[i];
     document.getElementById('lbCounter').textContent = (i+1)+' / '+photos.length;
   }
   function openLightbox(i) { current=i; setPhoto(i); document.getElementById('lightbox').classList.add('open'); }
-  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  function closeLightbox() { lbReset(); document.getElementById('lightbox').classList.remove('open'); }
   function showPhoto(i) { current=Math.max(0,Math.min(i,photos.length-1)); setPhoto(current); }
   document.getElementById('lbClose').addEventListener('click',e=>{e.stopPropagation();closeLightbox();});
   document.getElementById('lbPrev').addEventListener('click',e=>{e.stopPropagation();showPhoto(current-1);});
   document.getElementById('lbNext').addEventListener('click',e=>{e.stopPropagation();showPhoto(current+1);});
-  document.getElementById('lightbox').addEventListener('click',e=>{ if(e.target===document.getElementById('lightbox')||e.target===document.getElementById('lbImg'))closeLightbox(); });
-  let tsx=null;
-  document.getElementById('lightbox').addEventListener('touchstart',e=>{tsx=e.touches[0].clientX;},{passive:true});
-  document.getElementById('lightbox').addEventListener('touchend',e=>{if(tsx===null)return;const dx=e.changedTouches[0].clientX-tsx;tsx=null;if(Math.abs(dx)<35)return;dx<0?showPhoto(current+1):showPhoto(current-1);});
+  // Close only when tapping the dark background (not the image)
+  document.getElementById('lightbox').addEventListener('click',e=>{ if(e.target===document.getElementById('lightbox'))closeLightbox(); });
+  // Double-tap image to toggle zoom
+  let lbLastTap=0;
+  lbImg.addEventListener('click',e=>{
+    const now=Date.now();
+    if(now-lbLastTap<300){ lbScale>1?lbReset():(()=>{lbScale=2.5;lbApply();})(); }
+    lbLastTap=now;
+  });
+  // Pinch-to-zoom + pan + swipe
+  let tsx=null,lbPinchDist=null,lbPinchScale=1,lbPanStart=null;
+  function pinchDist(t){return Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);}
+  document.getElementById('lightbox').addEventListener('touchstart',e=>{
+    if(e.touches.length===2){
+      lbPinchDist=pinchDist(e.touches);lbPinchScale=lbScale;lbPanStart=null;tsx=null;
+    }else if(e.touches.length===1){
+      if(lbScale>1){lbPanStart={x:e.touches[0].clientX-lbTx,y:e.touches[0].clientY-lbTy};tsx=null;}
+      else{tsx=e.touches[0].clientX;lbPanStart=null;}
+    }
+  },{passive:true});
+  document.getElementById('lightbox').addEventListener('touchmove',e=>{
+    if(e.touches.length===2&&lbPinchDist!==null){
+      lbScale=Math.min(5,Math.max(1,lbPinchScale*pinchDist(e.touches)/lbPinchDist));
+      if(lbScale<=1){lbTx=0;lbTy=0;}lbApply();e.preventDefault();
+    }else if(e.touches.length===1&&lbPanStart&&lbScale>1){
+      lbTx=e.touches[0].clientX-lbPanStart.x;lbTy=e.touches[0].clientY-lbPanStart.y;lbApply();e.preventDefault();
+    }
+  },{passive:false});
+  document.getElementById('lightbox').addEventListener('touchend',e=>{
+    if(e.touches.length<2){lbPinchDist=null;if(lbScale<1.05)lbReset();}
+    if(e.touches.length===0){
+      lbPanStart=null;
+      if(lbScale<=1&&tsx!==null){const dx=e.changedTouches[0].clientX-tsx;tsx=null;if(Math.abs(dx)>=35){dx<0?showPhoto(current+1):showPhoto(current-1);}}
+      else{tsx=null;}
+    }
+  },{passive:true});
 
   // Sticky header
   const sBar=document.getElementById('stickyBar'),hero=document.getElementById('hero');
