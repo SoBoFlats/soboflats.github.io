@@ -3,716 +3,207 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Piramal Aranya · 3 BHK · For Rent</title>
+  <title>Piramal Aranya, Arav · 3 bhk · For Rent</title>
   <style>
-    /* ── Theme variables ── */
     :root {
-      --body-bg: #0a1a17;
-      --overlay: linear-gradient(to bottom,
-        rgba(5,20,17,0.18) 0%,
-        rgba(5,20,17,0.40) 32%,
-        rgba(5,20,17,0.84) 66%,
-        rgba(5,20,17,0.97) 100%);
-      --card-bg: rgba(255,255,255,0.07);
-      --card-border: rgba(255,255,255,0.13);
-      --text-primary: #fff;
-      --text-secondary: rgba(255,255,255,0.82);
-      --text-muted: rgba(255,255,255,0.45);
-      --text-label: rgba(255,255,255,0.32);
-      --chip-bg: rgba(255,255,255,0.08);
-      --chip-border: rgba(255,255,255,0.12);
-      --chip-color: rgba(255,255,255,0.82);
-      --divider: rgba(255,255,255,0.09);
-      --tag-bg: rgba(255,255,255,0.14);
-      --tag-border: rgba(255,255,255,0.25);
-      --tag-color: rgba(255,255,255,0.92);
-      --sub-tag-bg: rgba(255,255,255,0.13);
-      --sub-tag-border: rgba(255,255,255,0.28);
-      --link-border: rgba(255,255,255,0.07);
-      --fade-right: rgba(10,26,23,0.58);
-      --toggle-bg: rgba(255,255,255,0.12);
-      --toggle-border: rgba(255,255,255,0.22);
-      --toggle-color: rgba(255,255,255,0.80);
-      --sticky-bg: rgba(5,20,17,0.88);
-      --sticky-border: rgba(255,255,255,0.08);
+      --body-bg:#0a1a17;--overlay:linear-gradient(to bottom,rgba(5,20,17,.18) 0%,rgba(5,20,17,.40) 32%,rgba(5,20,17,.84) 66%,rgba(5,20,17,.97) 100%);
+      --card-bg:rgba(255,255,255,.07);--card-border:rgba(255,255,255,.13);--text-primary:#fff;--text-secondary:rgba(255,255,255,.82);
+      --text-muted:rgba(255,255,255,.45);--text-label:rgba(255,255,255,.32);--chip-bg:rgba(255,255,255,.08);--chip-border:rgba(255,255,255,.12);
+      --chip-color:rgba(255,255,255,.82);--divider:rgba(255,255,255,.09);--tag-bg:rgba(255,255,255,.14);--tag-border:rgba(255,255,255,.25);
+      --tag-color:rgba(255,255,255,.92);--sub-tag-bg:rgba(255,255,255,.13);--sub-tag-border:rgba(255,255,255,.28);--link-border:rgba(255,255,255,.07);
+      --fade-right:rgba(10,26,23,.58);--toggle-bg:rgba(255,255,255,.12);--toggle-border:rgba(255,255,255,.22);--toggle-color:rgba(255,255,255,.80);
+      --sticky-bg:rgba(5,20,17,.88);--sticky-border:rgba(255,255,255,.08);
     }
-
     [data-theme="light"] {
-      --body-bg: #f0ece3;
-      --overlay: linear-gradient(to bottom,
-        rgba(240,236,227,0.10) 0%,
-        rgba(240,236,227,0.32) 32%,
-        rgba(240,236,227,0.90) 66%,
-        rgba(240,236,227,0.98) 100%);
-      --card-bg: rgba(255,255,251,0.82);
-      --card-border: rgba(0,0,0,0.09);
-      --text-primary: #111;
-      --text-secondary: rgba(20,20,20,0.85);
-      --text-muted: rgba(20,20,20,0.50);
-      --text-label: rgba(20,20,20,0.40);
-      --chip-bg: rgba(0,0,0,0.06);
-      --chip-border: rgba(0,0,0,0.11);
-      --chip-color: rgba(20,20,20,0.82);
-      --divider: rgba(0,0,0,0.08);
-      --tag-bg: rgba(0,0,0,0.08);
-      --tag-border: rgba(0,0,0,0.18);
-      --tag-color: rgba(20,20,20,0.88);
-      --sub-tag-bg: rgba(0,0,0,0.07);
-      --sub-tag-border: rgba(0,0,0,0.15);
-      --link-border: rgba(0,0,0,0.07);
-      --fade-right: rgba(240,236,227,0.62);
-      --toggle-bg: rgba(0,0,0,0.08);
-      --toggle-border: rgba(0,0,0,0.18);
-      --toggle-color: rgba(20,20,20,0.70);
-      --sticky-bg: rgba(240,236,227,0.92);
-      --sticky-border: rgba(0,0,0,0.08);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--body-bg);
-      min-height: 100vh;
-      max-width: 430px;
-      margin: 0 auto;
-    }
-
-    /* ── Background ── */
-    .bg {
-      position: fixed;
-      inset: 0;
-      max-width: 430px;
-      margin: 0 auto;
-      background: url('https://www.piramalrealty.com/images/aranya-day-elevetion-01.jpg')
-                  center top / cover no-repeat;
-      z-index: 0;
-    }
-    .bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--overlay);
-      transition: background 0.35s;
-    }
-
-    .scroll {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ── Sticky mini header (shows on scroll) ── */
-    .sticky-bar {
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100%);
-      width: 100%;
-      max-width: 430px;
-      z-index: 60;
-      background: var(--sticky-bg);
-      border-bottom: 1px solid var(--sticky-border);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 11px 18px 10px;
-      transition: transform 0.25s ease;
-    }
-    .sticky-bar.visible { transform: translateX(-50%) translateY(0); }
-    .sticky-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.2px;
-    }
-    .sticky-price {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--text-primary);
-    }
-
-    /* ── Theme toggle ── */
-    .toggle-anchor {
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 430px;
-      height: 0;
-      z-index: 50;
-      pointer-events: none;
-    }
-    .theme-toggle {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      pointer-events: all;
-      background: var(--toggle-bg);
-      border: 1px solid var(--toggle-border);
-      border-radius: 20px;
-      padding: 7px 16px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.4px;
-      color: var(--toggle-color);
-      cursor: pointer;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      transition: background 0.2s, color 0.2s;
-    }
-
-    /* ═══ HERO ═══ */
-    .hero { padding: 52px 18px 24px; }
-
-    .tag-row {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-    .tag {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 20px;
-      color: var(--tag-color);
-      background: var(--tag-bg);
-      border: 1px solid var(--tag-border);
-      backdrop-filter: blur(8px);
-    }
-    .tag.highlight {
-      color: #1a1000;
-      background: rgba(255,217,60,0.92);
-      border-color: rgba(200,165,0,0.55);
-    }
-
-    .hero-title {
-      font-size: 30px;
-      font-weight: 800;
-      color: var(--text-primary);
-      line-height: 1.15;
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
-    }
-
-    .sub-tag-row { display: flex; gap: 7px; flex-wrap: wrap; }
-    .sub-tag {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 5px 13px;
-      border-radius: 20px;
-      color: rgba(255,255,255,0.95);
-      background: var(--sub-tag-bg);
-      border: 1px solid var(--sub-tag-border);
-      backdrop-filter: blur(8px);
-    }
-    /* Dark: subtle gold glow. Light: solid yellow like "For Rent" */
-    .sub-tag.gold {
-      color: #ffd966;
-      background: rgba(255,217,102,0.14);
-      border-color: rgba(255,217,102,0.40);
-    }
-    [data-theme="light"] .sub-tag.gold {
-      color: #1a1000;
-      background: rgba(255,217,60,0.90);
-      border-color: rgba(200,165,0,0.55);
-    }
-
-    /* ═══ GLASS CARD ═══ */
-    .card {
-      margin: 0 12px 16px;
-      border-radius: 22px;
-      overflow: hidden;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-    }
-
-    /* ─── Price block ─── */
-    .price-block {
-      padding: 15px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--divider);
-    }
-    .price-left { display: flex; flex-direction: column; gap: 3px; }
-    .price-rent-row { display: flex; align-items: baseline; gap: 4px; }
-    .price-deposit { font-size: 11.5px; color: var(--text-muted); letter-spacing: 0.1px; }
-    .price-main {
-      font-size: 30px;
-      font-weight: 800;
-      color: var(--text-primary);
-      line-height: 1;
-      letter-spacing: -0.5px;
-    }
-    .price-suffix { font-size: 13px; color: var(--text-muted); }
-    .price-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
-
-    /* "Immediately Available" — neutral chip style, no colour */
-    .avail-pill {
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 20px;
-      letter-spacing: 0.3px;
-      white-space: nowrap;
-      color: var(--chip-color);
-      background: var(--chip-bg);
-      border: 1px solid var(--chip-border);
-    }
-    .rera-badge {
-      background: rgba(72,199,142,0.14);
-      border: 1px solid rgba(72,199,142,0.35);
-      color: #48c78e;
-      font-size: 9.5px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.4px;
-      white-space: nowrap;
-    }
-
-    /* ─── Photo strip ─── */
-    .photo-wrap { position: relative; }
-    .photo-wrap::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0; bottom: 10px;
-      width: 40px;
-      background: linear-gradient(to right, transparent, var(--fade-right));
-      pointer-events: none;
-    }
-
-    /* Photo count badge */
-    .photo-count {
-      position: absolute;
-      bottom: 20px;
-      right: 14px;
-      z-index: 2;
-      background: rgba(0,0,0,0.55);
-      color: rgba(255,255,255,0.85);
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 20px;
-      letter-spacing: 0.3px;
-      pointer-events: none;
-      backdrop-filter: blur(6px);
-    }
-
-    /* Swipe hint */
-    .swipe-hint {
-      position: absolute;
-      bottom: 20px;
-      left: 18px;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      background: rgba(0,0,0,0.45);
-      color: rgba(255,255,255,0.75);
-      font-size: 10px;
-      font-weight: 600;
-      padding: 3px 10px 3px 8px;
-      border-radius: 20px;
-      pointer-events: none;
-      backdrop-filter: blur(6px);
-      animation: hintFade 3.5s ease forwards;
-    }
-    .swipe-hint-arrow {
-      font-size: 13px;
-      animation: hintSlide 1.2s ease-in-out infinite;
-    }
-    @keyframes hintFade {
-      0%   { opacity: 0; }
-      15%  { opacity: 1; }
-      70%  { opacity: 1; }
-      100% { opacity: 0; pointer-events: none; }
-    }
-    @keyframes hintSlide {
-      0%,100% { transform: translateX(0); }
-      50%     { transform: translateX(4px); }
-    }
-
-    .photo-strip {
-      overflow-x: auto;
-      display: flex;
-      gap: 8px;
-      padding: 14px 14px 38px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .photo-strip::-webkit-scrollbar { display: none; }
-
-    .photo-thumb {
-      flex-shrink: 0;
-      width: 180px;
-      height: 265px;
-      border-radius: 12px;
-      object-fit: cover;
-      scroll-snap-align: start;
-      cursor: pointer;
-      transition: transform 0.15s;
-      border: 1px solid var(--chip-border);
-    }
-    .photo-thumb:active { transform: scale(0.96); }
-
-    .video-thumb-wrap {
-      position: relative;
-      flex-shrink: 0;
-      width: 180px;
-      height: 265px;
-      scroll-snap-align: start;
-      cursor: pointer;
-    }
-    .video-thumb-wrap .photo-thumb {
-      width: 100%;
-      height: 100%;
-      scroll-snap-align: unset;
-    }
-    .video-thumb-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 12px;
-      background: rgba(0,0,0,0.28);
-      pointer-events: none;
-    }
-    .play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.92);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.38);
-    }
-    .play-btn::after {
-      content: '';
-      display: block;
-      width: 0;
-      height: 0;
-      border-top: 11px solid transparent;
-      border-bottom: 11px solid transparent;
-      border-left: 18px solid #1a1000;
-      margin-left: 3px;
-    }
-
-    .album-sep {
-      flex-shrink: 0;
-      align-self: center;
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--text-label);
-      padding: 6px 2px;
-    }
-    .album-sep:first-child { display: none; }
-
-    /* ─── Details ─── */
-    .details {
-      padding: 16px 18px;
-      border-top: 1px solid var(--divider);
-      border-bottom: 1px solid var(--divider);
-    }
-    .sec-label {
-      font-size: 9.5px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text-label);
-      margin-bottom: 12px;
-    }
-    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
-    .chip {
-      font-size: 12px;
-      color: var(--chip-color);
-      background: var(--chip-bg);
-      border: 1px solid var(--chip-border);
-      border-radius: 8px;
-      padding: 6px 11px;
-    }
-    /* Dark: soft gold glow; Light: solid yellow like For Rent tag */
-    .chip.gold {
-      color: #ffd966;
-      background: rgba(255,217,102,0.14);
-      border-color: rgba(255,217,102,0.40);
-    }
-    .terms-list {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-    .terms-list li {
-      font-size: 12px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-      padding-left: 14px;
-      position: relative;
-    }
-    .terms-list li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: var(--text-muted);
-    }
-    .chip.incl {
-      color: #48c78e;
-      background: rgba(72,199,142,0.10);
-      border-color: rgba(72,199,142,0.25);
-    }
-    [data-theme="light"] .chip.incl {
-      color: #1a6640;
-      background: rgba(72,199,142,0.15);
-      border-color: rgba(72,199,142,0.32);
-    }
-    .chip.excl {
-      color: rgba(255,130,110,0.90);
-      background: rgba(255,100,80,0.08);
-      border-color: rgba(255,100,80,0.22);
-    }
-    [data-theme="light"] .chip.excl {
-      color: #9a2010;
-      background: rgba(220,80,60,0.09);
-      border-color: rgba(220,80,60,0.22);
-    }
-    [data-theme="light"] .chip.gold {
-      color: #1a1000;
-      background: rgba(255,217,60,0.90);
-      border-color: rgba(200,165,0,0.55);
-    }
-
-    /* ─── Links ─── */
-    .links { padding: 16px 18px 4px; border-bottom: 1px solid var(--divider); }
-    .link-row {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 12px 0;
-      text-decoration: none;
-      border-bottom: 1px solid var(--link-border);
-    }
-    .link-row:last-child { border-bottom: none; }
-    .link-row:first-of-type { padding-top: 0; }
-    .l-icon {
-      width: 38px; height: 38px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 17px; flex-shrink: 0;
-    }
-    .li-green  { background: rgba(72,199,142,0.18); }
-    .li-orange { background: rgba(255,167,38,0.18); }
-    .li-pink   { background: rgba(240,98,146,0.18); }
-    .li-blue   { background: rgba(66,165,245,0.18); }
-    .l-text { flex: 1; }
-    .l-name { font-size: 13.5px; font-weight: 600; color: var(--text-primary); }
-    .l-sub  { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
-    .l-arrow { font-size: 16px; color: rgba(255,255,255,0.22); }
-
-    /* ─── Copy link row ─── */
-    .copy-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 18px;
-    }
-    .copy-label {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-    .copy-btn {
-      background: var(--chip-bg);
-      border: 1px solid var(--chip-border);
-      border-radius: 20px;
-      padding: 7px 16px;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.15s;
-      letter-spacing: 0.2px;
-    }
-    .copy-btn:active { background: rgba(72,199,142,0.14); }
-    .copy-btn.copied { color: #48c78e; border-color: rgba(72,199,142,0.35); }
-
-    /* ─── YouTube video card (bottom) ─── */
-    .video-card {
-      margin: 0 12px 32px;
-      border-radius: 22px;
-      overflow: hidden;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-    }
-    .video-label {
-      padding: 14px 18px 10px;
-      font-size: 9.5px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text-label);
-    }
-    .video-section {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-    }
-    .video-section iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: none;
-    }
-
-    /* ═══ LIGHTBOX ═══ */
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: rgba(0,0,0,0.93);
-      align-items: center;
-      justify-content: center;
-      max-width: 430px;
-      margin: 0 auto;
-    }
-    .lightbox.open { display: flex; }
-    .lightbox img {
-      max-width: 90%;
-      max-height: 82vh;
-      border-radius: 10px;
-      object-fit: contain;
-      pointer-events: none;
-      user-select: none;
-    }
-    .lb-close {
-      position: absolute;
-      top: 16px; right: 16px;
-      font-size: 18px;
-      color: rgba(255,255,255,0.80);
-      cursor: pointer;
-      background: rgba(255,255,255,0.12);
-      border-radius: 50%;
-      width: 38px; height: 38px;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 102;
-      border: 1px solid rgba(255,255,255,0.18);
-    }
-    .lb-zone {
-      position: absolute;
-      top: 0; bottom: 0; width: 42%;
-      display: flex; align-items: center;
-      z-index: 101; cursor: pointer;
-    }
-    .lb-zone-prev { left: 0; justify-content: flex-start; padding-left: 10px; }
-    .lb-zone-next { right: 0; justify-content: flex-end; padding-right: 10px; }
-    .lb-arrow {
-      width: 36px; height: 36px;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 50%;
-      font-size: 20px; font-weight: 300;
-      color: rgba(255,255,255,0.60);
-      transition: background 0.12s, color 0.12s;
-    }
-    .lb-zone:active .lb-arrow { background: rgba(255,255,255,0.22); color: #fff; }
-    .lb-counter {
-      position: absolute;
-      bottom: 22px; left: 50%;
-      transform: translateX(-50%);
-      font-size: 12px;
-      color: rgba(255,255,255,0.45);
-      pointer-events: none;
-      white-space: nowrap;
-    }
-    #lbVideo {
-      display: none;
-      max-width: 92%;
-      max-height: 82vh;
-      border-radius: 10px;
-      outline: none;
-      background: #000;
-    }
-    .lb-gp-link {
-      display: none;
-      position: absolute;
-      bottom: 52px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255,255,255,0.13);
-      border: 1px solid rgba(255,255,255,0.22);
-      color: rgba(255,255,255,0.80);
-      padding: 8px 20px;
-      border-radius: 20px;
-      font-size: 13px;
-      text-decoration: none;
-      white-space: nowrap;
-      z-index: 103;
-    }
+      --body-bg:#f0ece3;--overlay:linear-gradient(to bottom,rgba(240,236,227,.10) 0%,rgba(240,236,227,.32) 32%,rgba(240,236,227,.90) 66%,rgba(240,236,227,.98) 100%);
+      --card-bg:rgba(255,255,251,.82);--card-border:rgba(0,0,0,.09);--text-primary:#111;--text-secondary:rgba(20,20,20,.85);
+      --text-muted:rgba(20,20,20,.50);--text-label:rgba(20,20,20,.40);--chip-bg:rgba(0,0,0,.06);--chip-border:rgba(0,0,0,.11);
+      --chip-color:rgba(20,20,20,.82);--divider:rgba(0,0,0,.08);--tag-bg:rgba(0,0,0,.08);--tag-border:rgba(0,0,0,.18);
+      --tag-color:rgba(20,20,20,.88);--sub-tag-bg:rgba(0,0,0,.07);--sub-tag-border:rgba(0,0,0,.15);--link-border:rgba(0,0,0,.07);
+      --fade-right:rgba(240,236,227,.62);--toggle-bg:rgba(0,0,0,.08);--toggle-border:rgba(0,0,0,.18);--toggle-color:rgba(20,20,20,.70);
+      --sticky-bg:rgba(240,236,227,.92);--sticky-border:rgba(0,0,0,.08);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--body-bg);min-height:100vh;max-width:430px;margin:0 auto}
+    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('https://lh3.googleusercontent.com/pw/AP1GczOvW6FdTB2j2o0ZDPBoeR-EXb89fEoECSEI1rnYrK7QLdm9teA4vv7Jiys_7C1Jvwk3Bdcvzhq0NX2pHMEVI1IPreo6J5Vp5bM_mu9oaleGwYNMvHHb=w1600') center top/cover no-repeat;z-index:0;overflow:hidden}
+    .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s;pointer-events:none;z-index:1}
+    .scroll{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+    .sticky-bar{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:430px;z-index:60;background:var(--sticky-bg);border-bottom:1px solid var(--sticky-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:11px 18px 10px;transition:transform .25s ease}
+    .sticky-bar.visible{transform:translateX(-50%) translateY(0)}
+    .sticky-title{font-size:13px;font-weight:700;color:var(--text-primary);letter-spacing:-.2px}
+    .sticky-price{font-size:13px;font-weight:800;color:var(--text-primary)}
+    #browseBtn{position:fixed;bottom:24px;right:16px;z-index:90;background:rgba(72,199,142,.92);border:none;border-radius:24px;padding:13px 20px;font-size:13px;font-weight:700;color:#0a1a17;cursor:pointer;box-shadow:0 4px 20px rgba(72,199,142,.35);backdrop-filter:blur(8px);letter-spacing:.2px;transition:opacity .2s,transform .2s}
+    #browseBtn.hidden{opacity:0;pointer-events:none;transform:translateY(8px)}
+    .toggle-anchor{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:0;z-index:50;pointer-events:none}
+    .theme-toggle{position:absolute;top:14px;right:14px;pointer-events:all;background:var(--toggle-bg);border:1px solid var(--toggle-border);border-radius:20px;padding:7px 16px;font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--toggle-color);cursor:pointer;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .2s,color .2s}
+    .hero{padding:52px 18px 24px}
+    .tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+    .tag{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:5px 12px;border-radius:20px;color:var(--tag-color);background:var(--tag-bg);border:1px solid var(--tag-border);backdrop-filter:blur(8px)}
+    .tag.highlight{color:#1a1000;background:rgba(255,217,60,.92);border-color:rgba(200,165,0,.55)}
+    .tag.gold{color:#ffd966;background:rgba(255,217,102,.14);border-color:rgba(255,217,102,.40)}
+    [data-theme="light"] .tag.gold{color:#7a5800;background:rgba(255,217,60,.22);border-color:rgba(200,165,0,.45)}
+    .hero-title{font-size:30px;font-weight:800;color:var(--text-primary);line-height:1.15;letter-spacing:-.5px;margin-bottom:12px}
+    .sub-tag-row{display:flex;gap:7px;flex-wrap:wrap}
+    .sub-tag{font-size:11px;font-weight:600;padding:5px 13px;border-radius:20px;color:rgba(255,255,255,.95);background:var(--sub-tag-bg);border:1px solid var(--sub-tag-border);backdrop-filter:blur(8px)}
+    .sub-tag.gold{color:#ffd966;background:rgba(255,217,102,.14);border-color:rgba(255,217,102,.40)}
+    [data-theme="light"] .sub-tag.gold{color:#1a1000;background:rgba(255,217,60,.90);border-color:rgba(200,165,0,.55)}
+    .card{margin:0 12px 16px;border-radius:22px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+    .price-block{padding:15px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--divider)}
+    .price-left{display:flex;flex-direction:column;gap:3px}
+    .price-rent-row{display:flex;align-items:baseline;gap:4px}
+    .price-deposit{font-size:11.5px;color:var(--text-muted);letter-spacing:.1px}
+    .price-main{font-size:30px;font-weight:800;color:var(--text-primary);line-height:1;letter-spacing:-.5px}
+    .price-suffix{font-size:13px;color:var(--text-muted)}
+    .price-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+    .avail-pill{font-size:10.5px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:.3px;white-space:nowrap;color:var(--chip-color);background:var(--chip-bg);border:1px solid var(--chip-border)}
+    .rera-badge{background:rgba(72,199,142,.14);border:1px solid rgba(72,199,142,.35);color:#48c78e;font-size:9.5px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.4px;white-space:nowrap}
+    .photos-coming-soon{height:265px;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text-muted);font-weight:600;letter-spacing:.2px;padding:20px;flex-direction:column;gap:8px}
+    .photo-wrap{position:relative}
+    .photo-wrap::after{content:'';position:absolute;top:0;right:0;bottom:48px;width:40px;background:linear-gradient(to right,transparent,var(--fade-right));pointer-events:none}
+    .photo-count{position:absolute;bottom:56px;right:14px;z-index:2;background:rgba(0,0,0,.55);color:rgba(255,255,255,.85);font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.3px;pointer-events:none;backdrop-filter:blur(6px)}
+    .swipe-hint{position:absolute;bottom:56px;left:18px;z-index:2;display:flex;align-items:center;gap:4px;background:rgba(0,0,0,.45);color:rgba(255,255,255,.75);font-size:10px;font-weight:600;padding:3px 10px 3px 8px;border-radius:20px;pointer-events:none;backdrop-filter:blur(6px);animation:hintFade 3.5s ease forwards}
+    .swipe-hint-arrow{font-size:13px;animation:hintSlide 1.2s ease-in-out infinite}
+    @keyframes hintFade{0%{opacity:0}15%{opacity:1}70%{opacity:1}100%{opacity:0;pointer-events:none}}
+    @keyframes hintSlide{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+    .photo-strip{overflow-x:auto;display:flex;gap:8px;padding:14px 14px 10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .photo-strip::-webkit-scrollbar{display:none}
+    .photo-thumb{flex-shrink:0;width:180px;height:265px;border-radius:12px;object-fit:cover;scroll-snap-align:start;cursor:pointer;transition:transform .15s;border:1px solid var(--chip-border)}
+    .photo-thumb:active{transform:scale(.96)}
+    .album-sep{flex-shrink:0;align-self:center;writing-mode:vertical-rl;transform:rotate(180deg);font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-label);padding:6px 2px}
+    .album-sep:first-child{display:none}
+    .details{padding:16px 18px;border-top:1px solid var(--divider);border-bottom:1px solid var(--divider)}
+    .sec-label{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label);margin-bottom:12px}
+    .chips{display:flex;flex-wrap:wrap;gap:7px}
+    .chip{font-size:12px;color:var(--chip-color);background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:8px;padding:6px 11px}
+    .chip.gold{color:#ffd966;background:rgba(255,217,102,.14);border-color:rgba(255,217,102,.40)}
+    .chip.incl{color:#48c78e;background:rgba(72,199,142,.10);border-color:rgba(72,199,142,.25)}
+    .chip.excl{color:rgba(255,130,110,.90);background:rgba(255,100,80,.08);border-color:rgba(255,100,80,.22)}
+    [data-theme="light"] .chip.gold{color:#1a1000;background:rgba(255,217,60,.90);border-color:rgba(200,165,0,.55)}
+    [data-theme="light"] .chip.incl{color:#1a6640;background:rgba(72,199,142,.15);border-color:rgba(72,199,142,.32)}
+    [data-theme="light"] .chip.excl{color:#9a2010;background:rgba(220,80,60,.09);border-color:rgba(220,80,60,.22)}
+    .terms-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:9px}
+    .terms-list li{font-size:12px;color:var(--text-secondary);line-height:1.5;padding-left:14px;position:relative}
+    .terms-list li::before{content:'•';position:absolute;left:0;color:var(--text-muted)}
+    .links{padding:16px 18px 4px;border-bottom:1px solid var(--divider)}
+    .link-row{display:flex;align-items:center;gap:13px;padding:12px 0;text-decoration:none;border-bottom:1px solid var(--link-border)}
+    .link-row:last-child{border-bottom:none}
+    .link-row:first-of-type{padding-top:0}
+    .l-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+    .li-green{background:rgba(72,199,142,.18)}.li-orange{background:rgba(255,167,38,.18)}.li-pink{background:rgba(240,98,146,.18)}.li-blue{background:rgba(66,165,245,.18)}
+    .l-text{flex:1}.l-name{font-size:13.5px;font-weight:600;color:var(--text-primary)}.l-sub{font-size:11px;color:var(--text-muted);margin-top:1px}
+    .l-arrow{font-size:16px;color:rgba(255,255,255,.22)}
+    .map-embed-wrap{border-top:1px solid var(--divider);overflow:hidden}
+    .map-iframe{display:block;width:100%;height:220px;border:none}
+    .share-section{padding:14px 18px 18px;border-top:1px solid var(--divider)}
+    .share-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+    .share-btn{padding:11px 6px;border:1px solid var(--chip-border);border-radius:12px;background:var(--chip-bg);color:var(--chip-color);font-size:11.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;transition:background .15s}
+    .share-btn:active{background:rgba(72,199,142,.14)}.share-btn.copied{color:#48c78e;border-color:rgba(72,199,142,.35)}
+    .share-btn.green{background:rgba(72,199,142,.12);border-color:rgba(72,199,142,.30);color:#48c78e}
+    .share-btn.green:active{background:rgba(72,199,142,.22)}
+    .video-card{margin:0 12px 32px;border-radius:22px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+    .video-label{padding:14px 18px 10px;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label)}
+    .video-section{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
+    .video-section iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+    video.photo-thumb{object-fit:cover;background:#000}
+    /* CP Footer (screenshot only) */
+    #cpFooter{display:none;background:linear-gradient(135deg,#0d2118,#081510);border-top:2px solid rgba(72,199,142,.5);padding:14px 18px;margin:0 12px;border-radius:0 0 22px 22px}
+    .cp-inner{display:flex;align-items:center;justify-content:space-between}
+    .cp-fname{font-size:14px;font-weight:700;color:#fff}
+    .cp-fphone{font-size:12px;color:#48c78e;margin-top:2px}
+    .cp-company{font-size:13px;color:rgba(255,255,255,.65);text-align:right;max-width:140px;font-weight:500}
+    /* Lightbox */
+    .lightbox{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.93);align-items:center;justify-content:center;max-width:430px;margin:0 auto}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:90%;max-height:82vh;border-radius:10px;object-fit:contain;pointer-events:none;user-select:none}
+    .lb-close{position:absolute;top:16px;right:16px;font-size:18px;color:rgba(255,255,255,.80);cursor:pointer;background:rgba(255,255,255,.12);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;z-index:102;border:1px solid rgba(255,255,255,.18)}
+    .lb-zone{position:absolute;top:0;bottom:0;width:42%;display:flex;align-items:center;z-index:101;cursor:pointer}
+    .lb-zone-prev{left:0;justify-content:flex-start;padding-left:10px}.lb-zone-next{right:0;justify-content:flex-end;padding-right:10px}
+    .lb-arrow{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:50%;font-size:20px;font-weight:300;color:rgba(255,255,255,.60);transition:background .12s,color .12s}
+    .lb-zone:active .lb-arrow{background:rgba(255,255,255,.22);color:#fff}
+    .lb-counter{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:12px;color:rgba(255,255,255,.45);pointer-events:none;white-space:nowrap}
+    /* Not Available Banner */
+    #unavailBanner{display:none;position:fixed;inset:0;z-index:200;background:rgba(10,26,23,.97);align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:32px 24px;backdrop-filter:blur(12px)}
+    .unavail-icon{font-size:56px;margin-bottom:18px}
+    .unavail-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
+    .unavail-sub{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:28px;max-width:280px;line-height:1.6}
+    .unavail-btn{background:rgba(72,199,142,.18);border:1px solid rgba(72,199,142,.40);color:#48c78e;padding:13px 28px;border-radius:24px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:.2px}
+    /* Browse Drawer */
+    #browseOverlay{display:none;position:fixed;inset:0;z-index:91;background:rgba(0,0,0,.5)}
+    #browseDrawer{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:430px;height:78vh;z-index:92;background:#0d2118;border-top:1px solid rgba(255,255,255,.12);border-radius:22px 22px 0 0;transition:transform .32s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;overflow:hidden}
+    #browseDrawer.open{transform:translate(-50%,0)}
+    .drawer-handle{width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:14px auto 12px;flex-shrink:0}
+    .drawer-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;text-align:center;margin-bottom:14px;flex-shrink:0}
+    .tab-row{display:flex;gap:6px;padding:0 14px 12px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+    .tab-row::-webkit-scrollbar{display:none}
+    .tab-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
+    .tab-btn.active{background:rgba(72,199,142,.2);border-color:rgba(72,199,142,.4);color:#48c78e}
+    .listings-scroll{flex:1;overflow-y:auto;padding:0 14px 24px}
+    .listing-card{display:flex;gap:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:14px;text-decoration:none;cursor:pointer}
+    .listing-card.current{border-color:rgba(72,199,142,.35);background:rgba(72,199,142,.07)}
+    .listing-thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0;background:rgba(255,255,255,.1)}
+    .listing-info{flex:1;display:flex;flex-direction:column;justify-content:center;gap:3px}
+    .listing-name{font-size:13px;font-weight:700;color:#fff}
+    .listing-meta{font-size:11px;color:rgba(255,255,255,.5)}
+    .listing-rent{font-size:14px;font-weight:800;color:#48c78e}
+    .listing-current-tag{font-size:10px;color:rgba(72,199,142,.8);font-weight:600;margin-top:2px}
+    .no-listings{text-align:center;color:rgba(255,255,255,.35);font-size:13px;padding:32px 0}
+    /* Modals */
+    .modal-overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.65);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto}
+    .modal-sheet{background:#0d2118;border-radius:22px 22px 0 0;padding:14px 18px 32px;width:100%;border-top:1px solid rgba(255,255,255,.12)}
+    .modal-handle{width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:0 auto 16px}
+    .modal-title{font-size:14px;font-weight:700;color:#fff;text-align:center;margin-bottom:16px}
+    .modal-note{font-size:11px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:14px}
+    .modal-album-btn{width:100%;padding:13px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.06);color:#fff;font-size:13px;font-weight:600;cursor:pointer;text-align:left;margin-bottom:8px;display:block}
+    .modal-album-btn:active{background:rgba(72,199,142,.15)}
+    .utype-row{display:flex;gap:8px;margin-bottom:14px}
+    .utype-btn{flex:1;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
+    .utype-btn.active{background:rgba(72,199,142,.18);border-color:rgba(72,199,142,.40);color:#48c78e}
+    .cp-input{width:100%;padding:11px 14px;border:1px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(255,255,255,.07);color:#fff;font-size:13px;margin-bottom:8px;outline:none;display:block}
+    .cp-input::placeholder{color:rgba(255,255,255,.3)}
+    #cpForm{display:none;margin-bottom:4px}
+    .modal-dl-btn{width:100%;padding:13px;border-radius:16px;background:rgba(72,199,142,.2);border:1px solid rgba(72,199,142,.4);color:#48c78e;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;display:block}
+    .modal-dl-btn:active{background:rgba(72,199,142,.35)}
+    .modal-cancel{width:100%;padding:11px;border-radius:16px;background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:13px;cursor:pointer;display:block}
+    .modal-ask-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.75);text-align:center;margin-bottom:12px}
   </style>
 </head>
 <body>
 
-<!-- Sticky mini header -->
-<div class="sticky-bar" id="stickyBar">
-  <span class="sticky-title">Piramal Aranya · 3 BHK</span>
-  <span class="sticky-price">&#8377;1.95L / month</span>
+<div id="unavailBanner">
+  <div class="unavail-icon">&#127968;</div>
+  <div class="unavail-title">Not Currently Available</div>
+  <div class="unavail-sub">This property has been rented or is no longer listed.</div>
+  <button class="unavail-btn" onclick="openBrowse()">Browse Available Flats &#8594;</button>
 </div>
 
-<!-- Theme toggle -->
+<div class="sticky-bar" id="stickyBar">
+  <span class="sticky-title">Piramal Aranya, Arav · 3 bhk</span>
+  <span class="sticky-price">₹1.95L / month</span>
+</div>
+
 <div class="toggle-anchor">
   <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Day</button>
 </div>
 
 <div class="bg"></div>
 
+<div id="captureArea">
 <div class="scroll">
-
-  <!-- Hero -->
   <div class="hero" id="hero">
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
       <span class="tag">Byculla (E)</span>
+      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 257</span>
     </div>
-    <div class="hero-title">Piramal Aranya,<br>Arav</div>
+    <div class="hero-title">Piramal Aranya, Arav</div>
     <div class="sub-tag-row">
-      <span class="sub-tag">3 BHK</span>
+      <span class="sub-tag">3 bhk</span>
       <span class="sub-tag">1100 carpet</span>
       <span class="sub-tag gold">Everyone Welcome</span>
     </div>
   </div>
 
-  <!-- Main card -->
   <div class="card">
-
-    <!-- Price -->
     <div class="price-block">
       <div class="price-left">
         <div class="price-rent-row">
@@ -727,88 +218,80 @@
       </div>
     </div>
 
-    <!-- Photo strip — 15 flat + 30 amenity = 45 photos (freshly scraped) -->
     <div class="photo-wrap">
       <div class="photo-strip" id="photoStrip">
         <div class="album-sep">Flat Photos</div>
-        <div class="video-thumb-wrap" onclick="openLightbox(0)">
-          <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMklFxTMbjM_Wi-IbHLwNfWonnOuq24_FqAKYS7dy3RjWztUzTnWZBErs-TKLOL7RYqzzHWnUjH568GCMeyv47BzNTiqo5FGER1em6yaDSYGIFQ0D0Y=w1600" loading="lazy">
-          <div class="play-btn"></div>
-        </div>
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNQEdvHMEZiJKMm8WKtj55E-XI2rP8EyHo8-Rl4lr6EIBYPUgI1sJPY-pWWZWsq3SLUr-wgIFqXzvcfr-ae4P74UrXp4nEwuGOJSXDMByEFR8HWNO9M=w1600" onclick="openLightbox(1)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMew9ooQ9KpSumo0d8Cmu3jqlwaPa5ROOu2RLABgFALxsS8JFTqIds3B5_orNPpW44i_KAz66haH64w6CWqS5EAEQ8aBOESU3_xChEVqo_AqsbJ0zXF=w1600" onclick="openLightbox(2)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPqRSyUW1Ez92JVZDXN-LbUraO2J5hkBOWY8rNxRfxH2UBFQYf44DcDujRt91PYHj08qzD2o21-QWzlhM1GFRPVMFga0Ex-t_Uv48uWrRR8YOfNMx24=w1600" onclick="openLightbox(3)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMyzdpDL13FxQBAEkTOZOddvVuxD9eXQGU9Mszcg_JRVR6yWmrcDFXraUBtXPbnqhsZZ48Nz-fhWXxH5UIzg2DaRNAb3GroZhI-i4K0tmhTE36dJ_Nd=w1600" onclick="openLightbox(4)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczN6UeCN-3AijIbTyFkNeih7qdbADC3glSrL-63SbNvqy6ZmLZDyFZWXa8iPtdf2qIEEX3UNwiohBwGiXmHJ1UFzPYUpD8xUhgCtqLFR-f4-UE4uwEXv=w1600" onclick="openLightbox(5)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNX78Iaa06CcQJsPRdbjSTsN8pXFiCYwALA0I1XGo9cRQEt7ddpTwToKVLXw7PFYrpniJTCA_s1ydQxptmeO8FNQ5u--VH8o1ji4drogyfVl0FifAsk=w1600" onclick="openLightbox(6)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMhwNeKLt9Sw07iJPmOb_ORrzvP31z7PmeSurRZ4doWjUMDaTX7rRXQn5c7mAKgy_rV7y3KwiA3AdqTnNLxoVIIwnQYVXblCjEyFCU0faoXEMrL9UfS=w1600" onclick="openLightbox(7)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMP92qJOrt9o5BGQD1L7G8fQNsdBx6B-MWx2clEN3t2OBYk8PK3apzn0oKQkO44y2VtrtoWpTRyvrr_xaSRRghvTnj9hSMdJM9LxB2zYry5IeOoalIV=w1600" onclick="openLightbox(8)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMj9mAfvsbRziJEsPiKfXtvtCecmJ5Aq4qTE9p9F4jBvkc47cZc4cK_RiF_eim8C3zNj5jeDCh9eSY5dw1dNFxoTndD2qOGm65sVr3cgXPKLzKuq2Ez=w1600" onclick="openLightbox(9)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMz1zkkqbDuAtnfxzS4ZtAQQ4SYhatbgM8M9hJ5o8dQxTj35L7-yij1RnJFoOUfMAjGmfkVMMljMkqQ1LXVj_LmmvgNt0EUxn_6oWuc5vwh7GSZRDdJ=w1600" onclick="openLightbox(10)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczO7WdyRTSNaTXvbliEGmbkujOCp30XoI4WUR4SAlVlenHxuFP_AQCKJJQmH_tbJAidJGyXnE6KgHjJ1mB8BljXvai1Co0_GW684Z49w1K0-mTI4W3MP=w1600" onclick="openLightbox(11)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOvW6FdTB2j2o0ZDPBoeR-EXb89fEoECSEI1rnYrK7QLdm9teA4vv7Jiys_7C1Jvwk3Bdcvzhq0NX2pHMEVI1IPreo6J5Vp5bM_mu9oaleGwYNMvHHb=w1600" onclick="openLightbox(12)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOxxfAnqtJVXmdK1emKYKzpNZMgj4sQ6r-kDDsZe__Us8irRsEPUqgkcojQsAjM9ZnVxxZQ_GhHjeLFWyLufaby4N75KdgRwZlyzQn9v3L1ViwV1IgT=w1600" onclick="openLightbox(13)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMhloJJJkjT1ODC4JQYAzBV5ivsl0cyZe4-N3cvGJEdL4-fC2D77LdGKhUD6tPt_jl3Ytoow5PPozvceuFE1ujnj5UgWMlrDZrGjpW5dnPqF6PhW_p1=w1600" onclick="openLightbox(14)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOvW6FdTB2j2o0ZDPBoeR-EXb89fEoECSEI1rnYrK7QLdm9teA4vv7Jiys_7C1Jvwk3Bdcvzhq0NX2pHMEVI1IPreo6J5Vp5bM_mu9oaleGwYNMvHHb=w1600" onclick="openLightbox(0)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOxxfAnqtJVXmdK1emKYKzpNZMgj4sQ6r-kDDsZe__Us8irRsEPUqgkcojQsAjM9ZnVxxZQ_GhHjeLFWyLufaby4N75KdgRwZlyzQn9v3L1ViwV1IgT=w1600" onclick="openLightbox(1)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczO7WdyRTSNaTXvbliEGmbkujOCp30XoI4WUR4SAlVlenHxuFP_AQCKJJQmH_tbJAidJGyXnE6KgHjJ1mB8BljXvai1Co0_GW684Z49w1K0-mTI4W3MP=w1600" onclick="openLightbox(2)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNQEdvHMEZiJKMm8WKtj55E-XI2rP8EyHo8-Rl4lr6EIBYPUgI1sJPY-pWWZWsq3SLUr-wgIFqXzvcfr-ae4P74UrXp4nEwuGOJSXDMByEFR8HWNO9M=w1600" onclick="openLightbox(3)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMhloJJJkjT1ODC4JQYAzBV5ivsl0cyZe4-N3cvGJEdL4-fC2D77LdGKhUD6tPt_jl3Ytoow5PPozvceuFE1ujnj5UgWMlrDZrGjpW5dnPqF6PhW_p1=w1600" onclick="openLightbox(4)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMP92qJOrt9o5BGQD1L7G8fQNsdBx6B-MWx2clEN3t2OBYk8PK3apzn0oKQkO44y2VtrtoWpTRyvrr_xaSRRghvTnj9hSMdJM9LxB2zYry5IeOoalIV=w1600" onclick="openLightbox(5)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMhwNeKLt9Sw07iJPmOb_ORrzvP31z7PmeSurRZ4doWjUMDaTX7rRXQn5c7mAKgy_rV7y3KwiA3AdqTnNLxoVIIwnQYVXblCjEyFCU0faoXEMrL9UfS=w1600" onclick="openLightbox(6)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMyzdpDL13FxQBAEkTOZOddvVuxD9eXQGU9Mszcg_JRVR6yWmrcDFXraUBtXPbnqhsZZ48Nz-fhWXxH5UIzg2DaRNAb3GroZhI-i4K0tmhTE36dJ_Nd=w1600" onclick="openLightbox(7)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNX78Iaa06CcQJsPRdbjSTsN8pXFiCYwALA0I1XGo9cRQEt7ddpTwToKVLXw7PFYrpniJTCA_s1ydQxptmeO8FNQ5u--VH8o1ji4drogyfVl0FifAsk=w1600" onclick="openLightbox(8)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczN6UeCN-3AijIbTyFkNeih7qdbADC3glSrL-63SbNvqy6ZmLZDyFZWXa8iPtdf2qIEEX3UNwiohBwGiXmHJ1UFzPYUpD8xUhgCtqLFR-f4-UE4uwEXv=w1600" onclick="openLightbox(9)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMz1zkkqbDuAtnfxzS4ZtAQQ4SYhatbgM8M9hJ5o8dQxTj35L7-yij1RnJFoOUfMAjGmfkVMMljMkqQ1LXVj_LmmvgNt0EUxn_6oWuc5vwh7GSZRDdJ=w1600" onclick="openLightbox(10)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMj9mAfvsbRziJEsPiKfXtvtCecmJ5Aq4qTE9p9F4jBvkc47cZc4cK_RiF_eim8C3zNj5jeDCh9eSY5dw1dNFxoTndD2qOGm65sVr3cgXPKLzKuq2Ez=w1600" onclick="openLightbox(11)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMew9ooQ9KpSumo0d8Cmu3jqlwaPa5ROOu2RLABgFALxsS8JFTqIds3B5_orNPpW44i_KAz66haH64w6CWqS5EAEQ8aBOESU3_xChEVqo_AqsbJ0zXF=w1600" onclick="openLightbox(12)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMklFxTMbjM_Wi-IbHLwNfWonnOuq24_FqAKYS7dy3RjWztUzTnWZBErs-TKLOL7RYqzzHWnUjH568GCMeyv47BzNTiqo5FGER1em6yaDSYGIFQ0D0Y=w1600" onclick="openLightbox(13)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPqRSyUW1Ez92JVZDXN-LbUraO2J5hkBOWY8rNxRfxH2UBFQYf44DcDujRt91PYHj08qzD2o21-QWzlhM1GFRPVMFga0Ex-t_Uv48uWrRR8YOfNMx24=w1600" onclick="openLightbox(14)" loading="lazy" crossorigin="anonymous">
         <div class="album-sep">Amenities</div>
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOb9mMyelsmC4UFVPWIvoGnNC-jUv6MGEwRE2j9YAnJQ1VP1RVBRV2CClP3lvSNp5jWqlj7E8gOD0YnubHYqIXWK69dFi6jNh-6itbCKEz5PzLgOQQ=w1600" onclick="openLightbox(15)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMRTbdQlLmanz9PgvfK5HqSbmmAb469EFVX1GjQiVtFs6IoVpV8RIR3zNXGfng3DPYzf06MAC4dXPy6ZXHbeQSLAa9csGQSJS_wc89yQy7EV0KUpi0=w1600" onclick="openLightbox(16)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczM0MRk8wb-8J-sY1W4CuQ975m7wOrgVLgCLqiN_7UnUx55lAN9aYFEdjEYDgqgYk5pIT8K4NoEufpFlxKPSKNyaZVJT_As7-SejRnssZn5XyVKFYoM=w1600" onclick="openLightbox(17)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMqW4UOSQm6SyhfMuZDMs2ERYuZcBFRttrmdFkrkTKv3_ShaGJ0sMSSLCkTwnumJ9g44pM85V8G2YshDeqgihN4TfMmDzYuJIHLpjJwURbq8w4tQ00=w1600" onclick="openLightbox(18)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNuvwb9cDp1kwmm4pqcb7VncYNOxm-4_QPS1j3fSJQhGE-y2z1kYRvSIemmjN4dHNtzl7XzfarXjNyOykYVMw2lqQ_LvA0LvW0CZTKO_8socVjXi1s=w1600" onclick="openLightbox(19)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczM_n5W4MS2gAnw7SDM9_1pL3MKVEVh_sSfpM9EPwX5rUP6_YoxjTKOdGXlYFFcs_5qHTYfIq9cpTNmtaQkyH1EFUoUf8QiVZ0x7jr4MvxECsV2y-Wo=w1600" onclick="openLightbox(20)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOLmC0Px5HRO5vx5cXUvQkZQPZonJuqPhpkDQWe8IpNfpF0d1-ag6oKBU_LmAbpOhDui6VJu_ZFPEg_RZq_0702I1PWOTA-OJBYmOYRvMhidFx4T8w=w1600" onclick="openLightbox(21)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPmtNZHijQjqFVUq-zhmTrjXqM2qI2bXTWG5tp9wqDDh4YX20VqdiKff9jXpc6y2H4lwNy2mPg5HJFzV6BFcBt3XijSSQb9hKp0KlrlYuzsJjcVPiQ=w1600" onclick="openLightbox(22)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPYfir9DCqeNHzEmme-fSarZFSsY7-Dfx_wuCLdt-faGFR57DbKdf_hDvykIxDNJxs_cuPpkfENYpQDPWCbbC-uuzbWGdUznjyrpNIx9mtr5hPtugA=w1600" onclick="openLightbox(23)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNdtbOoS61bEP6rhwL-kLXaM3wLEicSmR9Hxq15IGu_sg05tA5y3gPO45kCM9hytSaX4rZxB5_T-mlQKzofY5l-9gXNQiGNE-psJW2AO-4_SP663Yk=w1600" onclick="openLightbox(24)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczN1xqFal6V-CWvLHFrCaadPkROVsVYIwb5VGSqiRB1F0lcVeSlDlHzpWtwaatjS2ZwxIE2cjLvMOrYI_axt97-rk1J5wLmst0hnzNgSpSPRGO9o1hs=w1600" onclick="openLightbox(25)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMSZIQjZXAYOws_JWlLVZXmaUA5CHQ4Jp9HI1PA0S1IF9Exv6B4q6x7mB-oMgy2uqaObQ-kslYMDgAhAm_x7f7a6eNW368RLQJJ8rCioM9LzYWthkc=w1600" onclick="openLightbox(26)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczO9MzddqF31doOOA2v9VnG__HgceXSc0jBR9VwkSTtYjRUXtqcqiyN32RQd3VgFEFpvjV-Bw3AwJfckIWftlwSuwSCwvzzn9aHOqJftCfd-KEdi0t4=w1600" onclick="openLightbox(27)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMF3DSsANkq9J3WvLRVNBBOIzR4ElDpMaqJDC4UOaw-vvZ-eoxpOvQtK9k2vpHZH1NMUgErrsQEmEcZwRC2EEcUci-Zh088cW1R5S8BIL5BZ_oP6c4=w1600" onclick="openLightbox(28)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMqi1PrdGxC79PXRcLYJhElESqY7mLyA_Pdmn4SR4gwlolc9SyL1nV4cFml3OSXyYxO-Bk4kZ8Ye9F6tyOP8wwhYykBuV94P6gtzHWP1ynmZaErbOk=w1600" onclick="openLightbox(29)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMjjnjr_BfByQ_yVw1iGO3IgW0IC-UxDaiFCWzcq3-7ufghovtaEWxze4bq7j52Gd2FAwWRQ0eBHWL_WJ7Ga2dG4gnqGQFqPQimeitmmpX8XHzYxso=w1600" onclick="openLightbox(30)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMrD-u4JriknYKjWUEAj8o5NvkWmBAokVhy7Bd8L-mSNEpUbolLhsQ5v6z1roEOnbnRg02Kqjj3m0I9Nx-_75_EZIsvDFbGWPsoSXSTw1hDo7C4IRs=w1600" onclick="openLightbox(31)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOw-vT5jWZvPOdD8M_ccS2kwGlhxGvgF3VOydyL80V18JFouAaEt_lsi8gXYoIaM6eDoH2_WuU0jL2P2In_mtOxJUfquz0G_mOsywSg6AtFHg_Qyqw=w1600" onclick="openLightbox(32)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPk1f7KlwXvVJ0m_zkyNYe9EyVtDNIg8QWcJf1zKODXatI6xSHjbC0lOStNnXPOrm-jwgAalUFSr7JzH-oWKd9j4ku62Rh9pvUj4VVv-DZP8gS0Orc=w1600" onclick="openLightbox(33)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNHjQGfe4PJxAKIudVsfaohYclw7CKH3dsKHQCIrHqbaWK9abD72Zayya2To603pukpg2QfBsc4jdLkxjThvgSLm5IhevLlsiKf_OP08CS8t4b335E=w1600" onclick="openLightbox(34)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMRNdz0rxMhaQuhAscWnh59NzVuFim7_FFvH6zPHW7D7JIuZfKAm2NRlbUd2bqjHwxKfHIWzuRGXEYg8We2fbt1fHycVpHLMNsMlr0DghfOd2Zt30o=w1600" onclick="openLightbox(35)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMIEviMRIgJyshdbSIYLYflypNAHABeYB3iDWcXsk_RpabiPgR-jP7g304USpC9swbkH7H1vwKTa7uu4UC84O56mn5CVvF6k7VzjU6TA6wF8ChJK9g=w1600" onclick="openLightbox(36)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOlhTdXme-YpL3XRt7xsx6MXs8fOsrSt9m9oSY8kvuvJmLHGJ2r8cpxFaXDZFtKcBNstOWvewHX6FJC6qFBtBPSbb7lURmodvkU7duV_IOQlri55A4=w1600" onclick="openLightbox(37)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMSdUNU3By8xMA90GWgM0-asackrut17eSpMvtBBSi99CyyqaKhrublR6oL9BAYH9_4WSjEPTJLU2DnD17bGl01tQeEVonXxL7LegAau-92OJ99-n8=w1600" onclick="openLightbox(38)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOxZec1E9PtoD4pwVc0NB3SMpNWuCM9mcBq4bqjH572WkTB0f5m6OS4_ySsd6m129k83uis5l9ry3ErrzWl8fQDIAMZfxpaP5CZb95P7phvaoZUA3k=w1600" onclick="openLightbox(39)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNbk0zBnHqgouS6zvJpQE9zsZZg6QGt9Ylp_Em_mQPK72uA6RywrIKVmYDtm_ZWXQp2OGP-8dq2VkTj5aJVh5lEpmhg77fcUB6exNtVfuNxafUKHoc=w1600" onclick="openLightbox(40)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMb2NqfAWlHvvIuzYhULSsKpgPq04PJajnayhFFMlhTxzCmdEhV9mwCnyrNHY1mXVUAOuNZgbnvdT842JvnomnJNAZbYTQpB-qCxSjwFvkmiNt9-Ys=w1600" onclick="openLightbox(41)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczP7VqRnvXdIR6HwLEnOy6_51FYLp4gsZ_fg7vVidCXDQoA-uDJxMNXqBOgGWMreMPTZPpdOXPJfIKm9YdJpZ1pBzRgkoAWw6nVcgCvOyYfCm9iuDmg=w1600" onclick="openLightbox(42)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPylO8QiFSlGybcCdxYGHS8cWte4SI2YzRFqEr0BAi7a8hfePcXwqH1W9gtfZ2PgVuFSsfjAp4n_eKZwv-1H2SY33LikJ2yMtKtEjp9m6Xf9MAKmd4=w1600" onclick="openLightbox(43)" loading="lazy">
-        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNXYphzEA1Nwi4MUPDYnvyQpCqFDAGyl4MwvSQr8Si79FxLRiXOxj66Mpskb9n7qcmm5C0bxeqgvw0PAmcw8XlILjv8SxivmcL_FqqiWdXA-gDPk6E=w1600" onclick="openLightbox(44)" loading="lazy">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOw-vT5jWZvPOdD8M_ccS2kwGlhxGvgF3VOydyL80V18JFouAaEt_lsi8gXYoIaM6eDoH2_WuU0jL2P2In_mtOxJUfquz0G_mOsywSg6AtFHg_Qyqw=w1600" onclick="openLightbox(15)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNbk0zBnHqgouS6zvJpQE9zsZZg6QGt9Ylp_Em_mQPK72uA6RywrIKVmYDtm_ZWXQp2OGP-8dq2VkTj5aJVh5lEpmhg77fcUB6exNtVfuNxafUKHoc=w1600" onclick="openLightbox(16)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPYfir9DCqeNHzEmme-fSarZFSsY7-Dfx_wuCLdt-faGFR57DbKdf_hDvykIxDNJxs_cuPpkfENYpQDPWCbbC-uuzbWGdUznjyrpNIx9mtr5hPtugA=w1600" onclick="openLightbox(17)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMSdUNU3By8xMA90GWgM0-asackrut17eSpMvtBBSi99CyyqaKhrublR6oL9BAYH9_4WSjEPTJLU2DnD17bGl01tQeEVonXxL7LegAau-92OJ99-n8=w1600" onclick="openLightbox(18)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMqW4UOSQm6SyhfMuZDMs2ERYuZcBFRttrmdFkrkTKv3_ShaGJ0sMSSLCkTwnumJ9g44pM85V8G2YshDeqgihN4TfMmDzYuJIHLpjJwURbq8w4tQ00=w1600" onclick="openLightbox(19)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMRTbdQlLmanz9PgvfK5HqSbmmAb469EFVX1GjQiVtFs6IoVpV8RIR3zNXGfng3DPYzf06MAC4dXPy6ZXHbeQSLAa9csGQSJS_wc89yQy7EV0KUpi0=w1600" onclick="openLightbox(20)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNuvwb9cDp1kwmm4pqcb7VncYNOxm-4_QPS1j3fSJQhGE-y2z1kYRvSIemmjN4dHNtzl7XzfarXjNyOykYVMw2lqQ_LvA0LvW0CZTKO_8socVjXi1s=w1600" onclick="openLightbox(21)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMrD-u4JriknYKjWUEAj8o5NvkWmBAokVhy7Bd8L-mSNEpUbolLhsQ5v6z1roEOnbnRg02Kqjj3m0I9Nx-_75_EZIsvDFbGWPsoSXSTw1hDo7C4IRs=w1600" onclick="openLightbox(22)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMjjnjr_BfByQ_yVw1iGO3IgW0IC-UxDaiFCWzcq3-7ufghovtaEWxze4bq7j52Gd2FAwWRQ0eBHWL_WJ7Ga2dG4gnqGQFqPQimeitmmpX8XHzYxso=w1600" onclick="openLightbox(23)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczM_n5W4MS2gAnw7SDM9_1pL3MKVEVh_sSfpM9EPwX5rUP6_YoxjTKOdGXlYFFcs_5qHTYfIq9cpTNmtaQkyH1EFUoUf8QiVZ0x7jr4MvxECsV2y-Wo=w1600" onclick="openLightbox(24)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMRNdz0rxMhaQuhAscWnh59NzVuFim7_FFvH6zPHW7D7JIuZfKAm2NRlbUd2bqjHwxKfHIWzuRGXEYg8We2fbt1fHycVpHLMNsMlr0DghfOd2Zt30o=w1600" onclick="openLightbox(25)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNXYphzEA1Nwi4MUPDYnvyQpCqFDAGyl4MwvSQr8Si79FxLRiXOxj66Mpskb9n7qcmm5C0bxeqgvw0PAmcw8XlILjv8SxivmcL_FqqiWdXA-gDPk6E=w1600" onclick="openLightbox(26)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNHjQGfe4PJxAKIudVsfaohYclw7CKH3dsKHQCIrHqbaWK9abD72Zayya2To603pukpg2QfBsc4jdLkxjThvgSLm5IhevLlsiKf_OP08CS8t4b335E=w1600" onclick="openLightbox(27)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczNdtbOoS61bEP6rhwL-kLXaM3wLEicSmR9Hxq15IGu_sg05tA5y3gPO45kCM9hytSaX4rZxB5_T-mlQKzofY5l-9gXNQiGNE-psJW2AO-4_SP663Yk=w1600" onclick="openLightbox(28)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczN1xqFal6V-CWvLHFrCaadPkROVsVYIwb5VGSqiRB1F0lcVeSlDlHzpWtwaatjS2ZwxIE2cjLvMOrYI_axt97-rk1J5wLmst0hnzNgSpSPRGO9o1hs=w1600" onclick="openLightbox(29)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczP7VqRnvXdIR6HwLEnOy6_51FYLp4gsZ_fg7vVidCXDQoA-uDJxMNXqBOgGWMreMPTZPpdOXPJfIKm9YdJpZ1pBzRgkoAWw6nVcgCvOyYfCm9iuDmg=w1600" onclick="openLightbox(30)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMqi1PrdGxC79PXRcLYJhElESqY7mLyA_Pdmn4SR4gwlolc9SyL1nV4cFml3OSXyYxO-Bk4kZ8Ye9F6tyOP8wwhYykBuV94P6gtzHWP1ynmZaErbOk=w1600" onclick="openLightbox(31)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMF3DSsANkq9J3WvLRVNBBOIzR4ElDpMaqJDC4UOaw-vvZ-eoxpOvQtK9k2vpHZH1NMUgErrsQEmEcZwRC2EEcUci-Zh088cW1R5S8BIL5BZ_oP6c4=w1600" onclick="openLightbox(32)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOLmC0Px5HRO5vx5cXUvQkZQPZonJuqPhpkDQWe8IpNfpF0d1-ag6oKBU_LmAbpOhDui6VJu_ZFPEg_RZq_0702I1PWOTA-OJBYmOYRvMhidFx4T8w=w1600" onclick="openLightbox(33)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPylO8QiFSlGybcCdxYGHS8cWte4SI2YzRFqEr0BAi7a8hfePcXwqH1W9gtfZ2PgVuFSsfjAp4n_eKZwv-1H2SY33LikJ2yMtKtEjp9m6Xf9MAKmd4=w1600" onclick="openLightbox(34)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczO9MzddqF31doOOA2v9VnG__HgceXSc0jBR9VwkSTtYjRUXtqcqiyN32RQd3VgFEFpvjV-Bw3AwJfckIWftlwSuwSCwvzzn9aHOqJftCfd-KEdi0t4=w1600" onclick="openLightbox(35)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPk1f7KlwXvVJ0m_zkyNYe9EyVtDNIg8QWcJf1zKODXatI6xSHjbC0lOStNnXPOrm-jwgAalUFSr7JzH-oWKd9j4ku62Rh9pvUj4VVv-DZP8gS0Orc=w1600" onclick="openLightbox(36)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMb2NqfAWlHvvIuzYhULSsKpgPq04PJajnayhFFMlhTxzCmdEhV9mwCnyrNHY1mXVUAOuNZgbnvdT842JvnomnJNAZbYTQpB-qCxSjwFvkmiNt9-Ys=w1600" onclick="openLightbox(37)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOxZec1E9PtoD4pwVc0NB3SMpNWuCM9mcBq4bqjH572WkTB0f5m6OS4_ySsd6m129k83uis5l9ry3ErrzWl8fQDIAMZfxpaP5CZb95P7phvaoZUA3k=w1600" onclick="openLightbox(38)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOb9mMyelsmC4UFVPWIvoGnNC-jUv6MGEwRE2j9YAnJQ1VP1RVBRV2CClP3lvSNp5jWqlj7E8gOD0YnubHYqIXWK69dFi6jNh-6itbCKEz5PzLgOQQ=w1600" onclick="openLightbox(39)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPmtNZHijQjqFVUq-zhmTrjXqM2qI2bXTWG5tp9wqDDh4YX20VqdiKff9jXpc6y2H4lwNy2mPg5HJFzV6BFcBt3XijSSQb9hKp0KlrlYuzsJjcVPiQ=w1600" onclick="openLightbox(40)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOlhTdXme-YpL3XRt7xsx6MXs8fOsrSt9m9oSY8kvuvJmLHGJ2r8cpxFaXDZFtKcBNstOWvewHX6FJC6qFBtBPSbb7lURmodvkU7duV_IOQlri55A4=w1600" onclick="openLightbox(41)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMSZIQjZXAYOws_JWlLVZXmaUA5CHQ4Jp9HI1PA0S1IF9Exv6B4q6x7mB-oMgy2uqaObQ-kslYMDgAhAm_x7f7a6eNW368RLQJJ8rCioM9LzYWthkc=w1600" onclick="openLightbox(42)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczMIEviMRIgJyshdbSIYLYflypNAHABeYB3iDWcXsk_RpabiPgR-jP7g304USpC9swbkH7H1vwKTa7uu4UC84O56mn5CVvF6k7VzjU6TA6wF8ChJK9g=w1600" onclick="openLightbox(43)" loading="lazy" crossorigin="anonymous">
+        <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczM0MRk8wb-8J-sY1W4CuQ975m7wOrgVLgCLqiN_7UnUx55lAN9aYFEdjEYDgqgYk5pIT8K4NoEufpFlxKPSKNyaZVJT_As7-SejRnssZn5XyVKFYoM=w1600" onclick="openLightbox(44)" loading="lazy" crossorigin="anonymous">
       </div>
       <span class="photo-count">45 photos</span>
-      <div class="swipe-hint"><span class="swipe-hint-arrow">›</span> Swipe</div>
+      <div class="swipe-hint"><span class="swipe-hint-arrow">&#8250;</span> Swipe</div>
     </div>
 
-    <!-- Details chips -->
     <div class="details">
       <div class="sec-label">Property Details</div>
       <div class="chips">
-        <span class="chip">3 BHK</span>
+        <span class="chip">3 bhk</span>
         <span class="chip">1100 carpet</span>
-        <span class="chip">Balcony</span>
+        <span class="chip">Rani baug view & clean open views</span>
         <span class="chip">3 Washrooms</span>
-        <span class="chip">Rani Baug &amp; open views</span>
-        <span class="chip">Furnished</span>
+        <span class="chip">Furnished Flat</span>
         <span class="chip">2 Car Parkings</span>
-        <span class="chip">Brand New Flat</span>
         <span class="chip">Vastu Flat</span>
-        <span class="chip">Good Light &amp; Ventilation</span>
-        <span class="chip">Dry Area in Kitchen</span>
-        <span class="chip">House-help washroom on floor</span>
-        <span class="chip">Gated Community with Amenities</span>
-        <span class="chip">Jain Derasar</span>
+        <span class="chip">Good Light and Ventilation</span>
+        <span class="chip">Brand New Flat</span>
+        <span class="chip">Seperate Dry Area in Kitchen</span>
+        <span class="chip">house-help washroom on every floor</span>
+        <span class="chip">Gated community with Amenities</span>
         <span class="chip">Main Road Touch</span>
         <span class="chip gold">Everyone Welcome</span>
       </div>
     </div>
 
-    <!-- Tenant Preference -->
     <div class="details">
       <div class="sec-label">Tenant Preference</div>
       <div class="chips">
@@ -818,12 +301,10 @@
         <span class="chip">H ok</span>
         <span class="chip">Non-Veg ok</span>
         <span class="chip">Pets Allowed</span>
-        <span class="chip">12 months rent together</span>
-        <span class="chip">Online Registered Agreement</span>
+        <span class="chip">Online Registered Agrement only</span>
       </div>
     </div>
 
-    <!-- Furniture Included -->
     <div class="details">
       <div class="sec-label">Furniture Included</div>
       <div class="chips">
@@ -831,239 +312,406 @@
         <span class="chip incl">Fans</span>
         <span class="chip incl">AC</span>
         <span class="chip incl">Modular Kitchen</span>
-        <span class="chip incl">Washrooms (Gysers, Mirrors, Glass Partition)</span>
+        <span class="chip incl">Washrooms done-up with Gysers</span>
+        <span class="chip incl">Mirrors</span>
+        <span class="chip incl">Glass Partition</span>
         <span class="chip incl">Curtains</span>
         <span class="chip incl">Wardrobes</span>
-        <span class="chip incl">Beds with Mattress &amp; Side Table</span>
-        <span class="chip incl">Sofa with Coffee Table</span>
-        <span class="chip incl">Dining Table with Chairs</span>
-        <span class="chip incl">TV with TV Unit</span>
-        <span class="chip incl">Shoe Unit</span>
-        <span class="chip incl">Gas Stove</span>
+        <span class="chip incl">Beds with Matress with Side Table</span>
+        <span class="chip incl">Sofa with Coffee table</span>
+        <span class="chip incl">Dining Table with chairs</span>
+        <span class="chip incl">TV with TV unit</span>
+        <span class="chip incl">shoe unit</span>
+        <span class="chip incl">Kitchen Electronics:  Gas</span>
         <span class="chip incl">Fridge</span>
         <span class="chip incl">Microwave</span>
       </div>
     </div>
 
-    <!-- Furniture Excluded -->
-    <div class="details">
-      <div class="sec-label">Furniture Excluded</div>
-      <div class="chips">
-        <span class="chip excl">Study Table</span>
-        <span class="chip excl">Hob &amp; Chimney</span>
-        <span class="chip excl">Water Purifier</span>
-        <span class="chip excl">Washing Machine</span>
-        <span class="chip excl">Dishwasher</span>
-      </div>
-    </div>
 
-    <!-- Notes -->
-    <div class="details">
+    <div class="details" id="notesSection">
       <div class="sec-label">Notes</div>
       <div class="chips">
         <span class="chip">1 day notice for visit</span>
-        <span class="chip">Tenant profile required</span>
+        <span class="chip">Tenant Profile required</span>
         <span class="chip">Keys with Me</span>
-        <span class="chip">Mandate Flat</span>
-        <span class="chip">1 month commission</span>
+        <span class="chip">MANDATE FLAT</span>
+        <span class="chip">1 month Commission</span>
       </div>
     </div>
 
-    <!-- Basic Terms -->
-    <div class="details">
+    <div class="details" id="basicTermsSection">
       <div class="sec-label">Basic Terms</div>
       <ul class="terms-list">
-        <li>Agreement cost split 50:50 between Owner &amp; Tenant</li>
+        <li>Agreement cost split 50:50 between owner & tenant</li>
         <li>TDS deduction by Tenant as per govt. norms</li>
-        <li>Society maintenance &amp; structural repairs: Owner</li>
-        <li>Utilities &amp; bills: Tenant</li>
-        <li>Moving, shifting &amp; club house charges (if any): Tenant</li>
+        <li>Society Maintaince & Structural Repairs: Owner</li>
+        <li>Utilities & Bills: Tenant</li>
+        <li>Moving, Shifting & Club House charges (if any): Tenant</li>
       </ul>
     </div>
 
-    <!-- Links -->
-    <div class="links">
+    <div class="links" id="viewPropertyLinks">
       <div class="sec-label">View Property</div>
       <a class="link-row" href="https://photos.app.goo.gl/VRwTxiwQLCBxyEQe8" target="_blank" rel="noopener">
         <div class="l-icon li-green">📸</div>
-        <div class="l-text">
-          <div class="l-name">Flat Photos</div>
-          <div class="l-sub">Interior &amp; room photos</div>
-        </div>
+        <div class="l-text"><div class="l-name">Flat Photos</div><div class="l-sub">Interior &amp; room photos</div></div>
         <div class="l-arrow">›</div>
       </a>
       <a class="link-row" href="https://photos.app.goo.gl/fYii4rDt8SGWEkoE7" target="_blank" rel="noopener">
         <div class="l-icon li-orange">🏊</div>
-        <div class="l-text">
-          <div class="l-name">Amenities</div>
-          <div class="l-sub">Pool, gym, common areas</div>
-        </div>
+        <div class="l-text"><div class="l-name">Amenities</div><div class="l-sub">Pool, gym, common areas</div></div>
         <div class="l-arrow">›</div>
       </a>
       <a class="link-row" href="https://youtu.be/oh85OzeLxZY?si=QWq1JRonSSI45bhu" target="_blank" rel="noopener">
-        <div class="l-icon li-pink">▶️</div>
-        <div class="l-text">
-          <div class="l-name">Virtual Tour</div>
-          <div class="l-sub">Project walkthrough video</div>
-        </div>
+        <div class="l-icon li-pink">&#9654;&#65039;</div>
+        <div class="l-text"><div class="l-name">Virtual Tour</div><div class="l-sub">Watch video walkthrough</div></div>
         <div class="l-arrow">›</div>
       </a>
       <a class="link-row" href="https://maps.app.goo.gl/yWAZmSjmf3Qnc3pp8" target="_blank" rel="noopener">
-        <div class="l-icon li-blue">📍</div>
-        <div class="l-text">
-          <div class="l-name">Location</div>
-          <div class="l-sub">Open in Google Maps</div>
-        </div>
+        <div class="l-icon li-blue">&#128205;</div>
+        <div class="l-text"><div class="l-name">Location</div><div class="l-sub">Open in Google Maps</div></div>
         <div class="l-arrow">›</div>
       </a>
     </div>
 
-    <!-- Copy link -->
-    <div class="copy-row">
-      <span class="copy-label">Share this listing</span>
-      <button class="copy-btn" id="copyBtn" onclick="copyLink()">
-        <span>&#128279;</span> Copy Link
-      </button>
-    </div>
 
-  </div><!-- /card -->
-
-  <!-- YouTube Virtual Tour — bottom of page -->
-  <div class="video-card">
-    <div class="video-label">Virtual Tour · Piramal Aranya</div>
-    <div class="video-section">
-      <iframe
-        src="https://www.youtube.com/embed/oh85OzeLxZY?playsinline=1&rel=0&modestbranding=1"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+    <div class="share-section" id="shareSection">
+      <div class="sec-label">Share this listing</div>
+      <div class="share-grid">
+        <button class="share-btn green" onclick="openSaveModal()">&#128444; Save Listing</button>
+        <button class="share-btn" onclick="openDownloadModal()">&#128247; Save Photos</button>
+        <button class="share-btn" id="copyBtn" onclick="copyLink()">&#128257; Share Listing</button>
+        <button class="share-btn" onclick="sharePortfolio()">&#127968; Share Portfolio</button>
+      </div>
     </div>
   </div>
 
-</div><!-- /scroll -->
+  <div id="cpFooter">
+    <div class="cp-inner">
+      <div>
+        <div class="cp-fname" id="cpFooterName"></div>
+        <div class="cp-fphone" id="cpFooterPhone"></div>
+      </div>
+      <div class="cp-company" id="cpFooterCompany"></div>
+    </div>
+  </div>
 
-<!-- Lightbox -->
+</div>
+</div>
+
+  <div class="video-card" id="ytVideoCard">
+    <div class="video-label">Virtual Tour · Piramal Aranya, Arav</div>
+    <div class="video-section">
+      <iframe src="https://www.youtube.com/embed/oh85OzeLxZY?playsinline=1&rel=0&modestbranding=1"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+
+<!-- Download Photos Modal -->
+<div id="dlModal" class="modal-overlay" onclick="if(event.target===this)closeModal('dlModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Save Photos</div>
+    <div class="modal-note">Opens photos in new tab &#x2022; Long-press to save on mobile</div>
+    <div id="dlAlbums"></div>
+    <button class="modal-cancel" onclick="closeModal('dlModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- Save Listing Modal -->
+<div id="saveModal" class="modal-overlay" onclick="if(event.target===this)closeModal('saveModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Save Listing Card</div>
+    <!-- Step 1: Choose user type -->
+    <div id="modalStep1">
+      <div class="utype-row">
+        <button class="utype-btn active" id="btnEndUser" onclick="setUserType('end')">End User</button>
+        <button class="utype-btn" id="btnCP" onclick="setUserType('cp')">Channel Partner (CP)</button>
+      </div>
+      <button class="modal-dl-btn" onclick="proceedFromStep1()">Continue &#8250;</button>
+    </div>
+    <!-- Step 2 (CP only): Ask if they want details on the card -->
+    <div id="modalStep2" style="display:none">
+      <div class="modal-ask-label">Add your contact details to the image?</div>
+      <div class="utype-row">
+        <button class="utype-btn" id="btnDetailsYes" onclick="setCpWantsDetails(true)">Yes, add details</button>
+        <button class="utype-btn" id="btnDetailsNo" onclick="setCpWantsDetails(false)">No, just save</button>
+      </div>
+      <div id="cpForm">
+        <input id="cpName" type="text" placeholder="Full Name *" class="cp-input">
+        <input id="cpPhone" type="tel" placeholder="Contact Number *" class="cp-input">
+        <input id="cpCompany" type="text" placeholder="Company Name (optional)" class="cp-input">
+      </div>
+      <button class="modal-dl-btn" id="btnSaveCard" onclick="saveListingCard()" style="display:none">&#128444; Download Card</button>
+      <button class="modal-cancel" onclick="showModalStep(1)" style="margin-bottom:8px">&#8249; Back</button>
+    </div>
+    <button class="modal-cancel" onclick="closeModal('saveModal')">Cancel</button>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox">
   <div class="lb-close" id="lbClose">&#10005;</div>
   <div class="lb-zone lb-zone-prev" id="lbPrev"><div class="lb-arrow">&#8249;</div></div>
   <img id="lbImg" src="" alt="" draggable="false">
-  <video id="lbVideo" controls playsinline preload="metadata"></video>
-  <a id="lbGpLink" class="lb-gp-link" href="https://photos.app.goo.gl/VRwTxiwQLCBxyEQe8" target="_blank" rel="noopener">&#9654; Open in Google Photos</a>
   <div class="lb-zone lb-zone-next" id="lbNext"><div class="lb-arrow">&#8250;</div></div>
   <div class="lb-counter" id="lbCounter"></div>
 </div>
 
+<button id="browseBtn" onclick="openBrowse()">&#127968; Browse Flats</button>
+<div id="browseOverlay" onclick="closeBrowse()"></div>
+<div id="browseDrawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-title">Available Flats</div>
+  <div class="tab-row" id="tabRow"></div>
+  <div class="listings-scroll" id="listingsScroll"></div>
+</div>
+
 <script>
-  // ── Lightbox ──
-  const photos = Array.from(document.querySelectorAll('.photo-thumb')).map(i => i.src)
-  let current = 0
+  const MY_SERIAL = 257;
+  const MY_BUCKET = "3 & 3.5 BHK";
+  const BUCKET_ORDER = ["1 RK", "1 & 1.5 BHK", "2 & 2.5 BHK", "3 & 3.5 BHK", "4 & 4.5 BHK", "5 & 5.5 BHK"];
+  const photos = ["https://lh3.googleusercontent.com/pw/AP1GczOvW6FdTB2j2o0ZDPBoeR-EXb89fEoECSEI1rnYrK7QLdm9teA4vv7Jiys_7C1Jvwk3Bdcvzhq0NX2pHMEVI1IPreo6J5Vp5bM_mu9oaleGwYNMvHHb=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOxxfAnqtJVXmdK1emKYKzpNZMgj4sQ6r-kDDsZe__Us8irRsEPUqgkcojQsAjM9ZnVxxZQ_GhHjeLFWyLufaby4N75KdgRwZlyzQn9v3L1ViwV1IgT=w1600", "https://lh3.googleusercontent.com/pw/AP1GczO7WdyRTSNaTXvbliEGmbkujOCp30XoI4WUR4SAlVlenHxuFP_AQCKJJQmH_tbJAidJGyXnE6KgHjJ1mB8BljXvai1Co0_GW684Z49w1K0-mTI4W3MP=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNQEdvHMEZiJKMm8WKtj55E-XI2rP8EyHo8-Rl4lr6EIBYPUgI1sJPY-pWWZWsq3SLUr-wgIFqXzvcfr-ae4P74UrXp4nEwuGOJSXDMByEFR8HWNO9M=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMhloJJJkjT1ODC4JQYAzBV5ivsl0cyZe4-N3cvGJEdL4-fC2D77LdGKhUD6tPt_jl3Ytoow5PPozvceuFE1ujnj5UgWMlrDZrGjpW5dnPqF6PhW_p1=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMP92qJOrt9o5BGQD1L7G8fQNsdBx6B-MWx2clEN3t2OBYk8PK3apzn0oKQkO44y2VtrtoWpTRyvrr_xaSRRghvTnj9hSMdJM9LxB2zYry5IeOoalIV=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMhwNeKLt9Sw07iJPmOb_ORrzvP31z7PmeSurRZ4doWjUMDaTX7rRXQn5c7mAKgy_rV7y3KwiA3AdqTnNLxoVIIwnQYVXblCjEyFCU0faoXEMrL9UfS=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMyzdpDL13FxQBAEkTOZOddvVuxD9eXQGU9Mszcg_JRVR6yWmrcDFXraUBtXPbnqhsZZ48Nz-fhWXxH5UIzg2DaRNAb3GroZhI-i4K0tmhTE36dJ_Nd=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNX78Iaa06CcQJsPRdbjSTsN8pXFiCYwALA0I1XGo9cRQEt7ddpTwToKVLXw7PFYrpniJTCA_s1ydQxptmeO8FNQ5u--VH8o1ji4drogyfVl0FifAsk=w1600", "https://lh3.googleusercontent.com/pw/AP1GczN6UeCN-3AijIbTyFkNeih7qdbADC3glSrL-63SbNvqy6ZmLZDyFZWXa8iPtdf2qIEEX3UNwiohBwGiXmHJ1UFzPYUpD8xUhgCtqLFR-f4-UE4uwEXv=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMz1zkkqbDuAtnfxzS4ZtAQQ4SYhatbgM8M9hJ5o8dQxTj35L7-yij1RnJFoOUfMAjGmfkVMMljMkqQ1LXVj_LmmvgNt0EUxn_6oWuc5vwh7GSZRDdJ=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMj9mAfvsbRziJEsPiKfXtvtCecmJ5Aq4qTE9p9F4jBvkc47cZc4cK_RiF_eim8C3zNj5jeDCh9eSY5dw1dNFxoTndD2qOGm65sVr3cgXPKLzKuq2Ez=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMew9ooQ9KpSumo0d8Cmu3jqlwaPa5ROOu2RLABgFALxsS8JFTqIds3B5_orNPpW44i_KAz66haH64w6CWqS5EAEQ8aBOESU3_xChEVqo_AqsbJ0zXF=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMklFxTMbjM_Wi-IbHLwNfWonnOuq24_FqAKYS7dy3RjWztUzTnWZBErs-TKLOL7RYqzzHWnUjH568GCMeyv47BzNTiqo5FGER1em6yaDSYGIFQ0D0Y=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPqRSyUW1Ez92JVZDXN-LbUraO2J5hkBOWY8rNxRfxH2UBFQYf44DcDujRt91PYHj08qzD2o21-QWzlhM1GFRPVMFga0Ex-t_Uv48uWrRR8YOfNMx24=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOw-vT5jWZvPOdD8M_ccS2kwGlhxGvgF3VOydyL80V18JFouAaEt_lsi8gXYoIaM6eDoH2_WuU0jL2P2In_mtOxJUfquz0G_mOsywSg6AtFHg_Qyqw=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNbk0zBnHqgouS6zvJpQE9zsZZg6QGt9Ylp_Em_mQPK72uA6RywrIKVmYDtm_ZWXQp2OGP-8dq2VkTj5aJVh5lEpmhg77fcUB6exNtVfuNxafUKHoc=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPYfir9DCqeNHzEmme-fSarZFSsY7-Dfx_wuCLdt-faGFR57DbKdf_hDvykIxDNJxs_cuPpkfENYpQDPWCbbC-uuzbWGdUznjyrpNIx9mtr5hPtugA=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMSdUNU3By8xMA90GWgM0-asackrut17eSpMvtBBSi99CyyqaKhrublR6oL9BAYH9_4WSjEPTJLU2DnD17bGl01tQeEVonXxL7LegAau-92OJ99-n8=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMqW4UOSQm6SyhfMuZDMs2ERYuZcBFRttrmdFkrkTKv3_ShaGJ0sMSSLCkTwnumJ9g44pM85V8G2YshDeqgihN4TfMmDzYuJIHLpjJwURbq8w4tQ00=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMRTbdQlLmanz9PgvfK5HqSbmmAb469EFVX1GjQiVtFs6IoVpV8RIR3zNXGfng3DPYzf06MAC4dXPy6ZXHbeQSLAa9csGQSJS_wc89yQy7EV0KUpi0=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNuvwb9cDp1kwmm4pqcb7VncYNOxm-4_QPS1j3fSJQhGE-y2z1kYRvSIemmjN4dHNtzl7XzfarXjNyOykYVMw2lqQ_LvA0LvW0CZTKO_8socVjXi1s=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMrD-u4JriknYKjWUEAj8o5NvkWmBAokVhy7Bd8L-mSNEpUbolLhsQ5v6z1roEOnbnRg02Kqjj3m0I9Nx-_75_EZIsvDFbGWPsoSXSTw1hDo7C4IRs=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMjjnjr_BfByQ_yVw1iGO3IgW0IC-UxDaiFCWzcq3-7ufghovtaEWxze4bq7j52Gd2FAwWRQ0eBHWL_WJ7Ga2dG4gnqGQFqPQimeitmmpX8XHzYxso=w1600", "https://lh3.googleusercontent.com/pw/AP1GczM_n5W4MS2gAnw7SDM9_1pL3MKVEVh_sSfpM9EPwX5rUP6_YoxjTKOdGXlYFFcs_5qHTYfIq9cpTNmtaQkyH1EFUoUf8QiVZ0x7jr4MvxECsV2y-Wo=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMRNdz0rxMhaQuhAscWnh59NzVuFim7_FFvH6zPHW7D7JIuZfKAm2NRlbUd2bqjHwxKfHIWzuRGXEYg8We2fbt1fHycVpHLMNsMlr0DghfOd2Zt30o=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNXYphzEA1Nwi4MUPDYnvyQpCqFDAGyl4MwvSQr8Si79FxLRiXOxj66Mpskb9n7qcmm5C0bxeqgvw0PAmcw8XlILjv8SxivmcL_FqqiWdXA-gDPk6E=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNHjQGfe4PJxAKIudVsfaohYclw7CKH3dsKHQCIrHqbaWK9abD72Zayya2To603pukpg2QfBsc4jdLkxjThvgSLm5IhevLlsiKf_OP08CS8t4b335E=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNdtbOoS61bEP6rhwL-kLXaM3wLEicSmR9Hxq15IGu_sg05tA5y3gPO45kCM9hytSaX4rZxB5_T-mlQKzofY5l-9gXNQiGNE-psJW2AO-4_SP663Yk=w1600", "https://lh3.googleusercontent.com/pw/AP1GczN1xqFal6V-CWvLHFrCaadPkROVsVYIwb5VGSqiRB1F0lcVeSlDlHzpWtwaatjS2ZwxIE2cjLvMOrYI_axt97-rk1J5wLmst0hnzNgSpSPRGO9o1hs=w1600", "https://lh3.googleusercontent.com/pw/AP1GczP7VqRnvXdIR6HwLEnOy6_51FYLp4gsZ_fg7vVidCXDQoA-uDJxMNXqBOgGWMreMPTZPpdOXPJfIKm9YdJpZ1pBzRgkoAWw6nVcgCvOyYfCm9iuDmg=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMqi1PrdGxC79PXRcLYJhElESqY7mLyA_Pdmn4SR4gwlolc9SyL1nV4cFml3OSXyYxO-Bk4kZ8Ye9F6tyOP8wwhYykBuV94P6gtzHWP1ynmZaErbOk=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMF3DSsANkq9J3WvLRVNBBOIzR4ElDpMaqJDC4UOaw-vvZ-eoxpOvQtK9k2vpHZH1NMUgErrsQEmEcZwRC2EEcUci-Zh088cW1R5S8BIL5BZ_oP6c4=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOLmC0Px5HRO5vx5cXUvQkZQPZonJuqPhpkDQWe8IpNfpF0d1-ag6oKBU_LmAbpOhDui6VJu_ZFPEg_RZq_0702I1PWOTA-OJBYmOYRvMhidFx4T8w=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPylO8QiFSlGybcCdxYGHS8cWte4SI2YzRFqEr0BAi7a8hfePcXwqH1W9gtfZ2PgVuFSsfjAp4n_eKZwv-1H2SY33LikJ2yMtKtEjp9m6Xf9MAKmd4=w1600", "https://lh3.googleusercontent.com/pw/AP1GczO9MzddqF31doOOA2v9VnG__HgceXSc0jBR9VwkSTtYjRUXtqcqiyN32RQd3VgFEFpvjV-Bw3AwJfckIWftlwSuwSCwvzzn9aHOqJftCfd-KEdi0t4=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPk1f7KlwXvVJ0m_zkyNYe9EyVtDNIg8QWcJf1zKODXatI6xSHjbC0lOStNnXPOrm-jwgAalUFSr7JzH-oWKd9j4ku62Rh9pvUj4VVv-DZP8gS0Orc=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMb2NqfAWlHvvIuzYhULSsKpgPq04PJajnayhFFMlhTxzCmdEhV9mwCnyrNHY1mXVUAOuNZgbnvdT842JvnomnJNAZbYTQpB-qCxSjwFvkmiNt9-Ys=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOxZec1E9PtoD4pwVc0NB3SMpNWuCM9mcBq4bqjH572WkTB0f5m6OS4_ySsd6m129k83uis5l9ry3ErrzWl8fQDIAMZfxpaP5CZb95P7phvaoZUA3k=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOb9mMyelsmC4UFVPWIvoGnNC-jUv6MGEwRE2j9YAnJQ1VP1RVBRV2CClP3lvSNp5jWqlj7E8gOD0YnubHYqIXWK69dFi6jNh-6itbCKEz5PzLgOQQ=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPmtNZHijQjqFVUq-zhmTrjXqM2qI2bXTWG5tp9wqDDh4YX20VqdiKff9jXpc6y2H4lwNy2mPg5HJFzV6BFcBt3XijSSQb9hKp0KlrlYuzsJjcVPiQ=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOlhTdXme-YpL3XRt7xsx6MXs8fOsrSt9m9oSY8kvuvJmLHGJ2r8cpxFaXDZFtKcBNstOWvewHX6FJC6qFBtBPSbb7lURmodvkU7duV_IOQlri55A4=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMSZIQjZXAYOws_JWlLVZXmaUA5CHQ4Jp9HI1PA0S1IF9Exv6B4q6x7mB-oMgy2uqaObQ-kslYMDgAhAm_x7f7a6eNW368RLQJJ8rCioM9LzYWthkc=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMIEviMRIgJyshdbSIYLYflypNAHABeYB3iDWcXsk_RpabiPgR-jP7g304USpC9swbkH7H1vwKTa7uu4UC84O56mn5CVvF6k7VzjU6TA6wF8ChJK9g=w1600", "https://lh3.googleusercontent.com/pw/AP1GczM0MRk8wb-8J-sY1W4CuQ975m7wOrgVLgCLqiN_7UnUx55lAN9aYFEdjEYDgqgYk5pIT8K4NoEufpFlxKPSKNyaZVJT_As7-SejRnssZn5XyVKFYoM=w1600"];
+  const PHOTO_ALBUMS = [{"name": "Flat Photos", "urls": ["https://lh3.googleusercontent.com/pw/AP1GczOvW6FdTB2j2o0ZDPBoeR-EXb89fEoECSEI1rnYrK7QLdm9teA4vv7Jiys_7C1Jvwk3Bdcvzhq0NX2pHMEVI1IPreo6J5Vp5bM_mu9oaleGwYNMvHHb=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOxxfAnqtJVXmdK1emKYKzpNZMgj4sQ6r-kDDsZe__Us8irRsEPUqgkcojQsAjM9ZnVxxZQ_GhHjeLFWyLufaby4N75KdgRwZlyzQn9v3L1ViwV1IgT=w1600", "https://lh3.googleusercontent.com/pw/AP1GczO7WdyRTSNaTXvbliEGmbkujOCp30XoI4WUR4SAlVlenHxuFP_AQCKJJQmH_tbJAidJGyXnE6KgHjJ1mB8BljXvai1Co0_GW684Z49w1K0-mTI4W3MP=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNQEdvHMEZiJKMm8WKtj55E-XI2rP8EyHo8-Rl4lr6EIBYPUgI1sJPY-pWWZWsq3SLUr-wgIFqXzvcfr-ae4P74UrXp4nEwuGOJSXDMByEFR8HWNO9M=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMhloJJJkjT1ODC4JQYAzBV5ivsl0cyZe4-N3cvGJEdL4-fC2D77LdGKhUD6tPt_jl3Ytoow5PPozvceuFE1ujnj5UgWMlrDZrGjpW5dnPqF6PhW_p1=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMP92qJOrt9o5BGQD1L7G8fQNsdBx6B-MWx2clEN3t2OBYk8PK3apzn0oKQkO44y2VtrtoWpTRyvrr_xaSRRghvTnj9hSMdJM9LxB2zYry5IeOoalIV=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMhwNeKLt9Sw07iJPmOb_ORrzvP31z7PmeSurRZ4doWjUMDaTX7rRXQn5c7mAKgy_rV7y3KwiA3AdqTnNLxoVIIwnQYVXblCjEyFCU0faoXEMrL9UfS=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMyzdpDL13FxQBAEkTOZOddvVuxD9eXQGU9Mszcg_JRVR6yWmrcDFXraUBtXPbnqhsZZ48Nz-fhWXxH5UIzg2DaRNAb3GroZhI-i4K0tmhTE36dJ_Nd=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNX78Iaa06CcQJsPRdbjSTsN8pXFiCYwALA0I1XGo9cRQEt7ddpTwToKVLXw7PFYrpniJTCA_s1ydQxptmeO8FNQ5u--VH8o1ji4drogyfVl0FifAsk=w1600", "https://lh3.googleusercontent.com/pw/AP1GczN6UeCN-3AijIbTyFkNeih7qdbADC3glSrL-63SbNvqy6ZmLZDyFZWXa8iPtdf2qIEEX3UNwiohBwGiXmHJ1UFzPYUpD8xUhgCtqLFR-f4-UE4uwEXv=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMz1zkkqbDuAtnfxzS4ZtAQQ4SYhatbgM8M9hJ5o8dQxTj35L7-yij1RnJFoOUfMAjGmfkVMMljMkqQ1LXVj_LmmvgNt0EUxn_6oWuc5vwh7GSZRDdJ=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMj9mAfvsbRziJEsPiKfXtvtCecmJ5Aq4qTE9p9F4jBvkc47cZc4cK_RiF_eim8C3zNj5jeDCh9eSY5dw1dNFxoTndD2qOGm65sVr3cgXPKLzKuq2Ez=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMew9ooQ9KpSumo0d8Cmu3jqlwaPa5ROOu2RLABgFALxsS8JFTqIds3B5_orNPpW44i_KAz66haH64w6CWqS5EAEQ8aBOESU3_xChEVqo_AqsbJ0zXF=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMklFxTMbjM_Wi-IbHLwNfWonnOuq24_FqAKYS7dy3RjWztUzTnWZBErs-TKLOL7RYqzzHWnUjH568GCMeyv47BzNTiqo5FGER1em6yaDSYGIFQ0D0Y=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPqRSyUW1Ez92JVZDXN-LbUraO2J5hkBOWY8rNxRfxH2UBFQYf44DcDujRt91PYHj08qzD2o21-QWzlhM1GFRPVMFga0Ex-t_Uv48uWrRR8YOfNMx24=w1600"]}, {"name": "Amenities", "urls": ["https://lh3.googleusercontent.com/pw/AP1GczOw-vT5jWZvPOdD8M_ccS2kwGlhxGvgF3VOydyL80V18JFouAaEt_lsi8gXYoIaM6eDoH2_WuU0jL2P2In_mtOxJUfquz0G_mOsywSg6AtFHg_Qyqw=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNbk0zBnHqgouS6zvJpQE9zsZZg6QGt9Ylp_Em_mQPK72uA6RywrIKVmYDtm_ZWXQp2OGP-8dq2VkTj5aJVh5lEpmhg77fcUB6exNtVfuNxafUKHoc=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPYfir9DCqeNHzEmme-fSarZFSsY7-Dfx_wuCLdt-faGFR57DbKdf_hDvykIxDNJxs_cuPpkfENYpQDPWCbbC-uuzbWGdUznjyrpNIx9mtr5hPtugA=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMSdUNU3By8xMA90GWgM0-asackrut17eSpMvtBBSi99CyyqaKhrublR6oL9BAYH9_4WSjEPTJLU2DnD17bGl01tQeEVonXxL7LegAau-92OJ99-n8=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMqW4UOSQm6SyhfMuZDMs2ERYuZcBFRttrmdFkrkTKv3_ShaGJ0sMSSLCkTwnumJ9g44pM85V8G2YshDeqgihN4TfMmDzYuJIHLpjJwURbq8w4tQ00=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMRTbdQlLmanz9PgvfK5HqSbmmAb469EFVX1GjQiVtFs6IoVpV8RIR3zNXGfng3DPYzf06MAC4dXPy6ZXHbeQSLAa9csGQSJS_wc89yQy7EV0KUpi0=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNuvwb9cDp1kwmm4pqcb7VncYNOxm-4_QPS1j3fSJQhGE-y2z1kYRvSIemmjN4dHNtzl7XzfarXjNyOykYVMw2lqQ_LvA0LvW0CZTKO_8socVjXi1s=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMrD-u4JriknYKjWUEAj8o5NvkWmBAokVhy7Bd8L-mSNEpUbolLhsQ5v6z1roEOnbnRg02Kqjj3m0I9Nx-_75_EZIsvDFbGWPsoSXSTw1hDo7C4IRs=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMjjnjr_BfByQ_yVw1iGO3IgW0IC-UxDaiFCWzcq3-7ufghovtaEWxze4bq7j52Gd2FAwWRQ0eBHWL_WJ7Ga2dG4gnqGQFqPQimeitmmpX8XHzYxso=w1600", "https://lh3.googleusercontent.com/pw/AP1GczM_n5W4MS2gAnw7SDM9_1pL3MKVEVh_sSfpM9EPwX5rUP6_YoxjTKOdGXlYFFcs_5qHTYfIq9cpTNmtaQkyH1EFUoUf8QiVZ0x7jr4MvxECsV2y-Wo=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMRNdz0rxMhaQuhAscWnh59NzVuFim7_FFvH6zPHW7D7JIuZfKAm2NRlbUd2bqjHwxKfHIWzuRGXEYg8We2fbt1fHycVpHLMNsMlr0DghfOd2Zt30o=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNXYphzEA1Nwi4MUPDYnvyQpCqFDAGyl4MwvSQr8Si79FxLRiXOxj66Mpskb9n7qcmm5C0bxeqgvw0PAmcw8XlILjv8SxivmcL_FqqiWdXA-gDPk6E=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNHjQGfe4PJxAKIudVsfaohYclw7CKH3dsKHQCIrHqbaWK9abD72Zayya2To603pukpg2QfBsc4jdLkxjThvgSLm5IhevLlsiKf_OP08CS8t4b335E=w1600", "https://lh3.googleusercontent.com/pw/AP1GczNdtbOoS61bEP6rhwL-kLXaM3wLEicSmR9Hxq15IGu_sg05tA5y3gPO45kCM9hytSaX4rZxB5_T-mlQKzofY5l-9gXNQiGNE-psJW2AO-4_SP663Yk=w1600", "https://lh3.googleusercontent.com/pw/AP1GczN1xqFal6V-CWvLHFrCaadPkROVsVYIwb5VGSqiRB1F0lcVeSlDlHzpWtwaatjS2ZwxIE2cjLvMOrYI_axt97-rk1J5wLmst0hnzNgSpSPRGO9o1hs=w1600", "https://lh3.googleusercontent.com/pw/AP1GczP7VqRnvXdIR6HwLEnOy6_51FYLp4gsZ_fg7vVidCXDQoA-uDJxMNXqBOgGWMreMPTZPpdOXPJfIKm9YdJpZ1pBzRgkoAWw6nVcgCvOyYfCm9iuDmg=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMqi1PrdGxC79PXRcLYJhElESqY7mLyA_Pdmn4SR4gwlolc9SyL1nV4cFml3OSXyYxO-Bk4kZ8Ye9F6tyOP8wwhYykBuV94P6gtzHWP1ynmZaErbOk=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMF3DSsANkq9J3WvLRVNBBOIzR4ElDpMaqJDC4UOaw-vvZ-eoxpOvQtK9k2vpHZH1NMUgErrsQEmEcZwRC2EEcUci-Zh088cW1R5S8BIL5BZ_oP6c4=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOLmC0Px5HRO5vx5cXUvQkZQPZonJuqPhpkDQWe8IpNfpF0d1-ag6oKBU_LmAbpOhDui6VJu_ZFPEg_RZq_0702I1PWOTA-OJBYmOYRvMhidFx4T8w=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPylO8QiFSlGybcCdxYGHS8cWte4SI2YzRFqEr0BAi7a8hfePcXwqH1W9gtfZ2PgVuFSsfjAp4n_eKZwv-1H2SY33LikJ2yMtKtEjp9m6Xf9MAKmd4=w1600", "https://lh3.googleusercontent.com/pw/AP1GczO9MzddqF31doOOA2v9VnG__HgceXSc0jBR9VwkSTtYjRUXtqcqiyN32RQd3VgFEFpvjV-Bw3AwJfckIWftlwSuwSCwvzzn9aHOqJftCfd-KEdi0t4=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPk1f7KlwXvVJ0m_zkyNYe9EyVtDNIg8QWcJf1zKODXatI6xSHjbC0lOStNnXPOrm-jwgAalUFSr7JzH-oWKd9j4ku62Rh9pvUj4VVv-DZP8gS0Orc=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMb2NqfAWlHvvIuzYhULSsKpgPq04PJajnayhFFMlhTxzCmdEhV9mwCnyrNHY1mXVUAOuNZgbnvdT842JvnomnJNAZbYTQpB-qCxSjwFvkmiNt9-Ys=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOxZec1E9PtoD4pwVc0NB3SMpNWuCM9mcBq4bqjH572WkTB0f5m6OS4_ySsd6m129k83uis5l9ry3ErrzWl8fQDIAMZfxpaP5CZb95P7phvaoZUA3k=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOb9mMyelsmC4UFVPWIvoGnNC-jUv6MGEwRE2j9YAnJQ1VP1RVBRV2CClP3lvSNp5jWqlj7E8gOD0YnubHYqIXWK69dFi6jNh-6itbCKEz5PzLgOQQ=w1600", "https://lh3.googleusercontent.com/pw/AP1GczPmtNZHijQjqFVUq-zhmTrjXqM2qI2bXTWG5tp9wqDDh4YX20VqdiKff9jXpc6y2H4lwNy2mPg5HJFzV6BFcBt3XijSSQb9hKp0KlrlYuzsJjcVPiQ=w1600", "https://lh3.googleusercontent.com/pw/AP1GczOlhTdXme-YpL3XRt7xsx6MXs8fOsrSt9m9oSY8kvuvJmLHGJ2r8cpxFaXDZFtKcBNstOWvewHX6FJC6qFBtBPSbb7lURmodvkU7duV_IOQlri55A4=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMSZIQjZXAYOws_JWlLVZXmaUA5CHQ4Jp9HI1PA0S1IF9Exv6B4q6x7mB-oMgy2uqaObQ-kslYMDgAhAm_x7f7a6eNW368RLQJJ8rCioM9LzYWthkc=w1600", "https://lh3.googleusercontent.com/pw/AP1GczMIEviMRIgJyshdbSIYLYflypNAHABeYB3iDWcXsk_RpabiPgR-jP7g304USpC9swbkH7H1vwKTa7uu4UC84O56mn5CVvF6k7VzjU6TA6wF8ChJK9g=w1600", "https://lh3.googleusercontent.com/pw/AP1GczM0MRk8wb-8J-sY1W4CuQ975m7wOrgVLgCLqiN_7UnUx55lAN9aYFEdjEYDgqgYk5pIT8K4NoEufpFlxKPSKNyaZVJT_As7-SejRnssZn5XyVKFYoM=w1600"]}];
+  let current = 0, allListings = [], activeBucket = MY_BUCKET;
 
-  // video index → direct video URL (Google Photos =dv format)
-  const videoMap = {
-    0: photos[0].replace(/=[^=]+$/, '=dv')
+  // Lightbox
+  function setPhoto(i) {
+    document.getElementById('lbImg').src = photos[i];
+    document.getElementById('lbCounter').textContent = (i+1)+' / '+photos.length;
+  }
+  function openLightbox(i) { current=i; setPhoto(i); document.getElementById('lightbox').classList.add('open'); }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  function showPhoto(i) { current=Math.max(0,Math.min(i,photos.length-1)); setPhoto(current); }
+  document.getElementById('lbClose').addEventListener('click',e=>{e.stopPropagation();closeLightbox();});
+  document.getElementById('lbPrev').addEventListener('click',e=>{e.stopPropagation();showPhoto(current-1);});
+  document.getElementById('lbNext').addEventListener('click',e=>{e.stopPropagation();showPhoto(current+1);});
+  document.getElementById('lightbox').addEventListener('click',e=>{ if(e.target===document.getElementById('lightbox')||e.target===document.getElementById('lbImg'))closeLightbox(); });
+  let tsx=null;
+  document.getElementById('lightbox').addEventListener('touchstart',e=>{tsx=e.touches[0].clientX;},{passive:true});
+  document.getElementById('lightbox').addEventListener('touchend',e=>{if(tsx===null)return;const dx=e.changedTouches[0].clientX-tsx;tsx=null;if(Math.abs(dx)<35)return;dx<0?showPhoto(current+1):showPhoto(current-1);});
+
+  // Sticky header
+  const sBar=document.getElementById('stickyBar'),hero=document.getElementById('hero');
+  window.addEventListener('scroll',()=>{sBar.classList.toggle('visible',hero.getBoundingClientRect().bottom<0);},{passive:true});
+
+  // Theme
+  function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeToggle').textContent=d?'Night':'Day';}
+
+  // Share Listing (copy link)
+  function copyLink(){
+    const btn=document.getElementById('copyBtn'),url="https://soboflats.github.io/257.html";
+    const reset=()=>{btn.innerHTML='&#128257; Share Listing';btn.classList.remove('copied');};
+    const done=()=>{btn.textContent='&#10003; Link Copied!';btn.classList.add('copied');setTimeout(reset,2200);};
+    if(navigator.share){navigator.share({title:document.title,url}).catch(()=>fallbackCopy());}
+    else{fallbackCopy();}
+    function fallbackCopy(){navigator.clipboard.writeText(url).then(done).catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);done();});}
   }
 
-  function setMedia(idx) {
-    const lbImg = document.getElementById('lbImg')
-    const lbVideo = document.getElementById('lbVideo')
-    const lbGpLink = document.getElementById('lbGpLink')
-    const lbPrev = document.getElementById('lbPrev')
-    const lbNext = document.getElementById('lbNext')
-    if (videoMap[idx]) {
-      lbImg.style.display = 'none'
-      lbVideo.style.display = 'block'
-      if (lbVideo.src !== videoMap[idx]) lbVideo.src = videoMap[idx]
-      lbGpLink.style.display = 'block'
-      lbPrev.style.display = 'none'
-      lbNext.style.display = 'none'
-    } else {
-      lbVideo.pause()
-      lbVideo.style.display = 'none'
-      lbGpLink.style.display = 'none'
-      lbImg.style.display = 'block'
-      lbImg.src = photos[idx]
-      lbPrev.style.display = 'flex'
-      lbNext.style.display = 'flex'
-    }
-    document.getElementById('lbCounter').textContent = (idx + 1) + ' / ' + photos.length
+  // Browse drawer
+  function openBrowse(){document.getElementById('browseDrawer').classList.add('open');document.getElementById('browseOverlay').style.display='block';}
+  function closeBrowse(){document.getElementById('browseDrawer').classList.remove('open');document.getElementById('browseOverlay').style.display='none';}
+  // Hide Browse Flats button when share section scrolls into view
+  (function(){
+    const btn = document.getElementById('browseBtn');
+    const share = document.getElementById('shareSection');
+    if (!btn || !share) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => btn.classList.toggle('hidden', e.isIntersecting));
+    }, {threshold: 0.05});
+    obs.observe(share);
+  })();
+
+  function renderListings(bucket){
+    activeBucket=bucket;
+    const scroll=document.getElementById('listingsScroll');
+    const items=allListings.filter(l=>l.bucket===bucket);
+    if(!items.length){scroll.innerHTML='<div class="no-listings">No listings in this category</div>';return;}
+    scroll.innerHTML=items.map(l=>{
+      const isCur=l.serial===MY_SERIAL;
+      return `<a class="listing-card${isCur?' current':''}" href="${l.url}">
+        <img class="listing-thumb" src="${l.thumb||''}" alt="" loading="lazy">
+        <div class="listing-info">
+          <div class="listing-name">${l.project}</div>
+          <div class="listing-meta">${l.bhk}${l.carpet?' · '+l.carpet+' carpet':''}</div>
+          <div class="listing-rent">${l.rent_display}</div>
+          ${isCur?'<div class="listing-current-tag">&#8592; Viewing this</div>':''}
+        </div></a>`;
+    }).join('');
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.bucket===bucket));
   }
 
-  function openLightbox(idx) {
-    current = idx
-    setMedia(idx)
-    document.getElementById('lightbox').classList.add('open')
-  }
-  function closeLightbox() {
-    document.getElementById('lbVideo').pause()
-    document.getElementById('lightbox').classList.remove('open')
-  }
-  function showPhoto(idx) {
-    current = Math.max(0, Math.min(idx, photos.length - 1))
-    setMedia(current)
-  }
-  document.getElementById('lbClose').addEventListener('click', e => { e.stopPropagation(); closeLightbox() })
-  document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); showPhoto(current - 1) })
-  document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); showPhoto(current + 1) })
-  document.getElementById('lightbox').addEventListener('click', e => {
-    if (e.target === document.getElementById('lightbox') || e.target === document.getElementById('lbImg')) closeLightbox()
-  })
-  let touchStartX = null
-  const lb = document.getElementById('lightbox')
-  lb.addEventListener('touchstart', e => {
-    if (videoMap[current]) return  // don't swipe-navigate on video
-    touchStartX = e.touches[0].clientX
-  }, { passive: true })
-  lb.addEventListener('touchend', e => {
-    if (touchStartX === null) return
-    const dx = e.changedTouches[0].clientX - touchStartX
-    touchStartX = null
-    if (Math.abs(dx) < 35) return
-    if (dx < 0) showPhoto(current + 1)
-    else showPhoto(current - 1)
-  })
-
-  // ── Sticky header on scroll ──
-  const stickyBar = document.getElementById('stickyBar')
-  const hero = document.getElementById('hero')
-  window.addEventListener('scroll', () => {
-    const heroBottom = hero.getBoundingClientRect().bottom
-    stickyBar.classList.toggle('visible', heroBottom < 0)
-  }, { passive: true })
-
-  // ── Theme toggle ──
-  function toggleTheme() {
-    const html = document.documentElement
-    const isDark = html.getAttribute('data-theme') === 'dark'
-    html.setAttribute('data-theme', isDark ? 'light' : 'dark')
-    document.getElementById('themeToggle').textContent = isDark ? 'Night' : 'Day'
+  function buildTabs(listings){
+    const tabRow=document.getElementById('tabRow');
+    const buckets=BUCKET_ORDER.filter(b=>listings.some(l=>l.bucket===b));
+    tabRow.innerHTML=buckets.map(b=>{
+      const cnt=listings.filter(l=>l.bucket===b).length;
+      return `<button class="tab-btn${b===activeBucket?' active':''}" data-bucket="${b}" onclick="renderListings('${b}')">${b} <span style="opacity:.5">(${cnt})</span></button>`;
+    }).join('');
   }
 
-  // ── Copy link ──
-  function copyLink() {
-    const btn = document.getElementById('copyBtn')
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      btn.textContent = '✓ Copied!'
-      btn.classList.add('copied')
-      setTimeout(() => {
-        btn.innerHTML = '<span>&#128279;</span> Copy Link'
-        btn.classList.remove('copied')
-      }, 2200)
-    }).catch(() => {
-      // fallback
-      const ta = document.createElement('textarea')
-      ta.value = window.location.href
-      document.body.appendChild(ta)
-      ta.select()
-      document.execCommand('copy')
-      document.body.removeChild(ta)
-      btn.textContent = '✓ Copied!'
-      btn.classList.add('copied')
-      setTimeout(() => {
-        btn.innerHTML = '<span>&#128279;</span> Copy Link'
-        btn.classList.remove('copied')
-      }, 2200)
+  fetch('./active.json?_='+Date.now())
+    .then(r=>r.json())
+    .then(data=>{
+      allListings=data.listings||[];
+      if(!allListings.map(l=>l.serial).includes(MY_SERIAL))
+        document.getElementById('unavailBanner').style.display='flex';
+      buildTabs(allListings);
+      const hasBucket=allListings.some(l=>l.bucket===MY_BUCKET);
+      renderListings(hasBucket?MY_BUCKET:(BUCKET_ORDER.find(b=>allListings.some(l=>l.bucket===b))||''));
     })
+    .catch(()=>{document.getElementById('browseBtn').style.display='none';});
+
+  // ── Download Photos ──────────────────────────────────────────────────────
+  function openDownloadModal() {
+    if (!PHOTO_ALBUMS.length) { alert('No photos available for this listing.'); return; }
+    const allUrls = PHOTO_ALBUMS.flatMap(a => a.urls);
+    let btns = PHOTO_ALBUMS.map(a =>
+      `<button class="modal-album-btn" onclick='downloadPhotos(${JSON.stringify(a.urls)},"${a.name}")'>${a.name} &bull; ${a.urls.length} photo${a.urls.length!==1?'s':''}</button>`
+    ).join('');
+    if (PHOTO_ALBUMS.length > 1) {
+      btns = `<button class="modal-album-btn" style="border-color:rgba(72,199,142,.4);color:#48c78e" onclick='downloadPhotos(${JSON.stringify(allUrls)},"All Photos")'>&#11088; All Photos &bull; ${allUrls.length} photos</button>` + btns;
+    }
+    document.getElementById('dlAlbums').innerHTML = btns;
+    document.getElementById('dlModal').style.display = 'flex';
   }
+
+  async function downloadPhotos(urls, albumName) {
+    closeModal('dlModal');
+    const label = document.createElement('div');
+    label.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:999;backdrop-filter:blur(8px)';
+    label.textContent = 'Downloading 0 / ' + urls.length;
+    document.body.appendChild(label);
+    let done = 0;
+    for (const url of urls) {
+      try {
+        const resp = await fetch(url, {mode:'cors'});
+        const blob = await resp.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = albumName.replace(/\s+/g,'-') + '-' + (++done) + '.jpg';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+      } catch(e) {
+        ++done;
+        window.open(url, '_blank');
+      }
+      label.textContent = 'Downloading ' + done + ' / ' + urls.length;
+      await new Promise(r => setTimeout(r, 350));
+    }
+    label.textContent = '&#10003; Done — ' + done + ' photos saved';
+    setTimeout(() => label.remove(), 2500);
+  }
+
+  // ── Modals ───────────────────────────────────────────────────────────────
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+  // ── Save Listing Card ────────────────────────────────────────────────────
+  let userType = 'end', cpWantsDetails = false;
+
+  function showModalStep(n) {
+    document.getElementById('modalStep1').style.display = n===1 ? 'block' : 'none';
+    document.getElementById('modalStep2').style.display = n===2 ? 'block' : 'none';
+  }
+  function setUserType(t) {
+    userType = t;
+    document.getElementById('btnEndUser').classList.toggle('active', t==='end');
+    document.getElementById('btnCP').classList.toggle('active', t==='cp');
+  }
+  function setCpWantsDetails(wants) {
+    cpWantsDetails = wants;
+    document.getElementById('btnDetailsYes').classList.toggle('active', wants);
+    document.getElementById('btnDetailsNo').classList.toggle('active', !wants);
+    document.getElementById('cpForm').style.display = wants ? 'block' : 'none';
+    document.getElementById('btnSaveCard').style.display = 'block';
+  }
+  function proceedFromStep1() {
+    if (userType === 'end') {
+      closeModal('saveModal');
+      doSaveCard();
+    } else {
+      showModalStep(2);
+      document.getElementById('btnDetailsYes').classList.remove('active');
+      document.getElementById('btnDetailsNo').classList.remove('active');
+      document.getElementById('cpForm').style.display = 'none';
+      document.getElementById('btnSaveCard').style.display = 'none';
+      cpWantsDetails = false;
+    }
+  }
+  function openSaveModal() {
+    showModalStep(1);
+    setUserType('end');
+    document.getElementById('saveModal').style.display = 'flex';
+  }
+  function saveListingCard() {
+    if (cpWantsDetails) {
+      const name = document.getElementById('cpName').value.trim();
+      const phone = document.getElementById('cpPhone').value.trim();
+      if (!name || !phone) { alert('Please enter your Full Name and Contact Number.'); return; }
+      document.getElementById('cpFooterName').textContent = name;
+      document.getElementById('cpFooterPhone').textContent = phone;
+      document.getElementById('cpFooterCompany').textContent = document.getElementById('cpCompany').value.trim();
+      document.getElementById('cpFooter').style.display = 'block';
+    }
+    closeModal('saveModal');
+    doSaveCard();
+  }
+  async function doSaveCard() {
+    const hide = ['mapEmbedWrap','shareSection','viewPropertyLinks','notesSection','basicTermsSection','ytVideoCard']
+      .map(id => document.getElementById(id)).filter(Boolean);
+    hide.forEach(el => el.style.visibility = 'hidden');
+    // Force-load first 3 strip photos with CORS before capture
+    const thumbs = Array.from(document.querySelectorAll('.photo-strip .photo-thumb')).slice(0, 3);
+    await Promise.all(thumbs.map(img => new Promise(resolve => {
+      if (img.tagName === 'VIDEO') { resolve(); return; }
+      if (img.complete && img.naturalWidth > 0) { resolve(); return; }
+      img.crossOrigin = 'anonymous'; img.loading = 'eager';
+      img.onload = img.onerror = resolve;
+      img.src = img.src;
+    })));
+    await new Promise(r => setTimeout(r, 400));
+    try {
+      const canvas = await html2canvas(document.getElementById('captureArea'), {
+        allowTaint: true, useCORS: true, backgroundColor: '#0a1a17', scale: 2, logging: false, imageTimeout: 8000,
+      });
+      hide.forEach(el => el.style.visibility = '');
+      document.getElementById('cpFooter').style.display = 'none';
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      const link = document.createElement('a');
+      link.download = 'flat-257-listing.jpg';
+      link.href = dataUrl;
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        window.open(dataUrl, '_blank');
+      } else {
+        document.body.appendChild(link); link.click(); document.body.removeChild(link);
+      }
+    } catch(e) {
+      hide.forEach(el => el.style.visibility = '');
+      document.getElementById('cpFooter').style.display = 'none';
+      alert('Screenshot failed. Try scrolling to the top first.');
+    }
+  }
+
+  // ── Share Portfolio ──────────────────────────────────────────────────────
+  function sharePortfolio() {
+    const url = 'https://soboflats.github.io';
+    if (navigator.share) {
+      navigator.share({ title: 'SoBoFlats — Available Flats for Rent', url });
+    } else {
+      navigator.clipboard.writeText(url)
+        .then(() => alert('Portfolio link copied! ✔'))
+        .catch(() => {
+          const t = document.createElement('textarea');
+          t.value = url; document.body.appendChild(t); t.select();
+          document.execCommand('copy'); document.body.removeChild(t);
+          alert('Portfolio link copied! ✔');
+        });
+    }
+  }
+
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 </body>
 </html>

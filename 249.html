@@ -27,18 +27,21 @@
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--body-bg);min-height:100vh;max-width:430px;margin:0 auto}
     .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1280&q=80&auto=format&fit=crop') center top/cover no-repeat;z-index:0;overflow:hidden}
     .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s;pointer-events:none;z-index:1}
-    #bgMap{position:absolute;inset:0;opacity:0;transition:opacity 1.5s;z-index:0}
     .scroll{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
     .sticky-bar{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:430px;z-index:60;background:var(--sticky-bg);border-bottom:1px solid var(--sticky-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:11px 18px 10px;transition:transform .25s ease}
     .sticky-bar.visible{transform:translateX(-50%) translateY(0)}
     .sticky-title{font-size:13px;font-weight:700;color:var(--text-primary);letter-spacing:-.2px}
     .sticky-price{font-size:13px;font-weight:800;color:var(--text-primary)}
+    #browseBtn{position:fixed;bottom:24px;right:16px;z-index:90;background:rgba(72,199,142,.92);border:none;border-radius:24px;padding:13px 20px;font-size:13px;font-weight:700;color:#0a1a17;cursor:pointer;box-shadow:0 4px 20px rgba(72,199,142,.35);backdrop-filter:blur(8px);letter-spacing:.2px;transition:opacity .2s,transform .2s}
+    #browseBtn.hidden{opacity:0;pointer-events:none;transform:translateY(8px)}
     .toggle-anchor{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:0;z-index:50;pointer-events:none}
     .theme-toggle{position:absolute;top:14px;right:14px;pointer-events:all;background:var(--toggle-bg);border:1px solid var(--toggle-border);border-radius:20px;padding:7px 16px;font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--toggle-color);cursor:pointer;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .2s,color .2s}
     .hero{padding:52px 18px 24px}
     .tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
     .tag{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:5px 12px;border-radius:20px;color:var(--tag-color);background:var(--tag-bg);border:1px solid var(--tag-border);backdrop-filter:blur(8px)}
     .tag.highlight{color:#1a1000;background:rgba(255,217,60,.92);border-color:rgba(200,165,0,.55)}
+    .tag.gold{color:#ffd966;background:rgba(255,217,102,.14);border-color:rgba(255,217,102,.40)}
+    [data-theme="light"] .tag.gold{color:#7a5800;background:rgba(255,217,60,.22);border-color:rgba(200,165,0,.45)}
     .hero-title{font-size:30px;font-weight:800;color:var(--text-primary);line-height:1.15;letter-spacing:-.5px;margin-bottom:12px}
     .sub-tag-row{display:flex;gap:7px;flex-wrap:wrap}
     .sub-tag{font-size:11px;font-weight:600;padding:5px 13px;border-radius:20px;color:rgba(255,255,255,.95);background:var(--sub-tag-bg);border:1px solid var(--sub-tag-border);backdrop-filter:blur(8px)}
@@ -54,6 +57,7 @@
     .price-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
     .avail-pill{font-size:10.5px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:.3px;white-space:nowrap;color:var(--chip-color);background:var(--chip-bg);border:1px solid var(--chip-border)}
     .rera-badge{background:rgba(72,199,142,.14);border:1px solid rgba(72,199,142,.35);color:#48c78e;font-size:9.5px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.4px;white-space:nowrap}
+    .photos-coming-soon{height:265px;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text-muted);font-weight:600;letter-spacing:.2px;padding:20px;flex-direction:column;gap:8px}
     .photo-wrap{position:relative}
     .photo-wrap::after{content:'';position:absolute;top:0;right:0;bottom:48px;width:40px;background:linear-gradient(to right,transparent,var(--fade-right));pointer-events:none}
     .photo-count{position:absolute;bottom:56px;right:14px;z-index:2;background:rgba(0,0,0,.55);color:rgba(255,255,255,.85);font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.3px;pointer-events:none;backdrop-filter:blur(6px)}
@@ -91,8 +95,8 @@
     .map-embed-wrap{border-top:1px solid var(--divider);overflow:hidden}
     .map-iframe{display:block;width:100%;height:220px;border:none}
     .share-section{padding:14px 18px 18px;border-top:1px solid var(--divider)}
-    .share-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-    .share-btn{flex:1 1 calc(50% - 4px);min-width:120px;padding:10px 6px;border:1px solid var(--chip-border);border-radius:12px;background:var(--chip-bg);color:var(--chip-color);font-size:11.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;transition:background .15s}
+    .share-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+    .share-btn{padding:11px 6px;border:1px solid var(--chip-border);border-radius:12px;background:var(--chip-bg);color:var(--chip-color);font-size:11.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;transition:background .15s}
     .share-btn:active{background:rgba(72,199,142,.14)}.share-btn.copied{color:#48c78e;border-color:rgba(72,199,142,.35)}
     .share-btn.green{background:rgba(72,199,142,.12);border-color:rgba(72,199,142,.30);color:#48c78e}
     .share-btn.green:active{background:rgba(72,199,142,.22)}
@@ -100,12 +104,13 @@
     .video-label{padding:14px 18px 10px;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label)}
     .video-section{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
     .video-section iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+    video.photo-thumb{object-fit:cover;background:#000}
     /* CP Footer (screenshot only) */
     #cpFooter{display:none;background:linear-gradient(135deg,#0d2118,#081510);border-top:2px solid rgba(72,199,142,.5);padding:14px 18px;margin:0 12px;border-radius:0 0 22px 22px}
     .cp-inner{display:flex;align-items:center;justify-content:space-between}
     .cp-fname{font-size:14px;font-weight:700;color:#fff}
     .cp-fphone{font-size:12px;color:#48c78e;margin-top:2px}
-    .cp-company{font-size:11px;color:rgba(255,255,255,.45);text-align:right;max-width:130px}
+    .cp-company{font-size:13px;color:rgba(255,255,255,.65);text-align:right;max-width:140px;font-weight:500}
     /* Lightbox */
     .lightbox{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.93);align-items:center;justify-content:center;max-width:430px;margin:0 auto}
     .lightbox.open{display:flex}
@@ -123,7 +128,6 @@
     .unavail-sub{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:28px;max-width:280px;line-height:1.6}
     .unavail-btn{background:rgba(72,199,142,.18);border:1px solid rgba(72,199,142,.40);color:#48c78e;padding:13px 28px;border-radius:24px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:.2px}
     /* Browse Drawer */
-    #browseBtn{position:fixed;bottom:24px;left:16px;z-index:90;background:rgba(72,199,142,.92);border:none;border-radius:24px;padding:13px 20px;font-size:13px;font-weight:700;color:#0a1a17;cursor:pointer;box-shadow:0 4px 20px rgba(72,199,142,.35);backdrop-filter:blur(8px);letter-spacing:.2px}
     #browseOverlay{display:none;position:fixed;inset:0;z-index:91;background:rgba(0,0,0,.5)}
     #browseDrawer{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:430px;height:78vh;z-index:92;background:#0d2118;border-top:1px solid rgba(255,255,255,.12);border-radius:22px 22px 0 0;transition:transform .32s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;overflow:hidden}
     #browseDrawer.open{transform:translate(-50%,0)}
@@ -181,9 +185,7 @@
   <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Day</button>
 </div>
 
-<div class="bg">
-  <div id="bgMap"></div>
-</div>
+<div class="bg"></div>
 
 <div id="captureArea">
 <div class="scroll">
@@ -191,7 +193,7 @@
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
       <span class="tag">Lalbaug</span>
-      <span class="tag" style="font-size:9px;opacity:.45;letter-spacing:.4px">ID: 249</span>
+      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 249</span>
     </div>
     <div class="hero-title">Nekjat Maratha Sadan</div>
     <div class="sub-tag-row">
@@ -218,10 +220,9 @@
 
     <div class="photo-wrap">
       <div class="photo-strip" id="photoStrip">
-        <div class="album-sep">Flat Photos</div>
-        <img class="photo-thumb" src="./placeholder.png" onclick="openLightbox(0)" loading="lazy">
+<div class="photos-coming-soon">&#128247; Photos Coming Soon</div>
       </div>
-      <span class="photo-count">1 photo</span>
+      <span class="photo-count">0 photos</span>
       <div class="swipe-hint"><span class="swipe-hint-arrow">&#8250;</span> Swipe</div>
     </div>
 
@@ -273,7 +274,7 @@
     </div>
 
 
-    <div class="details">
+    <div class="details" id="notesSection">
       <div class="sec-label">Notes</div>
       <div class="chips">
         <span class="chip">1 day notice for visit</span>
@@ -283,7 +284,7 @@
       </div>
     </div>
 
-    <div class="details">
+    <div class="details" id="basicTermsSection">
       <div class="sec-label">Basic Terms</div>
       <ul class="terms-list">
         <li>Agreement cost split 50:50 between owner & tenant</li>
@@ -294,26 +295,26 @@
       </ul>
     </div>
 
-    <div class="links">
+    <div class="links" id="viewPropertyLinks">
       <div class="sec-label">View Property</div>
       <a class="link-row" href="https://maps.app.goo.gl/1bovo5uHc5eEB4SbA" target="_blank" rel="noopener">
-        <div class="l-icon li-blue">📍</div>
+        <div class="l-icon li-blue">&#128205;</div>
         <div class="l-text"><div class="l-name">Location</div><div class="l-sub">Open in Google Maps</div></div>
         <div class="l-arrow">›</div>
       </a>
     </div>
 
     <div class="map-embed-wrap" id="mapEmbedWrap">
-      <iframe class="map-iframe" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&center=18.9914124,72.8325748&zoom=20&maptype=satellite" loading="lazy"
+      <iframe class="map-iframe" src="https://maps.google.com/maps?q=18.9914124,72.8325748&z=19&output=embed" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     </div>
 
     <div class="share-section" id="shareSection">
       <div class="sec-label">Share this listing</div>
       <div class="share-grid">
-        
-        <button class="share-btn" id="copyBtn" onclick="copyLink()">&#128279; Copy Link</button>
-        <button class="share-btn green" onclick="openSaveModal()">&#128444; Save Card</button>
+        <button class="share-btn green" onclick="openSaveModal()">&#128444; Save Listing</button>
+        <button class="share-btn" onclick="openDownloadModal()">&#128247; Save Photos</button>
+        <button class="share-btn" id="copyBtn" onclick="copyLink()">&#128257; Share Listing</button>
         <button class="share-btn" onclick="sharePortfolio()">&#127968; Share Portfolio</button>
       </div>
     </div>
@@ -397,7 +398,7 @@
   const MY_SERIAL = 249;
   const MY_BUCKET = "1 RK";
   const BUCKET_ORDER = ["1 RK", "1 & 1.5 BHK", "2 & 2.5 BHK", "3 & 3.5 BHK", "4 & 4.5 BHK", "5 & 5.5 BHK"];
-  const photos = ["./placeholder.png"];
+  const photos = [];
   const PHOTO_ALBUMS = [];
   let current = 0, allListings = [], activeBucket = MY_BUCKET;
 
@@ -424,17 +425,29 @@
   // Theme
   function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeToggle').textContent=d?'Night':'Day';}
 
-  // Copy link
+  // Share Listing (copy link)
   function copyLink(){
     const btn=document.getElementById('copyBtn'),url="https://soboflats.github.io/249.html";
-    const reset=()=>{btn.innerHTML='&#128279; Copy Link';btn.classList.remove('copied');};
-    const done=()=>{btn.textContent='&#10003; Copied!';btn.classList.add('copied');setTimeout(reset,2200);};
-    navigator.clipboard.writeText(url).then(done).catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);done();});
+    const reset=()=>{btn.innerHTML='&#128257; Share Listing';btn.classList.remove('copied');};
+    const done=()=>{btn.textContent='&#10003; Link Copied!';btn.classList.add('copied');setTimeout(reset,2200);};
+    if(navigator.share){navigator.share({title:document.title,url}).catch(()=>fallbackCopy());}
+    else{fallbackCopy();}
+    function fallbackCopy(){navigator.clipboard.writeText(url).then(done).catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);done();});}
   }
 
   // Browse drawer
   function openBrowse(){document.getElementById('browseDrawer').classList.add('open');document.getElementById('browseOverlay').style.display='block';}
   function closeBrowse(){document.getElementById('browseDrawer').classList.remove('open');document.getElementById('browseOverlay').style.display='none';}
+  // Hide Browse Flats button when share section scrolls into view
+  (function(){
+    const btn = document.getElementById('browseBtn');
+    const share = document.getElementById('shareSection');
+    if (!btn || !share) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => btn.classList.toggle('hidden', e.isIntersecting));
+    }, {threshold: 0.05});
+    obs.observe(share);
+  })();
 
   function renderListings(bucket){
     activeBucket=bucket;
@@ -478,15 +491,43 @@
 
   // ── Download Photos ──────────────────────────────────────────────────────
   function openDownloadModal() {
-    if (!PHOTO_ALBUMS.length) { alert('No photos available.'); return; }
-    document.getElementById('dlAlbums').innerHTML = PHOTO_ALBUMS.map(a =>
-      `<button class="modal-album-btn" onclick='openAlbum(${JSON.stringify(a.urls)})'>${a.name} &bull; ${a.urls.length} photo${a.urls.length!==1?'s':''}</button>`
+    if (!PHOTO_ALBUMS.length) { alert('No photos available for this listing.'); return; }
+    const allUrls = PHOTO_ALBUMS.flatMap(a => a.urls);
+    let btns = PHOTO_ALBUMS.map(a =>
+      `<button class="modal-album-btn" onclick='downloadPhotos(${JSON.stringify(a.urls)},"${a.name}")'>${a.name} &bull; ${a.urls.length} photo${a.urls.length!==1?'s':''}</button>`
     ).join('');
+    if (PHOTO_ALBUMS.length > 1) {
+      btns = `<button class="modal-album-btn" style="border-color:rgba(72,199,142,.4);color:#48c78e" onclick='downloadPhotos(${JSON.stringify(allUrls)},"All Photos")'>&#11088; All Photos &bull; ${allUrls.length} photos</button>` + btns;
+    }
+    document.getElementById('dlAlbums').innerHTML = btns;
     document.getElementById('dlModal').style.display = 'flex';
   }
-  function openAlbum(urls) {
+
+  async function downloadPhotos(urls, albumName) {
     closeModal('dlModal');
-    urls.forEach((url, i) => setTimeout(() => window.open(url, '_blank'), i * 250));
+    const label = document.createElement('div');
+    label.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:999;backdrop-filter:blur(8px)';
+    label.textContent = 'Downloading 0 / ' + urls.length;
+    document.body.appendChild(label);
+    let done = 0;
+    for (const url of urls) {
+      try {
+        const resp = await fetch(url, {mode:'cors'});
+        const blob = await resp.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = albumName.replace(/\s+/g,'-') + '-' + (++done) + '.jpg';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+      } catch(e) {
+        ++done;
+        window.open(url, '_blank');
+      }
+      label.textContent = 'Downloading ' + done + ' / ' + urls.length;
+      await new Promise(r => setTimeout(r, 350));
+    }
+    label.textContent = '&#10003; Done — ' + done + ' photos saved';
+    setTimeout(() => label.remove(), 2500);
   }
 
   // ── Modals ───────────────────────────────────────────────────────────────
@@ -543,17 +584,24 @@
     doSaveCard();
   }
   async function doSaveCard() {
-    const mapEl = document.getElementById('mapEmbedWrap');
-    const shareEl = document.getElementById('shareSection');
-    if (mapEl) mapEl.style.visibility = 'hidden';
-    if (shareEl) shareEl.style.visibility = 'hidden';
-    await new Promise(r => setTimeout(r, 150));
+    const hide = ['mapEmbedWrap','shareSection','viewPropertyLinks','notesSection','basicTermsSection','ytVideoCard']
+      .map(id => document.getElementById(id)).filter(Boolean);
+    hide.forEach(el => el.style.visibility = 'hidden');
+    // Force-load first 3 strip photos with CORS before capture
+    const thumbs = Array.from(document.querySelectorAll('.photo-strip .photo-thumb')).slice(0, 3);
+    await Promise.all(thumbs.map(img => new Promise(resolve => {
+      if (img.tagName === 'VIDEO') { resolve(); return; }
+      if (img.complete && img.naturalWidth > 0) { resolve(); return; }
+      img.crossOrigin = 'anonymous'; img.loading = 'eager';
+      img.onload = img.onerror = resolve;
+      img.src = img.src;
+    })));
+    await new Promise(r => setTimeout(r, 400));
     try {
       const canvas = await html2canvas(document.getElementById('captureArea'), {
-        allowTaint: true, useCORS: true, backgroundColor: '#0a1a17', scale: 2, logging: false,
+        allowTaint: true, useCORS: true, backgroundColor: '#0a1a17', scale: 2, logging: false, imageTimeout: 8000,
       });
-      if (mapEl) mapEl.style.visibility = '';
-      if (shareEl) shareEl.style.visibility = '';
+      hide.forEach(el => el.style.visibility = '');
       document.getElementById('cpFooter').style.display = 'none';
       const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
       const link = document.createElement('a');
@@ -565,8 +613,7 @@
         document.body.appendChild(link); link.click(); document.body.removeChild(link);
       }
     } catch(e) {
-      if (mapEl) mapEl.style.visibility = '';
-      if (shareEl) shareEl.style.visibility = '';
+      hide.forEach(el => el.style.visibility = '');
       document.getElementById('cpFooter').style.display = 'none';
       alert('Screenshot failed. Try scrolling to the top first.');
     }
@@ -589,21 +636,7 @@
     }
   }
 
-  // ── Background 3D Aerial Map ─────────────────────────────────────────────
-  function initBgMap() {
-    const el = document.getElementById('bgMap');
-    if (!el || typeof google === 'undefined') return;
-    const map = new google.maps.Map(el, {
-      center: { lat: 18.9914124, lng: 72.8325748 },
-      zoom: 19, mapTypeId: 'satellite', tilt: 67, heading: 0,
-      disableDefaultUI: true, gestureHandling: 'none', keyboardShortcuts: false,
-    });
-    el.style.opacity = '1';
-    let h = 0;
-    setInterval(() => { h = (h + 0.4) % 360; map.setHeading(h); }, 100);
-  }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&callback=initBgMap" async defer></script>
 </body>
 </html>

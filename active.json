@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-21T14:12:14.889130+00:00",
+  "updated_at": "2026-05-21T14:27:46.004291+00:00",
   "listings": [
     {
       "serial": 249,
@@ -7,11 +7,23 @@
       "bhk": "1 rk",
       "carpet": "275",
       "bucket": "1 RK",
-      "rent": 0.0,
-      "rent_display": "₹30K* (₹30,000)L",
+      "rent": 0.3,
+      "rent_display": "₹0.3L",
       "location": "Lalbaug",
       "url": "https://soboflats.github.io/249.html",
       "thumb": ""
+    },
+    {
+      "serial": 257,
+      "project": "Piramal Aranya, Arav",
+      "bhk": "3 bhk",
+      "carpet": "1100",
+      "bucket": "3 & 3.5 BHK",
+      "rent": 1.95,
+      "rent_display": "₹1.95L",
+      "location": "Byculla (E)",
+      "url": "https://soboflats.github.io/257.html",
+      "thumb": "https://lh3.googleusercontent.com/pw/AP1GczOvW6FdTB2j2o0ZDPBoeR-EXb89fEoECSEI1rnYrK7QLdm9teA4vv7Jiys_7C1Jvwk3Bdcvzhq0NX2pHMEVI1IPreo6J5Vp5bM_mu9oaleGwYNMvHHb=w1600"
     }
   ]
 }
