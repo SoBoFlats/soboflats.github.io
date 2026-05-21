@@ -149,6 +149,8 @@
     .listing-name{font-size:13px;font-weight:700;color:#fff}
     .listing-meta{font-size:11px;color:rgba(255,255,255,.5)}
     .listing-rent{font-size:14px;font-weight:800;color:#48c78e}
+    .listing-loc-inline{font-size:11px;font-weight:400;opacity:.45}
+    .listing-date{font-size:9.5px;color:rgba(255,255,255,.28);letter-spacing:.1px}
     .listing-current-tag{font-size:10px;color:rgba(72,199,142,.8);font-weight:600;margin-top:2px}
     .no-listings{text-align:center;color:rgba(255,255,255,.35);font-size:13px;padding:32px 0}
     /* Modals */
@@ -536,13 +538,14 @@
     if(!items.length){scroll.innerHTML='<div class="no-listings">No listings in this category</div>';return;}
     scroll.innerHTML=items.map(l=>{
       const isCur=l.serial===MY_SERIAL;
-      const locStr = l.location ? ' <span style="opacity:.45">·</span> '+l.location : '';
+      const locStr = l.location ? ` <span class="listing-loc-inline">&nbsp;·&nbsp;${l.location}</span>` : '';
       const colLStr = l.col_l ? ' · '+l.col_l : '';
       return `<a class="listing-card${isCur?' current':''}" href="${l.url}">
         <img class="listing-thumb" src="${l.thumb||''}" alt="" loading="lazy">
         <div class="listing-info">
           <div class="listing-name">${l.project}${locStr}</div>
           <div class="listing-meta">${l.bhk}${l.carpet?' · '+l.carpet+' carpet':''}${colLStr}</div>
+          ${l.page_date?'<div class="listing-date">'+l.page_date+'</div>':''}
           <div class="listing-rent">${l.rent_display}</div>
           ${isCur?'<div class="listing-current-tag">&#8592; Viewing this</div>':''}
         </div></a>`;
