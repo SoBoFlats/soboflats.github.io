@@ -67,9 +67,6 @@
     .photo-thumb:active{transform:scale(.96)}
     .album-sep{flex-shrink:0;align-self:center;writing-mode:vertical-rl;transform:rotate(180deg);font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-label);padding:6px 2px}
     .album-sep:first-child{display:none}
-    .photo-actions{padding:6px 14px 12px;display:flex;gap:8px}
-    .photo-act-btn{flex:1;padding:9px;border:1px solid var(--chip-border);border-radius:12px;background:var(--chip-bg);color:var(--chip-color);font-size:12px;font-weight:600;cursor:pointer}
-    .photo-act-btn:active{background:rgba(72,199,142,.14)}
     .details{padding:16px 18px;border-top:1px solid var(--divider);border-bottom:1px solid var(--divider)}
     .sec-label{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label);margin-bottom:12px}
     .chips{display:flex;flex-wrap:wrap;gap:7px}
@@ -93,11 +90,12 @@
     .l-arrow{font-size:16px;color:rgba(255,255,255,.22)}
     .map-embed-wrap{border-top:1px solid var(--divider);overflow:hidden}
     .map-iframe{display:block;width:100%;height:220px;border:none}
-    #copyActionRow{display:flex;gap:8px;padding:14px 18px;border-top:1px solid var(--divider)}
-    .copy-btn{flex:1;background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:20px;padding:9px 0;font-size:11.5px;font-weight:700;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s;letter-spacing:.2px}
-    .copy-btn:active{background:rgba(72,199,142,.14)}.copy-btn.copied{color:#48c78e;border-color:rgba(72,199,142,.35)}
-    .save-btn{flex:1;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.30);border-radius:20px;padding:9px 0;font-size:11.5px;font-weight:700;color:#48c78e;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
-    .save-btn:active{background:rgba(72,199,142,.22)}
+    .share-section{padding:14px 18px 18px;border-top:1px solid var(--divider)}
+    .share-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .share-btn{flex:1 1 calc(50% - 4px);min-width:120px;padding:10px 6px;border:1px solid var(--chip-border);border-radius:12px;background:var(--chip-bg);color:var(--chip-color);font-size:11.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;transition:background .15s}
+    .share-btn:active{background:rgba(72,199,142,.14)}.share-btn.copied{color:#48c78e;border-color:rgba(72,199,142,.35)}
+    .share-btn.green{background:rgba(72,199,142,.12);border-color:rgba(72,199,142,.30);color:#48c78e}
+    .share-btn.green:active{background:rgba(72,199,142,.22)}
     .video-card{margin:0 12px 32px;border-radius:22px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
     .video-label{padding:14px 18px 10px;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label)}
     .video-section{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
@@ -125,7 +123,7 @@
     .unavail-sub{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:28px;max-width:280px;line-height:1.6}
     .unavail-btn{background:rgba(72,199,142,.18);border:1px solid rgba(72,199,142,.40);color:#48c78e;padding:13px 28px;border-radius:24px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:.2px}
     /* Browse Drawer */
-    #browseBtn{position:fixed;bottom:24px;right:16px;z-index:90;background:rgba(72,199,142,.92);border:none;border-radius:24px;padding:13px 20px;font-size:13px;font-weight:700;color:#0a1a17;cursor:pointer;box-shadow:0 4px 20px rgba(72,199,142,.35);backdrop-filter:blur(8px);letter-spacing:.2px}
+    #browseBtn{position:fixed;bottom:24px;left:16px;z-index:90;background:rgba(72,199,142,.92);border:none;border-radius:24px;padding:13px 20px;font-size:13px;font-weight:700;color:#0a1a17;cursor:pointer;box-shadow:0 4px 20px rgba(72,199,142,.35);backdrop-filter:blur(8px);letter-spacing:.2px}
     #browseOverlay{display:none;position:fixed;inset:0;z-index:91;background:rgba(0,0,0,.5)}
     #browseDrawer{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:430px;height:78vh;z-index:92;background:#0d2118;border-top:1px solid rgba(255,255,255,.12);border-radius:22px 22px 0 0;transition:transform .32s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;overflow:hidden}
     #browseDrawer.open{transform:translate(-50%,0)}
@@ -162,6 +160,7 @@
     .modal-dl-btn{width:100%;padding:13px;border-radius:16px;background:rgba(72,199,142,.2);border:1px solid rgba(72,199,142,.4);color:#48c78e;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;display:block}
     .modal-dl-btn:active{background:rgba(72,199,142,.35)}
     .modal-cancel{width:100%;padding:11px;border-radius:16px;background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:13px;cursor:pointer;display:block}
+    .modal-ask-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.75);text-align:center;margin-bottom:12px}
   </style>
 </head>
 <body>
@@ -225,7 +224,6 @@
       <span class="photo-count">1 photo</span>
       <div class="swipe-hint"><span class="swipe-hint-arrow">&#8250;</span> Swipe</div>
     </div>
-    
 
     <div class="details">
       <div class="sec-label">Property Details</div>
@@ -306,13 +304,18 @@
     </div>
 
     <div class="map-embed-wrap" id="mapEmbedWrap">
-      <iframe class="map-iframe" src="https://maps.google.com/maps?q=18.9914124,72.8325748&z=19&maptype=satellite&output=embed" loading="lazy"
+      <iframe class="map-iframe" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&center=18.9914124,72.8325748&zoom=20&maptype=satellite" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     </div>
 
-    <div id="copyActionRow">
-      <button class="copy-btn" id="copyBtn" onclick="copyLink()">&#128279; Copy Link</button>
-      <button class="save-btn" onclick="openSaveModal()">&#128247; Save Card</button>
+    <div class="share-section" id="shareSection">
+      <div class="sec-label">Share this listing</div>
+      <div class="share-grid">
+        
+        <button class="share-btn" id="copyBtn" onclick="copyLink()">&#128279; Copy Link</button>
+        <button class="share-btn green" onclick="openSaveModal()">&#128444; Save Card</button>
+        <button class="share-btn" onclick="sharePortfolio()">&#127968; Share Portfolio</button>
+      </div>
     </div>
   </div>
 
@@ -346,16 +349,29 @@
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">Save Listing Card</div>
-    <div class="utype-row">
-      <button class="utype-btn active" id="btnEndUser" onclick="setUserType('end')">End User</button>
-      <button class="utype-btn" id="btnCP" onclick="setUserType('cp')">Channel Partner (CP)</button>
+    <!-- Step 1: Choose user type -->
+    <div id="modalStep1">
+      <div class="utype-row">
+        <button class="utype-btn active" id="btnEndUser" onclick="setUserType('end')">End User</button>
+        <button class="utype-btn" id="btnCP" onclick="setUserType('cp')">Channel Partner (CP)</button>
+      </div>
+      <button class="modal-dl-btn" onclick="proceedFromStep1()">Continue &#8250;</button>
     </div>
-    <div id="cpForm">
-      <input id="cpName" type="text" placeholder="Full Name *" class="cp-input">
-      <input id="cpPhone" type="tel" placeholder="Contact Number *" class="cp-input">
-      <input id="cpCompany" type="text" placeholder="Company Name (optional)" class="cp-input">
+    <!-- Step 2 (CP only): Ask if they want details on the card -->
+    <div id="modalStep2" style="display:none">
+      <div class="modal-ask-label">Add your contact details to the image?</div>
+      <div class="utype-row">
+        <button class="utype-btn" id="btnDetailsYes" onclick="setCpWantsDetails(true)">Yes, add details</button>
+        <button class="utype-btn" id="btnDetailsNo" onclick="setCpWantsDetails(false)">No, just save</button>
+      </div>
+      <div id="cpForm">
+        <input id="cpName" type="text" placeholder="Full Name *" class="cp-input">
+        <input id="cpPhone" type="tel" placeholder="Contact Number *" class="cp-input">
+        <input id="cpCompany" type="text" placeholder="Company Name (optional)" class="cp-input">
+      </div>
+      <button class="modal-dl-btn" id="btnSaveCard" onclick="saveListingCard()" style="display:none">&#128444; Download Card</button>
+      <button class="modal-cancel" onclick="showModalStep(1)" style="margin-bottom:8px">&#8249; Back</button>
     </div>
-    <button class="modal-dl-btn" onclick="saveListingCard()">&#128247; Download Card</button>
     <button class="modal-cancel" onclick="closeModal('saveModal')">Cancel</button>
   </div>
 </div>
@@ -411,8 +427,9 @@
   // Copy link
   function copyLink(){
     const btn=document.getElementById('copyBtn'),url="https://soboflats.github.io/249.html";
-    navigator.clipboard.writeText(url).then(()=>{btn.textContent='&#10003; Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML='&#128279; Copy Link';btn.classList.remove('copied');},2200);})
-    .catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);btn.textContent='&#10003; Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML='&#128279; Copy Link';btn.classList.remove('copied');},2200);});
+    const reset=()=>{btn.innerHTML='&#128279; Copy Link';btn.classList.remove('copied');};
+    const done=()=>{btn.textContent='&#10003; Copied!';btn.classList.add('copied');setTimeout(reset,2200);};
+    navigator.clipboard.writeText(url).then(done).catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);done();});
   }
 
   // Browse drawer
@@ -476,17 +493,44 @@
   function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
   // ── Save Listing Card ────────────────────────────────────────────────────
-  let userType = 'end';
+  let userType = 'end', cpWantsDetails = false;
+
+  function showModalStep(n) {
+    document.getElementById('modalStep1').style.display = n===1 ? 'block' : 'none';
+    document.getElementById('modalStep2').style.display = n===2 ? 'block' : 'none';
+  }
   function setUserType(t) {
     userType = t;
     document.getElementById('btnEndUser').classList.toggle('active', t==='end');
     document.getElementById('btnCP').classList.toggle('active', t==='cp');
-    document.getElementById('cpForm').style.display = t==='cp' ? 'block' : 'none';
   }
-  function openSaveModal() { document.getElementById('saveModal').style.display = 'flex'; }
-
-  async function saveListingCard() {
-    if (userType === 'cp') {
+  function setCpWantsDetails(wants) {
+    cpWantsDetails = wants;
+    document.getElementById('btnDetailsYes').classList.toggle('active', wants);
+    document.getElementById('btnDetailsNo').classList.toggle('active', !wants);
+    document.getElementById('cpForm').style.display = wants ? 'block' : 'none';
+    document.getElementById('btnSaveCard').style.display = 'block';
+  }
+  function proceedFromStep1() {
+    if (userType === 'end') {
+      closeModal('saveModal');
+      doSaveCard();
+    } else {
+      showModalStep(2);
+      document.getElementById('btnDetailsYes').classList.remove('active');
+      document.getElementById('btnDetailsNo').classList.remove('active');
+      document.getElementById('cpForm').style.display = 'none';
+      document.getElementById('btnSaveCard').style.display = 'none';
+      cpWantsDetails = false;
+    }
+  }
+  function openSaveModal() {
+    showModalStep(1);
+    setUserType('end');
+    document.getElementById('saveModal').style.display = 'flex';
+  }
+  function saveListingCard() {
+    if (cpWantsDetails) {
       const name = document.getElementById('cpName').value.trim();
       const phone = document.getElementById('cpPhone').value.trim();
       if (!name || !phone) { alert('Please enter your Full Name and Contact Number.'); return; }
@@ -495,18 +539,21 @@
       document.getElementById('cpFooterCompany').textContent = document.getElementById('cpCompany').value.trim();
       document.getElementById('cpFooter').style.display = 'block';
     }
-    const mapEl = document.getElementById('mapEmbedWrap');
-    const actEl = document.getElementById('copyActionRow');
-    if (mapEl) mapEl.style.visibility = 'hidden';
-    if (actEl) actEl.style.visibility = 'hidden';
     closeModal('saveModal');
+    doSaveCard();
+  }
+  async function doSaveCard() {
+    const mapEl = document.getElementById('mapEmbedWrap');
+    const shareEl = document.getElementById('shareSection');
+    if (mapEl) mapEl.style.visibility = 'hidden';
+    if (shareEl) shareEl.style.visibility = 'hidden';
     await new Promise(r => setTimeout(r, 150));
     try {
       const canvas = await html2canvas(document.getElementById('captureArea'), {
         allowTaint: true, useCORS: true, backgroundColor: '#0a1a17', scale: 2, logging: false,
       });
       if (mapEl) mapEl.style.visibility = '';
-      if (actEl) actEl.style.visibility = '';
+      if (shareEl) shareEl.style.visibility = '';
       document.getElementById('cpFooter').style.display = 'none';
       const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
       const link = document.createElement('a');
@@ -519,9 +566,26 @@
       }
     } catch(e) {
       if (mapEl) mapEl.style.visibility = '';
-      if (actEl) actEl.style.visibility = '';
+      if (shareEl) shareEl.style.visibility = '';
       document.getElementById('cpFooter').style.display = 'none';
       alert('Screenshot failed. Try scrolling to the top first.');
+    }
+  }
+
+  // ── Share Portfolio ──────────────────────────────────────────────────────
+  function sharePortfolio() {
+    const url = 'https://soboflats.github.io';
+    if (navigator.share) {
+      navigator.share({ title: 'SoBoFlats — Available Flats for Rent', url });
+    } else {
+      navigator.clipboard.writeText(url)
+        .then(() => alert('Portfolio link copied! ✔'))
+        .catch(() => {
+          const t = document.createElement('textarea');
+          t.value = url; document.body.appendChild(t); t.select();
+          document.execCommand('copy'); document.body.removeChild(t);
+          alert('Portfolio link copied! ✔');
+        });
     }
   }
 
