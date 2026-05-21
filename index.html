@@ -19,9 +19,9 @@
     [data-theme="light"] .toggle-btn{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.14)}
     .tab-row{display:flex;gap:6px;padding:16px 16px 8px;overflow-x:auto;scrollbar-width:none}
     .tab-row::-webkit-scrollbar{display:none}
-    .tab-btn{flex-shrink:0;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
+    .tab-btn{flex-shrink:0;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
     .tab-btn.active{background:var(--tab-a);border-color:var(--tab-ab);color:var(--accent)}
-    [data-theme="light"] .tab-btn{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.05);color:rgba(0,0,0,.5)}
+    [data-theme="light"] .tab-btn{border-color:rgba(0,0,0,.25);background:rgba(0,0,0,.05);color:rgba(0,0,0,.5)}
     [data-theme="light"] .tab-btn.active{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.35);color:var(--accent)}
     .listings{padding:8px 12px}
     .listing-card{display:flex;gap:12px;padding:14px;margin-bottom:10px;background:var(--card);border:1px solid var(--card-b);border-radius:16px;text-decoration:none;cursor:pointer}
@@ -51,13 +51,13 @@
 
   <script>
     const BUCKET_ORDER=['1 RK','1 & 1.5 BHK','2 & 2.5 BHK','3 & 3.5 BHK','4 & 4.5 BHK','5 & 5.5 BHK'];
-    let allListings=[], activeBucket='';
+    let allListings=[], activeBucket='__all__';
 
     function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');}
 
     function renderListings(bucket){
       activeBucket=bucket;
-      const items=allListings.filter(l=>l.bucket===bucket);
+      const items=bucket==='__all__'?allListings:allListings.filter(l=>l.bucket===bucket);
       const el=document.getElementById('listings');
       if(!items.length){el.innerHTML='<div class="empty">No listings in this category</div>';return;}
       el.innerHTML=items.map(l=>{
@@ -77,11 +77,11 @@
     function buildTabs(listings){
       const tabRow=document.getElementById('tabRow');
       const buckets=BUCKET_ORDER.filter(b=>listings.some(l=>l.bucket===b));
-      tabRow.innerHTML=buckets.map(b=>{
+      const allBtn=`<button class="tab-btn${activeBucket==='__all__'?' active':''}" data-bucket="__all__" onclick="renderListings('__all__')">All <span style="opacity:.5">${listings.length}</span></button>`;
+      tabRow.innerHTML=allBtn+buckets.map(b=>{
         const cnt=listings.filter(l=>l.bucket===b).length;
-        return `<button class="tab-btn" data-bucket="${b}" onclick="renderListings('${b}')">${b} <span style="opacity:.5">(${cnt})</span></button>`;
+        return `<button class="tab-btn${b===activeBucket?' active':''}" data-bucket="${b}" onclick="renderListings('${b}')">${b} <span style="opacity:.5">(${cnt})</span></button>`;
       }).join('');
-      return buckets;
     }
 
     fetch('./active.json?_='+Date.now())
@@ -89,8 +89,8 @@
       .then(data=>{
         allListings=data.listings||[];
         document.getElementById('hCount').textContent=allListings.length+' listing'+(allListings.length!==1?'s':'')+' available';
-        const buckets=buildTabs(allListings);
-        if(buckets.length){renderListings(buckets[0]);}
+        buildTabs(allListings);
+        if(allListings.length){renderListings('__all__');}
         else{document.getElementById('listings').innerHTML='<div class="empty">No listings currently available</div>';}
       })
       .catch(()=>{document.getElementById('listings').innerHTML='<div class="empty">Could not load listings</div>';});
