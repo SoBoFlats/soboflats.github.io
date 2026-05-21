@@ -25,8 +25,9 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--body-bg);min-height:100vh;max-width:430px;margin:0 auto}
-    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1280&q=80&auto=format&fit=crop') center top/cover no-repeat;z-index:0}
-    .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s}
+    .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1280&q=80&auto=format&fit=crop') center top/cover no-repeat;z-index:0;overflow:hidden}
+    .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s;pointer-events:none;z-index:1}
+    #bgMap{position:absolute;inset:0;opacity:0;transition:opacity 1.5s;z-index:0}
     .scroll{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
     .sticky-bar{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:430px;z-index:60;background:var(--sticky-bg);border-bottom:1px solid var(--sticky-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:11px 18px 10px;transition:transform .25s ease}
     .sticky-bar.visible{transform:translateX(-50%) translateY(0)}
@@ -54,18 +55,21 @@
     .avail-pill{font-size:10.5px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:.3px;white-space:nowrap;color:var(--chip-color);background:var(--chip-bg);border:1px solid var(--chip-border)}
     .rera-badge{background:rgba(72,199,142,.14);border:1px solid rgba(72,199,142,.35);color:#48c78e;font-size:9.5px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.4px;white-space:nowrap}
     .photo-wrap{position:relative}
-    .photo-wrap::after{content:'';position:absolute;top:0;right:0;bottom:10px;width:40px;background:linear-gradient(to right,transparent,var(--fade-right));pointer-events:none}
-    .photo-count{position:absolute;bottom:20px;right:14px;z-index:2;background:rgba(0,0,0,.55);color:rgba(255,255,255,.85);font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.3px;pointer-events:none;backdrop-filter:blur(6px)}
-    .swipe-hint{position:absolute;bottom:20px;left:18px;z-index:2;display:flex;align-items:center;gap:4px;background:rgba(0,0,0,.45);color:rgba(255,255,255,.75);font-size:10px;font-weight:600;padding:3px 10px 3px 8px;border-radius:20px;pointer-events:none;backdrop-filter:blur(6px);animation:hintFade 3.5s ease forwards}
+    .photo-wrap::after{content:'';position:absolute;top:0;right:0;bottom:48px;width:40px;background:linear-gradient(to right,transparent,var(--fade-right));pointer-events:none}
+    .photo-count{position:absolute;bottom:56px;right:14px;z-index:2;background:rgba(0,0,0,.55);color:rgba(255,255,255,.85);font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.3px;pointer-events:none;backdrop-filter:blur(6px)}
+    .swipe-hint{position:absolute;bottom:56px;left:18px;z-index:2;display:flex;align-items:center;gap:4px;background:rgba(0,0,0,.45);color:rgba(255,255,255,.75);font-size:10px;font-weight:600;padding:3px 10px 3px 8px;border-radius:20px;pointer-events:none;backdrop-filter:blur(6px);animation:hintFade 3.5s ease forwards}
     .swipe-hint-arrow{font-size:13px;animation:hintSlide 1.2s ease-in-out infinite}
     @keyframes hintFade{0%{opacity:0}15%{opacity:1}70%{opacity:1}100%{opacity:0;pointer-events:none}}
     @keyframes hintSlide{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
-    .photo-strip{overflow-x:auto;display:flex;gap:8px;padding:14px 14px 38px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .photo-strip{overflow-x:auto;display:flex;gap:8px;padding:14px 14px 10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
     .photo-strip::-webkit-scrollbar{display:none}
     .photo-thumb{flex-shrink:0;width:180px;height:265px;border-radius:12px;object-fit:cover;scroll-snap-align:start;cursor:pointer;transition:transform .15s;border:1px solid var(--chip-border)}
     .photo-thumb:active{transform:scale(.96)}
     .album-sep{flex-shrink:0;align-self:center;writing-mode:vertical-rl;transform:rotate(180deg);font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-label);padding:6px 2px}
     .album-sep:first-child{display:none}
+    .photo-actions{padding:6px 14px 12px;display:flex;gap:8px}
+    .photo-act-btn{flex:1;padding:9px;border:1px solid var(--chip-border);border-radius:12px;background:var(--chip-bg);color:var(--chip-color);font-size:12px;font-weight:600;cursor:pointer}
+    .photo-act-btn:active{background:rgba(72,199,142,.14)}
     .details{padding:16px 18px;border-top:1px solid var(--divider);border-bottom:1px solid var(--divider)}
     .sec-label{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label);margin-bottom:12px}
     .chips{display:flex;flex-wrap:wrap;gap:7px}
@@ -87,16 +91,24 @@
     .li-green{background:rgba(72,199,142,.18)}.li-orange{background:rgba(255,167,38,.18)}.li-pink{background:rgba(240,98,146,.18)}.li-blue{background:rgba(66,165,245,.18)}
     .l-text{flex:1}.l-name{font-size:13.5px;font-weight:600;color:var(--text-primary)}.l-sub{font-size:11px;color:var(--text-muted);margin-top:1px}
     .l-arrow{font-size:16px;color:rgba(255,255,255,.22)}
-    .map-embed-wrap{margin:0 0;border-top:1px solid var(--divider);overflow:hidden}
+    .map-embed-wrap{border-top:1px solid var(--divider);overflow:hidden}
     .map-iframe{display:block;width:100%;height:220px;border:none}
-    .copy-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
-    .copy-label{font-size:12px;color:var(--text-muted)}
-    .copy-btn{background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:20px;padding:7px 16px;font-size:11.5px;font-weight:700;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s;letter-spacing:.2px}
+    #copyActionRow{display:flex;gap:8px;padding:14px 18px;border-top:1px solid var(--divider)}
+    .copy-btn{flex:1;background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:20px;padding:9px 0;font-size:11.5px;font-weight:700;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s;letter-spacing:.2px}
     .copy-btn:active{background:rgba(72,199,142,.14)}.copy-btn.copied{color:#48c78e;border-color:rgba(72,199,142,.35)}
+    .save-btn{flex:1;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.30);border-radius:20px;padding:9px 0;font-size:11.5px;font-weight:700;color:#48c78e;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+    .save-btn:active{background:rgba(72,199,142,.22)}
     .video-card{margin:0 12px 32px;border-radius:22px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
     .video-label{padding:14px 18px 10px;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label)}
     .video-section{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
     .video-section iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+    /* CP Footer (screenshot only) */
+    #cpFooter{display:none;background:linear-gradient(135deg,#0d2118,#081510);border-top:2px solid rgba(72,199,142,.5);padding:14px 18px;margin:0 12px;border-radius:0 0 22px 22px}
+    .cp-inner{display:flex;align-items:center;justify-content:space-between}
+    .cp-fname{font-size:14px;font-weight:700;color:#fff}
+    .cp-fphone{font-size:12px;color:#48c78e;margin-top:2px}
+    .cp-company{font-size:11px;color:rgba(255,255,255,.45);text-align:right;max-width:130px}
+    /* Lightbox */
     .lightbox{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.93);align-items:center;justify-content:center;max-width:430px;margin:0 auto}
     .lightbox.open{display:flex}
     .lightbox img{max-width:90%;max-height:82vh;border-radius:10px;object-fit:contain;pointer-events:none;user-select:none}
@@ -133,15 +145,32 @@
     .listing-rent{font-size:14px;font-weight:800;color:#48c78e}
     .listing-current-tag{font-size:10px;color:rgba(72,199,142,.8);font-weight:600;margin-top:2px}
     .no-listings{text-align:center;color:rgba(255,255,255,.35);font-size:13px;padding:32px 0}
+    /* Modals */
+    .modal-overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.65);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto}
+    .modal-sheet{background:#0d2118;border-radius:22px 22px 0 0;padding:14px 18px 32px;width:100%;border-top:1px solid rgba(255,255,255,.12)}
+    .modal-handle{width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:0 auto 16px}
+    .modal-title{font-size:14px;font-weight:700;color:#fff;text-align:center;margin-bottom:16px}
+    .modal-note{font-size:11px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:14px}
+    .modal-album-btn{width:100%;padding:13px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.06);color:#fff;font-size:13px;font-weight:600;cursor:pointer;text-align:left;margin-bottom:8px;display:block}
+    .modal-album-btn:active{background:rgba(72,199,142,.15)}
+    .utype-row{display:flex;gap:8px;margin-bottom:14px}
+    .utype-btn{flex:1;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
+    .utype-btn.active{background:rgba(72,199,142,.18);border-color:rgba(72,199,142,.40);color:#48c78e}
+    .cp-input{width:100%;padding:11px 14px;border:1px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(255,255,255,.07);color:#fff;font-size:13px;margin-bottom:8px;outline:none;display:block}
+    .cp-input::placeholder{color:rgba(255,255,255,.3)}
+    #cpForm{display:none;margin-bottom:4px}
+    .modal-dl-btn{width:100%;padding:13px;border-radius:16px;background:rgba(72,199,142,.2);border:1px solid rgba(72,199,142,.4);color:#48c78e;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;display:block}
+    .modal-dl-btn:active{background:rgba(72,199,142,.35)}
+    .modal-cancel{width:100%;padding:11px;border-radius:16px;background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:13px;cursor:pointer;display:block}
   </style>
 </head>
 <body>
 
 <div id="unavailBanner">
-  <div class="unavail-icon">🏠</div>
+  <div class="unavail-icon">&#127968;</div>
   <div class="unavail-title">Not Currently Available</div>
   <div class="unavail-sub">This property has been rented or is no longer listed.</div>
-  <button class="unavail-btn" onclick="openBrowse()">Browse Available Flats →</button>
+  <button class="unavail-btn" onclick="openBrowse()">Browse Available Flats &#8594;</button>
 </div>
 
 <div class="sticky-bar" id="stickyBar">
@@ -153,8 +182,11 @@
   <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Day</button>
 </div>
 
-<div class="bg"></div>
+<div class="bg">
+  <div id="bgMap"></div>
+</div>
 
+<div id="captureArea">
 <div class="scroll">
   <div class="hero" id="hero">
     <div class="tag-row">
@@ -191,8 +223,9 @@
         <img class="photo-thumb" src="./placeholder.png" onclick="openLightbox(0)" loading="lazy">
       </div>
       <span class="photo-count">1 photo</span>
-      <div class="swipe-hint"><span class="swipe-hint-arrow">›</span> Swipe</div>
+      <div class="swipe-hint"><span class="swipe-hint-arrow">&#8250;</span> Swipe</div>
     </div>
+    
 
     <div class="details">
       <div class="sec-label">Property Details</div>
@@ -272,19 +305,59 @@
       </a>
     </div>
 
-    <div class="map-embed-wrap">
-      <iframe class="map-iframe" src="https://maps.google.com/maps?q=18.9914124,72.8325748&z=17&output=embed" loading="lazy"
+    <div class="map-embed-wrap" id="mapEmbedWrap">
+      <iframe class="map-iframe" src="https://maps.google.com/maps?q=18.9914124,72.8325748&z=19&maptype=satellite&output=embed" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     </div>
 
-    <div class="copy-row">
-      <span class="copy-label">Share this listing</span>
-      <button class="copy-btn" id="copyBtn" onclick="copyLink()">
-        <span>&#128279;</span> Copy Link
-      </button>
+    <div id="copyActionRow">
+      <button class="copy-btn" id="copyBtn" onclick="copyLink()">&#128279; Copy Link</button>
+      <button class="save-btn" onclick="openSaveModal()">&#128247; Save Card</button>
     </div>
   </div>
 
+  <div id="cpFooter">
+    <div class="cp-inner">
+      <div>
+        <div class="cp-fname" id="cpFooterName"></div>
+        <div class="cp-fphone" id="cpFooterPhone"></div>
+      </div>
+      <div class="cp-company" id="cpFooterCompany"></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- Download Photos Modal -->
+<div id="dlModal" class="modal-overlay" onclick="if(event.target===this)closeModal('dlModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Save Photos</div>
+    <div class="modal-note">Opens photos in new tab &#x2022; Long-press to save on mobile</div>
+    <div id="dlAlbums"></div>
+    <button class="modal-cancel" onclick="closeModal('dlModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- Save Listing Modal -->
+<div id="saveModal" class="modal-overlay" onclick="if(event.target===this)closeModal('saveModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Save Listing Card</div>
+    <div class="utype-row">
+      <button class="utype-btn active" id="btnEndUser" onclick="setUserType('end')">End User</button>
+      <button class="utype-btn" id="btnCP" onclick="setUserType('cp')">Channel Partner (CP)</button>
+    </div>
+    <div id="cpForm">
+      <input id="cpName" type="text" placeholder="Full Name *" class="cp-input">
+      <input id="cpPhone" type="tel" placeholder="Contact Number *" class="cp-input">
+      <input id="cpCompany" type="text" placeholder="Company Name (optional)" class="cp-input">
+    </div>
+    <button class="modal-dl-btn" onclick="saveListingCard()">&#128247; Download Card</button>
+    <button class="modal-cancel" onclick="closeModal('saveModal')">Cancel</button>
+  </div>
 </div>
 
 <div class="lightbox" id="lightbox">
@@ -295,7 +368,7 @@
   <div class="lb-counter" id="lbCounter"></div>
 </div>
 
-<button id="browseBtn" onclick="openBrowse()">🏠 Browse Flats</button>
+<button id="browseBtn" onclick="openBrowse()">&#127968; Browse Flats</button>
 <div id="browseOverlay" onclick="closeBrowse()"></div>
 <div id="browseDrawer">
   <div class="drawer-handle"></div>
@@ -309,6 +382,7 @@
   const MY_BUCKET = "1 RK";
   const BUCKET_ORDER = ["1 RK", "1 & 1.5 BHK", "2 & 2.5 BHK", "3 & 3.5 BHK", "4 & 4.5 BHK", "5 & 5.5 BHK"];
   const photos = ["./placeholder.png"];
+  const PHOTO_ALBUMS = [];
   let current = 0, allListings = [], activeBucket = MY_BUCKET;
 
   // Lightbox
@@ -337,8 +411,8 @@
   // Copy link
   function copyLink(){
     const btn=document.getElementById('copyBtn'),url="https://soboflats.github.io/249.html";
-    navigator.clipboard.writeText(url).then(()=>{btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML='<span>&#128279;</span> Copy Link';btn.classList.remove('copied');},2200);})
-    .catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML='<span>&#128279;</span> Copy Link';btn.classList.remove('copied');},2200);});
+    navigator.clipboard.writeText(url).then(()=>{btn.textContent='&#10003; Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML='&#128279; Copy Link';btn.classList.remove('copied');},2200);})
+    .catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);btn.textContent='&#10003; Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML='&#128279; Copy Link';btn.classList.remove('copied');},2200);});
   }
 
   // Browse drawer
@@ -358,7 +432,7 @@
           <div class="listing-name">${l.project}</div>
           <div class="listing-meta">${l.bhk}${l.carpet?' · '+l.carpet+' carpet':''}</div>
           <div class="listing-rent">${l.rent_display}</div>
-          ${isCur?'<div class="listing-current-tag">← Viewing this</div>':''}
+          ${isCur?'<div class="listing-current-tag">&#8592; Viewing this</div>':''}
         </div></a>`;
     }).join('');
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.bucket===bucket));
@@ -384,6 +458,88 @@
       renderListings(hasBucket?MY_BUCKET:(BUCKET_ORDER.find(b=>allListings.some(l=>l.bucket===b))||''));
     })
     .catch(()=>{document.getElementById('browseBtn').style.display='none';});
+
+  // ── Download Photos ──────────────────────────────────────────────────────
+  function openDownloadModal() {
+    if (!PHOTO_ALBUMS.length) { alert('No photos available.'); return; }
+    document.getElementById('dlAlbums').innerHTML = PHOTO_ALBUMS.map(a =>
+      `<button class="modal-album-btn" onclick='openAlbum(${JSON.stringify(a.urls)})'>${a.name} &bull; ${a.urls.length} photo${a.urls.length!==1?'s':''}</button>`
+    ).join('');
+    document.getElementById('dlModal').style.display = 'flex';
+  }
+  function openAlbum(urls) {
+    closeModal('dlModal');
+    urls.forEach((url, i) => setTimeout(() => window.open(url, '_blank'), i * 250));
+  }
+
+  // ── Modals ───────────────────────────────────────────────────────────────
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+  // ── Save Listing Card ────────────────────────────────────────────────────
+  let userType = 'end';
+  function setUserType(t) {
+    userType = t;
+    document.getElementById('btnEndUser').classList.toggle('active', t==='end');
+    document.getElementById('btnCP').classList.toggle('active', t==='cp');
+    document.getElementById('cpForm').style.display = t==='cp' ? 'block' : 'none';
+  }
+  function openSaveModal() { document.getElementById('saveModal').style.display = 'flex'; }
+
+  async function saveListingCard() {
+    if (userType === 'cp') {
+      const name = document.getElementById('cpName').value.trim();
+      const phone = document.getElementById('cpPhone').value.trim();
+      if (!name || !phone) { alert('Please enter your Full Name and Contact Number.'); return; }
+      document.getElementById('cpFooterName').textContent = name;
+      document.getElementById('cpFooterPhone').textContent = phone;
+      document.getElementById('cpFooterCompany').textContent = document.getElementById('cpCompany').value.trim();
+      document.getElementById('cpFooter').style.display = 'block';
+    }
+    const mapEl = document.getElementById('mapEmbedWrap');
+    const actEl = document.getElementById('copyActionRow');
+    if (mapEl) mapEl.style.visibility = 'hidden';
+    if (actEl) actEl.style.visibility = 'hidden';
+    closeModal('saveModal');
+    await new Promise(r => setTimeout(r, 150));
+    try {
+      const canvas = await html2canvas(document.getElementById('captureArea'), {
+        allowTaint: true, useCORS: true, backgroundColor: '#0a1a17', scale: 2, logging: false,
+      });
+      if (mapEl) mapEl.style.visibility = '';
+      if (actEl) actEl.style.visibility = '';
+      document.getElementById('cpFooter').style.display = 'none';
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      const link = document.createElement('a');
+      link.download = 'flat-249-listing.jpg';
+      link.href = dataUrl;
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        window.open(dataUrl, '_blank');
+      } else {
+        document.body.appendChild(link); link.click(); document.body.removeChild(link);
+      }
+    } catch(e) {
+      if (mapEl) mapEl.style.visibility = '';
+      if (actEl) actEl.style.visibility = '';
+      document.getElementById('cpFooter').style.display = 'none';
+      alert('Screenshot failed. Try scrolling to the top first.');
+    }
+  }
+
+  // ── Background 3D Aerial Map ─────────────────────────────────────────────
+  function initBgMap() {
+    const el = document.getElementById('bgMap');
+    if (!el || typeof google === 'undefined') return;
+    const map = new google.maps.Map(el, {
+      center: { lat: 18.9914124, lng: 72.8325748 },
+      zoom: 19, mapTypeId: 'satellite', tilt: 67, heading: 0,
+      disableDefaultUI: true, gestureHandling: 'none', keyboardShortcuts: false,
+    });
+    el.style.opacity = '1';
+    let h = 0;
+    setInterval(() => { h = (h + 0.4) % 360; map.setHeading(h); }, 100);
+  }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&callback=initBgMap" async defer></script>
 </body>
 </html>
