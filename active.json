@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-21T21:36:37.666279+00:00",
+  "updated_at": "2026-05-21T21:50:35.047198+00:00",
   "listings": [
     {
       "serial": 249,
@@ -28,6 +28,20 @@
       "page_date": "21-May-26",
       "url": "https://soboflats.github.io/255.html",
       "thumb": "https://lh3.googleusercontent.com/pw/AP1GczPjEA_oY4NeCONl0HMguv_Hnup0_Q0nnV4ookvdOECxCfAxGiSNKGfzrR84Y-cV8dfYeul8g4eonURtsndALd1MN_V3k0hx05b7OLrwnrYWxaBOY5Es=w1600"
+    },
+    {
+      "serial": 213,
+      "project": "Runwal Nirvana",
+      "bhk": "3 bhk",
+      "carpet": "1080",
+      "bucket": "3 & 3.5 BHK",
+      "rent": 1.8,
+      "rent_display": "₹1.8L",
+      "location": "Parel",
+      "col_l": "Family Only",
+      "page_date": "21-May-26",
+      "url": "https://soboflats.github.io/213.html",
+      "thumb": "https://lh3.googleusercontent.com/pw/AP1GczMjel3PL5RE3YrS2euRAb8HrmZ4GJ6mvIg6DjYbgaCANvysUy1Nml4hkshG0v9FJ0EbAybpemXYa0c5uBN1qvrrviUK1MF04pMd44S0dxaGSgI_JFvO=w1600"
     },
     {
       "serial": 257,
