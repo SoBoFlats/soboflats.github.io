@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-21T21:17:58.317421+00:00",
+  "updated_at": "2026-05-21T21:19:04.376187+00:00",
   "listings": [
     {
       "serial": 249,
@@ -14,6 +14,20 @@
       "page_date": "21-May-26",
       "url": "https://soboflats.github.io/249.html",
       "thumb": ""
+    },
+    {
+      "serial": 255,
+      "project": "Himalaya",
+      "bhk": "2 bhk",
+      "carpet": "800",
+      "bucket": "2 & 2.5 BHK",
+      "rent": 1.8,
+      "rent_display": "₹1.8L",
+      "location": "Worli Seaface",
+      "col_l": "Veg Family only",
+      "page_date": "21-May-26",
+      "url": "https://soboflats.github.io/255.html",
+      "thumb": "https://lh3.googleusercontent.com/pw/AP1GczPjEA_oY4NeCONl0HMguv_Hnup0_Q0nnV4ookvdOECxCfAxGiSNKGfzrR84Y-cV8dfYeul8g4eonURtsndALd1MN_V3k0hx05b7OLrwnrYWxaBOY5Es=w1600"
     },
     {
       "serial": 257,
