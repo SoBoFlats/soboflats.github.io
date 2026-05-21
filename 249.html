@@ -42,6 +42,7 @@
     .tag.highlight{color:#1a1000;background:rgba(255,217,60,.92);border-color:rgba(200,165,0,.55)}
     .tag.gold{color:#ffd966;background:rgba(255,217,102,.14);border-color:rgba(255,217,102,.40)}
     [data-theme="light"] .tag.gold{color:#7a5800;background:rgba(255,217,60,.22);border-color:rgba(200,165,0,.45)}
+    .hero-loc{font-size:16px;font-weight:400;color:rgba(255,255,255,.52);letter-spacing:0;line-height:inherit}
     /* Hero bg is always black — force white text in day mode too */
     [data-theme="light"] .hero-title{color:#fff!important}
     [data-theme="light"] .hero .tag:not(.highlight):not(.gold){color:rgba(255,255,255,.92)!important;background:rgba(255,255,255,.15)!important;border-color:rgba(255,255,255,.30)!important}
@@ -139,8 +140,8 @@
     .drawer-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;text-align:center;margin-bottom:14px;flex-shrink:0}
     .tab-row{display:flex;gap:6px;padding:0 14px 12px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
     .tab-row::-webkit-scrollbar{display:none}
-    .tab-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
-    .tab-btn.active{background:rgba(72,199,142,.2);border-color:rgba(72,199,142,.4);color:#48c78e}
+    .tab-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
+    .tab-btn.active{background:rgba(72,199,142,.2);border-color:rgba(72,199,142,.6);color:#48c78e}
     .listings-scroll{flex:1;overflow-y:auto;padding:0 14px 24px}
     .listing-card{display:flex;gap:12px;padding:12px;margin-bottom:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:14px;text-decoration:none;cursor:pointer}
     .listing-card.current{border-color:rgba(72,199,142,.35);background:rgba(72,199,142,.07)}
@@ -197,10 +198,9 @@
   <div class="hero" id="hero">
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
-      <span class="tag">Lalbaug</span>
       <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 249</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">21-May-26</span>
     </div>
-    <div class="hero-title">Nekjat Maratha Sadan</div>
+    <div class="hero-title">Nekjat Maratha Sadan <span class="hero-loc">&nbsp;·&nbsp;Lalbaug</span></div>
     <div class="sub-tag-row">
       <span class="sub-tag">1 rk</span>
       <span class="sub-tag">275 carpet</span>
@@ -409,7 +409,7 @@
   const PHOTO_ALBUMS = [];
   const GPHOTO_LINKS = [];
   const CAPTURE_PHOTOS_DATA = [];
-  let current = 0, allListings = [], activeBucket = MY_BUCKET;
+  let current = 0, allListings = [], activeBucket = '__all__';
 
   // Lightbox
   function setPhoto(i) {
@@ -461,7 +461,7 @@
   function renderListings(bucket){
     activeBucket=bucket;
     const scroll=document.getElementById('listingsScroll');
-    const items=allListings.filter(l=>l.bucket===bucket);
+    const items=bucket==='__all__'?allListings:allListings.filter(l=>l.bucket===bucket);
     if(!items.length){scroll.innerHTML='<div class="no-listings">No listings in this category</div>';return;}
     scroll.innerHTML=items.map(l=>{
       const isCur=l.serial===MY_SERIAL;
@@ -482,7 +482,8 @@
   function buildTabs(listings){
     const tabRow=document.getElementById('tabRow');
     const buckets=BUCKET_ORDER.filter(b=>listings.some(l=>l.bucket===b));
-    tabRow.innerHTML=buckets.map(b=>{
+    const allBtn=`<button class="tab-btn${activeBucket==='__all__'?' active':''}" data-bucket="__all__" onclick="renderListings('__all__')">All <span style="opacity:.5">${listings.length}</span></button>`;
+    tabRow.innerHTML=allBtn+buckets.map(b=>{
       const cnt=listings.filter(l=>l.bucket===b).length;
       return `<button class="tab-btn${b===activeBucket?' active':''}" data-bucket="${b}" onclick="renderListings('${b}')">${b} <span style="opacity:.5">(${cnt})</span></button>`;
     }).join('');
@@ -495,8 +496,7 @@
       if(!allListings.map(l=>l.serial).includes(MY_SERIAL))
         document.getElementById('unavailBanner').style.display='flex';
       buildTabs(allListings);
-      const hasBucket=allListings.some(l=>l.bucket===MY_BUCKET);
-      renderListings(hasBucket?MY_BUCKET:(BUCKET_ORDER.find(b=>allListings.some(l=>l.bucket===b))||''));
+      renderListings('__all__');
     })
     .catch(()=>{document.getElementById('browseBtn').style.display='none';});
 
