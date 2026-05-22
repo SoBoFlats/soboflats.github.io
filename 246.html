@@ -141,7 +141,8 @@
     #browseDrawer{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:430px;height:78vh;z-index:92;background:#0d2118;border-top:1px solid rgba(255,255,255,.12);border-radius:22px 22px 0 0;transition:transform .32s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;overflow:hidden}
     #browseDrawer.open{transform:translate(-50%,0)}
     .drawer-handle{width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:14px auto 12px;flex-shrink:0}
-    .drawer-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;text-align:center;margin-bottom:14px;flex-shrink:0}
+    .drawer-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;text-align:center;margin-bottom:14px;flex-shrink:0;text-decoration:none;display:block}
+    .drawer-title:hover{color:rgba(255,255,255,.8);text-decoration:underline}
     .tab-row{display:flex;gap:6px;padding:0 14px 12px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
     .tab-row::-webkit-scrollbar{display:none}
     .tab-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
@@ -339,7 +340,7 @@
         <div class="l-text"><div class="l-name">Flat Photos</div><div class="l-sub">Interior &amp; room photos</div></div>
         <div class="l-arrow">›</div>
       </a>
-      <a class="link-row" href="https://maps.app.goo.gl/LZAD8g7sKr7EdWaW9" target="_blank" rel="noopener">
+      <a class="link-row" href="https://maps.app.goo.gl/Qr1WJaPrX3frmDLo8" target="_blank" rel="noopener">
         <div class="l-icon li-blue">&#128205;</div>
         <div class="l-text"><div class="l-name">Location</div><div class="l-sub">Open in Google Maps</div></div>
         <div class="l-arrow">›</div>
@@ -370,7 +371,7 @@
 </div>
 </div>
 
-<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Mainmood Bldg, opp Masina Hospital</div><iframe class="map-iframe" src="https://maps.google.com/maps?q=18.9757312,72.8362939&z=19&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Mainmood Bldg, opp Masina Hospital</div><iframe class="map-iframe" src="https://maps.google.com/maps?q=18.9757535,72.8364848&z=19&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 
 <!-- Download Photos Modal -->
 <div id="dlModal" class="modal-overlay" onclick="if(event.target===this)closeModal('dlModal')">
@@ -427,7 +428,7 @@
 <div id="browseOverlay" onclick="closeBrowse()"></div>
 <div id="browseDrawer">
   <div class="drawer-handle"></div>
-  <div class="drawer-title">Available Rental Flats</div>
+  <a class="drawer-title" href="https://soboflats.github.io" target="_blank" rel="noopener">Available Rental Flats &#8599;</a>
   <div class="tab-row" id="tabRow"></div>
   <div class="search-wrap">
     <input type="text" id="searchInput" class="search-input" placeholder="Search name or area..." oninput="handleSearch(this.value)">
