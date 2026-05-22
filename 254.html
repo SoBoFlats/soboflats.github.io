@@ -110,6 +110,10 @@
     .video-section{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
     .video-section iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
     video.photo-thumb{object-fit:cover;background:#000}
+    .video-wrap{position:relative;flex-shrink:0;width:180px;height:265px;scroll-snap-align:start;border-radius:12px;overflow:hidden;border:1px solid var(--chip-border)}
+    .video-wrap video{width:100%;height:100%;border-radius:0;border:none;scroll-snap-align:unset;flex-shrink:unset}
+    .speed-btn{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.62);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:4px 9px;font-size:11px;font-weight:700;cursor:pointer;z-index:5;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);letter-spacing:.3px;line-height:1.2;touch-action:manipulation}
+    .speed-btn:active{background:rgba(0,0,0,.88)}
     /* CP Footer (screenshot only) */
     #cpFooter{display:none;background:rgba(255,217,60,.92);border-top:2px solid rgba(200,165,0,.55);padding:14px 18px;margin:0 12px;border-radius:0 0 22px 22px}
     .cp-inner{display:flex;align-items:center;justify-content:space-between}
@@ -238,7 +242,7 @@
     <div class="photo-wrap">
       <div class="photo-strip" id="photoStrip">
         <div class="album-sep">Flat Photos</div>
-        <video class="photo-thumb" poster="https://lh3.googleusercontent.com/pw/AP1GczM9CCxYxnG2uLZ61mbxOHFenXcoTk1J22g5uUrf_ETvCx-QlHYZ3tCei891wkRomCVA2JlDLdK1nz-ZKrZ5j_GIN8XnJk2nQn5JV4Ezx_i40qvWLhjk=w1600" controls playsinline preload="none" onclick="event.stopPropagation()"><source src="https://lh3.googleusercontent.com/pw/AP1GczM9CCxYxnG2uLZ61mbxOHFenXcoTk1J22g5uUrf_ETvCx-QlHYZ3tCei891wkRomCVA2JlDLdK1nz-ZKrZ5j_GIN8XnJk2nQn5JV4Ezx_i40qvWLhjk=dv" type="video/mp4"><img src="https://lh3.googleusercontent.com/pw/AP1GczM9CCxYxnG2uLZ61mbxOHFenXcoTk1J22g5uUrf_ETvCx-QlHYZ3tCei891wkRomCVA2JlDLdK1nz-ZKrZ5j_GIN8XnJk2nQn5JV4Ezx_i40qvWLhjk=w1600" class="photo-thumb" onclick="openLightbox(0)"></video>
+        <div class="video-wrap"><video class="photo-thumb" poster="https://lh3.googleusercontent.com/pw/AP1GczM9CCxYxnG2uLZ61mbxOHFenXcoTk1J22g5uUrf_ETvCx-QlHYZ3tCei891wkRomCVA2JlDLdK1nz-ZKrZ5j_GIN8XnJk2nQn5JV4Ezx_i40qvWLhjk=w1600" controls playsinline preload="none" onclick="event.stopPropagation()"><source src="https://lh3.googleusercontent.com/pw/AP1GczM9CCxYxnG2uLZ61mbxOHFenXcoTk1J22g5uUrf_ETvCx-QlHYZ3tCei891wkRomCVA2JlDLdK1nz-ZKrZ5j_GIN8XnJk2nQn5JV4Ezx_i40qvWLhjk=dv" type="video/mp4"><img src="https://lh3.googleusercontent.com/pw/AP1GczM9CCxYxnG2uLZ61mbxOHFenXcoTk1J22g5uUrf_ETvCx-QlHYZ3tCei891wkRomCVA2JlDLdK1nz-ZKrZ5j_GIN8XnJk2nQn5JV4Ezx_i40qvWLhjk=w1600" class="photo-thumb" onclick="openLightbox(0)"></video><button class="speed-btn" onclick="cycleSpeed(this)">&#9889;1&times;</button></div>
         <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPgaEZ1j3FTKjNFq4qTvCxhMdPpW__M7-9xCrrZukVWcKb_x952N3NbM6vY5J07PqusjQLxk7RJPEjpnK_6srkAYMivvfE2IXaOv-8UlrDV_rU_cdQJ=w1600" onclick="openLightbox(1)" loading="lazy">
         <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczPlp-ip_3cl6Og9OtfhsWoDr9vSzlXyZ-eVjiPhBNlUzJOZpD1lcYQ0VIX1thqgLaf2S4_Fc56mb_zaXkbn1jBATIoGgyXVhdGUGlqXdyPRAlTvjkDo=w1600" onclick="openLightbox(2)" loading="lazy">
         <img class="photo-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOzHljgzgMT-GWScAPRkgB3djJbLL7a_MFtIoV4QfG8gPr6oiHbjxcj7vhn6HvFyx0ryoEZwyyKvvOLHSd4mpML9ocyMxp2m8cDJmvR3ErNonCTTYmd=w1600" onclick="openLightbox(3)" loading="lazy">
@@ -484,6 +488,15 @@
     lbReset();
     lbImg.src = photos[i];
     document.getElementById('lbCounter').textContent = (i+1)+' / '+photos.length;
+  }
+  const _SPEEDS=[1,1.25,1.5,1.75,2,2.5,3];
+  function cycleSpeed(btn){
+    const vid=btn.closest('.video-wrap').querySelector('video');
+    const cur=parseFloat(vid.playbackRate)||1;
+    const idx=_SPEEDS.findIndex(s=>Math.abs(s-cur)<0.01);
+    const next=_SPEEDS[(idx+1)%_SPEEDS.length];
+    vid.playbackRate=next;
+    btn.innerHTML='&#9889;'+(next===1?'1&times;':next+'&times;');
   }
   function openLightbox(i) { current=i; setPhoto(i); document.getElementById('lightbox').classList.add('open'); }
   function closeLightbox() { lbReset(); document.getElementById('lightbox').classList.remove('open'); }
