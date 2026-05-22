@@ -119,7 +119,7 @@
     /* Lightbox */
     .lightbox{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.93);align-items:center;justify-content:center;max-width:430px;margin:0 auto}
     .lightbox.open{display:flex}
-    .lightbox img{max-width:90%;max-height:82vh;border-radius:10px;object-fit:contain;pointer-events:none;user-select:none}
+    .lightbox img{max-width:90%;max-height:82vh;border-radius:10px;object-fit:contain;user-select:none;transform-origin:center center;touch-action:none}
     .lb-close{position:absolute;top:16px;right:16px;font-size:18px;color:rgba(255,255,255,.80);cursor:pointer;background:rgba(255,255,255,.12);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;z-index:102;border:1px solid rgba(255,255,255,.18)}
     .lb-zone{position:absolute;top:0;bottom:0;width:42%;display:flex;align-items:center;z-index:101;cursor:pointer}
     .lb-zone-prev{left:0;justify-content:flex-start;padding-left:10px}.lb-zone-next{right:0;justify-content:flex-end;padding-right:10px}
@@ -198,7 +198,7 @@
   <div class="hero" id="hero">
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
-      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 249</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">21-May-26</span>
+      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 249</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">22-May-26</span>
     </div>
     <div class="hero-title">Nekjat Maratha Sadan <span class="hero-loc">&nbsp;·&nbsp;Lalbaug</span></div>
     <div class="sub-tag-row">
@@ -412,20 +412,57 @@
   let current = 0, allListings = [], activeBucket = '__all__';
 
   // Lightbox
+  let lbScale=1,lbTx=0,lbTy=0;
+  const lbImg=document.getElementById('lbImg');
+  function lbApply(){lbImg.style.transform=`scale(${lbScale}) translate(${lbTx/lbScale}px,${lbTy/lbScale}px)`;}
+  function lbReset(){lbScale=1;lbTx=0;lbTy=0;lbApply();}
   function setPhoto(i) {
-    document.getElementById('lbImg').src = photos[i];
+    lbReset();
+    lbImg.src = photos[i];
     document.getElementById('lbCounter').textContent = (i+1)+' / '+photos.length;
   }
   function openLightbox(i) { current=i; setPhoto(i); document.getElementById('lightbox').classList.add('open'); }
-  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  function closeLightbox() { lbReset(); document.getElementById('lightbox').classList.remove('open'); }
   function showPhoto(i) { current=Math.max(0,Math.min(i,photos.length-1)); setPhoto(current); }
   document.getElementById('lbClose').addEventListener('click',e=>{e.stopPropagation();closeLightbox();});
   document.getElementById('lbPrev').addEventListener('click',e=>{e.stopPropagation();showPhoto(current-1);});
   document.getElementById('lbNext').addEventListener('click',e=>{e.stopPropagation();showPhoto(current+1);});
-  document.getElementById('lightbox').addEventListener('click',e=>{ if(e.target===document.getElementById('lightbox')||e.target===document.getElementById('lbImg'))closeLightbox(); });
-  let tsx=null;
-  document.getElementById('lightbox').addEventListener('touchstart',e=>{tsx=e.touches[0].clientX;},{passive:true});
-  document.getElementById('lightbox').addEventListener('touchend',e=>{if(tsx===null)return;const dx=e.changedTouches[0].clientX-tsx;tsx=null;if(Math.abs(dx)<35)return;dx<0?showPhoto(current+1):showPhoto(current-1);});
+  // Close only when tapping the dark background (not the image)
+  document.getElementById('lightbox').addEventListener('click',e=>{ if(e.target===document.getElementById('lightbox'))closeLightbox(); });
+  // Double-tap image to toggle zoom
+  let lbLastTap=0;
+  lbImg.addEventListener('click',e=>{
+    const now=Date.now();
+    if(now-lbLastTap<300){ lbScale>1?lbReset():(()=>{lbScale=2.5;lbApply();})(); }
+    lbLastTap=now;
+  });
+  // Pinch-to-zoom + pan + swipe
+  let tsx=null,lbPinchDist=null,lbPinchScale=1,lbPanStart=null;
+  function pinchDist(t){return Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);}
+  document.getElementById('lightbox').addEventListener('touchstart',e=>{
+    if(e.touches.length===2){
+      lbPinchDist=pinchDist(e.touches);lbPinchScale=lbScale;lbPanStart=null;tsx=null;
+    }else if(e.touches.length===1){
+      if(lbScale>1){lbPanStart={x:e.touches[0].clientX-lbTx,y:e.touches[0].clientY-lbTy};tsx=null;}
+      else{tsx=e.touches[0].clientX;lbPanStart=null;}
+    }
+  },{passive:true});
+  document.getElementById('lightbox').addEventListener('touchmove',e=>{
+    if(e.touches.length===2&&lbPinchDist!==null){
+      lbScale=Math.min(5,Math.max(1,lbPinchScale*pinchDist(e.touches)/lbPinchDist));
+      if(lbScale<=1){lbTx=0;lbTy=0;}lbApply();e.preventDefault();
+    }else if(e.touches.length===1&&lbPanStart&&lbScale>1){
+      lbTx=e.touches[0].clientX-lbPanStart.x;lbTy=e.touches[0].clientY-lbPanStart.y;lbApply();e.preventDefault();
+    }
+  },{passive:false});
+  document.getElementById('lightbox').addEventListener('touchend',e=>{
+    if(e.touches.length<2){lbPinchDist=null;if(lbScale<1.05)lbReset();}
+    if(e.touches.length===0){
+      lbPanStart=null;
+      if(lbScale<=1&&tsx!==null){const dx=e.changedTouches[0].clientX-tsx;tsx=null;if(Math.abs(dx)>=35){dx<0?showPhoto(current+1):showPhoto(current-1);}}
+      else{tsx=null;}
+    }
+  },{passive:true});
 
   // Sticky header
   const sBar=document.getElementById('stickyBar'),hero=document.getElementById('hero');
