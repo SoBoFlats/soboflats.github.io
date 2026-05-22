@@ -141,7 +141,8 @@
     #browseDrawer{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:430px;height:78vh;z-index:92;background:#0d2118;border-top:1px solid rgba(255,255,255,.12);border-radius:22px 22px 0 0;transition:transform .32s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;overflow:hidden}
     #browseDrawer.open{transform:translate(-50%,0)}
     .drawer-handle{width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:14px auto 12px;flex-shrink:0}
-    .drawer-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;text-align:center;margin-bottom:14px;flex-shrink:0}
+    .drawer-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;text-align:center;margin-bottom:14px;flex-shrink:0;text-decoration:none;display:block}
+    .drawer-title:hover{color:rgba(255,255,255,.8);text-decoration:underline}
     .tab-row{display:flex;gap:6px;padding:0 14px 12px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
     .tab-row::-webkit-scrollbar{display:none}
     .tab-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
@@ -461,7 +462,7 @@
 <div id="browseOverlay" onclick="closeBrowse()"></div>
 <div id="browseDrawer">
   <div class="drawer-handle"></div>
-  <div class="drawer-title">Available Rental Flats</div>
+  <a class="drawer-title" href="https://soboflats.github.io" target="_blank" rel="noopener">Available Rental Flats &#8599;</a>
   <div class="tab-row" id="tabRow"></div>
   <div class="search-wrap">
     <input type="text" id="searchInput" class="search-input" placeholder="Search name or area..." oninput="handleSearch(this.value)">
