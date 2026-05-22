@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-22T17:55:00.172679+00:00",
+  "updated_at": "2026-05-22T19:35:41.624892+00:00",
   "listings": [
     {
       "serial": 249,
@@ -28,6 +28,20 @@
       "page_date": "22-May-26",
       "url": "https://soboflats.github.io/264.html",
       "thumb": "https://lh3.googleusercontent.com/pw/AP1GczPrnkYvMrMpm82lzGiOHN4yBtv4uvjqLMvLI1nQ3ZaVU7jPdZBo-reIzgIY2MS_5zIavu7o71dD2kXpt7xlnRYPAm0GzVWu6APw2pVaKKx-Jt2wctw=w1600"
+    },
+    {
+      "serial": 246,
+      "project": "Mainmood Bldg, opp Masina Hospital",
+      "bhk": "2 bhk",
+      "carpet": "1100",
+      "bucket": "2 & 2.5 BHK",
+      "rent": 1.2,
+      "rent_display": "₹1.2L",
+      "location": "Byculla (E)",
+      "col_l": "Muslims only",
+      "page_date": "22-May-26",
+      "url": "https://soboflats.github.io/246.html",
+      "thumb": "https://lh3.googleusercontent.com/pw/AP1GczNIyPuoDYi9OLEhjDTkQqh89LX_APHlKGlMgUTa4e3_g4aqi8xjv1dyUQUjy8RSZM2Jk-JJN2J10WwGaR3OJiBk_ryw8DoiUotsvDWlsQqRNrS4MFI4=w1600"
     },
     {
       "serial": 255,
