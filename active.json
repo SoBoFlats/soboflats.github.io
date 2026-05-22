@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-21T23:39:27.146160+00:00",
+  "updated_at": "2026-05-22T16:07:32.610805+00:00",
   "listings": [
     {
       "serial": 249,
@@ -11,9 +11,23 @@
       "rent_display": "₹0.3L",
       "location": "Lalbaug",
       "col_l": "Jain only",
-      "page_date": "21-May-26",
+      "page_date": "22-May-26",
       "url": "https://soboflats.github.io/249.html",
       "thumb": ""
+    },
+    {
+      "serial": 264,
+      "project": "Ajay Apartment",
+      "bhk": "1 bhk",
+      "carpet": "500",
+      "bucket": "1 & 1.5 BHK",
+      "rent": 0.65,
+      "rent_display": "₹0.65L",
+      "location": "Byculla (E)",
+      "col_l": "Everyone Welcome",
+      "page_date": "22-May-26",
+      "url": "https://soboflats.github.io/264.html",
+      "thumb": "https://lh3.googleusercontent.com/pw/AP1GczPrnkYvMrMpm82lzGiOHN4yBtv4uvjqLMvLI1nQ3ZaVU7jPdZBo-reIzgIY2MS_5zIavu7o71dD2kXpt7xlnRYPAm0GzVWu6APw2pVaKKx-Jt2wctw=w1600"
     },
     {
       "serial": 255,
@@ -25,7 +39,7 @@
       "rent_display": "₹1.8L",
       "location": "Worli Seaface",
       "col_l": "Veg Family only",
-      "page_date": "21-May-26",
+      "page_date": "22-May-26",
       "url": "https://soboflats.github.io/255.html",
       "thumb": "https://lh3.googleusercontent.com/pw/AP1GczPjEA_oY4NeCONl0HMguv_Hnup0_Q0nnV4ookvdOECxCfAxGiSNKGfzrR84Y-cV8dfYeul8g4eonURtsndALd1MN_V3k0hx05b7OLrwnrYWxaBOY5Es=w1600"
     },
@@ -39,7 +53,7 @@
       "rent_display": "₹1.8L",
       "location": "Parel",
       "col_l": "Family Only",
-      "page_date": "21-May-26",
+      "page_date": "22-May-26",
       "url": "https://soboflats.github.io/213.html",
       "thumb": "https://lh3.googleusercontent.com/pw/AP1GczMjel3PL5RE3YrS2euRAb8HrmZ4GJ6mvIg6DjYbgaCANvysUy1Nml4hkshG0v9FJ0EbAybpemXYa0c5uBN1qvrrviUK1MF04pMd44S0dxaGSgI_JFvO=w1600"
     },
@@ -53,7 +67,7 @@
       "rent_display": "₹1.95L",
       "location": "Byculla (E)",
       "col_l": "Everyone Welcome",
-      "page_date": "21-May-26",
+      "page_date": "22-May-26",
       "url": "https://soboflats.github.io/257.html",
       "thumb": "https://lh3.googleusercontent.com/pw/AP1GczMklFxTMbjM_Wi-IbHLwNfWonnOuq24_FqAKYS7dy3RjWztUzTnWZBErs-TKLOL7RYqzzHWnUjH568GCMeyv47BzNTiqo5FGER1em6yaDSYGIFQ0D0Y=w1600"
     },
@@ -67,7 +81,7 @@
       "rent_display": "₹2.6L",
       "location": "Byculla (W)",
       "col_l": "Veg Family only, 12 months Rent together",
-      "page_date": "21-May-26",
+      "page_date": "22-May-26",
       "url": "https://soboflats.github.io/245.html",
       "thumb": "https://lh3.googleusercontent.com/pw/AP1GczNCDtrgevt772jRp-2SFMO0OXEOrpYpau02m73XUSSj01C2s1pQ9FhyTakeIPQv0c3Kv6B4ttJovTv6ZUXRlDSxfpAZw9YzQC4SWB8LhRpiFGegsTXj=w1600"
     }
