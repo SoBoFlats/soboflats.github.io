@@ -33,6 +33,11 @@
     .listing-rent{font-size:15px;font-weight:800;color:var(--accent)}
     .empty{text-align:center;color:var(--muted);font-size:14px;padding:48px 16px}
     .loading{text-align:center;color:var(--muted);font-size:13px;padding:48px 16px}
+    .search-wrap{padding:0 16px 8px}
+    .search-input{width:100%;padding:10px 14px 10px 38px;border-radius:20px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);color:#fff;font-size:13px;outline:none;box-sizing:border-box;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,.38)' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:13px center}
+    .search-input::placeholder{color:rgba(255,255,255,.30)}
+    [data-theme="light"] .search-input{border-color:rgba(0,0,0,.18);background:rgba(0,0,0,.05);color:#111;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,.35)' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:13px center}
+    [data-theme="light"] .search-input::placeholder{color:rgba(0,0,0,.30)}
   </style>
 </head>
 <body>
@@ -47,6 +52,9 @@
     <button class="toggle-btn" onclick="toggleTheme()">Day / Night</button>
   </div>
   <div class="tab-row" id="tabRow"></div>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search name or area..." oninput="handleSearch(this.value)">
+  </div>
   <div class="listings" id="listings"><div class="loading">Loading listings...</div></div>
 
   <script>
@@ -55,23 +63,38 @@
 
     function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');}
 
-    function renderListings(bucket){
-      activeBucket=bucket;
-      const items=bucket==='__all__'?allListings:allListings.filter(l=>l.bucket===bucket);
-      const el=document.getElementById('listings');
-      if(!items.length){el.innerHTML='<div class="empty">No listings in this category</div>';return;}
-      el.innerHTML=items.map(l=>{
-        const locStr=l.location?` <span class="listing-loc-inline">&nbsp;·&nbsp;${l.location}</span>`:'';
-        const colLStr=l.col_l?' · '+l.col_l:'';
-        return `<a class="listing-card" href="${l.url}">
+    function cardHtml(l){
+      const locStr=l.location?` <span class="listing-loc-inline">&nbsp;·&nbsp;${l.location}</span>`:'';
+      const colLStr=l.col_l?' · '+l.col_l:'';
+      return `<a class="listing-card" href="${l.url}">
         <img class="listing-thumb" src="${l.thumb||''}" alt="" loading="lazy">
         <div class="listing-info">
           <div class="listing-name">${l.project}${locStr}</div>
           <div class="listing-meta">${l.bhk}${l.carpet?' · '+l.carpet+' carpet':''}${colLStr}</div>
           <div class="listing-rent">${l.rent_display}</div>
         </div></a>`;
-      }).join('');
+    }
+    function renderListings(bucket){
+      activeBucket=bucket;
+      const si=document.getElementById('searchInput');
+      if(si)si.value='';
+      const items=bucket==='__all__'?allListings:allListings.filter(l=>l.bucket===bucket);
+      const el=document.getElementById('listings');
+      if(!items.length){el.innerHTML='<div class="empty">No listings in this category</div>';return;}
+      el.innerHTML=items.map(cardHtml).join('');
       document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.bucket===bucket));
+    }
+    function handleSearch(val){
+      const q=val.trim().toLowerCase();
+      const el=document.getElementById('listings');
+      if(!q){renderListings(activeBucket);return;}
+      const filtered=allListings.filter(l=>
+        l.project.toLowerCase().includes(q)||(l.location||'').toLowerCase().includes(q)
+      );
+      el.innerHTML=filtered.length
+        ?filtered.map(cardHtml).join('')
+        :'<div class="empty">No matches found</div>';
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
     }
 
     function buildTabs(listings){
