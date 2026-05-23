@@ -59,6 +59,8 @@
     .tenant-btn.active{background:rgba(72,199,142,.15);border-color:rgba(72,199,142,.45);color:#48c78e}
     [data-theme="light"] .tenant-btn{border-color:rgba(0,0,0,.18);background:rgba(0,0,0,.03);color:rgba(0,0,0,.45)}
     [data-theme="light"] .tenant-btn.active{background:rgba(26,138,90,.10);border-color:rgba(26,138,90,.30);color:var(--accent)}
+    .tenant-sep{flex-shrink:0;width:1px;height:22px;background:rgba(255,255,255,.20);align-self:center;margin:0 3px}
+    [data-theme="light"] .tenant-sep{background:rgba(0,0,0,.15)}
     .listings{padding:8px 12px}
     .listing-card{display:flex;gap:12px;padding:14px;margin-bottom:10px;background:var(--card);border:1px solid var(--card-b);border-radius:16px;text-decoration:none;cursor:pointer}
     .listing-thumb{width:80px;height:80px;border-radius:12px;object-fit:cover;flex-shrink:0;background:rgba(255,255,255,.08)}
@@ -88,11 +90,12 @@
   </div>
   <div class="tab-row" id="tabRow"></div>
   <div class="tab-row tenant-row" id="tenantRow">
-    <button class="tenant-btn active" data-tenant="__all__" onclick="toggleTenantFilter('__all__')">All</button>
-    <button class="tenant-btn" data-tenant="veg" onclick="toggleTenantFilter('veg')">🥗 Pure Veg</button>
-    <button class="tenant-btn" data-tenant="nonveg" onclick="toggleTenantFilter('nonveg')">🍗 Non-veg ok</button>
-    <button class="tenant-btn" data-tenant="bachelor" onclick="toggleTenantFilter('bachelor')">👨 Bachelors ok</button>
-    <button class="tenant-btn" data-tenant="family" onclick="toggleTenantFilter('family')">👪 Family only</button>
+    <button class="tenant-btn active" data-tenant="__all__" onclick="toggleAllTenant()">All</button>
+    <button class="tenant-btn" data-tenant="jain" onclick="toggleFoodFilter('jain')">Jain only</button>
+    <button class="tenant-btn" data-tenant="veg" onclick="toggleFoodFilter('veg')">🥗 Pure Veg</button>
+    <button class="tenant-btn" data-tenant="muslim" onclick="toggleFoodFilter('muslim')">Muslim only</button>
+    <span class="tenant-sep"></span>
+    <button class="tenant-btn" data-tenant="bachelor" onclick="toggleBachelorFilter()">👨 Bachelors ok</button>
   </div>
   <div class="search-sort-row">
     <input type="text" id="searchInput" class="search-input" placeholder="Search name or area..." oninput="handleSearch(this.value)">
@@ -115,29 +118,29 @@
 
   <script>
     const BUCKET_ORDER=['1 RK','1 & 1.5 BHK','2 & 2.5 BHK','3 & 3.5 BHK','4 & 4.5 BHK','5 & 5.5 BHK'];
-    let allListings=[], activeBucket='__all__', tenantFilters=[];
+    let allListings=[], activeBucket='__all__';
+    let foodFilter=null, bachelorFilter=false;
     let sortKey='price', sortDir=1;
 
-    function tenantMatch(colL, f){
-      const v=(colL||'').toLowerCase();
-      if(f==='veg') return (v.includes('veg')&&!v.includes('non'))||v.includes('jain');
-      if(f==='nonveg') return v.includes('non-veg')||v.includes('non veg')||v.includes('everyone');
+    function tenantMatch(tt,f){
+      const v=(tt||'').toLowerCase();
+      if(f==='jain') return v.includes('jain');
+      if(f==='veg') return (v.includes('veg')||v.includes('vegetarian'))&&!v.includes('non-veg')&&!v.includes('non veg');
+      if(f==='muslim') return v.includes('muslim');
       if(f==='bachelor') return v.includes('bachelor');
-      if(f==='family') return v.includes('family');
       return false;
     }
-    function toggleTenantFilter(key){
-      if(key==='__all__'){tenantFilters=[];}
-      else{
-        const idx=tenantFilters.indexOf(key);
-        if(idx>=0)tenantFilters.splice(idx,1); else tenantFilters.push(key);
-      }
+    function _updateTenantUI(){
       document.querySelectorAll('.tenant-btn').forEach(b=>{
-        if(b.dataset.tenant==='__all__') b.classList.toggle('active',tenantFilters.length===0);
-        else b.classList.toggle('active',tenantFilters.includes(b.dataset.tenant));
+        const k=b.dataset.tenant;
+        if(k==='__all__') b.classList.toggle('active',!foodFilter&&!bachelorFilter);
+        else if(k==='bachelor') b.classList.toggle('active',bachelorFilter);
+        else b.classList.toggle('active',foodFilter===k);
       });
-      renderListings(activeBucket);
     }
+    function toggleAllTenant(){foodFilter=null;bachelorFilter=false;_updateTenantUI();renderListings(activeBucket);}
+    function toggleFoodFilter(key){foodFilter=(foodFilter===key)?null:key;_updateTenantUI();renderListings(activeBucket);}
+    function toggleBachelorFilter(){bachelorFilter=!bachelorFilter;_updateTenantUI();renderListings(activeBucket);}
 
     const SORT_OPTS=[
       {key:'price',label:'Price',icon:'₹',asc:'Low → High',desc:'High → Low'},
@@ -210,7 +213,8 @@
     }
     function applyFilters(listings, bucket){
       let r=bucket==='__all__'?listings:listings.filter(l=>l.bucket===bucket);
-      if(tenantFilters.length) r=r.filter(l=>tenantFilters.some(f=>tenantMatch(l.col_l,f)));
+      if(foodFilter) r=r.filter(l=>tenantMatch(l.tenant_text,foodFilter));
+      if(bachelorFilter) r=r.filter(l=>tenantMatch(l.tenant_text,'bachelor'));
       return r;
     }
     function renderListings(bucket){
@@ -230,7 +234,8 @@
       let items=allListings.filter(l=>
         l.project.toLowerCase().includes(q)||(l.location||'').toLowerCase().includes(q)
       );
-      if(tenantFilters.length) items=items.filter(l=>tenantFilters.some(f=>tenantMatch(l.col_l,f)));
+      if(foodFilter) items=items.filter(l=>tenantMatch(l.tenant_text,foodFilter));
+      if(bachelorFilter) items=items.filter(l=>tenantMatch(l.tenant_text,'bachelor'));
       el.innerHTML=items.length
         ?items.map(cardHtml).join('')
         :'<div class="empty">No matches found</div>';
