@@ -32,12 +32,10 @@
     .sticky-bar.visible{transform:translateX(-50%) translateY(0)}
     .sticky-title{font-size:13px;font-weight:700;color:var(--text-primary);letter-spacing:-.2px}
     .sticky-price{font-size:13px;font-weight:800;color:var(--text-primary)}
-    #browseBtn{position:fixed;bottom:24px;right:16px;z-index:90;background:rgba(72,199,142,.92);border:none;border-radius:24px;padding:13px 20px;font-size:13px;font-weight:700;color:#0a1a17;cursor:pointer;box-shadow:0 4px 20px rgba(72,199,142,.35);backdrop-filter:blur(8px);letter-spacing:.2px;transition:opacity .2s,transform .2s}
-    #browseBtn.hidden{opacity:0;pointer-events:none;transform:translateY(8px)}
-    .toggle-anchor{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:0;z-index:50;pointer-events:none}
-    .theme-toggle{position:absolute;top:14px;right:14px;pointer-events:all;background:var(--toggle-bg);border:1px solid var(--toggle-border);border-radius:20px;padding:7px 16px;font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--toggle-color);cursor:pointer;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .2s,color .2s}
-    .hero{padding:52px 18px 24px}
-    .tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+    .theme-toggle{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;width:38px;height:38px;font-size:16px;color:rgba(255,255,255,.85);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-left:auto}
+    [data-theme="light"] .theme-toggle{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.14);color:rgba(0,0,0,.7)}
+    .hero{padding:16px 18px 24px}
+    .tag-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
     .tag{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:5px 12px;border-radius:20px;color:var(--tag-color);background:var(--tag-bg);border:1px solid var(--tag-border);backdrop-filter:blur(8px)}
     .tag.highlight{color:#1a1000;background:rgba(255,217,60,.92);border-color:rgba(200,165,0,.55)}
     .tag.gold{color:#ffd966;background:rgba(255,217,102,.14);border-color:rgba(255,217,102,.40)}
@@ -110,6 +108,10 @@
     .video-section{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
     .video-section iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
     video.photo-thumb{object-fit:cover;background:#000}
+    .video-wrap{position:relative;flex-shrink:0;width:180px;height:265px;scroll-snap-align:start;border-radius:12px;overflow:hidden;border:1px solid var(--chip-border)}
+    .video-wrap video{width:100%;height:100%;border-radius:0;border:none;scroll-snap-align:unset;flex-shrink:unset}
+    .speed-btn{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.62);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:4px 9px;font-size:11px;font-weight:700;cursor:pointer;z-index:5;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);letter-spacing:.3px;line-height:1.2;touch-action:manipulation}
+    .speed-btn:active{background:rgba(0,0,0,.88)}
     /* CP Footer (screenshot only) */
     #cpFooter{display:none;background:rgba(255,217,60,.92);border-top:2px solid rgba(200,165,0,.55);padding:14px 18px;margin:0 12px;border-radius:0 0 22px 22px}
     .cp-inner{display:flex;align-items:center;justify-content:space-between}
@@ -137,7 +139,8 @@
     #browseDrawer{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:430px;height:78vh;z-index:92;background:#0d2118;border-top:1px solid rgba(255,255,255,.12);border-radius:22px 22px 0 0;transition:transform .32s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;overflow:hidden}
     #browseDrawer.open{transform:translate(-50%,0)}
     .drawer-handle{width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:14px auto 12px;flex-shrink:0}
-    .drawer-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;text-align:center;margin-bottom:14px;flex-shrink:0}
+    .drawer-title{font-size:13px;font-weight:700;color:#48c78e;letter-spacing:.8px;text-transform:uppercase;text-align:center;margin-bottom:14px;flex-shrink:0;text-decoration:underline;text-decoration-color:rgba(72,199,142,.40);text-underline-offset:3px;display:block}
+    .drawer-title:hover{color:#6ddca6;text-decoration-color:rgba(72,199,142,.80)}
     .tab-row{display:flex;gap:6px;padding:0 14px 12px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
     .tab-row::-webkit-scrollbar{display:none}
     .tab-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
@@ -153,9 +156,17 @@
     .listing-loc-inline{font-size:11px;font-weight:400;color:rgba(255,255,255,.38)}
     .listing-current-tag{font-size:10px;color:rgba(72,199,142,.8);font-weight:600;margin-top:2px}
     .no-listings{text-align:center;color:rgba(255,255,255,.35);font-size:13px;padding:32px 0}
-    .quick-save-wrap{display:flex;justify-content:flex-end;padding:4px 14px 10px}
+    .quick-save-wrap{display:flex;justify-content:flex-end;gap:7px;padding:4px 14px 10px}
     .quick-save-btn{font-size:11px;font-weight:600;padding:5px 13px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.50);cursor:pointer;letter-spacing:.1px}
     .quick-save-btn:active{background:rgba(255,255,255,.13)}
+    .quick-save-btn.save-card{color:rgba(72,199,142,.85);background:rgba(72,199,142,.09);border-color:rgba(72,199,142,.28)}
+    .quick-save-btn.save-card:active{background:rgba(72,199,142,.18)}
+    #browseBtn{position:fixed;bottom:24px;right:16px;z-index:90;background:rgba(72,199,142,.92);border:none;border-radius:24px;padding:13px 20px;font-size:13px;font-weight:700;color:#0a1a17;cursor:pointer;box-shadow:0 4px 20px rgba(72,199,142,.35);backdrop-filter:blur(8px);letter-spacing:.2px;transition:opacity .2s,transform .2s}
+    #browseBtn.hidden{opacity:0;pointer-events:none;transform:translateY(8px)}
+    .float-btn-pair{position:fixed;bottom:80px;right:16px;z-index:90;display:flex;gap:10px;align-items:center}
+    .float-btn-pair.hidden{opacity:0;pointer-events:none;transform:translateY(8px)}
+    #shareFloatBtn,#saveFloatBtn{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:50%;width:44px;height:44px;color:rgba(255,255,255,.80);cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .15s;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+    #shareFloatBtn:active,#saveFloatBtn:active{background:rgba(255,255,255,.22)}
     .search-wrap{padding:0 14px 10px;flex-shrink:0}
     .search-input{width:100%;padding:9px 14px 9px 36px;border-radius:20px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;font-size:13px;outline:none;box-sizing:border-box;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,.35)' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center}
     .search-input::placeholder{color:rgba(255,255,255,.30)}
@@ -193,10 +204,6 @@
   <span class="sticky-price">₹0.3L / month</span>
 </div>
 
-<div class="toggle-anchor">
-  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Day</button>
-</div>
-
 <div class="bg"></div>
 
 <div id="captureArea">
@@ -204,7 +211,8 @@
   <div class="hero" id="hero">
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
-      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 249</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">22-May-26</span>
+      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 249</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">23-May-26</span>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">&#9728;</button>
     </div>
     <div class="hero-title">Nekjat Maratha Sadan <span class="hero-loc">&nbsp;·&nbsp;Lalbaug</span></div>
     <div class="sub-tag-row">
@@ -244,6 +252,7 @@
     </div>
 
     <div class="quick-save-wrap">
+      <button class="quick-save-btn save-card" onclick="openSaveModal()">&#128444; Save Listing</button>
       <button class="quick-save-btn" onclick="openDownloadModal()">&#128247; Save Photos</button>
     </div>
 
@@ -348,8 +357,34 @@
 
 </div>
 </div>
+<div id="captureArea2" style="display:none;background:#0a1a17;max-width:430px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow:hidden">
+  <div style="padding:10px 15px 9px;border-bottom:1px solid rgba(255,255,255,.07)">
+    <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
+      <span style="font-size:7.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 7px;border-radius:20px;color:#1a1000;background:rgba(255,217,60,.92)">For Rent</span>
+      <span style="font-size:7.5px;font-weight:700;padding:3px 7px;border-radius:20px;color:#ffd966;background:rgba(255,217,102,.14);border:1px solid rgba(255,217,102,.35)">ID: 249</span>
+    </div>
+    <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.3px">Nekjat Maratha Sadan <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.42)">· Lalbaug</span></div>
+    <div style="display:flex;align-items:baseline;gap:5px;margin-top:4px">
+      <span style="font-size:20px;font-weight:800;color:#fff;line-height:1">&#8377;0.3L</span>
+      <span style="font-size:11px;color:rgba(255,255,255,.4)">/&nbsp;mo</span>
+      <span style="font-size:11px;color:rgba(255,255,255,.55);margin-left:3px">1 rk · 275 carpet · Jain only</span>
+    </div>
+    <div style="font-size:10px;color:rgba(255,255,255,.38);margin-top:3px">Deposit: 6 months  ·  Immediately Available</div>
+    
+  </div>
+  <div id="cap2Collage" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#000"></div>
+  <div id="cpFooter2" style="display:none;background:rgba(255,217,60,.92);border-top:2px solid rgba(200,165,0,.55);padding:11px 15px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div id="cpFooter2Name" style="font-size:13px;font-weight:800;color:#1a1000"></div>
+        <div id="cpFooter2Phone" style="font-size:11px;color:#5a3200;margin-top:2px"></div>
+      </div>
+      <div id="cpFooter2Company" style="font-size:14px;color:#1a1000;text-align:right;max-width:150px;font-weight:800;word-break:break-word"></div>
+    </div>
+  </div>
+</div>
 
-<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Nekjat Maratha Sadan</div><iframe class="map-iframe" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&q=Nejkat+Maratha+building+lalbaug&zoom=17" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Nekjat Maratha Sadan</div><iframe class="map-iframe" src="https://maps.google.com/maps?q=Nejkat+Maratha+building+lalbaug&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 
 <!-- Download Photos Modal -->
 <div id="dlModal" class="modal-overlay" onclick="if(event.target===this)closeModal('dlModal')">
@@ -402,11 +437,15 @@
   <div class="lb-counter" id="lbCounter"></div>
 </div>
 
+<div class="float-btn-pair" id="floatBtnPair">
+  <button id="saveFloatBtn" onclick="openSaveModal()" title="Save listing card"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+  <button id="shareFloatBtn" onclick="copyLink()" title="Share listing"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+</div>
 <button id="browseBtn" onclick="openBrowse()">&#127968; Browse Flats</button>
 <div id="browseOverlay" onclick="closeBrowse()"></div>
 <div id="browseDrawer">
   <div class="drawer-handle"></div>
-  <div class="drawer-title">Available Rental Flats</div>
+  <a class="drawer-title" href="https://soboflats.github.io" target="_blank" rel="noopener">Available Rental Flats &#8599;</a>
   <div class="tab-row" id="tabRow"></div>
   <div class="search-wrap">
     <input type="text" id="searchInput" class="search-input" placeholder="Search name or area..." oninput="handleSearch(this.value)">
@@ -422,6 +461,7 @@
   const PHOTO_ALBUMS = [];
   const GPHOTO_LINKS = [];
   const CAPTURE_PHOTOS_DATA = [];
+  const CAPTURE_COLLAGE_DATA = [];
   let current = 0, allListings = [], activeBucket = '__all__';
 
   // Lightbox
@@ -433,6 +473,15 @@
     lbReset();
     lbImg.src = photos[i];
     document.getElementById('lbCounter').textContent = (i+1)+' / '+photos.length;
+  }
+  const _SPEEDS=[1,1.25,1.5,1.75,2,2.5,3];
+  function cycleSpeed(btn){
+    const vid=btn.closest('.video-wrap').querySelector('video');
+    const cur=parseFloat(vid.playbackRate)||1;
+    const idx=_SPEEDS.findIndex(s=>Math.abs(s-cur)<0.01);
+    const next=_SPEEDS[(idx+1)%_SPEEDS.length];
+    vid.playbackRate=next;
+    btn.innerHTML='&#9889;'+(next===1?'1&times;':next+'&times;');
   }
   function openLightbox(i) { current=i; setPhoto(i); document.getElementById('lightbox').classList.add('open'); }
   function closeLightbox() { lbReset(); document.getElementById('lightbox').classList.remove('open'); }
@@ -482,7 +531,7 @@
   window.addEventListener('scroll',()=>{sBar.classList.toggle('visible',hero.getBoundingClientRect().bottom<0);},{passive:true});
 
   // Theme
-  function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeToggle').textContent=d?'Night':'Day';}
+  function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeToggle').textContent=d?'☾':'☀';}
 
   // Share Listing (copy link)
   function copyLink(){
@@ -500,10 +549,14 @@
   // Hide Browse Flats button when share section scrolls into view
   (function(){
     const btn = document.getElementById('browseBtn');
+    const pair = document.getElementById('floatBtnPair');
     const share = document.getElementById('shareSection');
-    if (!btn || !share) return;
+    if (!share) return;
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => btn.classList.toggle('hidden', e.isIntersecting));
+      entries.forEach(e => {
+        if (btn) btn.classList.toggle('hidden', e.isIntersecting);
+        if (pair) pair.classList.toggle('hidden', e.isIntersecting);
+      });
     }, {threshold: 0.05});
     obs.observe(share);
   })();
@@ -632,13 +685,11 @@
   }
   async function doSaveCard() {
     const photoWrap = document.querySelector('.photo-wrap');
-    // mapEmbedWrap and ytVideoCard are outside captureArea — no need to hide
     const hideIds = ['shareSection','viewPropertyLinks','notesSection','basicTermsSection'];
     const hideEls = hideIds.map(id => document.getElementById(id)).filter(Boolean);
     hideEls.forEach(el => el.style.display = 'none');
     if (photoWrap) photoWrap.style.display = 'none';
 
-    // Show 3 capture photos using pre-fetched base64 data: URLs (canvas-safe, no CORS issues)
     const capEl = document.getElementById('capturePhotos');
     const capImgs = capEl ? Array.from(capEl.querySelectorAll('img')) : [];
     if (capEl && CAPTURE_PHOTOS_DATA.length) {
@@ -647,26 +698,67 @@
       await new Promise(r => setTimeout(r, 200));
     }
 
+    const cpF = document.getElementById('cpFooter');
+    const cap2 = document.getElementById('captureArea2');
+
     const restoreAll = () => {
       hideEls.forEach(el => el.style.display = '');
       if (photoWrap) photoWrap.style.display = '';
       if (capEl) { capEl.style.display = 'none'; capImgs.forEach(img => img.src = ''); }
-      document.getElementById('cpFooter').style.display = 'none';
+      if (cpF) cpF.style.display = 'none';
+      if (cap2) cap2.style.display = 'none';
+      const f2 = document.getElementById('cpFooter2');
+      if (f2) f2.style.display = 'none';
+    };
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const dl = (url, name) => {
+      const a = document.createElement('a'); a.download = name; a.href = url;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
     };
 
     try {
-      const canvas = await html2canvas(document.getElementById('captureArea'), {
+      // ── Image 1: standard listing card ─────────────────────────────────────
+      const canvas1 = await html2canvas(document.getElementById('captureArea'), {
         allowTaint: false, useCORS: false, backgroundColor: '#000', scale: 2, logging: false,
       });
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      const dataUrl1 = canvas1.toDataURL('image/jpeg', 0.92);
+
+      // ── Image 2: compact top + photo collage ────────────────────────────────
+      let dataUrl2 = null;
+      if (cap2 && CAPTURE_COLLAGE_DATA.length) {
+        const collageEl = document.getElementById('cap2Collage');
+        collageEl.innerHTML = '';
+        const _cnt = CAPTURE_COLLAGE_DATA.length;
+        const _ph = _cnt <= 4 ? 175 : _cnt <= 8 ? 150 : _cnt <= 12 ? 130 : _cnt <= 18 ? 110 : 95;
+        CAPTURE_COLLAGE_DATA.forEach(src => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.style.cssText = `width:100%;height:${_ph}px;object-fit:cover;display:block`;
+          collageEl.appendChild(img);
+        });
+        if (cpF && cpF.style.display !== 'none') {
+          document.getElementById('cpFooter2Name').textContent = document.getElementById('cpFooterName').textContent;
+          document.getElementById('cpFooter2Phone').textContent = document.getElementById('cpFooterPhone').textContent;
+          document.getElementById('cpFooter2Company').textContent = document.getElementById('cpFooterCompany').textContent;
+          document.getElementById('cpFooter2').style.display = 'block';
+        }
+        cap2.style.display = 'block';
+        await new Promise(r => setTimeout(r, 300));
+        const canvas2 = await html2canvas(cap2, {
+          allowTaint: false, useCORS: false, backgroundColor: '#0a1a17', scale: 2, logging: false,
+        });
+        dataUrl2 = canvas2.toDataURL('image/jpeg', 0.92);
+      }
+
       restoreAll();
-      const link = document.createElement('a');
-      link.download = 'flat-249-listing.jpg';
-      link.href = dataUrl;
-      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-        window.open(dataUrl, '_blank');
+
+      if (isIOS) {
+        window.open(dataUrl1, '_blank');
+        if (dataUrl2) setTimeout(() => window.open(dataUrl2, '_blank'), 700);
       } else {
-        document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        dl(dataUrl1, 'flat-249-listing.jpg');
+        if (dataUrl2) setTimeout(() => dl(dataUrl2, 'flat-249-collage.jpg'), 400);
       }
     } catch(e) {
       restoreAll();
