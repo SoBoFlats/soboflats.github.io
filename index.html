@@ -12,8 +12,8 @@
     .header{padding:20px 16px 0;display:flex;align-items:flex-start;justify-content:space-between}
     .header-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
     .header-title{font-size:18px;font-weight:800;letter-spacing:-.3px;text-transform:uppercase}
-    .header-date{font-size:10px;font-weight:600;color:var(--muted);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:3px 8px;letter-spacing:.2px;white-space:nowrap}
-    [data-theme="light"] .header-date{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.10)}
+    .header-date{font-size:10px;font-weight:700;color:#48c78e;background:rgba(72,199,142,.18);border:1px solid rgba(72,199,142,.38);border-radius:20px;padding:4px 10px;letter-spacing:.2px;white-space:nowrap}
+    [data-theme="light"] .header-date{color:var(--accent);background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.32)}
     .header-count{font-size:12px;color:var(--muted);margin-top:4px}
     .toggle-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;width:38px;height:38px;font-size:16px;color:var(--sub);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
     [data-theme="light"] .toggle-btn{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.14)}
@@ -54,6 +54,11 @@
     .tab-btn.active{background:var(--tab-a);border-color:var(--tab-ab);color:var(--accent)}
     [data-theme="light"] .tab-btn{border-color:rgba(0,0,0,.25);background:rgba(0,0,0,.05);color:rgba(0,0,0,.5)}
     [data-theme="light"] .tab-btn.active{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.35);color:var(--accent)}
+    .tenant-row{padding:0 16px 10px}
+    .tenant-btn{flex-shrink:0;padding:6px 13px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);transition:all .15s}
+    .tenant-btn.active{background:rgba(72,199,142,.15);border-color:rgba(72,199,142,.45);color:#48c78e}
+    [data-theme="light"] .tenant-btn{border-color:rgba(0,0,0,.18);background:rgba(0,0,0,.03);color:rgba(0,0,0,.45)}
+    [data-theme="light"] .tenant-btn.active{background:rgba(26,138,90,.10);border-color:rgba(26,138,90,.30);color:var(--accent)}
     .listings{padding:8px 12px}
     .listing-card{display:flex;gap:12px;padding:14px;margin-bottom:10px;background:var(--card);border:1px solid var(--card-b);border-radius:16px;text-decoration:none;cursor:pointer}
     .listing-thumb{width:80px;height:80px;border-radius:12px;object-fit:cover;flex-shrink:0;background:rgba(255,255,255,.08)}
@@ -82,6 +87,13 @@
     <button class="toggle-btn" id="themeToggleIdx" onclick="toggleTheme()">&#9728;</button>
   </div>
   <div class="tab-row" id="tabRow"></div>
+  <div class="tab-row tenant-row" id="tenantRow">
+    <button class="tenant-btn active" data-tenant="__all__" onclick="toggleTenantFilter('__all__')">All</button>
+    <button class="tenant-btn" data-tenant="veg" onclick="toggleTenantFilter('veg')">🥗 Pure Veg</button>
+    <button class="tenant-btn" data-tenant="nonveg" onclick="toggleTenantFilter('nonveg')">🍗 Non-veg ok</button>
+    <button class="tenant-btn" data-tenant="bachelor" onclick="toggleTenantFilter('bachelor')">👨 Bachelors ok</button>
+    <button class="tenant-btn" data-tenant="family" onclick="toggleTenantFilter('family')">👪 Family only</button>
+  </div>
   <div class="search-sort-row">
     <input type="text" id="searchInput" class="search-input" placeholder="Search name or area..." oninput="handleSearch(this.value)">
     <button class="sort-btn" id="sortBtn" onclick="openSort()" title="Sort listings">&#8645;</button>
@@ -103,8 +115,29 @@
 
   <script>
     const BUCKET_ORDER=['1 RK','1 & 1.5 BHK','2 & 2.5 BHK','3 & 3.5 BHK','4 & 4.5 BHK','5 & 5.5 BHK'];
-    let allListings=[], activeBucket='__all__';
+    let allListings=[], activeBucket='__all__', tenantFilters=[];
     let sortKey='price', sortDir=1;
+
+    function tenantMatch(colL, f){
+      const v=(colL||'').toLowerCase();
+      if(f==='veg') return (v.includes('veg')&&!v.includes('non'))||v.includes('jain');
+      if(f==='nonveg') return v.includes('non-veg')||v.includes('non veg')||v.includes('everyone');
+      if(f==='bachelor') return v.includes('bachelor');
+      if(f==='family') return v.includes('family');
+      return false;
+    }
+    function toggleTenantFilter(key){
+      if(key==='__all__'){tenantFilters=[];}
+      else{
+        const idx=tenantFilters.indexOf(key);
+        if(idx>=0)tenantFilters.splice(idx,1); else tenantFilters.push(key);
+      }
+      document.querySelectorAll('.tenant-btn').forEach(b=>{
+        if(b.dataset.tenant==='__all__') b.classList.toggle('active',tenantFilters.length===0);
+        else b.classList.toggle('active',tenantFilters.includes(b.dataset.tenant));
+      });
+      renderListings(activeBucket);
+    }
 
     const SORT_OPTS=[
       {key:'price',label:'Price',icon:'₹',asc:'Low → High',desc:'High → Low'},
@@ -124,7 +157,7 @@
     function closeSort(){
       document.getElementById('sortModal').style.display='none';
       applySort();
-      renderListings(activeBucket);
+      renderListings(activeBucket);  // renderListings also applies tenantFilters
       updateSortBtn();
     }
     function resetSort(){sortKey='price';sortDir=1;renderSortOptions();}
@@ -175,11 +208,16 @@
           <div class="listing-rent">${l.rent_display}</div>
         </div></a>`;
     }
+    function applyFilters(listings, bucket){
+      let r=bucket==='__all__'?listings:listings.filter(l=>l.bucket===bucket);
+      if(tenantFilters.length) r=r.filter(l=>tenantFilters.some(f=>tenantMatch(l.col_l,f)));
+      return r;
+    }
     function renderListings(bucket){
       activeBucket=bucket;
       const si=document.getElementById('searchInput');
       if(si)si.value='';
-      const items=bucket==='__all__'?allListings:allListings.filter(l=>l.bucket===bucket);
+      const items=applyFilters(allListings,bucket);
       const el=document.getElementById('listings');
       if(!items.length){el.innerHTML='<div class="empty">No listings in this category</div>';return;}
       el.innerHTML=items.map(cardHtml).join('');
@@ -189,11 +227,12 @@
       const q=val.trim().toLowerCase();
       const el=document.getElementById('listings');
       if(!q){renderListings(activeBucket);return;}
-      const filtered=allListings.filter(l=>
+      let items=allListings.filter(l=>
         l.project.toLowerCase().includes(q)||(l.location||'').toLowerCase().includes(q)
       );
-      el.innerHTML=filtered.length
-        ?filtered.map(cardHtml).join('')
+      if(tenantFilters.length) items=items.filter(l=>tenantFilters.some(f=>tenantMatch(l.col_l,f)));
+      el.innerHTML=items.length
+        ?items.map(cardHtml).join('')
         :'<div class="empty">No matches found</div>';
       document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
     }
