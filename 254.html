@@ -435,7 +435,7 @@
         allowfullscreen></iframe>
     </div>
   </div>
-<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Piramal Mahalaxmi, South</div><iframe class="map-iframe" src="https://maps.google.com/maps?q=18.9823933,72.8260727&z=19&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Piramal Mahalaxmi, South</div><iframe class="map-iframe" src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&location=18.9823933,72.8260727&heading=210&pitch=10&fov=80&source=outdoor" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 
 <!-- Download Photos Modal -->
 <div id="dlModal" class="modal-overlay" onclick="if(event.target===this)closeModal('dlModal')">
@@ -783,10 +783,9 @@
         const _cnt = CAPTURE_COLLAGE_DATA.length;
         const _ph = _cnt <= 4 ? 175 : _cnt <= 8 ? 150 : _cnt <= 12 ? 130 : _cnt <= 18 ? 110 : 95;
         CAPTURE_COLLAGE_DATA.forEach(src => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.style.cssText = `width:100%;height:${_ph}px;object-fit:cover;display:block`;
-          collageEl.appendChild(img);
+          const div = document.createElement('div');
+          div.style.cssText = `width:100%;height:${_ph}px;background:url('${src}') center/cover no-repeat;flex-shrink:0`;
+          collageEl.appendChild(div);
         });
         if (cpF && cpF.style.display !== 'none') {
           document.getElementById('cpFooter2Name').textContent = document.getElementById('cpFooterName').textContent;
