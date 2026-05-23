@@ -15,8 +15,39 @@
     .header-date{font-size:10px;font-weight:600;color:var(--muted);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:3px 8px;letter-spacing:.2px;white-space:nowrap}
     [data-theme="light"] .header-date{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.10)}
     .header-count{font-size:12px;color:var(--muted);margin-top:4px}
-    .toggle-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:7px 14px;font-size:11px;font-weight:700;color:var(--sub);cursor:pointer;flex-shrink:0}
+    .toggle-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;width:38px;height:38px;font-size:16px;color:var(--sub);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
     [data-theme="light"] .toggle-btn{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.14)}
+    .search-sort-row{display:flex;gap:8px;padding:0 16px 8px;align-items:center}
+    .sort-btn{flex-shrink:0;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);color:rgba(255,255,255,.65);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+    .sort-btn.active{background:rgba(72,199,142,.15);border-color:rgba(72,199,142,.40);color:#48c78e}
+    [data-theme="light"] .sort-btn{border-color:rgba(0,0,0,.20);background:rgba(0,0,0,.05);color:rgba(0,0,0,.55)}
+    [data-theme="light"] .sort-btn.active{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.35);color:var(--accent)}
+    .sort-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.65);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto}
+    .sort-sheet{background:#0d2118;border-radius:22px 22px 0 0;padding:14px 18px 32px;width:100%;border-top:1px solid rgba(255,255,255,.12)}
+    [data-theme="light"] .sort-sheet{background:#f5f1e8;border-top-color:rgba(0,0,0,.10)}
+    .sort-handle{width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:0 auto 16px}
+    [data-theme="light"] .sort-handle{background:rgba(0,0,0,.12)}
+    .sort-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .sort-title{font-size:15px;font-weight:700;color:var(--text)}
+    [data-theme="light"] .sort-title{color:#111}
+    .sort-reset{background:none;border:none;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:4px 8px}
+    .sort-opt-row{width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:rgba(255,255,255,.04);cursor:pointer;margin-bottom:8px;text-align:left;transition:background .12s}
+    .sort-opt-row:active{background:rgba(255,255,255,.09)}
+    .sort-opt-row.sort-opt-active{background:rgba(72,199,142,.10);border-color:rgba(72,199,142,.30)}
+    [data-theme="light"] .sort-opt-row{border-color:rgba(0,0,0,.09);background:rgba(0,0,0,.03)}
+    [data-theme="light"] .sort-opt-row.sort-opt-active{background:rgba(26,138,90,.10);border-color:rgba(26,138,90,.28)}
+    .sort-opt-left{display:flex;flex-direction:column;gap:2px}
+    .sort-opt-label{font-size:13.5px;font-weight:600;color:var(--text)}
+    .sort-opt-row.sort-opt-active .sort-opt-label{color:#48c78e}
+    [data-theme="light"] .sort-opt-row.sort-opt-active .sort-opt-label{color:var(--accent)}
+    .sort-opt-dir{font-size:11px;color:var(--muted)}
+    .sort-opt-row.sort-opt-active .sort-opt-dir{color:rgba(72,199,142,.7)}
+    .sort-opt-right{font-size:16px;color:rgba(255,255,255,.3)}
+    .sort-check{color:#48c78e;font-size:15px;font-weight:700}
+    [data-theme="light"] .sort-check{color:var(--accent)}
+    [data-theme="light"] .sort-opt-right{color:rgba(0,0,0,.25)}
+    .sort-done{width:100%;padding:13px;border-radius:16px;background:rgba(72,199,142,.18);border:1px solid rgba(72,199,142,.35);color:#48c78e;font-size:13px;font-weight:700;cursor:pointer;margin-top:4px}
+    [data-theme="light"] .sort-done{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.30);color:var(--accent)}
     .tab-row{display:flex;gap:6px;padding:16px 16px 8px;overflow-x:auto;scrollbar-width:none}
     .tab-row::-webkit-scrollbar{display:none}
     .tab-btn{flex-shrink:0;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
@@ -33,7 +64,6 @@
     .listing-rent{font-size:15px;font-weight:800;color:var(--accent)}
     .empty{text-align:center;color:var(--muted);font-size:14px;padding:48px 16px}
     .loading{text-align:center;color:var(--muted);font-size:13px;padding:48px 16px}
-    .search-wrap{padding:0 16px 8px}
     .search-input{width:100%;padding:10px 14px 10px 38px;border-radius:20px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);color:#fff;font-size:13px;outline:none;box-sizing:border-box;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,.38)' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:13px center}
     .search-input::placeholder{color:rgba(255,255,255,.30)}
     [data-theme="light"] .search-input{border-color:rgba(0,0,0,.18);background:rgba(0,0,0,.05);color:#111;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,.35)' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:13px center}
@@ -45,23 +75,94 @@
     <div>
       <div class="header-title-row">
         <div class="header-title">Available Rental Flats</div>
-        <span class="header-date">22-May-26</span>
+        <span class="header-date">23-May-26</span>
       </div>
       <div class="header-count" id="hCount">Loading...</div>
     </div>
-    <button class="toggle-btn" onclick="toggleTheme()">Day / Night</button>
+    <button class="toggle-btn" id="themeToggleIdx" onclick="toggleTheme()">&#9728;</button>
   </div>
   <div class="tab-row" id="tabRow"></div>
-  <div class="search-wrap">
+  <div class="search-sort-row">
     <input type="text" id="searchInput" class="search-input" placeholder="Search name or area..." oninput="handleSearch(this.value)">
+    <button class="sort-btn" id="sortBtn" onclick="openSort()" title="Sort listings">&#8645;</button>
   </div>
   <div class="listings" id="listings"><div class="loading">Loading listings...</div></div>
+
+  <!-- Sort Modal -->
+  <div id="sortModal" class="sort-modal" onclick="if(event.target===this)closeSort()">
+    <div class="sort-sheet">
+      <div class="sort-handle"></div>
+      <div class="sort-header">
+        <div class="sort-title">Sort By</div>
+        <button class="sort-reset" onclick="resetSort()">Reset</button>
+      </div>
+      <div id="sortOptions"></div>
+      <button class="sort-done" onclick="closeSort()">Done</button>
+    </div>
+  </div>
 
   <script>
     const BUCKET_ORDER=['1 RK','1 & 1.5 BHK','2 & 2.5 BHK','3 & 3.5 BHK','4 & 4.5 BHK','5 & 5.5 BHK'];
     let allListings=[], activeBucket='__all__';
+    let sortKey='price', sortDir=1;
 
-    function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');}
+    const SORT_OPTS=[
+      {key:'price',label:'Price',icon:'₹',asc:'Low → High',desc:'High → Low'},
+      {key:'typology',label:'Typology',icon:'🏠',asc:'1 RK → 5+ BHK',desc:'5+ BHK → 1 RK'},
+      {key:'project',label:'Project Name',icon:'🅰',asc:'A → Z',desc:'Z → A'},
+      {key:'location',label:'Locality',icon:'📍',asc:'A → Z',desc:'Z → A'},
+      {key:'carpet',label:'Carpet Area',icon:'📐',asc:'Small → Large',desc:'Large → Small'},
+    ];
+
+    function toggleTheme(){
+      const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';
+      h.setAttribute('data-theme',d?'light':'dark');
+      document.getElementById('themeToggleIdx').textContent=d?'☾':'☀';
+    }
+
+    function openSort(){renderSortOptions();document.getElementById('sortModal').style.display='flex';}
+    function closeSort(){
+      document.getElementById('sortModal').style.display='none';
+      applySort();
+      renderListings(activeBucket);
+      updateSortBtn();
+    }
+    function resetSort(){sortKey='price';sortDir=1;renderSortOptions();}
+    function updateSortBtn(){
+      const btn=document.getElementById('sortBtn');
+      if(btn)btn.classList.toggle('active',!(sortKey==='price'&&sortDir===1));
+    }
+    function renderSortOptions(){
+      const el=document.getElementById('sortOptions');
+      el.innerHTML=SORT_OPTS.map(o=>{
+        const isA=o.key===sortKey;
+        const dirLbl=isA?(sortDir===1?o.asc:o.desc):o.asc;
+        const arrow=isA?(sortDir===1?'↑':'↓'):'';
+        return `<button class="sort-opt-row${isA?' sort-opt-active':''}" onclick="toggleSortOpt('${o.key}')">
+          <div class="sort-opt-left">
+            <div class="sort-opt-label">${o.icon} ${o.label}${isA?' '+arrow:''}</div>
+            <div class="sort-opt-dir">${dirLbl}</div>
+          </div>
+          <div class="sort-opt-right">${isA?'<span class="sort-check">✓</span>':'<span>›</span>'}</div>
+        </button>`;
+      }).join('');
+    }
+    function toggleSortOpt(key){
+      if(sortKey===key){sortDir*=-1;}else{sortKey=key;sortDir=1;}
+      renderSortOptions();
+    }
+    function applySort(){
+      allListings.sort((a,b)=>{
+        let va,vb;
+        if(sortKey==='price'){va=a.rent;vb=b.rent;}
+        else if(sortKey==='typology'){va=BUCKET_ORDER.indexOf(a.bucket);vb=BUCKET_ORDER.indexOf(b.bucket);}
+        else if(sortKey==='project'){va=(a.project||'').toLowerCase();vb=(b.project||'').toLowerCase();}
+        else if(sortKey==='location'){va=(a.location||'').toLowerCase();vb=(b.location||'').toLowerCase();}
+        else if(sortKey==='carpet'){va=parseFloat(a.carpet)||0;vb=parseFloat(b.carpet)||0;}
+        else{va=a.rent;vb=b.rent;}
+        return sortDir*(va<vb?-1:va>vb?1:0);
+      });
+    }
 
     function cardHtml(l){
       const locStr=l.location?` <span class="listing-loc-inline">&nbsp;·&nbsp;${l.location}</span>`:'';
