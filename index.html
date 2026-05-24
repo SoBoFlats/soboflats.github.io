@@ -114,6 +114,7 @@
     <button class="tenant-btn" data-tenant="nonveg" onclick="toggleFoodFilter('nonveg')">Non-veg ok</button>
   </div>
   <div class="tab-row tenant-row" id="occupancyRow" style="padding-top:2px">
+    <button class="tenant-btn active" data-occ="__all__" onclick="toggleOccFilter('__all__')">All</button>
     <button class="tenant-btn" data-occ="family" onclick="toggleOccFilter('family')">Family only</button>
     <button class="tenant-btn" data-occ="bachelor" onclick="toggleOccFilter('bachelor')">👨 Bachelors ok</button>
   </div>
@@ -154,15 +155,19 @@
     function _updateTenantUI(){
       document.querySelectorAll('.tenant-btn[data-tenant]').forEach(b=>{
         const k=b.dataset.tenant;
-        b.classList.toggle('active', k==='__all__' ? (!foodFilter&&!occFilter) : foodFilter===k);
+        b.classList.toggle('active', k==='__all__' ? !foodFilter : foodFilter===k);
       });
       document.querySelectorAll('.tenant-btn[data-occ]').forEach(b=>{
-        b.classList.toggle('active', occFilter===b.dataset.occ);
+        const k=b.dataset.occ;
+        b.classList.toggle('active', k==='__all__' ? !occFilter : occFilter===k);
       });
     }
     function toggleAllTenant(){foodFilter=null;occFilter=null;_updateTenantUI();renderListings(activeBucket);}
     function toggleFoodFilter(key){foodFilter=(foodFilter===key)?null:key;_updateTenantUI();renderListings(activeBucket);}
-    function toggleOccFilter(key){occFilter=(occFilter===key)?null:key;_updateTenantUI();renderListings(activeBucket);}
+    function toggleOccFilter(key){
+      if(key==='__all__'){occFilter=null;}else{occFilter=(occFilter===key)?null:key;}
+      _updateTenantUI();renderListings(activeBucket);
+    }
 
     const SORT_OPTS=[
       {key:'price',label:'Price',icon:'₹',asc:'Low → High',desc:'High → Low'},
@@ -244,6 +249,14 @@
       const si=document.getElementById('searchInput');
       if(si)si.value='';
       const items=applyFilters(allListings,bucket);
+      const total=allListings.length;
+      const hc=document.getElementById('hCount');
+      if(hc){
+        const shown=items.length;
+        hc.textContent=shown===total
+          ? total+' listing'+(total!==1?'s':'')+' available'
+          : shown+' of '+total+' listing'+(total!==1?'s':'');
+      }
       const el=document.getElementById('listings');
       if(!items.length){el.innerHTML='<div class="empty">No listings in this category</div>';return;}
       el.innerHTML=items.map(cardHtml).join('');
