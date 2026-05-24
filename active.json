@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-24T23:31:45.115543+00:00",
+  "updated_at": "2026-05-24T23:43:19.506912+00:00",
   "listings": [
     {
       "serial": 249,
@@ -75,6 +75,21 @@
       "page_date": "24-May-26",
       "url": "https://soboflats.github.io/262.html",
       "thumb": "https://lh3.googleusercontent.com/pw/AP1GczOzhE3wM8RVgHrqKshyqRols5CJKEsxm31QrwF7a4M6xb4n4en2PRqxCaz17T2Xxzp8rYr9BWiMj_bqaXvaJzDhcqgi21N2HC-LlvPwsukAVUWV0bk=w1600"
+    },
+    {
+      "serial": 259,
+      "project": "Monte South, T2",
+      "bhk": "2 bhk",
+      "carpet": "950",
+      "bucket": "2 & 2.5 BHK",
+      "rent": 1.5,
+      "rent_display": "₹1.5L",
+      "location": "Byculla (E)",
+      "col_l": "With Wardrobes, Everyone Welcome",
+      "tenant_text": "family ok, bachelors ok, m ok, h ok | non-veg ok | ok | online registered agrement only, long lease preferred",
+      "page_date": "24-May-26",
+      "url": "https://soboflats.github.io/259.html",
+      "thumb": ""
     },
     {
       "serial": 255,
