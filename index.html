@@ -15,7 +15,7 @@
     .header-date{font-size:10px;font-weight:700;color:#48c78e;background:rgba(72,199,142,.18);border:1px solid rgba(72,199,142,.38);border-radius:20px;padding:4px 10px;letter-spacing:.2px;white-space:nowrap}
     [data-theme="light"] .header-date{color:var(--accent);background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.32)}
     .header-count{font-size:12px;color:var(--muted);margin-top:4px}
-    .toggle-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;width:38px;height:38px;font-size:16px;color:var(--sub);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+    .toggle-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;width:32px;height:32px;font-size:14px;color:var(--sub);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
     [data-theme="light"] .toggle-btn{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.14)}
     .search-sort-row{display:flex;gap:8px;padding:0 16px 8px;align-items:center}
     .sort-btn{flex-shrink:0;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);color:rgba(255,255,255,.65);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
@@ -50,7 +50,7 @@
     [data-theme="light"] .sort-done{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.30);color:var(--accent)}
     .tab-row{display:flex;gap:6px;padding:16px 16px 8px;overflow-x:auto;scrollbar-width:none}
     .tab-row::-webkit-scrollbar{display:none}
-    .tab-btn{flex-shrink:0;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
+    .tab-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
     .tab-btn.active{background:var(--tab-a);border-color:var(--tab-ab);color:var(--accent)}
     [data-theme="light"] .tab-btn{border-color:rgba(0,0,0,.25);background:rgba(0,0,0,.05);color:rgba(0,0,0,.5)}
     [data-theme="light"] .tab-btn.active{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.35);color:var(--accent)}
@@ -107,13 +107,15 @@
     <button class="toggle-btn" id="themeToggleIdx" onclick="toggleTheme()">&#9728;</button>
   </div>
   <div class="tab-row" id="tabRow"></div>
-  <div class="tab-row tenant-row" id="tenantRow">
+  <div class="tab-row tenant-row" id="tenantRow" style="padding-bottom:4px">
     <button class="tenant-btn active" data-tenant="__all__" onclick="toggleAllTenant()">All</button>
     <button class="tenant-btn" data-tenant="jain" onclick="toggleFoodFilter('jain')">Jain only</button>
-    <button class="tenant-btn" data-tenant="veg" onclick="toggleFoodFilter('veg')">🥗 Pure Veg</button>
-    <button class="tenant-btn" data-tenant="muslim" onclick="toggleFoodFilter('muslim')">Muslim only</button>
-    <span class="tenant-sep"></span>
-    <button class="tenant-btn" data-tenant="bachelor" onclick="toggleBachelorFilter()">👨 Bachelors ok</button>
+    <button class="tenant-btn" data-tenant="veg" onclick="toggleFoodFilter('veg')">🥗 Veg only</button>
+    <button class="tenant-btn" data-tenant="nonveg" onclick="toggleFoodFilter('nonveg')">Non-veg ok</button>
+  </div>
+  <div class="tab-row tenant-row" id="occupancyRow" style="padding-top:2px">
+    <button class="tenant-btn" data-occ="family" onclick="toggleOccFilter('family')">Family only</button>
+    <button class="tenant-btn" data-occ="bachelor" onclick="toggleOccFilter('bachelor')">👨 Bachelors ok</button>
   </div>
   <div class="search-sort-row">
     <input type="text" id="searchInput" class="search-input" placeholder="Search name, area or ID..." oninput="handleSearch(this.value)">
@@ -137,28 +139,30 @@
   <script>
     const BUCKET_ORDER=['1 RK','1 & 1.5 BHK','2 & 2.5 BHK','3 & 3.5 BHK','4 & 4.5 BHK','5 & 5.5 BHK'];
     let allListings=[], activeBucket='__all__';
-    let foodFilter=null, bachelorFilter=false;
+    let foodFilter=null, occFilter=null;
     let sortKey='price', sortDir=1;
 
     function tenantMatch(tt,f){
       const v=(tt||'').toLowerCase();
       if(f==='jain') return v.includes('jain');
       if(f==='veg') return (v.includes('veg')||v.includes('vegetarian'))&&!v.includes('non-veg')&&!v.includes('non veg');
-      if(f==='muslim') return v.includes('muslim');
+      if(f==='nonveg') return v.includes('non-veg')||v.includes('non veg')||v.includes('nonveg');
+      if(f==='family') return v.includes('family');
       if(f==='bachelor') return v.includes('bachelor');
       return false;
     }
     function _updateTenantUI(){
-      document.querySelectorAll('.tenant-btn').forEach(b=>{
+      document.querySelectorAll('.tenant-btn[data-tenant]').forEach(b=>{
         const k=b.dataset.tenant;
-        if(k==='__all__') b.classList.toggle('active',!foodFilter&&!bachelorFilter);
-        else if(k==='bachelor') b.classList.toggle('active',bachelorFilter);
-        else b.classList.toggle('active',foodFilter===k);
+        b.classList.toggle('active', k==='__all__' ? (!foodFilter&&!occFilter) : foodFilter===k);
+      });
+      document.querySelectorAll('.tenant-btn[data-occ]').forEach(b=>{
+        b.classList.toggle('active', occFilter===b.dataset.occ);
       });
     }
-    function toggleAllTenant(){foodFilter=null;bachelorFilter=false;_updateTenantUI();renderListings(activeBucket);}
+    function toggleAllTenant(){foodFilter=null;occFilter=null;_updateTenantUI();renderListings(activeBucket);}
     function toggleFoodFilter(key){foodFilter=(foodFilter===key)?null:key;_updateTenantUI();renderListings(activeBucket);}
-    function toggleBachelorFilter(){bachelorFilter=!bachelorFilter;_updateTenantUI();renderListings(activeBucket);}
+    function toggleOccFilter(key){occFilter=(occFilter===key)?null:key;_updateTenantUI();renderListings(activeBucket);}
 
     const SORT_OPTS=[
       {key:'price',label:'Price',icon:'₹',asc:'Low → High',desc:'High → Low'},
@@ -232,7 +236,7 @@
     function applyFilters(listings, bucket){
       let r=bucket==='__all__'?listings:listings.filter(l=>l.bucket===bucket);
       if(foodFilter) r=r.filter(l=>tenantMatch(l.tenant_text,foodFilter));
-      if(bachelorFilter) r=r.filter(l=>tenantMatch(l.tenant_text,'bachelor'));
+      if(occFilter) r=r.filter(l=>tenantMatch(l.tenant_text,occFilter));
       return r;
     }
     function renderListings(bucket){
@@ -253,7 +257,7 @@
         l.project.toLowerCase().includes(q)||(l.location||'').toLowerCase().includes(q)||String(l.serial).includes(q)
       );
       if(foodFilter) items=items.filter(l=>tenantMatch(l.tenant_text,foodFilter));
-      if(bachelorFilter) items=items.filter(l=>tenantMatch(l.tenant_text,'bachelor'));
+      if(occFilter) items=items.filter(l=>tenantMatch(l.tenant_text,occFilter));
       el.innerHTML=items.length
         ?items.map(cardHtml).join('')
         :'<div class="empty">No matches found</div>';
