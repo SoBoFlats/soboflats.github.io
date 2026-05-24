@@ -414,7 +414,7 @@
     </div>
     <div style="font-size:10px;color:rgba(255,255,255,.38);margin-top:3px;display:flex;align-items:center;flex-wrap:wrap;gap:4px">Deposit: 3 months  ·  Immediately Available <span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:20px;background:rgba(72,199,142,.14);border:1px solid rgba(72,199,142,.30);color:#48c78e;display:inline-block;vertical-align:middle">&#10003; RERA</span></div>
   </div>
-  <div id="cap2Collage" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#000"></div>
+  <div id="cap2Collage" style="display:flex;gap:2px;background:#0a1a17"></div>
   <div id="cpFooter2" style="display:none;background:rgba(255,217,60,.92);border-top:2px solid rgba(200,165,0,.55);padding:11px 15px">
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div>
@@ -779,13 +779,19 @@
       if (cap2 && CAPTURE_COLLAGE_DATA.length) {
         const collageEl = document.getElementById('cap2Collage');
         collageEl.innerHTML = '';
-        const _cnt = CAPTURE_COLLAGE_DATA.length;
-        const _ph = _cnt <= 4 ? 175 : _cnt <= 8 ? 150 : _cnt <= 12 ? 130 : _cnt <= 18 ? 110 : 95;
-        CAPTURE_COLLAGE_DATA.forEach(src => {
-          const div = document.createElement('div');
-          div.style.cssText = `width:100%;height:${_ph}px;background:url('${src}') center/contain no-repeat #111;flex-shrink:0`;
-          collageEl.appendChild(div);
+        // Two natural-aspect-ratio columns — no fixed height, no black bars
+        const col1 = document.createElement('div');
+        const col2 = document.createElement('div');
+        col1.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:2px';
+        col2.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:2px';
+        CAPTURE_COLLAGE_DATA.forEach((src, i) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.style.cssText = 'width:100%;display:block';
+          (i % 2 === 0 ? col1 : col2).appendChild(img);
         });
+        collageEl.appendChild(col1);
+        collageEl.appendChild(col2);
         if (cpF && cpF.style.display !== 'none') {
           document.getElementById('cpFooter2Name').textContent = document.getElementById('cpFooterName').textContent;
           document.getElementById('cpFooter2Phone').textContent = document.getElementById('cpFooterPhone').textContent;
