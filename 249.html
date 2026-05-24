@@ -358,7 +358,7 @@
       <div class="share-grid">
         <button class="share-btn green" onclick="openSaveModal()">&#128444; Save Listing</button>
         <button class="share-btn" onclick="openDownloadModal()">&#128247; Save Photos</button>
-        <button class="share-btn" id="copyBtn" onclick="copyLink()">&#128257; Share Listing</button>
+        <button class="share-btn" id="copyBtn" onclick="openShareChoiceModal()">&#128257; Share Listing</button>
         <button class="share-btn" onclick="sharePortfolio()">&#127968; Share Portfolio</button>
       </div>
     </div>
@@ -420,10 +420,10 @@
     <!-- Step 1: Choose user type -->
     <div id="modalStep1">
       <div class="utype-row">
-        <button class="utype-btn active" id="btnEndUser" onclick="setUserType('end')">End User</button>
-        <button class="utype-btn" id="btnCP" onclick="setUserType('cp')">&#128188; Channel Partner (CP)</button>
+        <button class="utype-btn active" id="btnCP" onclick="setUserType('cp')">&#128188; Channel Partner</button>
+        <button class="utype-btn" id="btnEndUser" onclick="setUserType('end')">End User</button>
       </div>
-      <div id="cpHint" style="display:none;font-size:10px;color:rgba(255,255,255,.38);text-align:right;margin:-6px 0 10px;padding-right:4px;line-height:1.4">Stamp your name &amp; number on the listing image</div>
+      <div id="cpHint" style="font-size:10px;color:rgba(255,255,255,.38);text-align:right;margin:-6px 0 10px;padding-right:4px;line-height:1.4">Stamp your name &amp; number on the listing image</div>
       <button class="modal-dl-btn" onclick="proceedFromStep1()">Continue &#8250;</button>
     </div>
     <!-- Step 2 (CP only): Ask if they want details on the card -->
@@ -445,6 +445,19 @@
   </div>
 </div>
 
+<!-- Share Choice Modal -->
+<div id="shareChoiceModal" class="modal-overlay" onclick="if(event.target===this)closeModal('shareChoiceModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Share</div>
+    <div class="utype-row" style="margin-bottom:10px">
+      <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');doShareLink()">&#128257; Share Link</button>
+      <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');openSaveModal()">&#128444; Share Listing Card</button>
+    </div>
+    <button class="modal-cancel" onclick="closeModal('shareChoiceModal')">Cancel</button>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox">
   <div class="lb-close" id="lbClose">&#10005;</div>
   <div class="lb-zone lb-zone-prev" id="lbPrev"><div class="lb-arrow">&#8249;</div></div>
@@ -455,7 +468,7 @@
 
 <div class="float-btn-pair" id="floatBtnPair">
   <button id="saveFloatBtn" onclick="openSaveModal()" title="Save listing card"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
-  <button id="shareFloatBtn" onclick="copyLink()" title="Share listing"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+  <button id="shareFloatBtn" onclick="openShareChoiceModal()" title="Share listing"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
 </div>
 <button id="browseBtn" onclick="openBrowse()">&#127968; Browse Flats</button>
 <div id="browseOverlay" onclick="closeBrowse()"></div>
@@ -548,15 +561,21 @@
   // Theme
   function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeToggle').textContent=d?'☾':'☀';}
 
-  // Share Listing (copy link)
-  function copyLink(){
-    const btn=document.getElementById('copyBtn'),url="https://soboflats.github.io/249.html";
-    const reset=()=>{btn.innerHTML='&#128257; Share Listing';btn.classList.remove('copied');};
-    const done=()=>{btn.textContent='&#10003; Link Copied!';btn.classList.add('copied');setTimeout(reset,2200);};
+  // Share choice modal
+  function openShareChoiceModal(){document.getElementById('shareChoiceModal').style.display='flex';}
+
+  // Share Link (native share or clipboard copy)
+  function doShareLink(){
+    const url="https://soboflats.github.io/249.html";
+    const btn=document.getElementById('copyBtn');
+    const reset=()=>{if(btn){btn.innerHTML='&#128257; Share Listing';btn.classList.remove('copied');}};
+    const done=()=>{if(btn){btn.textContent='&#10003; Link Copied!';btn.classList.add('copied');setTimeout(reset,2200);}};
     if(navigator.share){navigator.share({title:document.title,url}).catch(()=>fallbackCopy());}
     else{fallbackCopy();}
     function fallbackCopy(){navigator.clipboard.writeText(url).then(done).catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);done();});}
   }
+  // Legacy alias (kept for sharePortfolio compatibility)
+  function copyLink(){doShareLink();}
 
   // Browse drawer
   function openBrowse(){document.getElementById('browseDrawer').classList.add('open');document.getElementById('browseOverlay').style.display='block';}
@@ -659,7 +678,7 @@
     userType = t;
     document.getElementById('btnEndUser').classList.toggle('active', t==='end');
     document.getElementById('btnCP').classList.toggle('active', t==='cp');
-    document.getElementById('cpHint').style.display = t==='cp' ? 'block' : 'none';
+    document.getElementById('cpHint').style.display = t==='end' ? 'none' : 'block';
   }
   function setCpWantsDetails(wants) {
     cpWantsDetails = wants;
@@ -683,7 +702,7 @@
   }
   function openSaveModal() {
     showModalStep(1);
-    setUserType('end');
+    setUserType('cp');
     // Auto-fill CP details from localStorage
     try {
       const saved = JSON.parse(localStorage.getItem('cp_details') || 'null');
