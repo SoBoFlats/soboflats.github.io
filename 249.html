@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Nekjat Maratha Sadan · 1 rk · For Rent</title>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://soboflats.github.io/249.html">
+  <meta property="og:title" content="For Rent · Nekjat Maratha Sadan · 1 rk · 275 carpet · Jain only · ₹0.3L">
+  <meta property="og:description" content="Tap to View for Photos">
+  <meta name="twitter:card" content="summary">
   <style>
     :root {
       --body-bg:#0a1a17;--overlay:linear-gradient(to bottom,rgba(5,20,17,.18) 0%,rgba(5,20,17,.40) 32%,rgba(5,20,17,.84) 66%,rgba(5,20,17,.97) 100%);
@@ -28,12 +33,14 @@
     .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:#000;z-index:0;overflow:hidden}
     .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s;pointer-events:none;z-index:1}
     .scroll{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
-    .sticky-bar{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:430px;z-index:60;background:var(--sticky-bg);border-bottom:1px solid var(--sticky-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:11px 18px 10px;transition:transform .25s ease}
+    .sticky-bar{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:430px;z-index:60;background:var(--sticky-bg);border-bottom:1px solid var(--sticky-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:11px 18px 10px 50px;transition:transform .25s ease}
     .sticky-bar.visible{transform:translateX(-50%) translateY(0)}
     .sticky-title{font-size:13px;font-weight:700;color:var(--text-primary);letter-spacing:-.2px}
     .sticky-price{font-size:13px;font-weight:800;color:var(--text-primary)}
     .theme-toggle{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;width:38px;height:38px;font-size:16px;color:rgba(255,255,255,.85);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-left:auto}
     [data-theme="light"] .theme-toggle{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.14);color:rgba(0,0,0,.7)}
+    /* Hero is always black — keep toggle white in light mode */
+    [data-theme="light"] .hero .theme-toggle{background:rgba(255,255,255,.18)!important;border-color:rgba(255,255,255,.40)!important;color:rgba(255,255,255,.90)!important}
     
     .hamburger-btn{position:fixed;top:8px;left:8px;z-index:95;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
     .nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
@@ -123,6 +130,9 @@
     .share-btn:active{background:rgba(72,199,142,.14)}.share-btn.copied{color:#48c78e;border-color:rgba(72,199,142,.35)}
     .share-btn.green{background:rgba(72,199,142,.12);border-color:rgba(72,199,142,.30);color:#48c78e}
     .share-btn.green:active{background:rgba(72,199,142,.22)}
+    [data-theme="light"] .share-btn{border-color:rgba(0,0,0,.22);background:rgba(0,0,0,.07);color:rgba(20,20,20,.85)}
+    [data-theme="light"] .share-btn.green{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.35);color:#1a8a5a}
+    [data-theme="light"] #shareFloatBtn,[data-theme="light"] #saveFloatBtn{background:rgba(255,255,255,.92);color:#333;border-color:rgba(0,0,0,.18);box-shadow:0 2px 10px rgba(0,0,0,.18)}
     .video-card{margin:0 12px 32px;border-radius:22px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
     .video-label{padding:14px 18px 10px;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-label)}
     .video-section{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
@@ -257,23 +267,12 @@
       </div>
     </div>
 
-    <div id="capturePhotos" style="display:none;flex-direction:row;gap:5px;padding:12px 14px 0">
-      <img style="flex:1;min-width:0;height:185px;object-fit:cover;border-radius:9px;background:#1a2e28" alt="">
-      <img style="flex:1;min-width:0;height:185px;object-fit:cover;border-radius:9px;background:#1a2e28" alt="">
-      <img style="flex:1;min-width:0;height:185px;object-fit:cover;border-radius:9px;background:#1a2e28" alt="">
-    </div>
-
     <div class="photo-wrap">
       <div class="photo-strip" id="photoStrip">
 <div class="photos-coming-soon">&#128247; Photos Coming Soon</div>
       </div>
       <span class="photo-count">0 photos</span>
       <div class="swipe-hint"><span class="swipe-hint-arrow">&#8250;</span> Swipe</div>
-    </div>
-
-    <div class="quick-save-wrap">
-      <button class="quick-save-btn save-card" onclick="openSaveModal()">&#128444; Save Listing</button>
-      <button class="quick-save-btn" onclick="openDownloadModal()">&#128247; Save Photos</button>
     </div>
 
     <div class="details">
@@ -377,7 +376,7 @@
 
 </div>
 </div>
-<div id="captureArea2" style="display:none;background:#0a1a17;max-width:430px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow:hidden">
+<div id="captureArea2" style="display:none;background:#0a1a17;max-width:430px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow:hidden;border-radius:16px">
   <div style="padding:10px 15px 9px;">
     <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
       <span style="font-size:7.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 7px;border-radius:20px;color:#1a1000;background:rgba(255,217,60,.92)">For Rent</span>
@@ -385,20 +384,10 @@
       <span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">24-May-26</span>
     </div>
     <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.3px">Nekjat Maratha Sadan <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.42)">· Lalbaug</span></div>
-    <div style="font-size:11px;color:rgba(255,255,255,.55);margin-top:3px">1 rk · 275 carpet · Jain only</div>
-    <div style="display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap">
-      <span style="font-size:20px;font-weight:800;color:#fff;line-height:1">&#8377;0.3L</span>
-      <span style="font-size:10px;color:rgba(255,255,255,.45);font-weight:500">Deposit: 6 months</span>
-    </div>
-    <div style="font-size:10px;color:rgba(255,255,255,.38);margin-top:3px;display:flex;align-items:center;flex-wrap:wrap;gap:4px">Immediately Available</div>
+    <div style="font-size:11px;margin-top:4px;line-height:1.5"><span style="color:rgba(255,255,255,.58)">1 rk</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.58)">275 carpet</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:#ffd966;font-weight:600">Jain only</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.40)">Immediately Available</span></div>
+    <div style="display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap"><span style="font-size:20px;font-weight:800;color:#fff;line-height:1">&#8377;0.3L</span> <span style="font-size:9.5px;color:rgba(255,255,255,.42)">· Deposit: 6 months</span></div>
   </div>
-<div style="padding:8px 15px 6px"><div style="font-size:8px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px">Tenant Preference</div><div style="display:flex;flex-wrap:wrap;gap:5px"><span class="chip">Jain only</span>
-<span class="chip">Family ok</span>
-<span class="chip">Bachelors ok</span>
-<span class="chip">Pure veg only</span>
-<span class="chip">Pets Not Allowed</span>
-<span class="chip">12 months Rent together</span>
-<span class="chip">Online Registered Agrement only</span></div></div><div style="padding:6px 15px 8px"><div style="font-size:8px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px">Furniture Included</div><div style="display:flex;flex-wrap:wrap;gap:5px"><span class="chip incl" style="font-size:10.5px;padding:4px 9px">Lights</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">Fans</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">Modular Kitchen</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">Washrooms done-up with Gysers</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">Curtains</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">Wardrobes</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">Beds with Matress</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">Sofa</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">TV with TV unit</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">shoe unit</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">Kitchen Electronics:  Gas</span> <span class="chip incl" style="font-size:10.5px;padding:4px 9px">Fridge</span></div></div>  <div id="cap2Collage" style="display:flex;gap:2px;background:#0a1a17;border-top:1px solid rgba(255,255,255,.07)"></div>
+<div style="padding:5px 15px 3px"><div style="font-size:7.5px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:5px">Property Details</div><div style="display:flex;flex-wrap:wrap;gap:4px"><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">1 Washroom</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Furnished Flat</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">No Car Parking. Only bike parking</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Vastu Flat</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Jain Derasar nearby</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Main Road Touch</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Building with Lift</span></div></div><div style="padding:4px 15px 3px"><div style="font-size:7.5px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:5px">Tenant Preference</div><div style="display:flex;flex-wrap:wrap;gap:4px"><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Jain only</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Family ok</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Bachelors ok</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Pure veg only</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Pets Not Allowed</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">12 months Rent together</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:inline-block;line-height:1.4">Online Registered Agrement only</span></div></div><div style="padding:4px 15px 6px"><div style="font-size:7.5px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:5px">Furniture Included</div><div style="display:flex;flex-wrap:wrap;gap:4px"><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Lights</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Fans</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Modular Kitchen</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Washrooms done-up with Gysers</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Curtains</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Wardrobes</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Beds with Matress</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Sofa</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">TV with TV unit</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">shoe unit</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Kitchen Electronics:  Gas</span><span style="font-size:10px;padding:3px 8px;border-radius:8px;color:#48c78e;background:rgba(72,199,142,.12);border:1px solid rgba(72,199,142,.28);display:inline-block;line-height:1.4">Fridge</span></div></div>  <div id="cap2Collage" style="display:flex;gap:2px;background:#0d2318;padding:4px;border-top:1px solid rgba(255,255,255,.07)"></div>
   <div id="cpFooter2" style="display:none;background:rgba(255,217,60,.92);border-top:2px solid rgba(200,165,0,.55);padding:8px 15px">
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div>
@@ -432,8 +421,9 @@
     <div id="modalStep1">
       <div class="utype-row">
         <button class="utype-btn active" id="btnEndUser" onclick="setUserType('end')">End User</button>
-        <button class="utype-btn" id="btnCP" onclick="setUserType('cp')">Channel Partner (CP)</button>
+        <button class="utype-btn" id="btnCP" onclick="setUserType('cp')">&#128188; Channel Partner (CP)</button>
       </div>
+      <div id="cpHint" style="display:none;font-size:10px;color:rgba(255,255,255,.38);text-align:right;margin:-6px 0 10px;padding-right:4px;line-height:1.4">Stamp your name &amp; number on the listing image</div>
       <button class="modal-dl-btn" onclick="proceedFromStep1()">Continue &#8250;</button>
     </div>
     <!-- Step 2 (CP only): Ask if they want details on the card -->
@@ -486,7 +476,6 @@
   const photos = [];
   const PHOTO_ALBUMS = [];
   const GPHOTO_LINKS = [];
-  const CAPTURE_PHOTOS_DATA = [];
   const CAPTURE_COLLAGE_DATA = [];
   let current = 0, allListings = [], activeBucket = '__all__';
 
@@ -670,6 +659,7 @@
     userType = t;
     document.getElementById('btnEndUser').classList.toggle('active', t==='end');
     document.getElementById('btnCP').classList.toggle('active', t==='cp');
+    document.getElementById('cpHint').style.display = t==='cp' ? 'block' : 'none';
   }
   function setCpWantsDetails(wants) {
     cpWantsDetails = wants;
@@ -694,6 +684,15 @@
   function openSaveModal() {
     showModalStep(1);
     setUserType('end');
+    // Auto-fill CP details from localStorage
+    try {
+      const saved = JSON.parse(localStorage.getItem('cp_details') || 'null');
+      if (saved) {
+        document.getElementById('cpName').value = saved.name || '';
+        document.getElementById('cpPhone').value = saved.phone || '';
+        document.getElementById('cpCompany').value = saved.company || '';
+      }
+    } catch(e) {}
     document.getElementById('saveModal').style.display = 'flex';
   }
   function saveListingCard() {
@@ -701,40 +700,30 @@
       const name = document.getElementById('cpName').value.trim();
       const phone = document.getElementById('cpPhone').value.trim();
       if (!name || !phone) { alert('Please enter your Full Name and Contact Number.'); return; }
+      const company = document.getElementById('cpCompany').value.trim();
       document.getElementById('cpFooterName').textContent = name;
       document.getElementById('cpFooterPhone').textContent = phone;
-      document.getElementById('cpFooterCompany').textContent = document.getElementById('cpCompany').value.trim();
+      document.getElementById('cpFooterCompany').textContent = company;
       document.getElementById('cpFooter').style.display = 'block';
+      // Save CP details for next time
+      try { localStorage.setItem('cp_details', JSON.stringify({name, phone, company})); } catch(e) {}
     }
     closeModal('saveModal');
     doSaveCard();
   }
   async function doSaveCard() {
-    const photoWrap = document.querySelector('.photo-wrap');
-    const hideIds = ['shareSection','viewPropertyLinks','notesSection','basicTermsSection','themeToggle'];
-    const hideEls = hideIds.map(id => document.getElementById(id)).filter(Boolean);
-    hideEls.forEach(el => el.style.display = 'none');
-    if (photoWrap) photoWrap.style.display = 'none';
-
-    const capEl = document.getElementById('capturePhotos');
-    const capImgs = capEl ? Array.from(capEl.querySelectorAll('img')) : [];
-    if (capEl && CAPTURE_PHOTOS_DATA.length) {
-      capEl.style.display = 'flex';
-      CAPTURE_PHOTOS_DATA.forEach((dataUrl, i) => { if (capImgs[i] && dataUrl) capImgs[i].src = dataUrl; });
-      await new Promise(r => setTimeout(r, 200));
+    if (!CAPTURE_COLLAGE_DATA.length) {
+      alert('No photos available to generate the listing card.');
+      return;
     }
-
-    const cpF = document.getElementById('cpFooter');
     const cap2 = document.getElementById('captureArea2');
+    const cpF = document.getElementById('cpFooter');
 
     const restoreAll = () => {
-      hideEls.forEach(el => el.style.display = '');
-      if (photoWrap) photoWrap.style.display = '';
-      if (capEl) { capEl.style.display = 'none'; capImgs.forEach(img => img.src = ''); }
-      if (cpF) cpF.style.display = 'none';
       if (cap2) cap2.style.display = 'none';
       const f2 = document.getElementById('cpFooter2');
       if (f2) f2.style.display = 'none';
+      if (cpF) cpF.style.display = 'none';
     };
 
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -744,52 +733,43 @@
     };
 
     try {
-      // ── Image 1: standard listing card ─────────────────────────────────────
-      const canvas1 = await html2canvas(document.getElementById('captureArea'), {
-        allowTaint: false, useCORS: false, backgroundColor: '#000', scale: 2, logging: false,
+      // Build photo collage
+      const collageEl = document.getElementById('cap2Collage');
+      collageEl.innerHTML = '';
+      const col1 = document.createElement('div');
+      const col2 = document.createElement('div');
+      col1.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px';
+      col2.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px';
+      CAPTURE_COLLAGE_DATA.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.style.cssText = 'width:100%;display:block;border-radius:6px';
+        (i % 2 === 0 ? col1 : col2).appendChild(img);
       });
-      const dataUrl1 = canvas1.toDataURL('image/jpeg', 0.92);
+      collageEl.appendChild(col1);
+      collageEl.appendChild(col2);
 
-      // ── Image 2: compact top + photo collage ────────────────────────────────
-      let dataUrl2 = null;
-      if (cap2 && CAPTURE_COLLAGE_DATA.length) {
-        const collageEl = document.getElementById('cap2Collage');
-        collageEl.innerHTML = '';
-        // Two natural-aspect-ratio columns — no fixed height, no black bars
-        const col1 = document.createElement('div');
-        const col2 = document.createElement('div');
-        col1.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:2px';
-        col2.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:2px';
-        CAPTURE_COLLAGE_DATA.forEach((src, i) => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.style.cssText = 'width:100%;display:block';
-          (i % 2 === 0 ? col1 : col2).appendChild(img);
-        });
-        collageEl.appendChild(col1);
-        collageEl.appendChild(col2);
-        if (cpF && cpF.style.display !== 'none') {
-          document.getElementById('cpFooter2Name').textContent = document.getElementById('cpFooterName').textContent;
-          document.getElementById('cpFooter2Phone').textContent = document.getElementById('cpFooterPhone').textContent;
-          document.getElementById('cpFooter2Company').textContent = document.getElementById('cpFooterCompany').textContent;
-          document.getElementById('cpFooter2').style.display = 'block';
-        }
-        cap2.style.display = 'block';
-        await new Promise(r => setTimeout(r, 300));
-        const canvas2 = await html2canvas(cap2, {
-          allowTaint: false, useCORS: false, backgroundColor: '#0a1a17', scale: 2, logging: false,
-        });
-        dataUrl2 = canvas2.toDataURL('image/jpeg', 0.92);
+      // Copy CP footer if active
+      if (cpF && cpF.style.display !== 'none') {
+        document.getElementById('cpFooter2Name').textContent = document.getElementById('cpFooterName').textContent;
+        document.getElementById('cpFooter2Phone').textContent = document.getElementById('cpFooterPhone').textContent;
+        document.getElementById('cpFooter2Company').textContent = document.getElementById('cpFooterCompany').textContent;
+        document.getElementById('cpFooter2').style.display = 'block';
       }
+
+      cap2.style.display = 'block';
+      await new Promise(r => setTimeout(r, 300));
+      const canvas = await html2canvas(cap2, {
+        allowTaint: false, useCORS: false, backgroundColor: '#0a1a17', scale: 2, logging: false,
+      });
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
 
       restoreAll();
 
       if (isIOS) {
-        window.open(dataUrl1, '_blank');
-        if (dataUrl2) setTimeout(() => window.open(dataUrl2, '_blank'), 700);
+        window.open(dataUrl, '_blank');
       } else {
-        dl(dataUrl1, 'flat-249-listing.jpg');
-        if (dataUrl2) setTimeout(() => dl(dataUrl2, 'flat-249-collage.jpg'), 400);
+        dl(dataUrl, 'flat-249-listing.jpg');
       }
     } catch(e) {
       restoreAll();
