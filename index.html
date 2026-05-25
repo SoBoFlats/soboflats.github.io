@@ -14,7 +14,7 @@
     .header-title{font-size:18px;font-weight:800;letter-spacing:-.3px;text-transform:uppercase}
     .header-date{font-size:10px;font-weight:700;color:#48c78e;background:rgba(72,199,142,.18);border:1px solid rgba(72,199,142,.38);border-radius:20px;padding:4px 10px;letter-spacing:.2px;white-space:nowrap}
     [data-theme="light"] .header-date{color:var(--accent);background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.32)}
-    .header-count{font-size:12px;font-weight:700;color:#ffd966;background:rgba(255,217,102,.13);border:1px solid rgba(255,217,102,.28);border-radius:20px;padding:3px 10px;margin-top:6px;display:inline-block;letter-spacing:.1px}
+    .header-count{font-size:12px;font-weight:700;color:#ffd966;background:rgba(255,217,102,.13);border:1px solid rgba(255,217,102,.28);border-radius:20px;padding:3px 10px;margin-top:6px;margin-left:42px;display:inline-block;letter-spacing:.1px}
     [data-theme="light"] .header-count{color:#a07800;background:rgba(255,217,102,.18);border-color:rgba(180,130,0,.30)}
     .toggle-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;width:32px;height:32px;font-size:14px;color:var(--sub);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
     [data-theme="light"] .toggle-btn{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.14)}
@@ -56,9 +56,8 @@
     [data-theme="light"] .tab-btn{border-color:rgba(0,0,0,.25);background:rgba(0,0,0,.05);color:rgba(0,0,0,.5)}
     [data-theme="light"] .tab-btn.active{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.35);color:var(--accent)}
     .tenant-row{padding:0 16px 10px}
-    .rent-row{flex-wrap:nowrap;gap:10px;align-items:center;padding-top:2px}
-    .rent-wrap{flex:1;display:flex;flex-direction:column;gap:5px}
-    .rent-label{font-size:10.5px;font-weight:600;color:rgba(255,255,255,.50);text-align:center;letter-spacing:.1px}
+    .rent-row{flex-wrap:nowrap;gap:8px;align-items:center;padding-top:2px}
+    .rent-label{font-size:10.5px;font-weight:600;color:rgba(255,255,255,.50);white-space:nowrap;flex-shrink:0;letter-spacing:.1px;min-width:96px;text-align:center}
     [data-theme="light"] .rent-label{color:rgba(0,0,0,.40)}
     .rent-slider-track{position:relative;height:20px;display:flex;align-items:center}
     .rent-bg{position:absolute;left:0;right:0;height:3px;background:rgba(255,255,255,.14);border-radius:2px}
@@ -95,10 +94,14 @@
     .nav-overlay.open{opacity:1;pointer-events:all}
     .nav-tray{position:fixed;top:0;left:0;bottom:0;width:280px;max-width:85vw;background:#0d2318;border-right:1px solid rgba(255,255,255,.08);z-index:201;transform:translateX(-100%);transition:transform .28s ease;display:flex;flex-direction:column}
     .nav-tray.open{transform:translateX(0)}
-    .nav-tray-header{padding:52px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between}
+    .nav-tray-header{padding:52px 20px 14px;border-bottom:none;display:flex;align-items:center;justify-content:space-between}
     .nav-tray-logo{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.2px;line-height:1.3}
-    .nav-tray-logo span{display:block;font-size:10px;font-weight:500;color:rgba(255,255,255,.45);letter-spacing:.6px;text-transform:uppercase;margin-top:2px}
     .nav-tray-close{background:none;border:none;color:rgba(255,255,255,.45);font-size:20px;cursor:pointer;padding:4px 6px;line-height:1}
+    .nav-profile-row{display:flex;align-items:center;gap:13px;padding:10px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav-profile-photo{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.14);flex-shrink:0;background:rgba(255,255,255,.07)}
+    .nav-profile-info{flex:1;min-width:0}
+    .nav-profile-name{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.2px}
+    .nav-company-logo{width:26px;height:26px;object-fit:contain;flex-shrink:0;border-radius:4px;opacity:.9}
     .nav-tray-items{padding:8px 0;flex:1}
     .nav-tray-item{display:flex;align-items:center;gap:14px;padding:16px 20px;text-decoration:none;color:#fff;border-bottom:1px solid rgba(255,255,255,.05)}
     a.nav-tray-item:active{background:rgba(255,255,255,.05)}
@@ -127,7 +130,7 @@
     <div>
       <div class="header-title-row">
         <div class="header-title" style="padding-left:42px">Rent Portfolio</div>
-        <span class="header-date">24-May-26</span>
+        <span class="header-date">&#8635; 24-May-26</span>
       </div>
       <div class="header-count" id="hCount">Loading...</div>
     </div>
@@ -137,24 +140,22 @@
   <div class="tab-row tenant-row" id="tenantRow" style="padding-bottom:4px">
     <button class="tenant-btn active" data-tenant="__all__" onclick="toggleAllTenant()">All</button>
     <button class="tenant-btn" data-tenant="jain" onclick="toggleFoodFilter('jain')">Jain only</button>
-    <button class="tenant-btn" data-tenant="veg" onclick="toggleFoodFilter('veg')">🥗 Veg only</button>
+    <button class="tenant-btn" data-tenant="veg" onclick="toggleFoodFilter('veg')">Veg only</button>
     <button class="tenant-btn" data-tenant="nonveg" onclick="toggleFoodFilter('nonveg')">Non-veg ok</button>
   </div>
   <div class="tab-row tenant-row" id="occupancyRow" style="padding-top:2px">
     <button class="tenant-btn active" data-occ="__all__" onclick="toggleOccFilter('__all__')">All</button>
     <button class="tenant-btn" data-occ="family" onclick="toggleOccFilter('family')">Family only</button>
-    <button class="tenant-btn" data-occ="bachelor" onclick="toggleOccFilter('bachelor')">👨 Bachelors ok</button>
+    <button class="tenant-btn" data-occ="bachelor" onclick="toggleOccFilter('bachelor')">Bachelors ok</button>
   </div>
-  <div class="tab-row tenant-row rent-row" id="rentRow" style="padding-bottom:8px">
+  <div class="tab-row tenant-row rent-row" id="rentRow" style="padding-bottom:10px">
     <button class="tenant-btn active" id="rentAllBtn" onclick="clearRentFilter()">All</button>
-    <div class="rent-wrap">
-      <div class="rent-label" id="rentLabel">loading...</div>
-      <div class="rent-slider-track">
-        <div class="rent-bg"></div>
-        <div class="rent-fill" id="rentFill"></div>
-        <input class="rent-slider" id="sliderLo" type="range" step="0.05" oninput="onRentSlider(this,'lo')">
-        <input class="rent-slider" id="sliderHi" type="range" step="0.05" oninput="onRentSlider(this,'hi')">
-      </div>
+    <span class="rent-label" id="rentLabel">—</span>
+    <div class="rent-slider-track" style="flex:1">
+      <div class="rent-bg"></div>
+      <div class="rent-fill" id="rentFill"></div>
+      <input class="rent-slider" id="sliderLo" type="range" step="0.05" oninput="onRentSlider(this,'lo')">
+      <input class="rent-slider" id="sliderHi" type="range" step="0.05" oninput="onRentSlider(this,'hi')">
     </div>
   </div>
   <div class="search-sort-row">
@@ -377,10 +378,9 @@
     function buildTabs(listings){
       const tabRow=document.getElementById('tabRow');
       const buckets=BUCKET_ORDER.filter(b=>listings.some(l=>l.bucket===b));
-      const allBtn=`<button class="tab-btn${activeBucket==='__all__'?' active':''}" data-bucket="__all__" onclick="renderListings('__all__')">All <span style="opacity:.5">${listings.length}</span></button>`;
+      const allBtn=`<button class="tab-btn${activeBucket==='__all__'?' active':''}" data-bucket="__all__" onclick="renderListings('__all__')">All</button>`;
       tabRow.innerHTML=allBtn+buckets.map(b=>{
-        const cnt=listings.filter(l=>l.bucket===b).length;
-        return `<button class="tab-btn${b===activeBucket?' active':''}" data-bucket="${b}" onclick="renderListings('${b}')">${b} <span style="opacity:.5">(${cnt})</span></button>`;
+        return `<button class="tab-btn${b===activeBucket?' active':''}" data-bucket="${b}" onclick="renderListings('${b}')">${b}</button>`;
       }).join('');
     }
 
@@ -399,8 +399,17 @@
 <div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
 <div class="nav-tray" id="navTray">
   <div class="nav-tray-header">
-    <div class="nav-tray-logo">Oswal Properties<span>Real Estate</span></div>
+    <div style="display:flex;align-items:center;gap:9px">
+      <img src="./logo.png" class="nav-company-logo" onerror="this.style.display='none'" alt="">
+      <div class="nav-tray-logo">Oswal Properties</div>
+    </div>
     <button class="nav-tray-close" onclick="closeNav()">&#215;</button>
+  </div>
+  <div class="nav-profile-row">
+    <img src="./photo.jpg" class="nav-profile-photo" onerror="this.style.display='none'" alt="Vaibhav Oswal">
+    <div class="nav-profile-info">
+      <div class="nav-profile-name">Vaibhav Oswal</div>
+    </div>
   </div>
   <div class="nav-tray-items">
     <a href="https://soboflats.github.io" class="nav-tray-item active-item">
