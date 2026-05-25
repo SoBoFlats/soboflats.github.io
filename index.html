@@ -14,7 +14,8 @@
     .header-title{font-size:18px;font-weight:800;letter-spacing:-.3px;text-transform:uppercase}
     .header-date{font-size:10px;font-weight:700;color:#48c78e;background:rgba(72,199,142,.18);border:1px solid rgba(72,199,142,.38);border-radius:20px;padding:4px 10px;letter-spacing:.2px;white-space:nowrap}
     [data-theme="light"] .header-date{color:var(--accent);background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.32)}
-    .header-count{font-size:12px;color:var(--muted);margin-top:4px}
+    .header-count{font-size:12px;font-weight:700;color:#ffd966;background:rgba(255,217,102,.13);border:1px solid rgba(255,217,102,.28);border-radius:20px;padding:3px 10px;margin-top:6px;display:inline-block;letter-spacing:.1px}
+    [data-theme="light"] .header-count{color:#a07800;background:rgba(255,217,102,.18);border-color:rgba(180,130,0,.30)}
     .toggle-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;width:32px;height:32px;font-size:14px;color:var(--sub);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
     [data-theme="light"] .toggle-btn{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.14)}
     .search-sort-row{display:flex;gap:8px;padding:0 16px 8px;align-items:center}
@@ -50,11 +51,25 @@
     [data-theme="light"] .sort-done{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.30);color:var(--accent)}
     .tab-row{display:flex;gap:6px;padding:16px 16px 8px;overflow-x:auto;scrollbar-width:none}
     .tab-row::-webkit-scrollbar{display:none}
-    .tab-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
+    .tab-btn{flex-shrink:0;padding:6px 13px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .15s}
     .tab-btn.active{background:var(--tab-a);border-color:var(--tab-ab);color:var(--accent)}
     [data-theme="light"] .tab-btn{border-color:rgba(0,0,0,.25);background:rgba(0,0,0,.05);color:rgba(0,0,0,.5)}
     [data-theme="light"] .tab-btn.active{background:rgba(26,138,90,.12);border-color:rgba(26,138,90,.35);color:var(--accent)}
     .tenant-row{padding:0 16px 10px}
+    .rent-row{flex-wrap:nowrap;gap:10px;align-items:center;padding-top:2px}
+    .rent-wrap{flex:1;display:flex;flex-direction:column;gap:5px}
+    .rent-label{font-size:10.5px;font-weight:600;color:rgba(255,255,255,.50);text-align:center;letter-spacing:.1px}
+    [data-theme="light"] .rent-label{color:rgba(0,0,0,.40)}
+    .rent-slider-track{position:relative;height:20px;display:flex;align-items:center}
+    .rent-bg{position:absolute;left:0;right:0;height:3px;background:rgba(255,255,255,.14);border-radius:2px}
+    [data-theme="light"] .rent-bg{background:rgba(0,0,0,.15)}
+    .rent-fill{position:absolute;height:3px;background:#48c78e;border-radius:2px;left:0%;right:0%}
+    [data-theme="light"] .rent-fill{background:var(--accent)}
+    .rent-slider{position:absolute;left:0;right:0;width:100%;-webkit-appearance:none;appearance:none;background:transparent;pointer-events:none;height:20px;margin:0;outline:none}
+    .rent-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#48c78e;border:2.5px solid #0d2118;cursor:pointer;pointer-events:all;box-shadow:0 1px 5px rgba(0,0,0,.4)}
+    .rent-slider::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#48c78e;border:2px solid #0d2118;cursor:pointer;pointer-events:all}
+    [data-theme="light"] .rent-slider::-webkit-slider-thumb{background:var(--accent);border-color:#f0ece3}
+    [data-theme="light"] .rent-slider::-moz-range-thumb{background:var(--accent);border-color:#f0ece3}
     .tenant-btn{flex-shrink:0;padding:6px 13px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);transition:all .15s}
     .tenant-btn.active{background:rgba(72,199,142,.15);border-color:rgba(72,199,142,.45);color:#48c78e}
     [data-theme="light"] .tenant-btn{border-color:rgba(0,0,0,.18);background:rgba(0,0,0,.03);color:rgba(0,0,0,.45)}
@@ -130,6 +145,18 @@
     <button class="tenant-btn" data-occ="family" onclick="toggleOccFilter('family')">Family only</button>
     <button class="tenant-btn" data-occ="bachelor" onclick="toggleOccFilter('bachelor')">👨 Bachelors ok</button>
   </div>
+  <div class="tab-row tenant-row rent-row" id="rentRow" style="padding-bottom:8px">
+    <button class="tenant-btn active" id="rentAllBtn" onclick="clearRentFilter()">All</button>
+    <div class="rent-wrap">
+      <div class="rent-label" id="rentLabel">loading...</div>
+      <div class="rent-slider-track">
+        <div class="rent-bg"></div>
+        <div class="rent-fill" id="rentFill"></div>
+        <input class="rent-slider" id="sliderLo" type="range" step="0.05" oninput="onRentSlider(this,'lo')">
+        <input class="rent-slider" id="sliderHi" type="range" step="0.05" oninput="onRentSlider(this,'hi')">
+      </div>
+    </div>
+  </div>
   <div class="search-sort-row">
     <input type="text" id="searchInput" class="search-input" placeholder="Search name, area or ID..." oninput="handleSearch(this.value)">
     <button class="sort-btn" id="sortBtn" onclick="openSort()" title="Sort listings">&#8645;</button>
@@ -154,6 +181,59 @@
     let allListings=[], activeBucket='__all__';
     let foodFilter=null, occFilter=null;
     let sortKey='price', sortDir=1;
+    let RENT_FLOOR=0, RENT_CEIL=5, rentFilterActive=false;
+
+    function fmtRentL(v){
+      v=Math.round(v*100)/100;
+      if(v<1) return '₹'+Math.round(v*100)+'K';
+      return '₹'+v.toString().replace(/\.?0+$/,'')+'L';
+    }
+    function _updateRentFill(){
+      const lo=parseFloat(document.getElementById('sliderLo').value);
+      const hi=parseFloat(document.getElementById('sliderHi').value);
+      const range=RENT_CEIL-RENT_FLOOR;
+      const lp=(lo-RENT_FLOOR)/range*100;
+      const hp=(hi-RENT_FLOOR)/range*100;
+      document.getElementById('rentFill').style.left=lp+'%';
+      document.getElementById('rentFill').style.right=(100-hp)+'%';
+      document.getElementById('rentLabel').textContent=fmtRentL(lo)+' – '+fmtRentL(hi);
+    }
+    function onRentSlider(el,side){
+      const lo=document.getElementById('sliderLo');
+      const hi=document.getElementById('sliderHi');
+      const minGap=(RENT_CEIL-RENT_FLOOR)*0.04;
+      if(side==='lo'&&parseFloat(lo.value)>parseFloat(hi.value)-minGap)
+        lo.value=Math.max(RENT_FLOOR,parseFloat(hi.value)-minGap);
+      if(side==='hi'&&parseFloat(hi.value)<parseFloat(lo.value)+minGap)
+        hi.value=Math.min(RENT_CEIL,parseFloat(lo.value)+minGap);
+      _updateRentFill();
+      const isAll=parseFloat(lo.value)<=RENT_FLOOR+0.001&&parseFloat(hi.value)>=RENT_CEIL-0.001;
+      rentFilterActive=!isAll;
+      document.getElementById('rentAllBtn').classList.toggle('active',!rentFilterActive);
+      renderListings(activeBucket);
+    }
+    function clearRentFilter(){
+      rentFilterActive=false;
+      document.getElementById('sliderLo').value=RENT_FLOOR;
+      document.getElementById('sliderHi').value=RENT_CEIL;
+      _updateRentFill();
+      document.getElementById('rentAllBtn').classList.add('active');
+      renderListings(activeBucket);
+    }
+    function initRentSlider(listings){
+      const rents=listings.map(l=>parseFloat(l.rent)||0).filter(r=>r>0);
+      if(!rents.length){document.getElementById('rentRow').style.display='none';return;}
+      RENT_FLOOR=Math.floor(Math.min(...rents)*20)/20;
+      RENT_CEIL=Math.ceil(Math.max(...rents)*20)/20;
+      if(RENT_CEIL<=RENT_FLOOR)RENT_CEIL=RENT_FLOOR+0.05;
+      ['sliderLo','sliderHi'].forEach(id=>{
+        const el=document.getElementById(id);
+        el.min=RENT_FLOOR; el.max=RENT_CEIL; el.step=0.05;
+      });
+      document.getElementById('sliderLo').value=RENT_FLOOR;
+      document.getElementById('sliderHi').value=RENT_CEIL;
+      _updateRentFill();
+    }
 
     function tenantMatch(tt,f){
       const v=(tt||'').toLowerCase();
@@ -254,6 +334,11 @@
       let r=bucket==='__all__'?listings:listings.filter(l=>l.bucket===bucket);
       if(foodFilter) r=r.filter(l=>tenantMatch(l.tenant_text,foodFilter));
       if(occFilter) r=r.filter(l=>tenantMatch(l.tenant_text,occFilter));
+      if(rentFilterActive){
+        const lo=parseFloat(document.getElementById('sliderLo').value);
+        const hi=parseFloat(document.getElementById('sliderHi').value);
+        r=r.filter(l=>{const rv=parseFloat(l.rent)||0;return rv>=lo-0.001&&rv<=hi+0.001;});
+      }
       return r;
     }
     function renderListings(bucket){
@@ -305,6 +390,7 @@
         allListings=data.listings||[];
         document.getElementById('hCount').textContent=allListings.length+' listing'+(allListings.length!==1?'s':'')+' available';
         buildTabs(allListings);
+        initRentSlider(allListings);
         if(allListings.length){renderListings('__all__');}
         else{document.getElementById('listings').innerHTML='<div class="empty">No listings currently available</div>';}
       })

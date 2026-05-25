@@ -60,6 +60,18 @@
     .nav-tray-label{flex:1;font-size:14px;font-weight:600;letter-spacing:-.1px}
     .nav-tray-chevron{font-size:20px;color:rgba(255,255,255,.35)}
     .nav-tray-soon{font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);letter-spacing:.3px;white-space:nowrap}
+    .nav-tray-footer{margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding:14px 20px 32px}
+    .nav-build-btn{width:100%;text-align:left;background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.22);border-radius:14px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:11px}
+    .nav-build-btn:active{background:rgba(255,217,102,.15)}
+    .nav-build-label{font-size:12.5px;font-weight:700;color:#ffd966;line-height:1.35;flex:1}
+    .nav-build-sub{font-size:10.5px;color:rgba(255,217,102,.55);font-weight:400;display:block;margin-top:2px}
+    .nav-contact-card{display:none;margin-top:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px}
+    .nav-contact-card.open{display:block}
+    .nav-contact-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px}
+    .nav-contact-role{font-size:10.5px;color:rgba(255,255,255,.42);margin-bottom:12px}
+    .nav-contact-wa{display:flex;align-items:center;gap:10px;text-decoration:none;background:rgba(37,211,102,.14);border:1px solid rgba(37,211,102,.28);border-radius:12px;padding:11px 14px;color:#25d366;font-size:13px;font-weight:700}
+    .nav-contact-wa:active{background:rgba(37,211,102,.24)}
+    .nav-contact-wa svg{flex-shrink:0}
 
     .hero{padding:16px 18px 24px}
     .tag-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:14px;padding-left:42px}
@@ -462,7 +474,7 @@
         <button class="utype-btn active" id="btnCP" onclick="setUserType('cp')">&#128188; Channel Partner</button>
         <button class="utype-btn" id="btnEndUser" onclick="setUserType('end')">End User</button>
       </div>
-      <div id="cpHint" style="font-size:10px;color:rgba(255,255,255,.38);text-align:right;margin:-6px 0 10px;padding-right:4px;line-height:1.4">Stamp your name &amp; number on the listing image</div>
+      <div id="cpHint" style="font-size:10px;color:rgba(255,255,255,.38);text-align:left;margin:-4px 0 10px;padding-left:4px;line-height:1.4;max-width:50%">Stamp your name &amp; number on the image</div>
       <button class="modal-dl-btn" onclick="proceedFromStep1()">Continue &#8250;</button>
     </div>
     <!-- Step 2 (CP only): Ask if they want details on the card -->
@@ -491,7 +503,7 @@
     <div class="modal-title">Share</div>
     <div class="utype-row" style="margin-bottom:10px">
       <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');doShareLink()">&#128257; Share Link</button>
-      <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');openSaveModal()">&#128444; Share Listing Card</button>
+      <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');openSaveModal()">&#128444; Share Listing Photo</button>
     </div>
     <button class="modal-cancel" onclick="closeModal('shareChoiceModal')">Cancel</button>
   </div>
@@ -873,6 +885,23 @@
       <span class="nav-tray-soon">Coming Soon</span>
     </div>
   </div>
+  <div class="nav-tray-footer">
+    <button class="nav-build-btn" onclick="toggleBuildContact()">
+      <span style="font-size:22px">&#128161;</span>
+      <span class="nav-build-label">Want an app like this?
+        <span class="nav-build-sub">Build your own portfolio</span>
+      </span>
+      <span id="buildChevron" style="font-size:16px;color:rgba(255,217,102,.55);transition:transform .2s">&#8250;</span>
+    </button>
+    <div class="nav-contact-card" id="navContactCard">
+      <div class="nav-contact-name">Vaibhav Oswal</div>
+      <div class="nav-contact-role">Real Estate &amp; Tech</div>
+      <a class="nav-contact-wa" href="https://wa.me/918828340668?text=I%20saw%20your%20Portfolio%20app%20and%20I%20want%20to%20build%20one%20for%20myself." target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp · 8828340668
+      </a>
+    </div>
+  </div>
 </div>
 <button class="hamburger-btn" onclick="openNav()" aria-label="Menu">
   <svg width="17" height="13" viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -885,6 +914,12 @@
 <script>
   function openNav(){document.getElementById('navOverlay').classList.add('open');document.getElementById('navTray').classList.add('open');}
   function closeNav(){document.getElementById('navOverlay').classList.remove('open');document.getElementById('navTray').classList.remove('open');}
+  function toggleBuildContact(){
+    var card=document.getElementById('navContactCard');
+    var chev=document.getElementById('buildChevron');
+    var open=card.classList.toggle('open');
+    if(chev){chev.style.transform=open?'rotate(90deg)':'';}
+  }
 </script>
 </body>
 </html>
