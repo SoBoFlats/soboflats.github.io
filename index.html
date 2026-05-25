@@ -89,6 +89,10 @@
     .search-input::placeholder{color:rgba(255,255,255,.30)}
     [data-theme="light"] .search-input{border-color:rgba(0,0,0,.18);background:rgba(0,0,0,.05);color:#111;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,.35)' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:13px center}
     [data-theme="light"] .search-input::placeholder{color:rgba(0,0,0,.30)}
+    /* ── Index float share button ── */
+    #idxShareFloatBtn{position:fixed;bottom:20px;right:16px;z-index:80;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.80);cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.30);transition:background .15s}
+    #idxShareFloatBtn:active{background:rgba(255,255,255,.22)}
+    [data-theme="light"] #idxShareFloatBtn{background:rgba(255,255,255,.92);color:#333;border-color:rgba(0,0,0,.18);box-shadow:0 2px 10px rgba(0,0,0,.18)}
     /* ── Index Share / Picker / CP modals ── */
     .idx-share-modal{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.65);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto}
     .idx-share-modal.open{display:flex}
@@ -219,12 +223,7 @@
       </div>
       <div class="header-count" id="hCount">Loading...</div>
     </div>
-    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-      <button class="toggle-btn" id="idxShareBtn" onclick="openIdxShare()" title="Share" style="font-size:15px">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-      </button>
-      <button class="toggle-btn" id="themeToggleIdx" onclick="toggleTheme()">&#9728;</button>
-    </div>
+    <button class="toggle-btn" id="themeToggleIdx" onclick="toggleTheme()">&#9728;</button>
   </div>
   <div class="tab-row" id="tabRow"></div>
   <div class="tab-row tenant-row" id="tenantRow" style="padding-bottom:4px">
@@ -253,6 +252,11 @@
     <button class="sort-btn" id="sortBtn" onclick="openSort()" title="Sort listings">&#8645;</button>
   </div>
   <div class="listings" id="listings"><div class="loading">Loading listings...</div></div>
+
+  <!-- Index Float Share Button -->
+  <button id="idxShareFloatBtn" onclick="openIdxShare()" title="Share">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+  </button>
 
   <!-- Sort Modal -->
   <div id="sortModal" class="sort-modal" onclick="if(event.target===this)closeSort()">
@@ -667,55 +671,60 @@
         await new Promise(r=>setTimeout(r,400));
       }
     }
+    /* Convert a remote image URL to a base64 data URL so html2canvas works without CORS */
+    async function toIdxDataURL(url){
+      if(!url) return null;
+      try{
+        const src=url.replace(/=[a-zA-Z0-9\-]+$/,'')+'=w800';
+        const resp=await fetch(src,{mode:'cors'});
+        const blob=await resp.blob();
+        return await new Promise(r=>{const rd=new FileReader();rd.onloadend=()=>r(rd.result);rd.readAsDataURL(blob);});
+      }catch(e){return null;}
+    }
     async function generateIdxCard(l, showCp, cpName, cpPhone, cpCompany, idx, total){
       const card=document.getElementById('idxCaptureCard');
-      const locStr=l.location?' · '+l.location:'';
-      const colLStr=l.col_l?`<span style="background:rgba(255,196,0,.18);color:#ffc400;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;margin-left:4px">${l.col_l}</span>`:'';
-      const cpFooter=showCp?`<div style="border-top:1px solid rgba(255,255,255,.12);margin-top:12px;padding-top:10px;display:flex;align-items:center;gap:10px">
-        <div style="width:36px;height:36px;border-radius:50%;background:rgba(72,199,142,.18);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">&#128188;</div>
-        <div>
-          ${cpName?`<div style="font-size:12.5px;font-weight:700;color:#fff">${cpName}</div>`:''}
-          ${cpPhone?`<div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:1px">${cpPhone}</div>`:''}
-          ${cpCompany?`<div style="font-size:10.5px;color:rgba(255,255,255,.38);margin-top:1px">${cpCompany}</div>`:''}
-        </div></div>`:'';
-      card.innerHTML=`<div style="background:#0d2118;border-radius:18px;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
-        <div style="position:relative;width:100%;height:200px;background:#000;overflow:hidden">
-          <img src="${l.thumb||''}" style="width:100%;height:100%;object-fit:cover;opacity:.85" crossorigin="anonymous" alt="">
-          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,.7))"></div>
-          <div style="position:absolute;top:12px;left:12px;display:flex;gap:6px">
-            <span style="background:#fff;color:#000;font-size:9px;font-weight:800;padding:3px 8px;border-radius:8px;letter-spacing:.3px">FOR RENT</span>
-            <span style="background:rgba(255,196,0,.22);color:#ffc400;border:1px solid rgba(255,196,0,.45);font-size:9px;font-weight:800;padding:3px 8px;border-radius:8px">ID: ${l.serial}</span>
-            ${l.page_date?`<span style="background:rgba(255,255,255,.18);color:#fff;font-size:9px;font-weight:700;padding:3px 8px;border-radius:8px">${l.page_date}</span>`:''}
+      /* Pre-fetch photo as data URL → html2canvas can use useCORS:false, same as listing pages */
+      const imgDataUrl=await toIdxDataURL(l.thumb);
+      /* Sub-text line: BHK · carpet · col_l (gold) */
+      const _s=' <span style="color:rgba(255,255,255,.22)">·</span> ';
+      const subParts=[`<span style="color:rgba(255,255,255,.58)">${l.bhk}</span>`];
+      if(l.carpet) subParts.push(`<span style="color:rgba(255,255,255,.58)">${l.carpet} carpet</span>`);
+      if(l.col_l) subParts.push(`<span style="color:#ffd966;font-weight:600">${l.col_l}</span>`);
+      const subHtml=subParts.join(_s);
+      const locInline=l.location?` <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.42)">· ${l.location}</span>`:'';
+      /* Photo section */
+      const photoHtml=imgDataUrl
+        ?`<img src="${imgDataUrl}" style="width:100%;display:block;max-height:300px;object-fit:cover">`
+        :`<div style="height:100px;background:#0d2318;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.22);font-size:11px">No photo available</div>`;
+      /* CP footer — yellow, matches listing page exactly */
+      const cpFooterHtml=showCp?`<div style="background:rgba(255,217,60,.92);border-top:2px solid rgba(200,165,0,.55);padding:8px 15px"><div style="display:flex;align-items:center;justify-content:space-between">
+        <div>${cpName?`<div style="font-size:15px;font-weight:800;color:#1a1000">${cpName}</div>`:''}${cpPhone?`<div style="font-size:13px;color:#5a3200;margin-top:2px">${cpPhone}</div>`:''}</div>
+        ${cpCompany?`<div style="font-size:13px;color:#1a1000;text-align:right;max-width:150px;font-weight:800;word-break:break-word">${cpCompany}</div>`:''}
+      </div></div>`:'';
+      card.innerHTML=`<div style="background:#0a1a17;max-width:430px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow:hidden;border-radius:16px">
+        <div style="padding:10px 15px 9px;border-bottom:1px solid rgba(255,255,255,.07)">
+          <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
+            <span style="font-size:7.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 7px;border-radius:20px;color:#1a1000;background:rgba(255,217,60,.92)">For Rent</span>
+            <span style="font-size:7.5px;font-weight:700;padding:3px 7px;border-radius:20px;color:#ffd966;background:rgba(255,217,102,.14);border:1px solid rgba(255,217,102,.35)">ID: ${l.serial}</span>
+            ${l.page_date?`<span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">${l.page_date}</span>`:''}
           </div>
-          <div style="position:absolute;bottom:12px;left:14px;right:14px">
-            <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.3px;text-shadow:0 1px 4px rgba(0,0,0,.5)">${l.project}</div>
-            ${l.location?`<div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px">${l.location}</div>`:''}
-          </div>
-        </div>
-        <div style="padding:14px 16px">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px">
-            <span style="background:rgba(255,255,255,.09);color:rgba(255,255,255,.75);border-radius:10px;padding:4px 10px;font-size:11px;font-weight:600">${l.bhk}</span>
-            ${l.carpet?`<span style="background:rgba(255,255,255,.09);color:rgba(255,255,255,.75);border-radius:10px;padding:4px 10px;font-size:11px;font-weight:600">${l.carpet} carpet</span>`:''}
-            ${l.col_l?`<span style="background:rgba(255,196,0,.18);color:#ffc400;border-radius:10px;padding:4px 10px;font-size:11px;font-weight:700">${l.col_l}</span>`:''}
-          </div>
-          <div style="font-size:22px;font-weight:800;color:#48c78e;letter-spacing:-.3px">${l.rent_display}</div>
-          ${cpFooter}
-          <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);text-align:center">
-            <div style="font-size:9px;color:rgba(255,255,255,.30);letter-spacing:.3px">soboflats.github.io · Oswal Properties</div>
+          <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.3px">${l.project}${locInline}</div>
+          <div style="font-size:11px;margin-top:4px;line-height:1.5">${subHtml}</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap">
+            <span style="font-size:20px;font-weight:800;color:#fff;line-height:1">&#8377;${l.rent_display.replace('₹','')}</span>
           </div>
         </div>
+        ${photoHtml}
+        ${cpFooterHtml}
       </div>`;
       card.style.display='block';
-      await new Promise(r=>{
-        const img=card.querySelector('img');
-        if(!img||img.complete){r();}else{img.onload=r;img.onerror=r;setTimeout(r,2000);}
-      });
+      await new Promise(r=>setTimeout(r,200));
       try{
-        const canvas=await html2canvas(card,{useCORS:true,allowTaint:false,scale:2,backgroundColor:null,logging:false});
+        const canvas=await html2canvas(card,{allowTaint:false,useCORS:false,backgroundColor:'#0a1a17',scale:2,logging:false});
         const link=document.createElement('a');
         link.download=(total>1)?`listing_${idx}_of_${total}_id${l.serial}.jpg`:`listing_id${l.serial}.jpg`;
         link.href=canvas.toDataURL('image/jpeg',0.92);
-        link.click();
+        document.body.appendChild(link);link.click();document.body.removeChild(link);
       }catch(e){console.warn('html2canvas error',e);}
       card.style.display='none';
     }
