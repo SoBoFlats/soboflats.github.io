@@ -671,19 +671,31 @@
         await new Promise(r=>setTimeout(r,400));
       }
     }
-    /* Convert a remote image URL to a base64 data URL so html2canvas works without CORS */
+    /* Load a remote image into an off-screen <img>, draw to canvas, return data URL.
+       Uses Image+Canvas (not fetch) — works with Google Photos lh3 URLs that block fetch()
+       but respond correctly to <img crossorigin="anonymous"> requests. */
     async function toIdxDataURL(url){
-      if(!url) return null;
-      try{
-        const src=url.replace(/=[a-zA-Z0-9\-]+$/,'')+'=w800';
-        const resp=await fetch(src,{mode:'cors'});
-        const blob=await resp.blob();
-        return await new Promise(r=>{const rd=new FileReader();rd.onloadend=()=>r(rd.result);rd.readAsDataURL(blob);});
-      }catch(e){return null;}
+      if(!url||url.includes('placeholder')) return null;
+      return new Promise(resolve=>{
+        const img=new Image();
+        img.crossOrigin='anonymous';
+        const timer=setTimeout(()=>resolve(null),6000);
+        img.onload=function(){
+          clearTimeout(timer);
+          try{
+            const c=document.createElement('canvas');
+            c.width=img.naturalWidth; c.height=img.naturalHeight;
+            c.getContext('2d').drawImage(img,0,0);
+            resolve(c.toDataURL('image/jpeg',0.88));
+          }catch(e){resolve(null);}
+        };
+        img.onerror=()=>{clearTimeout(timer);resolve(null);};
+        img.src=url.replace(/=[a-zA-Z0-9\-]+$/,'')+'=w800';
+      });
     }
     async function generateIdxCard(l, showCp, cpName, cpPhone, cpCompany, idx, total){
       const card=document.getElementById('idxCaptureCard');
-      /* Pre-fetch photo as data URL → html2canvas can use useCORS:false, same as listing pages */
+      /* Pre-convert thumb to data URL so html2canvas needs no CORS handling */
       const imgDataUrl=await toIdxDataURL(l.thumb);
       /* Sub-text line: BHK · carpet · col_l (gold) */
       const _s=' <span style="color:rgba(255,255,255,.22)">·</span> ';
@@ -692,11 +704,11 @@
       if(l.col_l) subParts.push(`<span style="color:#ffd966;font-weight:600">${l.col_l}</span>`);
       const subHtml=subParts.join(_s);
       const locInline=l.location?` <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.42)">· ${l.location}</span>`:'';
-      /* Photo section */
+      /* Photo section — data URL so html2canvas never sees a remote URL */
       const photoHtml=imgDataUrl
         ?`<img src="${imgDataUrl}" style="width:100%;display:block;max-height:300px;object-fit:cover">`
-        :`<div style="height:100px;background:#0d2318;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.22);font-size:11px">No photo available</div>`;
-      /* CP footer — yellow, matches listing page exactly */
+        :`<div style="height:80px;background:#0d2318"></div>`;
+      /* CP footer — yellow, identical to listing page card */
       const cpFooterHtml=showCp?`<div style="background:rgba(255,217,60,.92);border-top:2px solid rgba(200,165,0,.55);padding:8px 15px"><div style="display:flex;align-items:center;justify-content:space-between">
         <div>${cpName?`<div style="font-size:15px;font-weight:800;color:#1a1000">${cpName}</div>`:''}${cpPhone?`<div style="font-size:13px;color:#5a3200;margin-top:2px">${cpPhone}</div>`:''}</div>
         ${cpCompany?`<div style="font-size:13px;color:#1a1000;text-align:right;max-width:150px;font-weight:800;word-break:break-word">${cpCompany}</div>`:''}
@@ -718,8 +730,9 @@
         ${cpFooterHtml}
       </div>`;
       card.style.display='block';
-      await new Promise(r=>setTimeout(r,200));
+      await new Promise(r=>setTimeout(r,150));
       try{
+        /* useCORS:false safe because all images are now data URLs */
         const canvas=await html2canvas(card,{allowTaint:false,useCORS:false,backgroundColor:'#0a1a17',scale:2,logging:false});
         const link=document.createElement('a');
         link.download=(total>1)?`listing_${idx}_of_${total}_id${l.serial}.jpg`:`listing_id${l.serial}.jpg`;
