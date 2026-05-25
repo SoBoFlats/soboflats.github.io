@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-25T20:08:45.153856+00:00",
+  "updated_at": "2026-05-25T20:52:53.696648+00:00",
   "listings": [
     {
       "serial": 249,
@@ -240,6 +240,21 @@
       "page_date": "25-May-26",
       "url": "https://soboflats.github.io/245.html",
       "thumb": "https://lh3.googleusercontent.com/pw/AP1GczNCDtrgevt772jRp-2SFMO0OXEOrpYpau02m73XUSSj01C2s1pQ9FhyTakeIPQv0c3Kv6B4ttJovTv6ZUXRlDSxfpAZw9YzQC4SWB8LhRpiFGegsTXj=w1600"
+    },
+    {
+      "serial": 147,
+      "project": "Oberoi 360 west",
+      "bhk": "4.5 bhk",
+      "carpet": "5235+ terrace",
+      "bucket": "4 & 4.5 BHK",
+      "rent": 27.0,
+      "rent_display": "₹27L",
+      "location": "Worli",
+      "col_l": "MF",
+      "tenant_text": "family only | non-veg ok | ok | registered offline agrement only, long lease only",
+      "page_date": "25-May-26",
+      "url": "https://soboflats.github.io/147.html",
+      "thumb": "https://lh3.googleusercontent.com/pw/AP1GczOpuOJ3R0gADkUd16qQDL4heOQHEo4bDV0Wa2W-SqTzAIh6ZF8Td4nz3ZwVEMu6tigDomoq5DNPmteEDjLp7TetLRFf8lPaXhUr0GmbSleOxD_EYKrV=w1600"
     }
   ]
 }
