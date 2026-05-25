@@ -47,14 +47,23 @@
     .nav-overlay.open{opacity:1;pointer-events:all}
     .nav-tray{position:fixed;top:0;left:0;bottom:0;width:280px;max-width:85vw;background:#0d2318;border-right:1px solid rgba(255,255,255,.08);z-index:201;transform:translateX(-100%);transition:transform .28s ease;display:flex;flex-direction:column}
     .nav-tray.open{transform:translateX(0)}
-    .nav-tray-header{padding:52px 20px 14px;border-bottom:none;display:flex;align-items:center;justify-content:space-between}
-    .nav-tray-logo{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.2px;line-height:1.3}
-    .nav-tray-close{background:none;border:none;color:rgba(255,255,255,.45);font-size:20px;cursor:pointer;padding:4px 6px;line-height:1}
-    .nav-profile-row{display:flex;align-items:center;gap:13px;padding:10px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav-tray-header{padding:52px 20px 12px;border-bottom:none;display:flex;align-items:center;justify-content:space-between;position:relative}
+    .nav-tray-logo{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .nav-tray-close{position:absolute;top:14px;right:14px;background:none;border:none;color:rgba(255,255,255,.45);font-size:20px;cursor:pointer;padding:4px 6px;line-height:1}
+    .nav-profile-row{display:flex;align-items:center;gap:13px;padding:8px 20px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
     .nav-profile-photo{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.14);flex-shrink:0;background:rgba(255,255,255,.07)}
     .nav-profile-info{flex:1;min-width:0}
     .nav-profile-name{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.2px}
-    .nav-company-logo{width:26px;height:26px;object-fit:contain;flex-shrink:0;border-radius:4px;opacity:.9}
+    .nav-profile-phone{font-size:11px;font-weight:500;color:rgba(255,255,255,.45);margin-top:2px}
+    .nav-company-logo{width:34px;height:34px;object-fit:contain;flex-shrink:0;border-radius:6px;opacity:.9}
+    .nav-team-toggle{background:none;border:none;color:rgba(255,255,255,.4);font-size:16px;cursor:pointer;padding:2px 4px;line-height:1;margin-top:2px;display:block}
+    .nav-team-toggle:hover{color:rgba(255,255,255,.7)}
+    .nav-team-section{display:none;border-top:1px solid rgba(255,255,255,.06);margin:0 20px;padding:10px 0 4px}
+    .nav-team-section.open{display:block}
+    .nav-team-row{display:flex;align-items:center;gap:10px;padding:7px 0;text-decoration:none}
+    .nav-team-photo{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.12);flex-shrink:0;background:rgba(255,255,255,.07)}
+    .nav-team-name{font-size:12.5px;font-weight:700;color:rgba(255,255,255,.80);line-height:1.2}
+    .nav-team-phone{font-size:11px;color:rgba(255,255,255,.40);margin-top:1px}
     .nav-tray-items{padding:8px 0;flex:1}
     .nav-tray-item{display:flex;align-items:center;gap:14px;padding:16px 20px;text-decoration:none;color:#fff;border-bottom:1px solid rgba(255,255,255,.05)}
     a.nav-tray-item:active{background:rgba(255,255,255,.05)}
@@ -896,7 +905,23 @@
     <img src="./photo.jpeg" class="nav-profile-photo" onerror="this.style.display='none'" alt="Vaibhav Oswal">
     <div class="nav-profile-info">
       <div class="nav-profile-name">Vaibhav Oswal</div>
+      <div class="nav-profile-phone">88283 40668</div>
     </div>
+    <button class="nav-team-toggle" id="teamToggleBtn" onclick="toggleTeam()" title="Team">&#8964;</button>
+  </div>
+  <div class="nav-team-section" id="navTeamSection">
+    <a class="nav-team-row" href="https://wa.me/917400494703" target="_blank" rel="noopener">
+      <img src="./team_vandana.jpeg" class="nav-team-photo" onerror="this.style.display='none'" alt="">
+      <div><div class="nav-team-name">Vandana Bhandari</div><div class="nav-team-phone">74004 94703</div></div>
+    </a>
+    <a class="nav-team-row" href="https://wa.me/919324059959" target="_blank" rel="noopener">
+      <img src="./team_aditi.jpeg" class="nav-team-photo" onerror="this.style.display='none'" alt="">
+      <div><div class="nav-team-name">Aditi Jain</div><div class="nav-team-phone">93240 59959</div></div>
+    </a>
+    <a class="nav-team-row" href="https://wa.me/919137848224" target="_blank" rel="noopener">
+      <img src="./team_bhavin.jpeg" class="nav-team-photo" onerror="this.style.display='none'" alt="">
+      <div><div class="nav-team-name">Bhavin Thakkar</div><div class="nav-team-phone">91378 48224</div></div>
+    </a>
   </div>
   <div class="nav-tray-items">
     <a href="https://soboflats.github.io" class="nav-tray-item active-item">
@@ -939,6 +964,12 @@
 <script>
   function openNav(){document.getElementById('navOverlay').classList.add('open');document.getElementById('navTray').classList.add('open');}
   function closeNav(){document.getElementById('navOverlay').classList.remove('open');document.getElementById('navTray').classList.remove('open');}
+  function toggleTeam(){
+    var s=document.getElementById('navTeamSection');
+    var b=document.getElementById('teamToggleBtn');
+    var open=s.classList.toggle('open');
+    if(b){b.style.transform=open?'rotate(180deg)':'';b.style.color=open?'rgba(255,255,255,.75)':'';}
+  }
   function toggleBuildContact(){
     var card=document.getElementById('navContactCard');
     var chev=document.getElementById('buildChevron');
