@@ -37,10 +37,9 @@
     .sticky-bar.visible{transform:translateX(-50%) translateY(0)}
     .sticky-title{font-size:13px;font-weight:700;color:var(--text-primary);letter-spacing:-.2px}
     .sticky-price{font-size:13px;font-weight:800;color:var(--text-primary)}
-    .theme-toggle{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;width:38px;height:38px;font-size:16px;color:rgba(255,255,255,.85);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-left:auto}
-    [data-theme="light"] .theme-toggle{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.14);color:rgba(0,0,0,.7)}
-    /* Hero is always black — keep toggle white in light mode */
-    [data-theme="light"] .hero .theme-toggle{background:rgba(255,255,255,.18)!important;border-color:rgba(255,255,255,.40)!important;color:rgba(255,255,255,.90)!important}
+    #enquiryFloatBtn{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:50%;width:44px;height:44px;color:rgba(255,255,255,.80);cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .15s;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+    #enquiryFloatBtn:active{background:rgba(255,255,255,.22)}
+    [data-theme="light"] #enquiryFloatBtn{background:rgba(255,255,255,.92);color:#333;border-color:rgba(0,0,0,.18);box-shadow:0 2px 10px rgba(0,0,0,.18)}
     
     .hamburger-btn{position:fixed;top:8px;left:8px;z-index:95;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
     .nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
@@ -87,6 +86,25 @@
     .nav-contact-wa{display:flex;align-items:center;gap:10px;text-decoration:none;background:rgba(37,211,102,.14);border:1px solid rgba(37,211,102,.28);border-radius:12px;padding:11px 14px;color:#25d366;font-size:13px;font-weight:700}
     .nav-contact-wa:active{background:rgba(37,211,102,.24)}
     .nav-contact-wa svg{flex-shrink:0}
+    .nav-theme-row{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid rgba(255,255,255,.07);margin-top:4px}
+    .nav-theme-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.50)}
+    .nav-theme-btn{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);border-radius:50%;width:34px;height:34px;font-size:15px;color:rgba(255,255,255,.80);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .dl-toast{position:fixed;bottom:148px;left:50%;transform:translateX(-50%);background:rgba(10,26,23,.96);border:1px solid rgba(72,199,142,.35);color:#fff;padding:10px 18px;border-radius:20px;font-size:12.5px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s;z-index:295;text-align:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    .dl-toast.show{opacity:1}
+    .enq-modal{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.65);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto}
+    .enq-modal.open{display:flex}
+    .enq-sheet{background:#0d2318;border-radius:22px 22px 0 0;padding:20px 20px 40px;width:100%;border-top:1px solid rgba(255,255,255,.12)}
+    [data-theme="light"] .enq-sheet{background:#f5f1e8;border-top-color:rgba(0,0,0,.10)}
+    .enq-handle{width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:0 auto 18px}
+    .enq-question{font-size:15px;font-weight:700;color:#fff;margin-bottom:14px;text-align:center}
+    [data-theme="light"] .enq-question{color:#111}
+    .enq-opts{display:flex;gap:10px;margin-bottom:4px}
+    .enq-opt{flex:1;padding:14px 10px;border-radius:14px;border:1.5px solid rgba(255,255,255,.20);background:rgba(255,255,255,.06);color:rgba(255,255,255,.75);font-size:14px;font-weight:600;cursor:pointer;text-align:center;transition:all .15s}
+    .enq-opt.sel,.enq-opt:active{border-color:#48c78e;background:rgba(72,199,142,.15);color:#48c78e}
+    [data-theme="light"] .enq-opt{border-color:rgba(0,0,0,.18);background:rgba(0,0,0,.04);color:rgba(0,0,0,.65)}
+    [data-theme="light"] .enq-opt.sel{border-color:var(--accent,#1a8a5a);background:rgba(26,138,90,.10);color:var(--accent,#1a8a5a)}
+    .enq-back{width:100%;margin-top:14px;padding:10px;border:none;background:none;color:rgba(255,255,255,.35);font-size:13px;cursor:pointer;border-radius:8px}
+    [data-theme="light"] .enq-back{color:rgba(0,0,0,.35)}
 
     .hero{padding:16px 18px 24px}
     .tag-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:14px;padding-left:42px}
@@ -269,7 +287,6 @@
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
       <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 252</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">25-May-26</span>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">&#9728;</button>
     </div>
     <div class="hero-title">Monte South, T2 <span class="hero-loc">&nbsp;·&nbsp;Byculla (E)</span></div>
     <div class="sub-tag-row">
@@ -510,7 +527,11 @@
   <div class="lb-counter" id="lbCounter"></div>
 </div>
 
+<div id="dlToast" class="dl-toast">Send as <b>Document</b> on WhatsApp for HD quality</div>
 <div class="float-btn-pair" id="floatBtnPair">
+  <button id="enquiryFloatBtn" onclick="openEnquiry()" title="Enquire">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+  </button>
   <button id="saveFloatBtn" onclick="openSaveModal()" title="Save listing card"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
   <button id="shareFloatBtn" onclick="openShareChoiceModal()" title="Share listing"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
 </div>
@@ -601,9 +622,6 @@
   // Sticky header
   const sBar=document.getElementById('stickyBar'),hero=document.getElementById('hero');
   window.addEventListener('scroll',()=>{sBar.classList.toggle('visible',hero.getBoundingClientRect().bottom<0);},{passive:true});
-
-  // Theme
-  function toggleTheme(){const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeToggle').textContent=d?'☾':'☀';}
 
   // Share choice modal
   function openShareChoiceModal(){document.getElementById('shareChoiceModal').style.display='flex';}
@@ -831,14 +849,27 @@
 
       if (isIOS) {
         window.open(dataUrl, '_blank');
+        showDlToast();
       } else {
         dl(dataUrl, 'flat-252-listing.jpg');
+        showDlToast();
       }
     } catch(e) {
       restoreAll();
       alert('Screenshot failed. Try scrolling to the top first.');
     }
   }
+
+  // ── Enquiry ───────────────────────────────────────────────────────────────
+  var _enqFor=null;
+  function openEnquiry(){_enqFor=null;['enqOptSelf','enqOptCp'].forEach(function(id){var b=document.getElementById(id);if(b)b.classList.remove('sel');});document.getElementById('enqStep1').style.display='block';document.getElementById('enqStep2').style.display='none';document.getElementById('enquiryModal').classList.add('open');}
+  function closeEnquiry(){document.getElementById('enquiryModal').classList.remove('open');}
+  function setEnqFor(who){_enqFor=who;document.getElementById(who==='cp'?'enqOptCp':'enqOptSelf').classList.add('sel');document.getElementById(who==='cp'?'enqOptSelf':'enqOptCp').classList.remove('sel');document.getElementById('enqStep1').style.display='none';document.getElementById('enqStep2').style.display='block';}
+  function enqBack(){document.getElementById('enqStep1').style.display='block';document.getElementById('enqStep2').style.display='none';}
+  function sendEnquiry(type){var intro=_enqFor==='cp'?"I'm a CP":"I'm enquiring for myself";var details='*Monte South, T2, 2 bhk, 950 carpet, Veg Family only` from June, ₹1.5L* with *ID 252*';var action=type==='visit'?'visit your':'get more details of your';var msg=intro+'. I want to '+action+' direct listing '+details+'. Kindly call me quickly';window.open('https://wa.me/917400494703?text='+encodeURIComponent(msg),'_blank');closeEnquiry();}
+
+  // ── Download toast ───────────────────────────────────────────────────────
+  function showDlToast(){var t=document.getElementById('dlToast');if(!t)return;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},5000);}
 
   // ── Share Portfolio ──────────────────────────────────────────────────────
   function sharePortfolio() {
@@ -859,6 +890,27 @@
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<div id="enquiryModal" class="enq-modal" onclick="if(event.target===this)closeEnquiry()">
+  <div class="enq-sheet">
+    <div class="enq-handle"></div>
+    <div id="enqStep1">
+      <div class="enq-question">Are you enquiring for?</div>
+      <div class="enq-opts">
+        <button class="enq-opt" id="enqOptSelf" onclick="setEnqFor('self')">Yourself</button>
+        <button class="enq-opt" id="enqOptCp" onclick="setEnqFor('cp')">CP</button>
+      </div>
+      <button class="enq-back" onclick="closeEnquiry()">Cancel</button>
+    </div>
+    <div id="enqStep2" style="display:none">
+      <div class="enq-question">Enquire for?</div>
+      <div class="enq-opts">
+        <button class="enq-opt" onclick="sendEnquiry('details')">More Details</button>
+        <button class="enq-opt" onclick="sendEnquiry('visit')">Site Visit</button>
+      </div>
+      <button class="enq-back" onclick="enqBack()">&#8592; Back</button>
+    </div>
+  </div>
+</div>
 
 <div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
 <div class="nav-tray" id="navTray">
@@ -903,6 +955,10 @@
       <span class="nav-tray-soon">Coming Soon</span>
     </div>
   </div>
+  <div class="nav-theme-row">
+    <span class="nav-theme-label">&#9728; Day &nbsp;/&nbsp; &#9790; Night</span>
+    <button class="nav-theme-btn" id="navThemeToggle" onclick="navToggleTheme()">&#9790;</button>
+  </div>
   <div class="nav-tray-footer">
     <button class="nav-build-btn" onclick="toggleBuildContact()">
       <span style="font-size:22px">&#128161;</span>
@@ -944,6 +1000,8 @@
     var open=card.classList.toggle('open');
     if(chev){chev.style.transform=open?'rotate(90deg)':'';}
   }
+  function navToggleTheme(){var h=document.documentElement;var d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');var btn=document.getElementById('navThemeToggle');if(btn)btn.textContent=d?'☀':'☾';}
+  (function(){var btn=document.getElementById('navThemeToggle');if(btn)btn.textContent=document.documentElement.getAttribute('data-theme')==='light'?'☀':'☾';})();
 </script>
 </body>
 </html>

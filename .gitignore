@@ -5,6 +5,7 @@
 *.bat
 *.json
 !active.json
+!collage_data.json
 *.log
 node_modules/
 sessions/
