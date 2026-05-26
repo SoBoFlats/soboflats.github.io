@@ -463,11 +463,7 @@
     function closeIdxEnquiry(){document.getElementById('idxEnqModal').classList.remove('open');}
     function setIdxEnqFor(who){_idxEnqFor=who;document.getElementById(who==='cp'?'idxEnqOptCp':'idxEnqOptSelf').classList.add('sel');document.getElementById(who==='cp'?'idxEnqOptSelf':'idxEnqOptCp').classList.remove('sel');document.getElementById('idxEnqStep1').style.display='none';document.getElementById('idxEnqStep2').style.display='block';}
     function idxEnqBack(){document.getElementById('idxEnqStep1').style.display='block';document.getElementById('idxEnqStep2').style.display='none';}
-    function sendIdxEnquiry(type){var intro=_idxEnqFor==='cp'?"I'm a CP":"I'm enquiring for myself";var action=type==='visit'?'visit your':'get more details of your';var msg=intro+'.
-
-I want to '+action+' direct RENT listing.
-
-Kindly call me quickly';window.open('https://wa.me/917400494703?text='+encodeURIComponent(msg),'_blank');closeIdxEnquiry();}
+    function sendIdxEnquiry(type){var intro=_idxEnqFor==='cp'?"I'm a CP":"I'm enquiring for myself";var action=type==='visit'?'visit your':'get more details of your';var msg=intro+'.\n\nI want to '+action+' direct RENT listing.\n\nKindly call me quickly';window.open('https://wa.me/917400494703?text='+encodeURIComponent(msg),'_blank');closeIdxEnquiry();}
 
     function initRentSlider(listings){
       const rents=listings.map(l=>parseFloat(l.rent)||0).filter(r=>r>0);

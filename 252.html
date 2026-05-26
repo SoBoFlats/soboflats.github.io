@@ -873,13 +873,7 @@
   function closeEnquiry(){document.getElementById('enquiryModal').classList.remove('open');}
   function setEnqFor(who){_enqFor=who;document.getElementById(who==='cp'?'enqOptCp':'enqOptSelf').classList.add('sel');document.getElementById(who==='cp'?'enqOptSelf':'enqOptCp').classList.remove('sel');document.getElementById('enqStep1').style.display='none';document.getElementById('enqStep2').style.display='block';}
   function enqBack(){document.getElementById('enqStep1').style.display='block';document.getElementById('enqStep2').style.display='none';}
-  function sendEnquiry(type){var intro=_enqFor==='cp'?"I'm a CP":"I'm enquiring for myself";var details='*Monte South, T2, 2 bhk, 950 carpet, Veg Family only` from June, ₹1.5L* with *ID 252*';var action=type==='visit'?'visit your':'get more details of your';var msg=intro+'.
-
-I want to '+action+' direct RENT listing
-
-'+details+'.
-
-Kindly call me quickly';window.open('https://wa.me/917400494703?text='+encodeURIComponent(msg),'_blank');closeEnquiry();}
+  function sendEnquiry(type){var intro=_enqFor==='cp'?"I'm a CP":"I'm enquiring for myself";var details='*Monte South, T2, 2 bhk, 950 carpet, Veg Family only` from June, ₹1.5L* with *ID 252*';var action=type==='visit'?'visit your':'get more details of your';var msg=intro+'.\n\nI want to '+action+' direct RENT listing\n\n'+details+'.\n\nKindly call me quickly';window.open('https://wa.me/917400494703?text='+encodeURIComponent(msg),'_blank');closeEnquiry();}
 
   // ── Download toast ───────────────────────────────────────────────────────
   function showDlToast(){var t=document.getElementById('dlToast');if(!t)return;t.classList.add('show');}
