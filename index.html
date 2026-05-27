@@ -61,6 +61,8 @@
     .rent-val-btn{font-size:14px;font-weight:700;color:#48c78e;cursor:pointer;padding:4px 10px;border-radius:10px;white-space:nowrap;border:1.5px solid rgba(72,199,142,.35);background:rgba(72,199,142,.10)}
     .rent-val-btn:active{background:rgba(72,199,142,.22)}
     [data-theme="light"] .rent-val-btn{color:var(--accent,#1a8a5a);border-color:rgba(26,138,90,.30);background:rgba(26,138,90,.08)}
+    .rent-hint-lakhs{font-size:10px;color:rgba(255,255,255,.30);flex-shrink:0;white-space:nowrap}
+    [data-theme="light"] .rent-hint-lakhs{color:rgba(0,0,0,.30)}
     .rent-sep{font-size:12px;color:rgba(255,255,255,.28);padding:0 2px}
     [data-theme="light"] .rent-sep{color:rgba(0,0,0,.22)}
     .rent-edit-inp{font-size:13px;font-weight:700;color:#48c78e;background:rgba(72,199,142,.10);border:1.5px solid rgba(72,199,142,.40);border-radius:8px;padding:3px 8px;width:68px;outline:none;flex-shrink:0;display:none}
@@ -83,7 +85,11 @@
     [data-theme="light"] .tenant-sep{background:rgba(0,0,0,.15)}
     .listings{padding:8px 12px}
     .listing-card{display:flex;gap:12px;padding:14px;margin-bottom:10px;background:var(--card);border:1px solid var(--card-b);border-radius:16px;text-decoration:none;cursor:pointer}
-    .listing-thumb{width:80px;height:80px;border-radius:12px;object-fit:cover;flex-shrink:0;background:rgba(255,255,255,.08)}
+    .listing-thumb{width:80px;height:80px;border-radius:12px;object-fit:cover;flex-shrink:0;background:rgba(255,255,255,.08);cursor:pointer}
+    .idx-thumb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:950;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+    .idx-thumb-overlay.show{opacity:1;pointer-events:all}
+    .idx-thumb-full{max-width:92vw;max-height:88vh;border-radius:12px;object-fit:contain}
+    .idx-thumb-close{position:fixed;top:14px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:22px;cursor:pointer;z-index:951}
     .listing-info{flex:1;display:flex;flex-direction:column;justify-content:center;gap:4px}
     .listing-name{font-size:14px;font-weight:700;color:var(--text)}
     .listing-loc-inline{font-size:12px;font-weight:400;color:var(--muted)}
@@ -183,8 +189,11 @@
     .nav-tray-header{padding:52px 20px 12px;border-bottom:none;display:flex;align-items:center;justify-content:space-between;position:relative}
     .nav-tray-logo{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .nav-tray-close{position:absolute;top:14px;right:14px;background:none;border:none;color:rgba(255,255,255,.45);font-size:20px;cursor:pointer;padding:4px 6px;line-height:1}
-    .nav-intro{padding:0 20px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
-    .nav-intro-img{width:100%;border-radius:12px;margin-bottom:10px;object-fit:cover;max-height:200px;display:block}
+    .nav-intro{padding:8px 20px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav-intro-img{width:52px;height:52px;border-radius:12px;object-fit:cover;flex-shrink:0}
+    .nav-intro-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .nav-intro-name{font-size:15px;font-weight:700;color:rgba(255,255,255,.85)}
+    [data-theme="light"] .nav-intro-name{color:rgba(0,0,0,.80)}
     .nav-intro-text{font-size:11px;line-height:1.55;color:rgba(255,255,255,.50);margin:0}
     .nav-intro-text b{color:rgba(255,255,255,.75);font-weight:700}
     [data-theme="light"] .nav-intro-text{color:rgba(0,0,0,.45)}
@@ -229,9 +238,12 @@
     .nav-theme-row{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid rgba(255,255,255,.07);margin-top:4px}
     .nav-theme-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.50)}
     .nav-theme-btn{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);border-radius:50%;width:34px;height:34px;font-size:15px;color:rgba(255,255,255,.80);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .dl-toast{position:fixed;bottom:148px;left:50%;transform:translateX(-50%);background:rgba(10,26,23,.96);border:1px solid rgba(72,199,142,.35);color:#fff;padding:12px 18px;border-radius:16px;font-size:12.5px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:295;text-align:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);white-space:normal;max-width:300px}
+    .dl-toast-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:900;opacity:0;pointer-events:none;transition:opacity .3s}
+    .dl-toast-overlay.show{opacity:1;pointer-events:all}
+    .dl-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(10,26,23,.97);border:1.5px solid rgba(72,199,142,.40);color:#fff;padding:22px 28px;border-radius:20px;font-size:14px;line-height:1.5;opacity:0;pointer-events:none;transition:opacity .3s;z-index:901;text-align:center;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:normal;max-width:320px}
     .dl-toast.show{opacity:1;pointer-events:all}
-    .dl-toast-ok{display:inline-block;margin-top:8px;padding:4px 20px;border-radius:10px;border:1px solid rgba(72,199,142,.45);background:rgba(72,199,142,.18);color:#48c78e;font-size:12px;font-weight:700;cursor:pointer}
+    .dl-toast-ok{display:inline-block;margin-top:14px;padding:8px 36px;border-radius:12px;border:1.5px solid rgba(72,199,142,.50);background:rgba(72,199,142,.22);color:#48c78e;font-size:14px;font-weight:700;cursor:pointer}
+    .dl-toast-ok:active{background:rgba(72,199,142,.35)}
     .enq-modal{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.65);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto}
     .enq-modal.open{display:flex}
     .enq-sheet{background:#0d2318;border-radius:22px 22px 0 0;padding:20px 20px 40px;width:100%;border-top:1px solid rgba(255,255,255,.12)}
@@ -278,6 +290,7 @@
       <span class="rent-sep">–</span>
       <button class="rent-val-btn" id="rentLabelHi" onclick="openRentEdit('hi')">—</button>
     </div>
+    <span class="rent-hint-lakhs">in Lakhs</span>
     <input type="number" class="rent-edit-inp" id="rentEditInp" step="0.05" onblur="applyRentEdit()" onkeydown="if(event.key==='Enter'){this.blur();}">
     <div class="rent-slider-track" style="flex:1">
       <div class="rent-bg"></div>
@@ -398,7 +411,14 @@
 
   <!-- Hidden capture card for html2canvas -->
   <div id="idxCaptureCard"></div>
-  <div id="dlToast" class="dl-toast">Send as <b>Document</b> on WhatsApp for HD quality<br><button class="dl-toast-ok" onclick="dismissDlToast()">OK</button></div>
+  <div id="dlToastOverlay" class="dl-toast-overlay" onclick="dismissDlToast()"></div>
+<div id="dlToast" class="dl-toast">Listing Downloaded.<br>While sharing on WhatsApp,<br>send in <b>HD quality</b><br><button class="dl-toast-ok" onclick="dismissDlToast()">OK</button></div>
+
+  <!-- Thumbnail Lightbox Overlay -->
+  <div id="idxThumbOverlay" class="idx-thumb-overlay" onclick="closeIdxThumb()">
+    <img id="idxThumbImg" src="" alt="" class="idx-thumb-full">
+    <button class="idx-thumb-close" onclick="closeIdxThumb()">&times;</button>
+  </div>
 
   <script>
     /* Collage photos lazy-loaded from collage_data.json — keeps index.html small */
@@ -452,8 +472,10 @@
       document.getElementById('rentAllBtn').classList.add('active');
       renderListings(activeBucket);
     }
-    function showDlToast(){var t=document.getElementById('dlToast');if(!t)return;t.classList.add('show');}
-    function dismissDlToast(){var t=document.getElementById('dlToast');if(t)t.classList.remove('show');}
+    function showDlToast(){var t=document.getElementById('dlToast');var o=document.getElementById('dlToastOverlay');if(t)t.classList.add('show');if(o)o.classList.add('show');}
+    function dismissDlToast(){var t=document.getElementById('dlToast');var o=document.getElementById('dlToastOverlay');if(t)t.classList.remove('show');if(o)o.classList.remove('show');}
+    function openIdxThumb(src){if(!src)return;var ov=document.getElementById('idxThumbOverlay');var im=document.getElementById('idxThumbImg');if(!ov||!im)return;im.src=src;ov.classList.add('show');}
+    function closeIdxThumb(){var ov=document.getElementById('idxThumbOverlay');if(ov)ov.classList.remove('show');}
     var _rentEditSide=null;
     function openRentEdit(side){_rentEditSide=side;const lo=parseFloat(document.getElementById('sliderLo').value);const hi=parseFloat(document.getElementById('sliderHi').value);const inp=document.getElementById('rentEditInp');inp.min=RENT_FLOOR;inp.max=RENT_CEIL;inp.step=0.05;inp.value=Math.round((side==='lo'?lo:hi)*100)/100;inp.style.display='block';inp.focus();inp.select();}
     function applyRentEdit(){const inp=document.getElementById('rentEditInp');inp.style.display='none';let v=parseFloat(inp.value);if(isNaN(v))return;v=Math.max(RENT_FLOOR,Math.min(RENT_CEIL,v));const lo=document.getElementById('sliderLo');const hi=document.getElementById('sliderHi');const gap=(RENT_CEIL-RENT_FLOOR)*0.04;if(_rentEditSide==='lo')lo.value=Math.min(v,parseFloat(hi.value)-gap);else hi.value=Math.max(v,parseFloat(lo.value)+gap);_updateRentFill();const isAll=parseFloat(lo.value)<=RENT_FLOOR+0.001&&parseFloat(hi.value)>=RENT_CEIL-0.001;rentFilterActive=!isAll;document.getElementById('rentAllBtn').classList.toggle('active',!rentFilterActive);renderListings(activeBucket);}
@@ -561,13 +583,13 @@
     function cardHtml(l){
       const locStr=l.location?` <span class="listing-loc-inline">&nbsp;·&nbsp;${l.location}</span>`:'';
       const colLStr=l.col_l?' · '+l.col_l:'';
-      return `<a class="listing-card" href="${l.url}">
-        <img class="listing-thumb" src="${l.thumb||''}" alt="" loading="lazy">
+      return `<div class="listing-card" onclick="window.location.href='${l.url}'">
+        <img class="listing-thumb" src="${l.thumb||''}" alt="" loading="lazy" onclick="event.stopPropagation();openIdxThumb(this.src)">
         <div class="listing-info">
           <div class="listing-name">${l.project}${locStr}</div>
           <div class="listing-meta">${l.bhk}${l.carpet?' · '+l.carpet+' carpet':''}${colLStr}</div>
           <div class="listing-rent">${l.rent_display}</div>
-        </div></a>`;
+        </div></div>`;
     }
     function applyFilters(listings, bucket){
       let r=bucket==='__all__'?listings:listings.filter(l=>l.bucket===bucket);
@@ -817,8 +839,12 @@
     <button class="nav-tray-close" onclick="closeNav()">&#215;</button>
   </div>
   <div class="nav-intro">
-    <img src="./intro_oswal.jpeg" class="nav-intro-img" onerror="this.style.display='none'" alt="Oswal Properties">
+    <div class="nav-intro-header">
+      <img src="./intro_oswal.jpeg" class="nav-intro-img" onerror="this.style.display='none'" alt="Oswal Properties">
+      <div class="nav-intro-name">Oswal Properties</div>
+    </div>
     <p class="nav-intro-text"><b>RERA approved</b> Real Estate Consultancy firm, since 9 years professionally (30+ years locally). We specialise <b>ONLY</b> in <b>Luxury Residential Properties in South Bombay</b>.</p>
+    <p class="nav-intro-text" style="margin-top:6px;font-size:10px;color:rgba(255,255,255,.35)">RERA Reg. No: A51900031717</p>
   </div>
   <div class="nav-profile-row">
     <img src="./photo.jpeg" class="nav-profile-photo" onerror="this.style.display='none'" alt="Vaibhav Oswal">
