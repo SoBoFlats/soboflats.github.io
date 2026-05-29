@@ -797,10 +797,6 @@
     doSaveCard();
   }
   async function doSaveCard() {
-    if (!CAPTURE_COLLAGE_DATA.length) {
-      alert('No photos available to generate the listing card.');
-      return;
-    }
     const cap2 = document.getElementById('captureArea2');
     const cpF = document.getElementById('cpFooter');
 
@@ -818,21 +814,29 @@
     };
 
     try {
-      // Build photo collage
+      // Build photo collage or placeholder
       const collageEl = document.getElementById('cap2Collage');
       collageEl.innerHTML = '';
-      const col1 = document.createElement('div');
-      const col2 = document.createElement('div');
-      col1.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px';
-      col2.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px';
-      CAPTURE_COLLAGE_DATA.forEach((src, i) => {
-        const img = document.createElement('img');
-        img.src = src;
-        img.style.cssText = 'width:100%;display:block;border-radius:6px';
-        (i % 2 === 0 ? col1 : col2).appendChild(img);
-      });
-      collageEl.appendChild(col1);
-      collageEl.appendChild(col2);
+      if (CAPTURE_COLLAGE_DATA.length) {
+        const col1 = document.createElement('div');
+        const col2 = document.createElement('div');
+        col1.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px';
+        col2.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px';
+        CAPTURE_COLLAGE_DATA.forEach((src, i) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.style.cssText = 'width:100%;display:block;border-radius:6px';
+          (i % 2 === 0 ? col1 : col2).appendChild(img);
+        });
+        collageEl.appendChild(col1);
+        collageEl.appendChild(col2);
+      } else {
+        collageEl.style.cssText += ';justify-content:center;align-items:center;min-height:200px;background:#fff';
+        const ph = document.createElement('div');
+        ph.style.cssText = 'text-align:center;color:#888;font-size:16px;font-weight:600;padding:40px 20px';
+        ph.textContent = '📷 Photos Coming Soon';
+        collageEl.appendChild(ph);
+      }
 
       // Copy CP footer if active
       if (cpF && cpF.style.display !== 'none') {

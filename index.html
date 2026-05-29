@@ -591,13 +591,15 @@
     function cardHtml(l){
       const locStr=l.location?` <span class="listing-loc-inline">&nbsp;·&nbsp;${l.location}</span>`:'';
       const colLStr=l.col_l?' · '+l.col_l:'';
-      return `<div class="listing-card" onclick="window.location.href='${l.url}'">
+      return `<div class="listing-card" onclick="window.location.href='${l.url}'" style="position:relative">
         <img class="listing-thumb" src="${l.thumb||''}" alt="" loading="lazy" onclick="event.stopPropagation();openIdxThumb(this.src)">
         <div class="listing-info">
           <div class="listing-name">${l.project}${locStr}</div>
           <div class="listing-meta">${l.bhk}${l.carpet?' · '+l.carpet+' carpet':''}${colLStr}</div>
           <div class="listing-rent">${l.rent_display}</div>
-        </div></div>`;
+        </div>
+        <span style="position:absolute;top:8px;right:10px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:12px;color:#ffd966;background:rgba(255,217,102,.14);border:1px solid rgba(255,217,102,.35)">ID: ${l.serial}</span>
+      </div>`;
     }
     function applyFilters(listings, bucket){
       let r=bucket==='__all__'?listings:listings.filter(l=>l.bucket===bucket);
@@ -797,8 +799,8 @@
       /* Populate 2-column photo collage — exact same logic as doSaveCard() on listing pages */
       const _cdata=await _loadCollage();
       const photos=_cdata[String(l.serial)]||[];
+      const collageEl=card.querySelector('#idxCapCollage');
       if(photos.length>0){
-        const collageEl=card.querySelector('#idxCapCollage');
         const col1=document.createElement('div');
         const col2=document.createElement('div');
         col1.style.cssText='flex:1;display:flex;flex-direction:column;gap:3px';
@@ -811,6 +813,12 @@
         });
         collageEl.appendChild(col1);
         collageEl.appendChild(col2);
+      }else if(collageEl){
+        collageEl.style.cssText+= ';justify-content:center;align-items:center;min-height:200px;background:#fff';
+        const ph=document.createElement('div');
+        ph.style.cssText='text-align:center;color:#888;font-size:16px;font-weight:600;padding:40px 20px';
+        ph.textContent='📷 Photos Coming Soon';
+        collageEl.appendChild(ph);
       }
       /* CP footer — show and fill from user inputs */
       if(showCp){
