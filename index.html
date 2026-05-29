@@ -580,7 +580,11 @@
         else if(sortKey==='location'){va=(a.location||'').toLowerCase();vb=(b.location||'').toLowerCase();}
         else if(sortKey==='carpet'){va=parseFloat(a.carpet)||0;vb=parseFloat(b.carpet)||0;}
         else{va=a.rent;vb=b.rent;}
-        return sortDir*(va<vb?-1:va>vb?1:0);
+        const cmp=sortDir*(va<vb?-1:va>vb?1:0);
+        if(cmp!==0)return cmp;
+        // Secondary sort: project name ascending (tiebreaker)
+        const pa=(a.project||'').toLowerCase(),pb=(b.project||'').toLowerCase();
+        return pa<pb?-1:pa>pb?1:0;
       });
     }
 
@@ -610,6 +614,7 @@
       activeBucket=bucket;
       const si=document.getElementById('searchInput');
       if(si)si.value='';
+      applySort();
       const items=applyFilters(allListings,bucket);
       const total=allListings.length;
       const hc=document.getElementById('hCount');
