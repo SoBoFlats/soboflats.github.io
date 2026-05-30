@@ -188,6 +188,32 @@ a.nav-tray-item:active{background:rgba(255,255,255,.05)}
 .end-text{font-size:13px;color:var(--text2);margin-bottom:28px;line-height:1.7;max-width:300px}
 .end-link{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 16px var(--accent-glow);transition:all .2s}
 .end-link:active{transform:scale(.97)}
+/* ── File Upload ─────────────────────────────────────────────────────── */
+.upload-zone{border:2px dashed var(--input-border);border-radius:16px;padding:24px 16px;text-align:center;cursor:pointer;transition:all .2s;background:var(--input-bg)}
+.upload-zone:active,.upload-zone.dragover{border-color:var(--accent);background:var(--accent-bg)}
+.upload-zone-icon{font-size:32px;margin-bottom:6px}
+.upload-zone-text{font-size:13px;color:var(--text2);line-height:1.5}
+.upload-zone-hint{font-size:10px;color:var(--text3);margin-top:4px}
+.upload-previews{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.upload-thumb{position:relative;width:72px;height:72px;border-radius:10px;overflow:hidden;border:1.5px solid var(--input-border)}
+.upload-thumb img,.upload-thumb video{width:100%;height:100%;object-fit:cover}
+.upload-thumb-remove{position:absolute;top:-2px;right:-2px;width:20px;height:20px;border-radius:50%;background:var(--danger);color:#fff;border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.upload-thumb-badge{position:absolute;bottom:2px;left:4px;font-size:9px;color:#fff;background:rgba(0,0,0,.6);padding:1px 4px;border-radius:4px}
+.upload-progress-wrap{margin-top:10px;display:none}
+.upload-progress-bar{width:100%;height:4px;border-radius:2px;background:var(--input-border);overflow:hidden}
+.upload-progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s;width:0}
+.upload-status{font-size:11px;color:var(--accent);margin-top:6px;font-weight:600}
+#oTypology{flex-wrap:wrap!important;overflow-x:visible!important}
+#oTypology .wiz-chip{padding:10px 10px;font-size:11.5px;flex:1;text-align:center;min-width:0;white-space:nowrap}
+.wiz-filter-note{font-size:10.5px;color:var(--gold);margin-top:6px;display:none;font-weight:500;line-height:1.5;padding:6px 10px;border-radius:8px;background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.15)}
+.wiz-filter-note.show{display:block}
+.owner-upload-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center}
+.owner-upload-overlay.show{display:flex}
+.owner-upload-dialog{background:var(--card);border:1.5px solid var(--accent-border);border-radius:20px;padding:32px 28px;text-align:center;max-width:320px;width:90%}
+.owner-upload-dialog .oud-spinner{width:40px;height:40px;border:4px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:oudspin 1s linear infinite;margin:0 auto 16px}
+@keyframes oudspin{to{transform:rotate(360deg)}}
+.owner-upload-dialog .oud-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.owner-upload-dialog .oud-sub{font-size:13px;color:var(--text2);line-height:1.5}
 </style>
 </head>
 <body>
@@ -471,6 +497,327 @@ a.nav-tray-item:active{background:rgba(255,255,255,.05)}
     <a href="https://soboflats.github.io" class="end-link">&#127968; Browse Rent Portfolio</a>
   </div>
 
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- ══  PROPERTY OWNER FLOW  ════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+
+  <!-- ── Owner Q2: Rent or Sale ──────────────────────────────────────── -->
+  <div class="chat-area" id="screenOwnerQ2" style="display:none">
+    <div class="chat-messages" id="ownerChatMsgs"></div>
+    <div id="ownerChatOpts"></div>
+  </div>
+
+  <!-- ── Owner Step 1: About You ─────────────────────────────────────── -->
+  <div class="wiz-screen" id="ownerStep1">
+    <div class="wiz-persistent-title">Listing your Property</div>
+    <div class="wiz-progress"><div class="wiz-bar active"></div><div class="wiz-bar"></div><div class="wiz-bar"></div></div>
+    <div class="wiz-step-header">
+      <div class="wiz-step-num">Step 1 of 3</div>
+      <div class="wiz-step-title">About You</div>
+      <div class="wiz-step-sub">Let's start with the basics</div>
+    </div>
+    <div style="overflow-y:auto;flex:1;padding-bottom:8px">
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128100;</span> Full Name</div>
+        <input class="wiz-input" id="oName" type="text" placeholder="Enter your full name" autocomplete="name">
+        <div class="wiz-error" id="oNameErr">Please enter your name</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128222;</span> WhatsApp Number</div>
+        <div class="phone-row">
+          <div class="country-picker" id="ownerCountryPicker" onclick="toggleOwnerCountryDD(event)">
+            <span class="country-flag" id="oSelFlag">&#127470;&#127475;</span>
+            <span class="country-code" id="oSelCode">+91</span>
+            <span class="country-arrow">&#9662;</span>
+            <div class="country-dropdown" id="ownerCountryDD"></div>
+          </div>
+          <input class="wiz-input" id="oPhone" type="tel" placeholder="10-digit number" maxlength="10" autocomplete="tel" style="flex:1">
+        </div>
+        <div class="wiz-error" id="oPhoneErr">Please enter a valid phone number</div>
+      </div>
+    </div>
+    <div class="wiz-nav">
+      <button class="wiz-btn wiz-back" onclick="goOwnerQ2()">&#8592; Back</button>
+      <button class="wiz-btn wiz-next" onclick="goOwnerStep2()">Continue &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ── Owner Step 2: Flat Details ──────────────────────────────────── -->
+  <div class="wiz-screen" id="ownerStep2">
+    <div class="wiz-persistent-title">Listing your Property</div>
+    <div class="wiz-progress"><div class="wiz-bar done"></div><div class="wiz-bar active"></div><div class="wiz-bar"></div></div>
+    <div class="wiz-step-header">
+      <div class="wiz-step-num">Step 2 of 3</div>
+      <div class="wiz-step-title">Flat Details</div>
+      <div class="wiz-step-sub">Tell us about your property</div>
+    </div>
+    <div style="overflow-y:auto;flex:1;padding-bottom:8px">
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#127963;</span> Building Name</div>
+        <input class="wiz-input" id="oBuilding" type="text" placeholder="e.g. Monte South">
+        <div class="wiz-error" id="oBuildingErr">Please enter building name</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#127970;</span> Tower / Wing Name <span class="opt">(optional)</span></div>
+        <input class="wiz-input" id="oWing" type="text" placeholder="e.g. Tower A, Wing B">
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128205;</span> Locality <span class="opt">(optional)</span></div>
+        <input class="wiz-input" id="oLocality" type="text" placeholder="e.g. Byculla, Worli">
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128290;</span> Flat Number</div>
+        <input class="wiz-input" id="oFlatNum" type="text" placeholder="e.g. A-1204, 1802">
+        <div class="wiz-error" id="oFlatNumErr">Please enter flat number</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#127968;</span> Typology</div>
+        <div class="wiz-btn-row" id="oTypology">
+          <button class="wiz-chip" data-v="Studio" onclick="oSelTypoBase(this)">Studio</button>
+          <button class="wiz-chip" data-v="1 BHK" onclick="oSelTypoBase(this)">1 BHK</button>
+          <button class="wiz-chip" data-v="2 BHK" onclick="oSelTypoBase(this)">2 BHK</button>
+          <button class="wiz-chip" data-v="3 BHK" onclick="oSelTypoBase(this)">3 BHK</button>
+          <button class="wiz-chip" data-v="4 BHK" onclick="oSelTypoBase(this)">4 BHK</button>
+          <button class="wiz-chip" data-v="5 BHK" onclick="oSelTypoBase(this)">5 BHK</button>
+        </div>
+        <div id="oTypoHalfWrap" style="display:none;margin-top:6px">
+          <div class="wiz-btn-row" id="oTypoHalf"></div>
+        </div>
+        <div class="wiz-error" id="oTypoErr">Please select typology</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128207;</span> Carpet Area <span class="opt">(in sq.ft)</span></div>
+        <input class="wiz-input" id="oCarpet" type="number" placeholder="e.g. 850" min="0">
+        <div class="wiz-error" id="oCarpetErr">Please enter carpet area</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#127749;</span> Balcony</div>
+        <div class="wiz-btn-row" id="oBalcony">
+          <button class="wiz-chip" data-v="Yes" onclick="oSelBalcony(this)">Yes</button>
+          <button class="wiz-chip" data-v="No" onclick="oSelBalcony(this)">No</button>
+        </div>
+        <div id="oBalconyCountWrap" style="display:none;margin-top:6px">
+          <div class="wiz-label" style="margin-bottom:4px">How many balconies?</div>
+          <div class="wiz-btn-row compact" id="oBalconyCount">
+            <button class="wiz-chip" data-v="1" onclick="oSelChip(this)">1</button>
+            <button class="wiz-chip" data-v="2" onclick="oSelChip(this)">2</button>
+            <button class="wiz-chip" data-v="3" onclick="oSelChip(this)">3</button>
+            <button class="wiz-chip" data-v="4" onclick="oSelChip(this)">4</button>
+            <button class="wiz-chip" data-v="5" onclick="oSelChip(this)">5</button>
+          </div>
+        </div>
+        <div class="wiz-error" id="oBalconyErr">Please select</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128722;</span> Furniture Type</div>
+        <div class="wiz-btn-row" id="oFurnType" style="flex-wrap:wrap">
+          <button class="wiz-chip" data-v="Bareshell" onclick="oSelFurnType(this)">Bareshell</button>
+          <button class="wiz-chip" data-v="Builder Finished" onclick="oSelFurnType(this)">Builder Finished</button>
+          <button class="wiz-chip" data-v="Semi Furnished" onclick="oSelFurnType(this)">Semi Furnished</button>
+          <button class="wiz-chip" data-v="Furnished" onclick="oSelFurnType(this)">Furnished</button>
+        </div>
+        <div class="wiz-error" id="oFurnTypeErr">Please select furniture type</div>
+      </div>
+      <div id="oFurnInclWrap" style="display:none">
+        <div class="wiz-field">
+          <div class="wiz-label"><span class="wiz-label-icon">&#128295;</span> Furniture Included <span class="opt">(select all that apply)</span></div>
+          <div class="wiz-btn-row" id="oFurnIncl" style="flex-wrap:wrap">
+            <button class="wiz-chip" data-v="Lights" onclick="oToggleChip(this)">Lights</button>
+            <button class="wiz-chip" data-v="Fans" onclick="oToggleChip(this)">Fans</button>
+            <button class="wiz-chip" data-v="AC's" onclick="oToggleChip(this)">AC's</button>
+            <button class="wiz-chip" data-v="Modular Kitchen" onclick="oToggleChip(this)">Modular Kitchen</button>
+            <button class="wiz-chip" data-v="Washrooms done-up" onclick="oToggleChip(this);updateWashroomSub()">Washrooms done-up</button>
+            <button class="wiz-chip" data-v="Curtain rods" onclick="oToggleChip(this)">Curtain rods</button>
+            <button class="wiz-chip" data-v="Curtains" onclick="oToggleChip(this)">Curtains</button>
+            <button class="wiz-chip" data-v="Wooden Furniture" onclick="oToggleChip(this);updateWoodenFurn()">Wooden Furniture</button>
+            <button class="wiz-chip" data-v="Appliances & Electronics" onclick="oToggleChip(this);updateAppliancesQ()">Appliances &amp; Electronics</button>
+          </div>
+        </div>
+        <div id="oWashroomSubWrap" style="display:none">
+          <div class="wiz-field">
+            <div class="wiz-label"><span class="wiz-label-icon">&#128703;</span> Washroom Includes</div>
+            <div class="wiz-btn-row" id="oWashroomSub" style="flex-wrap:wrap">
+              <button class="wiz-chip" data-v="Bathroom Accessories" onclick="oToggleChip(this)">Bathroom Accessories</button>
+              <button class="wiz-chip" data-v="Storage" onclick="oToggleChip(this)">Storage</button>
+              <button class="wiz-chip" data-v="Glass Partition" onclick="oToggleChip(this)">Glass Partition</button>
+              <button class="wiz-chip" data-v="Bath Tub" onclick="oToggleChip(this)">Bath Tub</button>
+            </div>
+          </div>
+        </div>
+        <div id="oWoodenFurnWrap" style="display:none">
+          <div class="wiz-field">
+            <div class="wiz-label"><span class="wiz-label-icon">&#129717;</span> Wooden Furniture Items</div>
+            <div class="wiz-btn-row" id="oWoodenFurn" style="flex-wrap:wrap">
+              <button class="wiz-chip" data-v="Wardrobes" onclick="oToggleChip(this)">Wardrobes</button>
+              <button class="wiz-chip" data-v="Beds" onclick="oToggleChip(this)">Beds</button>
+              <button class="wiz-chip" data-v="Mattresses" onclick="oToggleChip(this)">Mattresses</button>
+              <button class="wiz-chip" data-v="Sofa" onclick="oToggleChip(this)">Sofa</button>
+              <button class="wiz-chip" data-v="Coffee Table" onclick="oToggleChip(this)">Coffee Table</button>
+              <button class="wiz-chip" data-v="Dining Table with Chairs" onclick="oToggleChip(this)">Dining Table with Chairs</button>
+              <button class="wiz-chip" data-v="TV unit" onclick="oToggleChip(this)">TV unit</button>
+            </div>
+          </div>
+        </div>
+        <div id="oAppliancesWrap" style="display:none">
+          <div class="wiz-field">
+            <div class="wiz-label"><span class="wiz-label-icon">&#9889;</span> Which Appliances &amp; Electronics?</div>
+            <div class="wiz-btn-row" id="oAppliances" style="flex-wrap:wrap">
+              <button class="wiz-chip" data-v="Hob & Chimney" onclick="oToggleChip(this)">Hob &amp; Chimney</button>
+              <button class="wiz-chip" data-v="Gas" onclick="oToggleChip(this)">Gas</button>
+              <button class="wiz-chip" data-v="Fridge" onclick="oToggleChip(this)">Fridge</button>
+              <button class="wiz-chip" data-v="Water Purifier" onclick="oToggleChip(this)">Water Purifier</button>
+              <button class="wiz-chip" data-v="Microwave" onclick="oToggleChip(this)">Microwave</button>
+              <button class="wiz-chip" data-v="Washing Machine" onclick="oToggleChip(this)">Washing Machine</button>
+              <button class="wiz-chip" data-v="Dish washer" onclick="oToggleChip(this)">Dish washer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128663;</span> Car Parkings</div>
+        <div class="wiz-btn-row compact" id="oParking">
+          <button class="wiz-chip" data-v="No" onclick="oSelChip(this)">No</button>
+          <button class="wiz-chip" data-v="1P" onclick="oSelChip(this)">1P</button>
+          <button class="wiz-chip" data-v="2P" onclick="oSelChip(this)">2P</button>
+          <button class="wiz-chip" data-v="3P" onclick="oSelChip(this)">3P</button>
+          <button class="wiz-chip" data-v="4P" onclick="oSelChip(this)">4P</button>
+          <button class="wiz-chip" data-v="4P+" onclick="oSelChip(this)">4P+</button>
+        </div>
+        <div class="wiz-error" id="oParkErr">Please select parking</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128197;</span> Available From</div>
+        <div class="wiz-btn-row" id="oAvailMode" style="margin-bottom:6px">
+          <button class="wiz-chip" data-v="Immediately" onclick="oSelAvailMode(this)">Immediately</button>
+          <button class="wiz-chip" data-v="Select Date" onclick="oSelAvailMode(this)">Select Date</button>
+        </div>
+        <div id="oDateRowWrap" style="display:none">
+          <div class="date-row">
+            <select class="date-sel" id="oPossDay"></select>
+            <select class="date-sel" id="oPossMonth"></select>
+            <select class="date-sel" id="oPossYear"></select>
+          </div>
+        </div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128176;</span> Quoted Rent <span class="opt">(in &#8377;)</span></div>
+        <input class="wiz-input" id="oQuotedRent" type="text" inputmode="numeric" placeholder="e.g. 2,50,000" oninput="formatIndianRent(this)">
+        <div class="wiz-error" id="oRentErr">Please enter quoted rent</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128178;</span> Take-it-or-Leave-it Rent <span class="opt">(minimum, in &#8377;)</span></div>
+        <input class="wiz-input" id="oMinRent" type="text" inputmode="numeric" placeholder="e.g. 2,00,000" oninput="formatIndianRent(this)">
+        <div class="wiz-error" id="oMinRentErr">Please enter minimum rent</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128247;</span> Photos &amp; Videos <span class="opt">(optional, max 50 files, 10MB each)</span></div>
+        <div class="upload-zone" id="oUploadZone" onclick="document.getElementById('oFileInput').click()">
+          <div class="upload-zone-icon">&#128228;</div>
+          <div class="upload-zone-text">Tap to select photos or videos</div>
+          <div class="upload-zone-hint">JPEG, PNG, MP4 &middot; Max 50 files &middot; 10MB each</div>
+        </div>
+        <input type="file" id="oFileInput" accept="image/*,video/*" multiple style="display:none" onchange="handleOwnerFiles(this.files)">
+        <div class="upload-previews" id="oUploadPreviews"></div>
+        <div class="upload-progress-wrap" id="oUploadProgressWrap">
+          <div class="upload-progress-bar"><div class="upload-progress-fill" id="oUploadFill"></div></div>
+          <div class="upload-status" id="oUploadStatus"></div>
+        </div>
+      </div>
+    </div>
+    <div class="wiz-nav">
+      <button class="wiz-btn wiz-back" onclick="backOwnerStep1()">&#8592; Back</button>
+      <button class="wiz-btn wiz-next" onclick="goOwnerStep3()">Continue &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ── Owner Step 3: Tenant Preference ─────────────────────────────── -->
+  <div class="wiz-screen" id="ownerStep3">
+    <div class="wiz-persistent-title">Listing your Property</div>
+    <div class="wiz-progress"><div class="wiz-bar done"></div><div class="wiz-bar done"></div><div class="wiz-bar active"></div></div>
+    <div class="wiz-step-header">
+      <div class="wiz-step-num">Step 3 of 3</div>
+      <div class="wiz-step-title">Tenant Preference</div>
+      <div class="wiz-step-sub">What kind of tenant are you looking for?</div>
+    </div>
+    <div style="overflow-y:auto;flex:1;padding-bottom:8px">
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128106;</span> Type</div>
+        <div class="wiz-btn-row" id="oTenantType">
+          <button class="wiz-chip" data-v="Family only" onclick="oSelChip(this);updateOwnerFilterNote()">&#128106; Family only</button>
+          <button class="wiz-chip" data-v="Family or Bachelors" onclick="oSelChip(this);updateOwnerFilterNote()">&#128100; Family or Bachelors</button>
+        </div>
+        <div class="wiz-filter-note" id="oTypeFilterNote">Stricter filters may take longer to find a matching tenant</div>
+        <div class="wiz-error" id="oTenantTypeErr">Please select tenant type</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128197;</span> Tenure <span class="opt">(select all that apply)</span></div>
+        <div class="wiz-btn-row" id="oTenure" style="flex-wrap:wrap">
+          <button class="wiz-chip" data-v="Open to all" onclick="oToggleChip(this)">Open to all</button>
+          <button class="wiz-chip" data-v="<1 year" onclick="oToggleChip(this)">&lt;1 year</button>
+          <button class="wiz-chip" data-v="1 year" onclick="oToggleChip(this)">1 year</button>
+          <button class="wiz-chip" data-v="2 years" onclick="oToggleChip(this)">2 years</button>
+          <button class="wiz-chip" data-v="3 years" onclick="oToggleChip(this)">3 years</button>
+          <button class="wiz-chip" data-v="3 years+" onclick="oToggleChip(this)">3 years+</button>
+        </div>
+        <div class="wiz-error" id="oTenureErr">Please select tenure</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#127813;</span> Food Preference <span class="opt">(select all that apply)</span></div>
+        <div class="wiz-btn-row" id="oFood">
+          <button class="wiz-chip" data-v="Pure Veg only" onclick="oToggleChip(this);updateOwnerFilterNote()">&#129388; Pure Veg only</button>
+          <button class="wiz-chip" data-v="Non-veg ok" onclick="oToggleChip(this);updateOwnerFilterNote()">&#127830; Non-veg ok</button>
+        </div>
+        <div class="wiz-filter-note" id="oFoodFilterNote">Stricter filters may take longer to find a matching tenant</div>
+        <div class="wiz-error" id="oFoodErr">Please select food preference</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128591;</span> Religion <span class="opt">(select all that apply)</span></div>
+        <div class="wiz-btn-row" id="oReligion" style="flex-wrap:wrap">
+          <button class="wiz-chip" data-v="Open to all" onclick="oToggleChip(this);updateOwnerFilterNote()">Open to all</button>
+          <button class="wiz-chip" data-v="Hindu" onclick="oToggleChip(this);updateOwnerFilterNote()">Hindu</button>
+          <button class="wiz-chip" data-v="Jain" onclick="oToggleChip(this);updateOwnerFilterNote()">Jain</button>
+          <button class="wiz-chip" data-v="Muslim" onclick="oToggleChip(this);updateOwnerFilterNote()">Muslim</button>
+          <button class="wiz-chip" data-v="Catholic" onclick="oToggleChip(this);updateOwnerFilterNote()">Catholic</button>
+        </div>
+        <div class="wiz-filter-note" id="oReligionFilterNote">Stricter filters may take longer to find a matching tenant</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128062;</span> Pets</div>
+        <div class="wiz-btn-row" id="oPets">
+          <button class="wiz-chip" data-v="YES" onclick="oSelChip(this);updateOwnerFilterNote()">&#9989; YES</button>
+          <button class="wiz-chip" data-v="NO" onclick="oSelChip(this);updateOwnerFilterNote()">&#10060; NO</button>
+        </div>
+        <div class="wiz-filter-note" id="oPetsFilterNote">Stricter filters may take longer to find a matching tenant</div>
+        <div class="wiz-error" id="oPetsErr">Please select pets preference</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128221;</span> Remarks <span class="opt">(optional)</span></div>
+        <textarea class="wiz-textarea" id="oRemarks" placeholder="Any specific requirement (e.g. corporate professionals preferred)" maxlength="600"></textarea>
+      </div>
+    </div>
+    <div class="wiz-nav">
+      <button class="wiz-btn wiz-back" onclick="backOwnerStep2()">&#8592; Back</button>
+      <button class="wiz-btn wiz-next" id="ownerSubmitBtn" onclick="submitOwnerForm()">Submit &#10003;</button>
+    </div>
+  </div>
+
+  <!-- ── Owner Upload Overlay ─────────────────────────────────────────── -->
+  <div class="owner-upload-overlay" id="ownerUploadOverlay">
+    <div class="owner-upload-dialog">
+      <div class="oud-spinner"></div>
+      <div class="oud-title" id="oudTitle">Uploading files...</div>
+      <div class="oud-sub" id="oudSub">Please wait, do not close this page</div>
+    </div>
+  </div>
+
+  <!-- ── Owner Success ───────────────────────────────────────────────── -->
+  <div class="end-screen" id="screenOwnerSuccess">
+    <div class="end-icon">&#9989;</div>
+    <div class="end-title" style="color:var(--accent)">Property Listed!</div>
+    <div class="end-text">Our property expert will call you soon.<br>You will receive a WhatsApp message shortly.<br><br>In the meanwhile, browse our portfolio:</div>
+    <a href="https://soboflats.github.io" class="end-link">&#127968; Browse Rent Portfolio</a>
+  </div>
+
 </div>
 
 <script>
@@ -557,7 +904,7 @@ document.addEventListener('change',function(e){if(e.target.closest('.wiz-screen'
 
 // ── Screen management ──────────────────────────────────────────────────
 function showOnly(id){
-  ['screenQ1','wizStep1','wizStep2','wizStep3','screenBye','screenSuccess'].forEach(function(s){
+  ['screenQ1','wizStep1','wizStep2','wizStep3','screenBye','screenSuccess','screenOwnerQ2','ownerStep1','ownerStep2','ownerStep3','screenOwnerSuccess'].forEach(function(s){
     var el=document.getElementById(s);
     if(el){el.classList.remove('active');el.style.display='none'}
   });
@@ -592,7 +939,7 @@ function addUser(text){
     var grid=document.createElement('div');grid.className='q1-options';
     var items=[
       {icon:'🏠',label:'Tenant',sub:'Looking for a rental flat',val:'tenant'},
-      {icon:'🏢',label:'Property Owner',val:'owner',soon:true},
+      {icon:'🏢',label:'Property Owner',sub:'List your property',val:'owner'},
       {icon:'🤝',label:'Broker',val:'broker',soon:true},
       {icon:'🛒',label:'Buyer',val:'buyer',soon:true},
       {icon:'💬',label:'Others',val:'others',soon:true},
@@ -609,6 +956,9 @@ function addUser(text){
           else if(it.val==='tenant'){
             setTimeout(function(){addBot('Great! Let me get a few details from you.')},500);
             setTimeout(function(){showOnly('wizStep1')},2200);
+          }
+          else if(it.val==='owner'){
+            setTimeout(function(){initOwnerQ2()},600);
           }
         });
       }
@@ -881,10 +1231,676 @@ function submitForm(){
   showOnly('screenSuccess');
 }
 
+// ══════════════════════════════════════════════════════════════════════
+// ══  PROPERTY OWNER FLOW  ════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════════
+
+var OD = {};
+var OLS_KEY = 'enquire_owner_progress';
+var ownerSelCountry = countries[0];
+var ownerFiles = [];
+var ownerListingType = '';
+
+// ── Owner Q2: Rent or Sale ────────────────────────────────────────────
+function addOwnerBot(text,useHtml){
+  var d=document.getElementById('ownerChatMsgs');
+  var t=document.createElement('div');t.className='chat-typing';
+  t.innerHTML='<span></span><span></span><span></span>';
+  d.appendChild(t);
+  setTimeout(function(){
+    if(t.parentNode)t.remove();
+    var m=document.createElement('div');m.className='chat-msg chat-bot';
+    if(useHtml){m.innerHTML=text}else{m.textContent=text}
+    d.appendChild(m);
+  },500);
+}
+function addOwnerUser(text){
+  var m=document.createElement('div');m.className='chat-msg chat-user';m.textContent=text;
+  document.getElementById('ownerChatMsgs').appendChild(m);
+}
+
+function initOwnerQ2(){
+  showOnly('screenOwnerQ2');
+  var msgs=document.getElementById('ownerChatMsgs');
+  msgs.innerHTML='';
+  setTimeout(function(){addOwnerBot('Great! You want to list your property.')},200);
+  setTimeout(function(){addOwnerBot('Is your property for <b>Rent</b> or <b>Sale</b>?',true)},900);
+  setTimeout(function(){
+    var wrap=document.getElementById('ownerChatOpts');
+    wrap.innerHTML='';
+    var grid=document.createElement('div');grid.className='q1-options';
+    var items=[
+      {icon:'🏠',label:'For Rent',val:'rent'},
+      {icon:'🏷️',label:'For Sale',val:'sale',soon:true}
+    ];
+    items.forEach(function(it){
+      var b=document.createElement('button');
+      b.className='q1-btn'+(it.soon?' disabled':'');
+      b.innerHTML='<span class="q1-icon">'+it.icon+'</span>'+it.label+(it.soon?'<span class="q1-soon">COMING SOON</span>':'');
+      if(!it.soon){
+        b.addEventListener('click',function(){
+          addOwnerUser(it.label);wrap.innerHTML='';
+          ownerListingType=it.val==='rent'?'Rent':'Sale';
+          setTimeout(function(){addOwnerBot('Let me get your property details.')},500);
+          setTimeout(function(){showOnly('ownerStep1')},2000);
+        });
+      }
+      grid.appendChild(b);
+    });
+    wrap.appendChild(grid);
+  },1600);
+}
+
+function goOwnerQ2(){showOnly('screenOwnerQ2')}
+
+// ── Owner Country Picker ──────────────────────────────────────────────
+(function initOwnerCountryDD(){
+  var dd=document.getElementById('ownerCountryDD');
+  if(!dd)return;
+  countries.forEach(function(c){
+    var d=document.createElement('div');d.className='country-option';
+    d.innerHTML='<span class="country-option-flag">'+c.flag+'</span><span class="country-option-name">'+c.name+'</span><span class="country-option-code">'+c.code+'</span>';
+    d.addEventListener('click',function(e){
+      e.stopPropagation();
+      ownerSelCountry=c;
+      document.getElementById('oSelFlag').innerHTML=c.flag;
+      document.getElementById('oSelCode').textContent=c.code;
+      document.getElementById('oPhone').maxLength=c.digits;
+      document.getElementById('oPhone').placeholder=c.digits+'-digit number';
+      dd.classList.remove('open');
+    });
+    dd.appendChild(d);
+  });
+})();
+
+function toggleOwnerCountryDD(e){
+  e.stopPropagation();
+  document.getElementById('ownerCountryDD').classList.toggle('open');
+}
+document.addEventListener('click',function(){
+  var dd=document.getElementById('ownerCountryDD');
+  if(dd)dd.classList.remove('open');
+});
+
+// ── Owner Date Pickers ────────────────────────────────────────────────
+(function initOwnerDates(){
+  var ds=document.getElementById('oPossDay');
+  if(!ds)return;
+  for(var i=1;i<=31;i++){var o=document.createElement('option');o.value=i;o.textContent=i;ds.appendChild(o)}
+  ds.value=new Date().getDate();
+  var ms=document.getElementById('oPossMonth');
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  months.forEach(function(m,i){var o=document.createElement('option');o.value=i+1;o.textContent=m;ms.appendChild(o)});
+  ms.value=new Date().getMonth()+1;
+  var ys=document.getElementById('oPossYear');
+  var curYear=new Date().getFullYear();
+  for(var y=curYear;y<=curYear+3;y++){var o=document.createElement('option');o.value=y;o.textContent=y;ys.appendChild(o)}
+  ys.value=curYear;
+})();
+
+// ── Owner Chip Helpers ────────────────────────────────────────────────
+function oSelChip(btn){
+  var row=btn.parentNode;
+  row.querySelectorAll('.wiz-chip').forEach(function(b){b.classList.remove('sel')});
+  btn.classList.add('sel');
+  saveOwnerProgress();
+}
+function oToggleChip(btn){
+  btn.classList.toggle('sel');
+  saveOwnerProgress();
+}
+function oGetChip(id){var s=document.querySelector('#'+id+' .wiz-chip.sel');return s?s.getAttribute('data-v'):null}
+function oGetMultiChips(id){return Array.from(document.querySelectorAll('#'+id+' .wiz-chip.sel')).map(function(b){return b.getAttribute('data-v')})}
+
+// ── Typology .5 BHK Conditional ───────────────────────────────────
+var oTypoBaseVal='';
+function oSelTypoBase(btn){
+  var row=btn.parentNode;
+  row.querySelectorAll('.wiz-chip').forEach(function(b){b.classList.remove('sel')});
+  btn.classList.add('sel');
+  oTypoBaseVal=btn.getAttribute('data-v');
+  var halfWrap=document.getElementById('oTypoHalfWrap');
+  var halfRow=document.getElementById('oTypoHalf');
+  if(oTypoBaseVal==='Studio'){
+    halfWrap.style.display='none';halfRow.innerHTML='';
+    saveOwnerProgress();return;
+  }
+  var num=parseFloat(oTypoBaseVal);
+  var halfVal=num+0.5;
+  var halfLabel=halfVal+' BHK';
+  halfRow.innerHTML='<button class="wiz-chip sel" data-v="'+oTypoBaseVal+'" onclick="oSelTypoHalf(this)">'+oTypoBaseVal+'</button>'+
+    '<button class="wiz-chip" data-v="'+halfLabel+'" onclick="oSelTypoHalf(this)">'+halfLabel+'</button>';
+  halfWrap.style.display='block';
+  saveOwnerProgress();
+}
+function oSelTypoHalf(btn){
+  var row=btn.parentNode;
+  row.querySelectorAll('.wiz-chip').forEach(function(b){b.classList.remove('sel')});
+  btn.classList.add('sel');
+  saveOwnerProgress();
+}
+function oGetTypology(){
+  var halfSel=document.querySelector('#oTypoHalf .wiz-chip.sel');
+  if(halfSel)return halfSel.getAttribute('data-v');
+  var baseSel=document.querySelector('#oTypology .wiz-chip.sel');
+  return baseSel?baseSel.getAttribute('data-v'):null;
+}
+
+// ── Balcony Count Conditional ────────────────────────────────────
+function oSelBalcony(btn){
+  var row=btn.parentNode;
+  row.querySelectorAll('.wiz-chip').forEach(function(b){b.classList.remove('sel')});
+  btn.classList.add('sel');
+  var wrap=document.getElementById('oBalconyCountWrap');
+  if(btn.getAttribute('data-v')==='Yes'){wrap.style.display='block'}
+  else{wrap.style.display='none';document.querySelectorAll('#oBalconyCount .wiz-chip').forEach(function(b){b.classList.remove('sel')})}
+  saveOwnerProgress();
+}
+
+// ── Furniture Type → show/hide Furniture Included ────────────────
+function oSelFurnType(btn){
+  var row=btn.parentNode;
+  row.querySelectorAll('.wiz-chip').forEach(function(b){b.classList.remove('sel')});
+  btn.classList.add('sel');
+  var v=btn.getAttribute('data-v');
+  var wrap=document.getElementById('oFurnInclWrap');
+  if(v==='Bareshell'){
+    wrap.style.display='none';
+    document.querySelectorAll('#oFurnIncl .wiz-chip').forEach(function(b){b.classList.remove('sel')});
+    document.querySelectorAll('#oWoodenFurn .wiz-chip').forEach(function(b){b.classList.remove('sel')});
+    document.querySelectorAll('#oAppliances .wiz-chip').forEach(function(b){b.classList.remove('sel')});
+    document.querySelectorAll('#oWashroomSub .wiz-chip').forEach(function(b){b.classList.remove('sel')});
+    document.getElementById('oWoodenFurnWrap').style.display='none';
+    document.getElementById('oAppliancesWrap').style.display='none';
+    document.getElementById('oWashroomSubWrap').style.display='none';
+  } else {
+    wrap.style.display='block';
+  }
+  saveOwnerProgress();
+}
+
+// ── Washroom Sub-options Conditional ─────────────────────────────
+function updateWashroomSub(){
+  var wrap=document.getElementById('oWashroomSubWrap');
+  var sel=document.querySelector('#oFurnIncl .wiz-chip[data-v="Washrooms done-up"].sel');
+  wrap.style.display=sel?'block':'none';
+  if(!sel){document.querySelectorAll('#oWashroomSub .wiz-chip').forEach(function(b){b.classList.remove('sel')})}
+}
+
+// ── Wooden Furniture Conditional ─────────────────────────────────
+function updateWoodenFurn(){
+  var wrap=document.getElementById('oWoodenFurnWrap');
+  var sel=document.querySelector('#oFurnIncl .wiz-chip[data-v="Wooden Furniture"].sel');
+  wrap.style.display=sel?'block':'none';
+  if(!sel){document.querySelectorAll('#oWoodenFurn .wiz-chip').forEach(function(b){b.classList.remove('sel')})}
+}
+
+// ── Appliances Conditional ────────────────────────────────────────
+function updateAppliancesQ(){
+  var wrap=document.getElementById('oAppliancesWrap');
+  var sel=document.querySelector('#oFurnIncl .wiz-chip[data-v="Appliances & Electronics"].sel');
+  wrap.style.display=sel?'block':'none';
+  if(!sel){document.querySelectorAll('#oAppliances .wiz-chip').forEach(function(b){b.classList.remove('sel')})}
+}
+
+// ── Available From Mode ──────────────────────────────────────────
+function oSelAvailMode(btn){
+  var row=btn.parentNode;
+  row.querySelectorAll('.wiz-chip').forEach(function(b){b.classList.remove('sel')});
+  btn.classList.add('sel');
+  var v=btn.getAttribute('data-v');
+  document.getElementById('oDateRowWrap').style.display=(v==='Select Date')?'block':'none';
+  saveOwnerProgress();
+}
+
+// ── Indian Comma Formatting ──────────────────────────────────────
+function formatIndianRent(el){
+  var raw=el.value.replace(/[^0-9]/g,'');
+  if(!raw){el.value='';return}
+  var num=parseInt(raw,10);
+  el.value=num.toLocaleString('en-IN');
+}
+function parseIndianRent(el){
+  return el.value.replace(/[^0-9]/g,'');
+}
+
+// ── Owner Filter Notes ───────────────────────────────────────────
+function updateOwnerFilterNote(){
+  var typeVal=oGetChip('oTenantType');
+  var hasFamilyOnly=typeVal==='Family only';
+  var tn=document.getElementById('oTypeFilterNote');
+  if(tn){if(hasFamilyOnly){tn.classList.add('show')}else{tn.classList.remove('show')}}
+
+  var foodChips=oGetMultiChips('oFood');
+  var hasPureVeg=foodChips.indexOf('Pure Veg only')!==-1&&foodChips.indexOf('Non-veg ok')===-1;
+  var fn=document.getElementById('oFoodFilterNote');
+  if(fn){if(hasPureVeg){fn.classList.add('show')}else{fn.classList.remove('show')}}
+
+  var relChips=oGetMultiChips('oReligion');
+  var hasSpecificRel=relChips.length>0&&relChips.indexOf('Open to all')===-1;
+  var rn=document.getElementById('oReligionFilterNote');
+  if(rn){if(hasSpecificRel){rn.classList.add('show')}else{rn.classList.remove('show')}}
+
+  var pets=oGetChip('oPets');
+  var pn=document.getElementById('oPetsFilterNote');
+  if(pn){if(pets==='NO'){pn.classList.add('show')}else{pn.classList.remove('show')}}
+}
+
+// ── Owner Navigation ──────────────────────────────────────────────────
+function goOwnerStep2(){
+  hideAllErrs();var ok=true;
+  var name=document.getElementById('oName').value.trim();
+  var phone=document.getElementById('oPhone').value.trim();
+  if(!name){showErr('oNameErr');markErr('oName');ok=false}else{unmarkErr('oName')}
+  var digs=ownerSelCountry.digits;
+  var phoneRe=new RegExp('^\\d{'+digs+'}$');
+  if(!phoneRe.test(phone)){showErr('oPhoneErr');markErr('oPhone');ok=false}else{unmarkErr('oPhone')}
+  if(!ok)return;
+  OD.name=name;OD.phone=ownerSelCountry.code+' '+phone;OD.rawPhone=phone;OD.country=ownerSelCountry.name;
+  showOnly('ownerStep2');
+}
+function backOwnerStep1(){showOnly('ownerStep1')}
+
+function goOwnerStep3(){
+  hideAllErrs();var ok=true;
+  var building=document.getElementById('oBuilding').value.trim();
+  var flatNum=document.getElementById('oFlatNum').value.trim();
+  var typo=oGetTypology();
+  var carpet=document.getElementById('oCarpet').value.trim();
+  var balcony=oGetChip('oBalcony');
+  var furnType=oGetChip('oFurnType');
+  var parking=oGetChip('oParking');
+  var quotedRent=parseIndianRent(document.getElementById('oQuotedRent'));
+  var minRent=parseIndianRent(document.getElementById('oMinRent'));
+
+  if(!building){showErr('oBuildingErr');markErr('oBuilding');ok=false}else{unmarkErr('oBuilding')}
+  if(!flatNum){showErr('oFlatNumErr');markErr('oFlatNum');ok=false}else{unmarkErr('oFlatNum')}
+  if(!typo){showErr('oTypoErr');ok=false}
+  if(!carpet){showErr('oCarpetErr');markErr('oCarpet');ok=false}else{unmarkErr('oCarpet')}
+  if(!balcony){showErr('oBalconyErr');ok=false}
+  if(!furnType){showErr('oFurnTypeErr');ok=false}
+  if(!parking){showErr('oParkErr');ok=false}
+  if(!quotedRent){showErr('oRentErr');markErr('oQuotedRent');ok=false}else{unmarkErr('oQuotedRent')}
+  if(!minRent){showErr('oMinRentErr');markErr('oMinRent');ok=false}else{unmarkErr('oMinRent')}
+  if(!ok)return;
+
+  OD.building=building;
+  OD.wing=document.getElementById('oWing').value.trim();
+  OD.locality=document.getElementById('oLocality').value.trim();
+  OD.flatNum=flatNum;
+  OD.typology=typo;
+  OD.carpet=carpet;
+  OD.balcony=balcony;
+  OD.balconyCount=oGetChip('oBalconyCount')||'';
+  OD.furnType=furnType;
+  OD.furnIncl=oGetMultiChips('oFurnIncl');
+  OD.washroomSub=oGetMultiChips('oWashroomSub');
+  OD.woodenFurn=oGetMultiChips('oWoodenFurn');
+  OD.appliances=oGetMultiChips('oAppliances');
+  OD.parking=parking;
+  var availMode=oGetChip('oAvailMode');
+  if(availMode==='Immediately'){
+    OD.availFrom='Immediately';
+  } else {
+    var months=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    OD.availFrom=document.getElementById('oPossDay').value+'-'+months[parseInt(document.getElementById('oPossMonth').value)]+'-'+document.getElementById('oPossYear').value;
+  }
+  OD.quotedRent=quotedRent;
+  OD.minRent=minRent;
+  OD.listingType=ownerListingType;
+
+  showOnly('ownerStep3');
+}
+function backOwnerStep2(){showOnly('ownerStep2')}
+
+// ── Owner File Upload ─────────────────────────────────────────────────
+var MAX_FILES=50;
+var MAX_FILE_SIZE=10*1024*1024;
+
+function handleOwnerFiles(fileList){
+  for(var i=0;i<fileList.length;i++){
+    if(ownerFiles.length>=MAX_FILES){alert('Maximum '+MAX_FILES+' files allowed');break}
+    var f=fileList[i];
+    if(f.size>MAX_FILE_SIZE){alert(f.name+' exceeds 10MB limit');continue}
+    if(f.type.indexOf('image/')!==0&&f.type.indexOf('video/')!==0){alert(f.name+' is not an image or video');continue}
+    ownerFiles.push(f);
+  }
+  document.getElementById('oFileInput').value='';
+  renderOwnerPreviews();
+}
+
+function removeOwnerFile(idx){
+  ownerFiles.splice(idx,1);
+  renderOwnerPreviews();
+}
+
+function renderOwnerPreviews(){
+  var wrap=document.getElementById('oUploadPreviews');
+  wrap.innerHTML='';
+  ownerFiles.forEach(function(f,i){
+    var div=document.createElement('div');div.className='upload-thumb';
+    if(f.type.indexOf('video/')===0){
+      var vid=document.createElement('video');vid.src=URL.createObjectURL(f);vid.muted=true;
+      div.appendChild(vid);
+      var badge=document.createElement('span');badge.className='upload-thumb-badge';badge.textContent='▶ Video';
+      div.appendChild(badge);
+    } else {
+      var img=document.createElement('img');img.src=URL.createObjectURL(f);
+      div.appendChild(img);
+    }
+    var rm=document.createElement('button');rm.className='upload-thumb-remove';rm.textContent='×';
+    rm.onclick=(function(idx){return function(){removeOwnerFile(idx)}})(i);
+    div.appendChild(rm);
+    wrap.appendChild(div);
+  });
+}
+
+// Drag & drop on upload zone
+(function(){
+  var zone=document.getElementById('oUploadZone');
+  if(!zone)return;
+  zone.addEventListener('dragover',function(e){e.preventDefault();zone.classList.add('dragover')});
+  zone.addEventListener('dragleave',function(){zone.classList.remove('dragover')});
+  zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('dragover');handleOwnerFiles(e.dataTransfer.files)});
+})();
+
+function readFileAsBase64(file,cb){
+  var reader=new FileReader();
+  reader.onload=function(){cb(reader.result.split(',')[1])};
+  reader.readAsDataURL(file);
+}
+
+function compressImageFile(file,maxW,quality,cb){
+  if(file.type.indexOf('image/')!==0||file.size<=1.5*1024*1024){cb(file);return}
+  var reader=new FileReader();
+  reader.onload=function(){
+    var img=new Image();
+    img.onload=function(){
+      var w=img.width,h=img.height;
+      if(w>maxW){h=Math.round(h*maxW/w);w=maxW}
+      var c=document.createElement('canvas');c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      c.toBlob(function(blob){
+        cb(new File([blob],file.name,{type:'image/jpeg'}));
+      },'image/jpeg',quality);
+    };
+    img.src=reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function uploadOwnerFiles(files,sessionId,onDone){
+  if(files.length===0){onDone();return}
+  var progressWrap=document.getElementById('oUploadProgressWrap');
+  var fill=document.getElementById('oUploadFill');
+  var status=document.getElementById('oUploadStatus');
+  progressWrap.style.display='block';
+  var idx=0;
+  function uploadNext(){
+    if(idx>=files.length){
+      status.textContent='All files uploaded!';
+      fill.style.width='100%';
+      onDone();return;
+    }
+    status.textContent='Uploading '+(idx+1)+' of '+files.length+'...';
+    fill.style.width=Math.round(idx/files.length*100)+'%';
+    var oudT=document.getElementById('oudTitle');
+    if(oudT)oudT.textContent='Uploading file '+(idx+1)+' of '+files.length+'...';
+    var file=files[idx];
+    compressImageFile(file,1920,0.7,function(compressed){
+      readFileAsBase64(compressed,function(base64){
+        fetch(SHEET_URL+'?source=owner_upload',{
+          method:'POST',
+          mode:'no-cors',
+          headers:{'Content-Type':'text/plain'},
+          body:JSON.stringify({
+            session_id:sessionId,
+            filename:compressed.name,
+            mime_type:compressed.type,
+            data:base64
+          })
+        }).then(function(){
+          idx++;uploadNext();
+        }).catch(function(){
+          idx++;uploadNext();
+        });
+      });
+    });
+  }
+  uploadNext();
+}
+
+// ── Owner Requirement String ──────────────────────────────────────────
+function fmtIndian(v){if(!v)return'';var n=parseInt(v,10);return isNaN(n)?v:n.toLocaleString('en-IN')}
+function buildOwnerRequirementStr(){
+  var parts=[];
+  parts.push('Owner '+OD.listingType);
+  if(OD.building)parts.push(OD.building);
+  if(OD.wing)parts.push('Wing '+OD.wing);
+  if(OD.locality)parts.push(OD.locality);
+  if(OD.flatNum)parts.push('Flat '+OD.flatNum);
+  if(OD.typology)parts.push(OD.typology);
+  if(OD.carpet)parts.push(OD.carpet+' sqft');
+  if(OD.balcony==='Yes'){
+    var bc=OD.balconyCount?OD.balconyCount+' ':'';
+    parts.push(bc+'Balcony');
+  }
+  if(OD.furnType)parts.push(OD.furnType);
+  if(OD.furnIncl&&OD.furnIncl.length){
+    var fi=OD.furnIncl.filter(function(v){return v!=='Appliances & Electronics'&&v!=='Wooden Furniture'&&v!=='Washrooms done-up'});
+    if(fi.length)parts.push('Furn: '+fi.join(', '));
+  }
+  if(OD.furnIncl&&OD.furnIncl.indexOf('Washrooms done-up')!==-1){
+    var wsub=OD.washroomSub&&OD.washroomSub.length?'Washrooms done-up ('+OD.washroomSub.join(', ')+')':'Washrooms done-up';
+    parts.push(wsub);
+  }
+  if(OD.woodenFurn&&OD.woodenFurn.length)parts.push('Wooden Furn: '+OD.woodenFurn.join(', '));
+  if(OD.appliances&&OD.appliances.length)parts.push('Appliances: '+OD.appliances.join(', '));
+  if(OD.parking&&OD.parking!=='No')parts.push('Parking: '+OD.parking);
+  if(OD.availFrom)parts.push('Available: '+OD.availFrom);
+  if(OD.quotedRent)parts.push('Rent: '+fmtIndian(OD.quotedRent));
+  if(OD.minRent)parts.push('Min: '+fmtIndian(OD.minRent));
+  var tenantType=OD.tenantType;
+  if(tenantType&&tenantType.length)parts.push(tenantType.join(', '));
+  var tenure=OD.tenure;
+  if(tenure&&tenure.length)parts.push('Tenure: '+tenure.join(', '));
+  var food=OD.food;
+  if(food&&food.length)parts.push(food.join(', '));
+  var religion=OD.religion;
+  if(religion&&religion.length)parts.push(religion.join(', '));
+  if(OD.pets)parts.push('Pets: '+OD.pets);
+  if(OD.remarks)parts.push('Remarks: '+OD.remarks);
+  return parts.join(', ');
+}
+
+// ── Owner Submission ──────────────────────────────────────────────────
+function submitOwnerForm(){
+  hideAllErrs();var ok=true;
+  var tenantType=oGetChip('oTenantType');
+  var tenure=oGetMultiChips('oTenure');
+  var food=oGetMultiChips('oFood');
+  var pets=oGetChip('oPets');
+  if(!tenantType){showErr('oTenantTypeErr');ok=false}
+  if(tenure.length===0){showErr('oTenureErr');ok=false}
+  if(food.length===0){showErr('oFoodErr');ok=false}
+  if(!pets){showErr('oPetsErr');ok=false}
+  if(!ok)return;
+
+  OD.tenantType=[tenantType];
+  OD.tenure=tenure;
+  OD.food=food;
+  OD.religion=oGetMultiChips('oReligion');
+  OD.pets=pets;
+  OD.remarks=document.getElementById('oRemarks').value.trim();
+
+  var submitBtn=document.getElementById('ownerSubmitBtn');
+  submitBtn.disabled=true;submitBtn.textContent='Submitting...';
+
+  // Show upload overlay
+  var overlay=document.getElementById('ownerUploadOverlay');
+  var oudTitle=document.getElementById('oudTitle');
+  var oudSub=document.getElementById('oudSub');
+  if(ownerFiles.length>0){
+    oudTitle.textContent='Uploading files...';
+    oudSub.textContent='Please wait, do not close this page';
+  } else {
+    oudTitle.textContent='Submitting...';
+    oudSub.textContent='Please wait';
+  }
+  overlay.classList.add('show');
+
+  var folderParts=[OD.name||'Unknown'];
+  folderParts.push(fmtIndian(OD.quotedRent)||'NA');
+  var locParts=[OD.building||''];
+  if(OD.wing)locParts.push(OD.wing);
+  locParts.push(OD.flatNum||'');
+  folderParts.push(locParts.join(', '));
+  folderParts.push(OD.typology||'NA');
+  folderParts.push((OD.carpet||'NA')+' sqft');
+  var sessionId=folderParts.join('_').replace(/[\/\\:*?"<>|]/g,'-');
+
+  uploadOwnerFiles(ownerFiles,sessionId,function(){
+    oudTitle.textContent='Submitting your details...';
+    oudSub.textContent='Almost done';
+
+    var reqStr=buildOwnerRequirementStr();
+
+    var projParts=[OD.building];
+    if(OD.wing)projParts.push(OD.wing);
+    if(OD.locality)projParts.push(OD.locality);
+    var projectName=projParts.join(', ');
+
+    var url=SHEET_URL+'?source=owner_enquire';
+    fetch(url,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({
+        name:OD.name,
+        phone:OD.rawPhone,
+        listing_type:OD.listingType,
+        building:projectName,
+        flat_num:OD.flatNum,
+        flat_details:reqStr,
+        requirement:reqStr,
+        session_id:ownerFiles.length>0?sessionId:''
+      })
+    }).then(function(){console.log('Owner lead posted to sheet')})
+      .catch(function(err){console.error('Sheet POST error:',err)});
+
+    overlay.classList.remove('show');
+    clearOwnerProgress();
+    showOnly('screenOwnerSuccess');
+  });
+}
+
+// ── Owner localStorage ────────────────────────────────────────────────
+function saveOwnerProgress(){
+  try{
+    var d={};
+    d.name=document.getElementById('oName').value;
+    d.phone=document.getElementById('oPhone').value;
+    d.countryIdx=countries.indexOf(ownerSelCountry);
+    d.building=document.getElementById('oBuilding').value;
+    d.wing=document.getElementById('oWing').value;
+    d.locality=document.getElementById('oLocality').value;
+    d.flatNum=document.getElementById('oFlatNum').value;
+    d.typoBase=oGetChip('oTypology');
+    d.typoHalf=oGetTypology();
+    d.carpet=document.getElementById('oCarpet').value;
+    d.balcony=oGetChip('oBalcony');
+    d.balconyCount=oGetChip('oBalconyCount');
+    d.furnType=oGetChip('oFurnType');
+    d.furnIncl=oGetMultiChips('oFurnIncl');
+    d.washroomSub=oGetMultiChips('oWashroomSub');
+    d.woodenFurn=oGetMultiChips('oWoodenFurn');
+    d.appliances=oGetMultiChips('oAppliances');
+    d.parking=oGetChip('oParking');
+    d.availMode=oGetChip('oAvailMode');
+    d.possDay=document.getElementById('oPossDay').value;
+    d.possMonth=document.getElementById('oPossMonth').value;
+    d.possYear=document.getElementById('oPossYear').value;
+    d.quotedRent=document.getElementById('oQuotedRent').value;
+    d.minRent=document.getElementById('oMinRent').value;
+    d.tenantType=oGetChip('oTenantType');
+    d.tenure=oGetMultiChips('oTenure');
+    d.food=oGetMultiChips('oFood');
+    d.religion=oGetMultiChips('oReligion');
+    d.pets=oGetChip('oPets');
+    d.remarks=document.getElementById('oRemarks').value;
+    d.listingType=ownerListingType;
+    localStorage.setItem(OLS_KEY,JSON.stringify(d));
+  }catch(e){}
+}
+function restoreOwnerProgress(){
+  try{
+    var s=localStorage.getItem(OLS_KEY);if(!s)return;
+    var d=JSON.parse(s);
+    if(d.name)document.getElementById('oName').value=d.name;
+    if(d.phone)document.getElementById('oPhone').value=d.phone;
+    if(d.countryIdx!=null&&d.countryIdx>=0){
+      var c=countries[d.countryIdx];ownerSelCountry=c;
+      document.getElementById('oSelFlag').innerHTML=c.flag;
+      document.getElementById('oSelCode').textContent=c.code;
+      document.getElementById('oPhone').maxLength=c.digits;
+    }
+    if(d.building)document.getElementById('oBuilding').value=d.building;
+    if(d.wing)document.getElementById('oWing').value=d.wing;
+    if(d.locality)document.getElementById('oLocality').value=d.locality;
+    if(d.flatNum)document.getElementById('oFlatNum').value=d.flatNum;
+    if(d.typoBase){
+      var baseBtn=document.querySelector('#oTypology .wiz-chip[data-v="'+d.typoBase+'"]');
+      if(baseBtn)oSelTypoBase(baseBtn);
+      if(d.typoHalf&&d.typoHalf!==d.typoBase){
+        var halfBtn=document.querySelector('#oTypoHalf .wiz-chip[data-v="'+d.typoHalf+'"]');
+        if(halfBtn)oSelTypoHalf(halfBtn);
+      }
+    }
+    if(d.carpet)document.getElementById('oCarpet').value=d.carpet;
+    if(d.balcony){
+      var balBtn=document.querySelector('#oBalcony .wiz-chip[data-v="'+d.balcony+'"]');
+      if(balBtn)oSelBalcony(balBtn);
+    }
+    if(d.balconyCount)restoreChip('oBalconyCount',d.balconyCount);
+    if(d.furnType){
+      var ftBtn=document.querySelector('#oFurnType .wiz-chip[data-v="'+d.furnType+'"]');
+      if(ftBtn)oSelFurnType(ftBtn);
+    }
+    if(d.furnIncl&&d.furnIncl.length){d.furnIncl.forEach(function(v){restoreMultiChip('oFurnIncl',v)});updateWashroomSub();updateWoodenFurn();updateAppliancesQ()}
+    if(d.washroomSub&&d.washroomSub.length)d.washroomSub.forEach(function(v){restoreMultiChip('oWashroomSub',v)});
+    if(d.woodenFurn&&d.woodenFurn.length)d.woodenFurn.forEach(function(v){restoreMultiChip('oWoodenFurn',v)});
+    if(d.appliances&&d.appliances.length)d.appliances.forEach(function(v){restoreMultiChip('oAppliances',v)});
+    if(d.parking)restoreChip('oParking',d.parking);
+    if(d.availMode){
+      var amBtn=document.querySelector('#oAvailMode .wiz-chip[data-v="'+d.availMode+'"]');
+      if(amBtn)oSelAvailMode(amBtn);
+    }
+    if(d.possDay)document.getElementById('oPossDay').value=d.possDay;
+    if(d.possMonth)document.getElementById('oPossMonth').value=d.possMonth;
+    if(d.possYear)document.getElementById('oPossYear').value=d.possYear;
+    if(d.quotedRent)document.getElementById('oQuotedRent').value=d.quotedRent;
+    if(d.minRent)document.getElementById('oMinRent').value=d.minRent;
+    if(d.tenantType)restoreChip('oTenantType',d.tenantType);
+    if(d.tenure&&d.tenure.length)d.tenure.forEach(function(v){restoreMultiChip('oTenure',v)});
+    if(d.food&&d.food.length)d.food.forEach(function(v){restoreMultiChip('oFood',v)});
+    if(d.religion&&d.religion.length)d.religion.forEach(function(v){restoreMultiChip('oReligion',v)});
+    if(d.pets)restoreChip('oPets',d.pets);
+    if(d.remarks)document.getElementById('oRemarks').value=d.remarks;
+    if(d.listingType)ownerListingType=d.listingType;
+    updateOwnerFilterNote();
+  }catch(e){}
+}
+function clearOwnerProgress(){try{localStorage.removeItem(OLS_KEY)}catch(e){}}
+
+// Auto-save owner inputs
+document.addEventListener('input',function(e){if(e.target.closest('#ownerStep1,#ownerStep2,#ownerStep3'))saveOwnerProgress()});
+document.addEventListener('change',function(e){if(e.target.closest('#ownerStep1,#ownerStep2,#ownerStep3'))saveOwnerProgress()});
+
 // ── Init visibility ────────────────────────────────────────────────────
 document.getElementById('screenQ1').style.display='flex';
 // Restore saved progress
 restoreProgress();
+restoreOwnerProgress();
 </script>
 </body>
 </html>
