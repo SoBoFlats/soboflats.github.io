@@ -684,7 +684,7 @@ function updateSharingQ(){
   var wrap=document.getElementById('sharingWrap');
   var type=getChip('fType'),work=getChip('fWork');
   var typos=getMultiChips('fTypology');
-  if(type==='Bachelor'&&work==='Student'&&typos.length>0){
+  if(type==='Bachelor'&&(work==='Student'||work==='Corporate Professional')&&typos.length>0){
     var typoLabel=typos.join(' / ');
     wrap.innerHTML='<div class="sharing-card">'+
       '<div class="sharing-title">🤝 Sharing Preference</div>'+
