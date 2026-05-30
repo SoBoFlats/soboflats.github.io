@@ -467,7 +467,7 @@ a.nav-tray-item:active{background:rgba(255,255,255,.05)}
   <div class="end-screen" id="screenSuccess">
     <div class="end-icon">&#9989;</div>
     <div class="end-title" style="color:var(--accent)">Requirement Received!</div>
-    <div class="end-text">Our property expert will call you soon.<br><br>In the meanwhile, browse our portfolio:</div>
+    <div class="end-text">Our property expert will call you soon.<br>You will receive a WhatsApp message shortly.<br><br>In the meanwhile, browse our portfolio:</div>
     <a href="https://soboflats.github.io" class="end-link">&#127968; Browse Rent Portfolio</a>
   </div>
 
@@ -810,13 +810,16 @@ function buildRequirementStr(){
       parts.push('Sharing: Yes'+(mp?' ('+mp+')':''));
     } else parts.push('Sharing: No');
   }
-  if(FD.food) parts.push('Food: '+FD.food);
-  if(FD.religion) parts.push('Religion: '+FD.religion);
-  if(FD.type) parts.push('Type: '+FD.type);
-  if(FD.work) parts.push('Work: '+FD.work);
+  // Food + Religion + Type combined: "Pure Veg Jain Family"
+  var frt=[];
+  if(FD.food)frt.push(FD.food);
+  if(FD.religion)frt.push(FD.religion);
+  if(FD.type)frt.push(FD.type);
+  if(frt.length)parts.push(frt.join(' '));
+  if(FD.work) parts.push(FD.work);
   if(FD.budget) parts.push('Budget: '+FD.budget);
-  if(FD.locality) parts.push('Locality: '+FD.locality);
-  if(FD.society) parts.push('Society: '+FD.society);
+  if(FD.locality) parts.push(FD.locality);
+  if(FD.society) parts.push(FD.society);
   // Possession date
   if(FD.possDay&&FD.possMonth){
     var months=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
