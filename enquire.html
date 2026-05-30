@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Enquire · Oswal Properties</title>
+<meta name="description" content="Submit your rental flat requirement to Oswal Properties — South Bombay luxury residential specialists.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a1a14;--card:#0d2318;--card2:rgba(13,35,24,.85);--text:#fff;--text2:rgba(255,255,255,.50);--text3:rgba(255,255,255,.30);--accent:#48c78e;--accent2:#3ab87e;--accent-glow:rgba(72,199,142,.25);--accent-bg:rgba(72,199,142,.10);--accent-border:rgba(72,199,142,.30);--border:rgba(255,255,255,.08);--input-bg:rgba(255,255,255,.05);--input-border:rgba(255,255,255,.14);--gold:#ffd966;--danger:#e74c3c;--glass:rgba(255,255,255,.03);--glass-border:rgba(255,255,255,.08)}
+[data-theme="light"]{--bg:#f0ede4;--card:#fff;--card2:rgba(255,255,255,.92);--text:#111;--text2:rgba(0,0,0,.45);--text3:rgba(0,0,0,.25);--accent:#1a8a5a;--accent2:#168a52;--accent-glow:rgba(26,138,90,.15);--accent-bg:rgba(26,138,90,.07);--accent-border:rgba(26,138,90,.25);--border:rgba(0,0,0,.08);--input-bg:rgba(0,0,0,.03);--input-border:rgba(0,0,0,.12);--gold:#b8860b;--danger:#d63031;--glass:rgba(0,0,0,.02);--glass-border:rgba(0,0,0,.06)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:100dvh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+/* ── Hamburger Nav ──────────────────────────────────────────────────── */
+.hamburger-btn{position:fixed;top:8px;left:8px;z-index:95;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px}
+.nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+.nav-overlay.open{opacity:1;pointer-events:all}
+.nav-tray{position:fixed;top:0;left:0;bottom:0;width:280px;max-width:85vw;background:#0d2318;border-right:1px solid rgba(255,255,255,.08);z-index:201;transform:translateX(-100%);transition:transform .28s ease;display:flex;flex-direction:column;overflow-y:auto}
+.nav-tray.open{transform:translateX(0)}
+.nav-tray-logo{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.nav-tray-close{background:none;border:none;color:rgba(255,255,255,.45);font-size:22px;cursor:pointer;padding:4px 8px;line-height:1;flex-shrink:0}
+.nav-intro{padding:20px 20px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-intro-img{width:52px;height:52px;border-radius:12px;object-fit:cover;flex-shrink:0;cursor:pointer}
+.nav-thumb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.nav-thumb-overlay.show{opacity:1;pointer-events:all}
+.nav-thumb-full{max-width:88vw;max-height:88vh;border-radius:50%;object-fit:cover}
+.nav-thumb-close{position:fixed;top:14px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:22px;cursor:pointer;z-index:10000}
+.nav-intro-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.nav-intro-text{font-size:11px;line-height:1.55;color:rgba(255,255,255,.50);margin:0}
+.nav-intro-text b{color:rgba(255,255,255,.75);font-weight:700}
+[data-theme="light"] .nav-intro-text{color:rgba(0,0,0,.45)}
+[data-theme="light"] .nav-intro-text b{color:rgba(0,0,0,.70)}
+.nav-profile-row{display:flex;align-items:center;gap:13px;padding:8px 20px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-profile-photo{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.14);flex-shrink:0;background:rgba(255,255,255,.07)}
+.nav-profile-info{flex:1;min-width:0}
+.nav-profile-name{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.2px}
+.nav-profile-phone{font-size:11px;font-weight:500;color:rgba(255,255,255,.45);margin-top:2px}
+.nav-profile-phone a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:3px}
+.nav-team-toggle{background:none;border:none;color:rgba(255,255,255,.4);font-size:16px;cursor:pointer;padding:2px 4px;line-height:1;display:block}
+.nav-team-section{display:none;border-top:1px solid rgba(255,255,255,.06);margin:0 20px;padding:10px 0 4px}
+.nav-team-section.open{display:block}
+.nav-team-row{display:flex;align-items:center;gap:10px;padding:7px 0;text-decoration:none}
+.nav-team-photo{width:46px;height:46px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.12);flex-shrink:0;background:rgba(255,255,255,.07);cursor:pointer}
+.nav-team-name{font-size:12.5px;font-weight:700;color:rgba(255,255,255,.80)}
+.nav-team-role{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px}
+.nav-team-phone{font-size:11px;color:rgba(255,255,255,.40);margin-top:2px;display:inline-flex;align-items:center;gap:3px}
+.nav-tray-items{padding:8px 0;flex:1}
+.nav-tray-item{display:flex;align-items:center;gap:14px;padding:16px 20px;text-decoration:none;color:#fff;border-bottom:1px solid rgba(255,255,255,.05)}
+a.nav-tray-item:active{background:rgba(255,255,255,.05)}
+.nav-tray-item.active-item{background:rgba(72,199,142,.08);border-left:3px solid #48c78e;padding-left:17px}
+.nav-tray-item.disabled-item{opacity:.4;cursor:default}
+.nav-tray-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.nav-tray-label{flex:1;font-size:14px;font-weight:600}
+.nav-tray-chevron{font-size:20px;color:rgba(255,255,255,.35)}
+.nav-tray-soon{font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);letter-spacing:.3px}
+.nav-tray-footer{margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding:14px 20px 32px}
+.nav-build-btn{width:100%;text-align:left;background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.22);border-radius:14px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:11px}
+.nav-build-label{font-size:12.5px;font-weight:700;color:#ffd966;line-height:1.35;flex:1}
+.nav-build-sub{font-size:10.5px;color:rgba(255,217,102,.55);font-weight:400;display:block;margin-top:2px}
+.nav-contact-card{display:none;margin-top:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px}
+.nav-contact-card.open{display:block}
+.nav-contact-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px}
+.nav-contact-role{font-size:10.5px;color:rgba(255,255,255,.42);margin-bottom:12px}
+.nav-contact-wa{display:flex;align-items:center;gap:10px;text-decoration:none;background:rgba(37,211,102,.14);border:1px solid rgba(37,211,102,.28);border-radius:12px;padding:11px 14px;color:#25d366;font-size:13px;font-weight:700}
+.nav-contact-wa svg{flex-shrink:0}
+.nav-theme-row{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid rgba(255,255,255,.07);margin-top:4px}
+.nav-theme-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.50)}
+.nav-theme-btn{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);border-radius:50%;width:34px;height:34px;font-size:15px;color:rgba(255,255,255,.80);cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+/* ── Page Layout ──────────────────────────────────────────────────────── */
+.page-wrap{max-width:430px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:0 16px}
+.page-header{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 0 4px;text-align:center}
+.page-logo{width:38px;height:38px;border-radius:10px;object-fit:cover;box-shadow:0 4px 20px rgba(0,0,0,.3);flex-shrink:0}
+.page-header-text{text-align:left}
+.page-title{font-size:16px;font-weight:800;letter-spacing:-.3px;text-transform:uppercase}
+.page-subtitle{font-size:8.5px;color:var(--text2);font-weight:600;letter-spacing:1.8px;margin-top:2px;text-transform:uppercase}
+.wiz-persistent-title{font-size:11px;font-weight:600;color:var(--accent);letter-spacing:.3px;margin-bottom:6px;padding-left:2px;opacity:.8;margin-top:14px}
+.header-theme-btn{position:fixed;top:8px;right:12px;z-index:95;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.42);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
+
+/* ── Glass Card ───────────────────────────────────────────────────────── */
+.glass-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:20px;margin-bottom:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+/* ── Chat Bubbles (Q1 only) ───────────────────────────────────────────── */
+.chat-area{flex:1;display:flex;flex-direction:column;padding:8px 0 16px}
+.chat-messages{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.chat-msg{max-width:85%;padding:13px 18px;border-radius:18px;font-size:14px;line-height:1.55;animation:chatIn .3s ease}
+@keyframes chatIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.chat-bot{align-self:flex-start;background:var(--card);border:1px solid var(--border);border-bottom-left-radius:6px}
+.chat-user{align-self:flex-end;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-bottom-right-radius:6px;font-weight:600}
+.chat-typing{align-self:flex-start;padding:15px 22px;border-radius:18px;border-bottom-left-radius:6px;background:var(--card);border:1px solid var(--border)}
+.chat-typing span{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text2);margin:0 2px;animation:typeDot .9s infinite}
+.chat-typing span:nth-child(2){animation-delay:.15s}
+.chat-typing span:nth-child(3){animation-delay:.3s}
+@keyframes typeDot{0%,60%,100%{opacity:.25;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
+
+.q1-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;animation:chatIn .3s ease}
+.q1-btn{padding:16px 12px;border-radius:16px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:all .2s;position:relative;overflow:hidden}
+.q1-btn:active{transform:scale(.97)}
+.q1-btn:not(.disabled):active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+.q1-btn.disabled{opacity:.3;cursor:default;pointer-events:none}
+.q1-icon{font-size:24px;display:block;margin-bottom:6px}
+.q1-sub{font-size:9.5px;color:var(--text2);display:block;margin-top:4px;font-weight:400}
+.q1-soon{font-size:8px;font-weight:700;color:var(--text3);display:block;margin-top:5px;letter-spacing:.5px}
+
+/* ── Wizard ───────────────────────────────────────────────────────────── */
+.wiz-screen{display:none;flex:1;flex-direction:column;animation:wizIn .35s ease}
+.wiz-screen.active{display:flex}
+@keyframes wizIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+/* Progress */
+.wiz-progress{display:flex;gap:4px;margin-bottom:18px;padding:0 2px}
+.wiz-bar{flex:1;height:3.5px;border-radius:2px;background:var(--input-border);transition:all .4s ease;position:relative;overflow:hidden}
+.wiz-bar.done{background:var(--accent)}
+.wiz-bar.active{background:var(--input-border)}
+.wiz-bar.active::after{content:'';position:absolute;left:0;top:0;height:100%;width:50%;background:var(--accent);border-radius:2px;animation:barPulse 1.5s ease 3;animation-fill-mode:forwards}
+@keyframes barPulse{0%{width:30%}50%{width:70%}100%{width:50%}}
+
+.wiz-step-header{margin-bottom:18px}
+.wiz-step-num{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.wiz-step-title{font-size:18px;font-weight:800;letter-spacing:-.3px}
+.wiz-step-sub{font-size:12px;color:var(--text2);margin-top:3px}
+
+/* Fields */
+.wiz-field{margin-bottom:16px}
+.wiz-label{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.wiz-label-icon{font-size:14px}
+.wiz-label .opt{font-weight:400;font-size:10px;opacity:.45;margin-left:2px}
+.wiz-input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:all .2s}
+.wiz-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.wiz-input::placeholder{color:var(--text3)}
+.wiz-input.error{border-color:var(--danger)}
+.wiz-error{font-size:10px;color:var(--danger);margin-top:5px;display:none;font-weight:600}
+.wiz-error.show{display:block}
+
+/* Phone row with country picker */
+.phone-row{display:flex;gap:8px;align-items:stretch}
+.country-picker{display:flex;align-items:center;gap:4px;padding:0 12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);cursor:pointer;font-size:13px;color:var(--text);white-space:nowrap;transition:all .2s;position:relative;flex-shrink:0}
+.country-picker:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.country-flag{font-size:18px}
+.country-code{font-size:12px;font-weight:600;color:var(--text2)}
+.country-arrow{font-size:8px;color:var(--text3);margin-left:2px}
+.country-dropdown{position:absolute;top:100%;left:0;right:-40px;margin-top:4px;background:var(--card);border:1px solid var(--border);border-radius:14px;max-height:220px;overflow-y:auto;z-index:50;display:none;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.country-dropdown.open{display:block}
+.country-option{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;font-size:13px;transition:background .15s}
+.country-option:hover,.country-option:active{background:var(--accent-bg)}
+.country-option-flag{font-size:18px}
+.country-option-name{flex:1;font-weight:500}
+.country-option-code{font-size:12px;color:var(--text2);font-weight:600}
+
+/* Button options */
+.wiz-btn-row{display:flex;flex-wrap:wrap;gap:8px}
+.wiz-btn-row.compact{flex-wrap:nowrap;gap:6px}
+.wiz-btn-row.compact .wiz-chip{padding:10px 10px;font-size:12px;flex:1;text-align:center;min-width:0}
+.wiz-chip{padding:11px 18px;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;position:relative}
+.wiz-chip:active{transform:scale(.96)}
+.wiz-chip.sel{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.wiz-chip.sel::before{content:'✓';position:absolute;top:-5px;right:-3px;width:16px;height:16px;border-radius:50%;background:var(--accent);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:800}
+.wiz-chip.disabled{opacity:.3;cursor:default;pointer-events:none}
+
+/* Sharing question highlight */
+.sharing-card{background:linear-gradient(135deg,rgba(72,199,142,.08),rgba(72,199,142,.03));border:1.5px solid var(--accent-border);border-radius:16px;padding:16px;margin-bottom:16px;animation:wizIn .35s ease}
+.sharing-title{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:10px}
+
+/* Date picker */
+.date-row{display:flex;gap:8px}
+.date-sel{flex:1;padding:13px 12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:14px;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;transition:all .2s}
+.date-sel:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+
+/* Textarea */
+.wiz-textarea{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:14px;font-family:inherit;outline:none;resize:vertical;min-height:80px;transition:all .2s}
+.wiz-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.wiz-textarea::placeholder{color:var(--text3)}
+
+/* Nav buttons */
+.wiz-nav{display:flex;gap:10px;padding:14px 0 32px;margin-top:auto}
+.wiz-btn{flex:1;padding:15px;border-radius:14px;border:none;font-size:14px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;letter-spacing:-.1px}
+.wiz-btn:active{transform:scale(.97)}
+.wiz-back{background:var(--input-bg);border:1.5px solid var(--input-border);color:var(--text2)}
+.wiz-next{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 16px var(--accent-glow)}
+.wiz-next:disabled{opacity:.35;cursor:default;box-shadow:none}
+
+/* ── End Screens ──────────────────────────────────────────────────────── */
+.end-screen{flex:1;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;animation:wizIn .35s ease}
+.end-screen.active{display:flex}
+.end-icon{font-size:56px;margin-bottom:18px}
+.end-title{font-size:20px;font-weight:800;margin-bottom:8px;letter-spacing:-.3px}
+.end-text{font-size:13px;color:var(--text2);margin-bottom:28px;line-height:1.7;max-width:300px}
+.end-link{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 16px var(--accent-glow);transition:all .2s}
+.end-link:active{transform:scale(.97)}
+</style>
+</head>
+<body>
+
+<!-- ── Hamburger Nav ──────────────────────────────────────────────────── -->
+<div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
+<div class="nav-tray" id="navTray">
+  <div class="nav-intro">
+    <div class="nav-intro-header">
+      <img src="./intro_oswal.jpeg" class="nav-intro-img" onerror="this.style.display='none'" alt="Oswal Properties" onclick="event.stopPropagation();openNavThumb(this.src)">
+      <div style="min-width:0"><div class="nav-tray-logo" style="text-transform:uppercase;font-size:15px;white-space:nowrap">Oswal Properties</div><div style="font-size:7.5px;color:rgba(255,255,255,.40);letter-spacing:1.2px;font-weight:600;margin-top:2px;text-transform:uppercase;white-space:nowrap">Luxury &middot; Residential &middot; SoBo</div></div>
+      <button class="nav-tray-close" onclick="closeNav()" style="margin-left:auto">&#215;</button>
+    </div>
+    <p class="nav-intro-text"><b>RERA approved</b> Real Estate Consultancy firm, since 9 years professionally (30+ years locally). We specialise <b>ONLY</b> in <b>Luxury Residential Properties in South Bombay</b>.</p>
+    <p class="nav-intro-text" style="margin-top:6px;font-size:10px;color:rgba(255,255,255,.35)">RERA Reg. No: A51900031717</p>
+  </div>
+  <div class="nav-profile-row">
+    <img src="./photo.jpeg" class="nav-profile-photo" onerror="this.style.display='none'" alt="Vaibhav Oswal" onclick="event.stopPropagation();event.preventDefault();openNavThumb(this.src)">
+    <div class="nav-profile-info">
+      <div class="nav-profile-name">Vaibhav Oswal</div>
+      <div class="nav-profile-phone"><a href="https://wa.me/918828340668" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="#25d366" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>88283 40668</a></div>
+    </div>
+    <button class="nav-team-toggle" id="teamToggleBtn" onclick="toggleTeam()" title="Team">&#8964;</button>
+  </div>
+  <div class="nav-team-section" id="navTeamSection">
+    <a class="nav-team-row" href="https://wa.me/917400494703" target="_blank" rel="noopener">
+      <img src="./team_vandana.jpeg" class="nav-team-photo" onerror="this.style.display='none'" alt="" onclick="event.stopPropagation();event.preventDefault();openNavThumb(this.src)">
+      <div><div class="nav-team-name">Vandana Bhandari</div><div class="nav-team-role">Channel Sales, Rent</div><div class="nav-team-phone"><svg width="10" height="10" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>74004 94703</div></div>
+    </a>
+    <a class="nav-team-row" href="https://wa.me/919324059959" target="_blank" rel="noopener">
+      <img src="./team_aditi.jpeg" class="nav-team-photo" onerror="this.style.display='none'" alt="" onclick="event.stopPropagation();event.preventDefault();openNavThumb(this.src)">
+      <div><div class="nav-team-name">Aditi Jain</div><div class="nav-team-role">Direct Sales, Rent</div><div class="nav-team-phone"><svg width="10" height="10" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>93240 59959</div></div>
+    </a>
+    <a class="nav-team-row" href="https://wa.me/919137848224" target="_blank" rel="noopener">
+      <img src="./team_bhavin.jpeg" class="nav-team-photo" onerror="this.style.display='none'" alt="" onclick="event.stopPropagation();event.preventDefault();openNavThumb(this.src)">
+      <div><div class="nav-team-name">Bhavin Thakkar</div><div class="nav-team-role">Direct Sales, Rent</div><div class="nav-team-phone"><svg width="10" height="10" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>91378 48224</div></div>
+    </a>
+  </div>
+  <div class="nav-tray-items">
+    <a href="https://soboflats.github.io" class="nav-tray-item">
+      <span class="nav-tray-icon">&#127968;</span>
+      <span class="nav-tray-label">Rent Portfolio</span>
+      <span class="nav-tray-chevron">&#8250;</span>
+    </a>
+    <div class="nav-tray-item disabled-item">
+      <span class="nav-tray-icon">&#127963;</span>
+      <span class="nav-tray-label">Resale Portfolio</span>
+      <span class="nav-tray-soon">Coming Soon</span>
+    </div>
+    <a href="./enquire.html" class="nav-tray-item active-item">
+      <span class="nav-tray-icon">&#128203;</span>
+      <span class="nav-tray-label">Enquire</span>
+      <span class="nav-tray-chevron">&#8250;</span>
+    </a>
+  </div>
+  <div class="nav-theme-row">
+    <span class="nav-theme-label">Theme: Day / Night</span>
+    <button class="nav-theme-btn" id="navThemeToggle" onclick="navToggleTheme()">&#9790;</button>
+  </div>
+  <div class="nav-tray-footer">
+    <button class="nav-build-btn" onclick="toggleBuildContact()">
+      <span style="font-size:22px">&#128161;</span>
+      <span class="nav-build-label">Want an app like this?<span class="nav-build-sub">Build your own portfolio</span></span>
+      <span id="buildChevron" style="font-size:16px;color:rgba(255,217,102,.55);transition:transform .2s">&#8250;</span>
+    </button>
+    <div class="nav-contact-card" id="navContactCard">
+      <div class="nav-contact-name">Vaibhav Oswal</div>
+      <div class="nav-contact-role">Real Estate &amp; Tech</div>
+      <a class="nav-contact-wa" href="https://wa.me/918828340668?text=I%20saw%20your%20Portfolio%20app%20and%20I%20want%20to%20build%20one%20for%20myself." target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp &middot; 8828340668
+      </a>
+    </div>
+  </div>
+</div>
+<div id="navThumbOverlay" class="nav-thumb-overlay" onclick="closeNavThumb()">
+  <img id="navThumbImg" src="" alt="" class="nav-thumb-full">
+  <button class="nav-thumb-close" onclick="closeNavThumb()">&times;</button>
+</div>
+<button class="hamburger-btn" onclick="openNav()" aria-label="Menu">
+  <svg width="17" height="13" viewBox="0 0 17 13" fill="none"><rect width="17" height="2" rx="1" fill="currentColor"/><rect y="5.5" width="17" height="2" rx="1" fill="currentColor"/><rect y="11" width="17" height="2" rx="1" fill="currentColor"/></svg>
+</button>
+<button class="header-theme-btn" id="themeToggle" onclick="toggleTheme()">&#9790;</button>
+
+<!-- ── Page Content ───────────────────────────────────────────────────── -->
+<div class="page-wrap">
+
+  <div class="page-header">
+    <img src="./intro_oswal.jpeg" class="page-logo" onerror="this.style.display='none'" alt="">
+    <div class="page-header-text">
+      <div class="page-title">Oswal Properties</div>
+      <div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div>
+    </div>
+  </div>
+
+  <!-- ── Q1: Chat Bubbles — User Type ─────────────────────────────────── -->
+  <div class="chat-area" id="screenQ1">
+    <div class="chat-messages" id="chatMsgs"></div>
+    <div id="chatOpts"></div>
+  </div>
+
+  <!-- ── Wizard Step 1: Basic Info ────────────────────────────────────── -->
+  <div class="wiz-screen" id="wizStep1">
+    <div class="wiz-persistent-title">Noting your Rental Requirement</div>
+    <div class="wiz-progress"><div class="wiz-bar done"></div><div class="wiz-bar active"></div><div class="wiz-bar"></div></div>
+    <div class="wiz-step-header">
+      <div class="wiz-step-num">Step 1 of 3</div>
+      <div class="wiz-step-title">About You</div>
+      <div class="wiz-step-sub">Let's start with the basics</div>
+    </div>
+    <div style="overflow-y:auto;flex:1;padding-bottom:8px">
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128100;</span> Full Name</div>
+        <input class="wiz-input" id="fName" type="text" placeholder="Enter your full name" autocomplete="name">
+        <div class="wiz-error" id="fNameErr">Please enter your name</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128222;</span> WhatsApp Number</div>
+        <div class="phone-row">
+          <div class="country-picker" id="countryPicker" onclick="toggleCountryDD(event)">
+            <span class="country-flag" id="selFlag">&#127470;&#127475;</span>
+            <span class="country-code" id="selCode">+91</span>
+            <span class="country-arrow">&#9662;</span>
+            <div class="country-dropdown" id="countryDD"></div>
+          </div>
+          <input class="wiz-input" id="fPhone" type="tel" placeholder="10-digit number" maxlength="15" autocomplete="tel" style="flex:1">
+        </div>
+        <div class="wiz-error" id="fPhoneErr">Please enter a valid phone number</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128106;</span> Type</div>
+        <div class="wiz-btn-row" id="fType">
+          <button class="wiz-chip" data-v="Family" onclick="selChip(this)">&#128106; Family</button>
+          <button class="wiz-chip" data-v="Bachelor" onclick="selChip(this)">&#128100; Bachelor</button>
+        </div>
+        <div class="wiz-error" id="fTypeErr">Please select type</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128188;</span> Work Type</div>
+        <div class="wiz-btn-row" id="fWork">
+          <button class="wiz-chip" data-v="Corporate Professional" onclick="selChip(this)">&#128188; Corporate Professional</button>
+          <button class="wiz-chip" data-v="Business Owner" onclick="selChip(this)">&#127970; Business Owner</button>
+          <button class="wiz-chip" data-v="Student" onclick="selChip(this)">&#127891; Student</button>
+        </div>
+        <div class="wiz-error" id="fWorkErr">Please select work type</div>
+      </div>
+    </div>
+    <div class="wiz-nav">
+      <button class="wiz-btn wiz-back" onclick="goQ1()">&#8592; Back</button>
+      <button class="wiz-btn wiz-next" onclick="goStep2()">Continue &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ── Wizard Step 2: Property Requirement ──────────────────────────── -->
+  <div class="wiz-screen" id="wizStep2">
+    <div class="wiz-persistent-title">Noting your Rental Requirement</div>
+    <div class="wiz-progress"><div class="wiz-bar done"></div><div class="wiz-bar done"></div><div class="wiz-bar active"></div></div>
+    <div class="wiz-step-header">
+      <div class="wiz-step-num">Step 2 of 3</div>
+      <div class="wiz-step-title">Property Requirement</div>
+      <div class="wiz-step-sub">Tell us what you're looking for</div>
+    </div>
+    <div style="overflow-y:auto;flex:1;padding-bottom:8px">
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#127968;</span> Typology <span class="opt">(select up to 2)</span></div>
+        <div class="wiz-btn-row compact" id="fTypology">
+          <button class="wiz-chip" data-v="1 BHK" onclick="selMultiChip(this,2)">1 BHK</button>
+          <button class="wiz-chip" data-v="2 BHK" onclick="selMultiChip(this,2)">2 BHK</button>
+          <button class="wiz-chip" data-v="3 BHK" onclick="selMultiChip(this,2)">3 BHK</button>
+          <button class="wiz-chip" data-v="4 BHK" onclick="selMultiChip(this,2)">4 BHK</button>
+          <button class="wiz-chip" data-v="5 BHK" onclick="selMultiChip(this,2)">5 BHK</button>
+        </div>
+        <div class="wiz-error" id="fTypoErr">Please select at least one typology</div>
+      </div>
+
+      <!-- Sharing question (Bachelor + Student only, injected by JS) -->
+      <div id="sharingWrap"></div>
+
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128205;</span> Locality Range</div>
+        <input class="wiz-input" id="fLocality" type="text" placeholder="Example: Worli to Lower Parel">
+        <div class="wiz-error" id="fLocErr">Please enter a locality range</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#127963;</span> Precise Society <span class="opt">(optional)</span></div>
+        <input class="wiz-input" id="fSociety" type="text" placeholder="Example: Lodha Park">
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128663;</span> Car Parkings</div>
+        <div class="wiz-btn-row compact" id="fParking">
+          <button class="wiz-chip" data-v="Not compulsory" onclick="selChip(this)">N/A</button>
+          <button class="wiz-chip" data-v="1P" onclick="selChip(this)">1P</button>
+          <button class="wiz-chip" data-v="2P" onclick="selChip(this)">2P</button>
+          <button class="wiz-chip" data-v="3P" onclick="selChip(this)">3P</button>
+          <button class="wiz-chip" data-v="4P" onclick="selChip(this)">4P</button>
+          <button class="wiz-chip" data-v="5P & above" onclick="selChip(this)">5P+</button>
+        </div>
+        <div class="wiz-error" id="fParkErr">Please select parking preference</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128197;</span> Possession Date</div>
+        <div class="date-row">
+          <select class="date-sel" id="fPossDay"></select>
+          <select class="date-sel" id="fPossMonth"></select>
+        </div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128176;</span> Budget (maximum)</div>
+        <input class="wiz-input" id="fBudget" type="text" placeholder="Example: 2L">
+        <div class="wiz-error" id="fBudgetErr">Please enter your budget</div>
+      </div>
+    </div>
+    <div class="wiz-nav">
+      <button class="wiz-btn wiz-back" onclick="backStep1()">&#8592; Back</button>
+      <button class="wiz-btn wiz-next" onclick="goStep3()">Continue &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ── Wizard Step 3: Preferences ───────────────────────────────────── -->
+  <div class="wiz-screen" id="wizStep3">
+    <div class="wiz-persistent-title">Noting your Rental Requirement</div>
+    <div class="wiz-progress"><div class="wiz-bar done"></div><div class="wiz-bar done"></div><div class="wiz-bar done"></div></div>
+    <div class="wiz-step-header">
+      <div class="wiz-step-num">Step 3 of 3</div>
+      <div class="wiz-step-title">Preferences</div>
+      <div class="wiz-step-sub">Help us find the right match</div>
+    </div>
+    <div style="overflow-y:auto;flex:1;padding-bottom:8px">
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128591;</span> Religion <span class="opt">(optional)</span></div>
+        <div class="wiz-btn-row compact" id="fReligion">
+          <button class="wiz-chip" data-v="Hindu" onclick="selChip(this)">Hindu</button>
+          <button class="wiz-chip" data-v="Jain" onclick="selChip(this)">Jain</button>
+          <button class="wiz-chip" data-v="Muslim" onclick="selChip(this)">Muslim</button>
+          <button class="wiz-chip" data-v="Catholic" onclick="selChip(this)">Catholic</button>
+          <button class="wiz-chip" data-v="Others" onclick="selChip(this)">Others</button>
+        </div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#127813;</span> Food Preference</div>
+        <div class="wiz-btn-row" id="fFood">
+          <button class="wiz-chip" data-v="Pure Veg" onclick="selChip(this)">&#129388; Pure Veg</button>
+          <button class="wiz-chip" data-v="Non-veg ok" onclick="selChip(this)">&#127830; Non-veg ok</button>
+        </div>
+        <div class="wiz-error" id="fFoodErr">Please select food preference</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128062;</span> Pets</div>
+        <div class="wiz-btn-row" id="fPets">
+          <button class="wiz-chip" data-v="No Pets" onclick="selChip(this)">No Pets</button>
+          <button class="wiz-chip" data-v="Dog" onclick="selChip(this)">&#128054; Dog</button>
+          <button class="wiz-chip" data-v="Cat" onclick="selChip(this)">&#128008; Cat</button>
+          <button class="wiz-chip" data-v="Other" onclick="selChip(this)">Other</button>
+        </div>
+        <div class="wiz-error" id="fPetsErr">Please select pets preference</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128221;</span> Remarks <span class="opt">(optional)</span></div>
+        <textarea class="wiz-textarea" id="fRemarks" placeholder="Any specific requirement (e.g. Maid's Room, Long Lease, Jain Temple nearby)" maxlength="600"></textarea>
+      </div>
+    </div>
+    <div class="wiz-nav">
+      <button class="wiz-btn wiz-back" onclick="backStep2()">&#8592; Back</button>
+      <button class="wiz-btn wiz-next" onclick="submitForm()">Submit &#10003;</button>
+    </div>
+  </div>
+
+  <!-- ── By Mistake ───────────────────────────────────────────────────── -->
+  <div class="end-screen" id="screenBye">
+    <div class="end-icon">&#128075;</div>
+    <div class="end-title">No worries, goodbye!</div>
+    <div class="end-text">Whenever you're ready to explore luxury rental properties in South Bombay, we're here for you.</div>
+    <a href="https://soboflats.github.io" class="end-link">&#127968; Browse Rent Portfolio</a>
+  </div>
+
+  <!-- ── Success ──────────────────────────────────────────────────────── -->
+  <div class="end-screen" id="screenSuccess">
+    <div class="end-icon">&#9989;</div>
+    <div class="end-title" style="color:var(--accent)">Requirement Received!</div>
+    <div class="end-text">Our property expert will call you soon.<br><br>In the meanwhile, browse our portfolio:</div>
+    <a href="https://soboflats.github.io" class="end-link">&#127968; Browse Rent Portfolio</a>
+  </div>
+
+</div>
+
+<script>
+// ── Nav ────────────────────────────────────────────────────────────────
+function openNav(){document.getElementById('navOverlay').classList.add('open');document.getElementById('navTray').classList.add('open')}
+function closeNav(){document.getElementById('navOverlay').classList.remove('open');document.getElementById('navTray').classList.remove('open')}
+function openNavThumb(s){if(!s)return;var o=document.getElementById('navThumbOverlay'),i=document.getElementById('navThumbImg');if(!o||!i)return;i.src=s;o.classList.add('show')}
+function closeNavThumb(){var o=document.getElementById('navThumbOverlay');if(o)o.classList.remove('show')}
+function toggleTeam(){var s=document.getElementById('navTeamSection'),b=document.getElementById('teamToggleBtn');var op=s.classList.toggle('open');if(b){b.style.transform=op?'rotate(180deg)':'';b.style.color=op?'rgba(255,255,255,.75)':'';}}
+function toggleBuildContact(){var c=document.getElementById('navContactCard'),ch=document.getElementById('buildChevron');var op=c.classList.toggle('open');if(ch)ch.style.transform=op?'rotate(90deg)':'';}
+function navToggleTheme(){toggleTheme()}
+function toggleTheme(){var h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');var sym=d?'☀':'☾';['themeToggle','navThemeToggle'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=sym})}
+(function(){var sym=document.documentElement.getAttribute('data-theme')==='light'?'☀':'☾';['themeToggle','navThemeToggle'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=sym})})();
+
+// ── State ──────────────────────────────────────────────────────────────
+var FD = {};
+var LS_KEY = 'enquire_progress';
+
+// ── localStorage helpers ──────────────────────────────────────────────
+function saveProgress(){
+  try{
+    var d={};
+    d.name=document.getElementById('fName').value;
+    d.phone=document.getElementById('fPhone').value;
+    d.countryIdx=countries.indexOf(selCountry);
+    d.type=getChip('fType');
+    d.work=getChip('fWork');
+    d.typology=getMultiChips('fTypology');
+    d.locality=document.getElementById('fLocality').value;
+    d.society=document.getElementById('fSociety').value;
+    d.parking=getChip('fParking');
+    d.possDay=document.getElementById('fPossDay').value;
+    d.possMonth=document.getElementById('fPossMonth').value;
+    d.budget=document.getElementById('fBudget').value;
+    d.religion=getChip('fReligion');
+    d.food=getChip('fFood');
+    d.pets=getChip('fPets');
+    d.remarks=document.getElementById('fRemarks').value;
+    var sharingEl=document.querySelector('#fSharing .wiz-chip.sel');
+    if(sharingEl)d.sharing=sharingEl.getAttribute('data-v');
+    var mpEl=document.querySelector('#fMaxPeople .wiz-chip.sel');
+    if(mpEl)d.maxPeople=mpEl.getAttribute('data-v');
+    localStorage.setItem(LS_KEY,JSON.stringify(d));
+  }catch(e){}
+}
+function restoreProgress(){
+  try{
+    var s=localStorage.getItem(LS_KEY);if(!s)return;
+    var d=JSON.parse(s);
+    if(d.name)document.getElementById('fName').value=d.name;
+    if(d.phone)document.getElementById('fPhone').value=d.phone;
+    if(d.countryIdx!=null&&d.countryIdx>=0){
+      var c=countries[d.countryIdx];selCountry=c;
+      document.getElementById('selFlag').innerHTML=c.flag;
+      document.getElementById('selCode').textContent=c.code;
+      document.getElementById('fPhone').maxLength=c.digits;
+    }
+    if(d.type)restoreChip('fType',d.type);
+    if(d.work)restoreChip('fWork',d.work);
+    if(d.typology&&d.typology.length)d.typology.forEach(function(v){restoreMultiChip('fTypology',v)});
+    if(d.locality)document.getElementById('fLocality').value=d.locality;
+    if(d.society)document.getElementById('fSociety').value=d.society;
+    if(d.parking)restoreChip('fParking',d.parking);
+    if(d.possDay)document.getElementById('fPossDay').value=d.possDay;
+    if(d.possMonth)document.getElementById('fPossMonth').value=d.possMonth;
+    if(d.budget)document.getElementById('fBudget').value=d.budget;
+    if(d.religion)restoreChip('fReligion',d.religion);
+    if(d.food)restoreChip('fFood',d.food);
+    if(d.pets)restoreChip('fPets',d.pets);
+    if(d.remarks)document.getElementById('fRemarks').value=d.remarks;
+  }catch(e){}
+}
+function restoreChip(rowId,val){
+  document.querySelectorAll('#'+rowId+' .wiz-chip').forEach(function(b){if(b.getAttribute('data-v')===val)b.classList.add('sel')});
+}
+function restoreMultiChip(rowId,val){
+  document.querySelectorAll('#'+rowId+' .wiz-chip').forEach(function(b){if(b.getAttribute('data-v')===val)b.classList.add('sel')});
+}
+function clearProgress(){try{localStorage.removeItem(LS_KEY)}catch(e){}}
+
+// Auto-save on input changes
+document.addEventListener('input',function(e){if(e.target.closest('.wiz-screen'))saveProgress()});
+document.addEventListener('change',function(e){if(e.target.closest('.wiz-screen'))saveProgress()});
+
+// ── Screen management ──────────────────────────────────────────────────
+function showOnly(id){
+  ['screenQ1','wizStep1','wizStep2','wizStep3','screenBye','screenSuccess'].forEach(function(s){
+    var el=document.getElementById(s);
+    if(el){el.classList.remove('active');el.style.display='none'}
+  });
+  var t=document.getElementById(id);
+  if(t){t.style.display='flex';t.classList.add('active')}
+  window.scrollTo(0,0);
+}
+
+// ── Chat Q1 ────────────────────────────────────────────────────────────
+function addBot(text,useHtml){
+  var d=document.getElementById('chatMsgs');
+  var t=document.createElement('div');t.className='chat-typing';
+  t.innerHTML='<span></span><span></span><span></span>';
+  d.appendChild(t);
+  setTimeout(function(){
+    if(t.parentNode)t.remove();
+    var m=document.createElement('div');m.className='chat-msg chat-bot';
+    if(useHtml){m.innerHTML=text}else{m.textContent=text}
+    d.appendChild(m);
+  },500);
+}
+function addUser(text){
+  var m=document.createElement('div');m.className='chat-msg chat-user';m.textContent=text;
+  document.getElementById('chatMsgs').appendChild(m);
+}
+
+(function initQ1(){
+  setTimeout(function(){addBot('Welcome to Oswal Properties! 🏠')},200);
+  setTimeout(function(){addBot('I\'ll help you submit your requirement.<br><b>You are a...</b>',true)},1000);
+  setTimeout(function(){
+    var wrap=document.getElementById('chatOpts');
+    var grid=document.createElement('div');grid.className='q1-options';
+    var items=[
+      {icon:'🏠',label:'Tenant',sub:'Looking for a rental flat',val:'tenant'},
+      {icon:'🏢',label:'Property Owner',val:'owner',soon:true},
+      {icon:'🤝',label:'Broker',val:'broker',soon:true},
+      {icon:'🛒',label:'Buyer',val:'buyer',soon:true},
+      {icon:'💬',label:'Others',val:'others',soon:true},
+      {icon:'❌',label:'By Mistake',val:'bye'}
+    ];
+    items.forEach(function(it){
+      var b=document.createElement('button');
+      b.className='q1-btn'+(it.soon?' disabled':'');
+      b.innerHTML='<span class="q1-icon">'+it.icon+'</span>'+it.label+(it.sub?'<span class="q1-sub">'+it.sub+'</span>':'')+(it.soon?'<span class="q1-soon">COMING SOON</span>':'');
+      if(!it.soon){
+        b.addEventListener('click',function(){
+          addUser(it.label);wrap.innerHTML='';
+          if(it.val==='bye'){setTimeout(function(){showOnly('screenBye')},600)}
+          else if(it.val==='tenant'){
+            setTimeout(function(){addBot('Great! Let me get a few details from you.')},500);
+            setTimeout(function(){showOnly('wizStep1')},2200);
+          }
+        });
+      }
+      grid.appendChild(b);
+    });
+    wrap.appendChild(grid);
+  },1800);
+})();
+
+// ── Country Picker ─────────────────────────────────────────────────────
+var countries=[
+  {flag:'🇮🇳',name:'India',code:'+91',digits:10},
+  {flag:'🇦🇪',name:'UAE',code:'+971',digits:9},
+  {flag:'🇺🇸',name:'US',code:'+1',digits:10},
+  {flag:'🇬🇧',name:'UK',code:'+44',digits:10},
+  {flag:'🇸🇬',name:'Singapore',code:'+65',digits:8},
+  {flag:'🇸🇦',name:'Saudi Arabia',code:'+966',digits:9},
+  {flag:'🇶🇦',name:'Qatar',code:'+974',digits:8},
+  {flag:'🇴🇲',name:'Oman',code:'+968',digits:8},
+  {flag:'🇰🇼',name:'Kuwait',code:'+965',digits:8},
+  {flag:'🇧🇭',name:'Bahrain',code:'+973',digits:8},
+  {flag:'🇭🇰',name:'Hong Kong',code:'+852',digits:8},
+  {flag:'🇦🇺',name:'Australia',code:'+61',digits:9},
+  {flag:'🇨🇦',name:'Canada',code:'+1',digits:10}
+];
+var selCountry=countries[0];
+
+(function initCountryDD(){
+  var dd=document.getElementById('countryDD');
+  countries.forEach(function(c){
+    var d=document.createElement('div');d.className='country-option';
+    d.innerHTML='<span class="country-option-flag">'+c.flag+'</span><span class="country-option-name">'+c.name+'</span><span class="country-option-code">'+c.code+'</span>';
+    d.addEventListener('click',function(e){
+      e.stopPropagation();
+      selCountry=c;
+      document.getElementById('selFlag').innerHTML=c.flag;
+      document.getElementById('selCode').textContent=c.code;
+      document.getElementById('fPhone').maxLength=c.digits;
+      document.getElementById('fPhone').placeholder=c.digits+'-digit number';
+      dd.classList.remove('open');
+    });
+    dd.appendChild(d);
+  });
+})();
+
+function toggleCountryDD(e){
+  e.stopPropagation();
+  document.getElementById('countryDD').classList.toggle('open');
+}
+document.addEventListener('click',function(){document.getElementById('countryDD').classList.remove('open')});
+
+// ── Chip selection ─────────────────────────────────────────────────────
+function selChip(btn){
+  var row=btn.parentNode;
+  row.querySelectorAll('.wiz-chip').forEach(function(b){b.classList.remove('sel')});
+  btn.classList.add('sel');
+  saveProgress();
+}
+function selMultiChip(btn,max){
+  if(btn.classList.contains('sel')){btn.classList.remove('sel');saveProgress();return}
+  var row=btn.parentNode;
+  var count=row.querySelectorAll('.wiz-chip.sel').length;
+  if(count>=max)return;
+  btn.classList.add('sel');
+  updateSharingQ();
+  saveProgress();
+}
+function getChip(id){var s=document.querySelector('#'+id+' .wiz-chip.sel');return s?s.getAttribute('data-v'):null}
+function getMultiChips(id){return Array.from(document.querySelectorAll('#'+id+' .wiz-chip.sel')).map(function(b){return b.getAttribute('data-v')})}
+
+// ── Sharing question (Bachelor + Student) ──────────────────────────────
+function updateSharingQ(){
+  var wrap=document.getElementById('sharingWrap');
+  var type=getChip('fType'),work=getChip('fWork');
+  var typos=getMultiChips('fTypology');
+  if(type==='Bachelor'&&work==='Student'&&typos.length>0){
+    var typoLabel=typos.join(' / ');
+    wrap.innerHTML='<div class="sharing-card">'+
+      '<div class="sharing-title">🤝 Sharing Preference</div>'+
+      '<div class="wiz-field" style="margin-bottom:10px">'+
+        '<div class="wiz-label">Are you ok with sharing a flat?</div>'+
+        '<div class="wiz-btn-row" id="fSharing">'+
+          '<button class="wiz-chip" data-v="Yes" onclick="selChip(this);showMaxPeople()">Yes</button>'+
+          '<button class="wiz-chip" data-v="No" onclick="selChip(this);hideMaxPeople()">No</button>'+
+        '</div>'+
+      '</div>'+
+      '<div id="maxPeopleWrap"></div>'+
+    '</div>';
+  } else {
+    wrap.innerHTML='';
+  }
+}
+
+function showMaxPeople(){
+  var typos=getMultiChips('fTypology');
+  var label=typos.length>0?typos[0]:'the flat';
+  var w=document.getElementById('maxPeopleWrap');
+  w.innerHTML='<div class="wiz-field" style="margin-bottom:0">'+
+    '<div class="wiz-label">In a '+label+', max people you\'re ok staying with?</div>'+
+    '<div class="wiz-btn-row" id="fMaxPeople">'+
+      '<button class="wiz-chip" data-v="1" onclick="selChip(this)">1</button>'+
+      '<button class="wiz-chip" data-v="2" onclick="selChip(this)">2</button>'+
+      '<button class="wiz-chip" data-v="3" onclick="selChip(this)">3</button>'+
+      '<button class="wiz-chip" data-v="4" onclick="selChip(this)">4</button>'+
+      '<button class="wiz-chip" data-v="5" onclick="selChip(this)">5</button>'+
+      '<button class="wiz-chip" data-v="6" onclick="selChip(this)">6</button>'+
+    '</div></div>';
+}
+function hideMaxPeople(){var w=document.getElementById('maxPeopleWrap');if(w)w.innerHTML=''}
+
+// ── Date pickers ───────────────────────────────────────────────────────
+(function initDates(){
+  var ds=document.getElementById('fPossDay');
+  for(var i=1;i<=31;i++){var o=document.createElement('option');o.value=i;o.textContent=i;ds.appendChild(o)}
+  ds.value=new Date().getDate();
+  var ms=document.getElementById('fPossMonth');
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  months.forEach(function(m,i){var o=document.createElement('option');o.value=i+1;o.textContent=m;ms.appendChild(o)});
+  ms.value=new Date().getMonth()+1;
+})();
+
+// ── Validation helpers ─────────────────────────────────────────────────
+function showErr(id){document.getElementById(id).classList.add('show')}
+function hideErr(id){try{document.getElementById(id).classList.remove('show')}catch(e){}}
+function hideAllErrs(){document.querySelectorAll('.wiz-error').forEach(function(e){e.classList.remove('show')})}
+function markErr(id){document.getElementById(id).classList.add('error')}
+function unmarkErr(id){document.getElementById(id).classList.remove('error')}
+
+// ── Navigation ─────────────────────────────────────────────────────────
+function goQ1(){showOnly('screenQ1')}
+
+function goStep2(){
+  hideAllErrs();var ok=true;
+  var name=document.getElementById('fName').value.trim();
+  var phone=document.getElementById('fPhone').value.trim();
+  var type=getChip('fType');
+  var work=getChip('fWork');
+
+  if(!name){showErr('fNameErr');markErr('fName');ok=false}else{unmarkErr('fName')}
+  var digs=selCountry.digits;
+  var phoneRe=new RegExp('^\\d{'+digs+'}$');
+  if(!phoneRe.test(phone)){showErr('fPhoneErr');markErr('fPhone');ok=false}else{unmarkErr('fPhone')}
+  if(!type){showErr('fTypeErr');ok=false}
+  if(!work){showErr('fWorkErr');ok=false}
+  if(!ok)return;
+
+  FD.name=name;FD.phone=selCountry.code+' '+phone;FD.country=selCountry.name;FD.type=type;FD.work=work;
+  showOnly('wizStep2');
+  updateSharingQ();
+}
+
+function backStep1(){showOnly('wizStep1')}
+
+function goStep3(){
+  hideAllErrs();var ok=true;
+  var typos=getMultiChips('fTypology');
+  var loc=document.getElementById('fLocality').value.trim();
+  var park=getChip('fParking');
+  var budget=document.getElementById('fBudget').value.trim();
+
+  if(typos.length===0){showErr('fTypoErr');ok=false}
+  if(!loc){showErr('fLocErr');markErr('fLocality');ok=false}else{unmarkErr('fLocality')}
+  if(!park){showErr('fParkErr');ok=false}
+  if(!budget){showErr('fBudgetErr');markErr('fBudget');ok=false}else{unmarkErr('fBudget')}
+  if(!ok)return;
+
+  FD.typology=typos.join(', ');FD.locality=loc;
+  FD.society=document.getElementById('fSociety').value.trim();
+  FD.parking=park;
+  FD.possDay=document.getElementById('fPossDay').value;
+  FD.possMonth=document.getElementById('fPossMonth').value;
+  FD.budget=budget;
+
+  // Sharing data
+  var sharingEl=document.querySelector('#fSharing .wiz-chip.sel');
+  if(sharingEl){
+    FD.sharing=sharingEl.getAttribute('data-v');
+    if(FD.sharing==='Yes'){var mp=document.querySelector('#fMaxPeople .wiz-chip.sel');FD.maxPeople=mp?mp.getAttribute('data-v'):'';}
+  }
+
+  showOnly('wizStep3');
+}
+
+function backStep2(){showOnly('wizStep2')}
+
+function buildRequirementStr(){
+  var parts=[];
+  // Typology
+  var typos=FD.typology;
+  if(typos){
+    var arr=typos.split(', ');
+    if(arr.length>1) parts.push(arr.join(' or '));
+    else parts.push(arr[0]);
+  }
+  // Sharing info (Bachelor+Student)
+  if(FD.sharing){
+    if(FD.sharing==='Yes'){
+      var mp=FD.maxPeople?'max '+FD.maxPeople+' people':'';
+      parts.push('Sharing: Yes'+(mp?' ('+mp+')':''));
+    } else parts.push('Sharing: No');
+  }
+  if(FD.food) parts.push('Food: '+FD.food);
+  if(FD.religion) parts.push('Religion: '+FD.religion);
+  if(FD.type) parts.push('Type: '+FD.type);
+  if(FD.work) parts.push('Work: '+FD.work);
+  if(FD.budget) parts.push('Budget: '+FD.budget);
+  if(FD.locality) parts.push('Locality: '+FD.locality);
+  if(FD.society) parts.push('Society: '+FD.society);
+  // Possession date
+  if(FD.possDay&&FD.possMonth){
+    var months=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    parts.push('from '+FD.possDay+'-'+months[parseInt(FD.possMonth)]);
+  }
+  if(FD.pets&&FD.pets!=='No Pets') parts.push('Pets: '+FD.pets);
+  if(FD.parking&&FD.parking!=='Not compulsory') parts.push('Parking: '+FD.parking);
+  if(FD.remarks) parts.push('Remarks: '+FD.remarks);
+  return parts.join(', ');
+}
+
+// ── Google Sheets POST ────────────────────────────────────────────────
+// Replace YOUR_APPS_SCRIPT_URL with the deployed Apps Script web app URL
+var SHEET_URL = 'https://script.google.com/macros/s/AKfycbyxX8r0cPCr332m9O2s-6u8o3SH-tJhcNEHZCfgC9ksreMnTRJk5HlH-MTkUetMw1A/exec';
+
+function postToSheet(data){
+  if(SHEET_URL==='YOUR_APPS_SCRIPT_URL'){console.warn('Sheet URL not configured — skipping POST');return}
+  var url=SHEET_URL+'?source=enquire';
+  fetch(url,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'text/plain'},
+    body:JSON.stringify(data)
+  }).then(function(){console.log('Lead posted to sheet')})
+    .catch(function(err){console.error('Sheet POST error:',err)});
+}
+
+function submitForm(){
+  hideAllErrs();var ok=true;
+  var food=getChip('fFood');
+  var pets=getChip('fPets');
+
+  if(!food){showErr('fFoodErr');ok=false}
+  if(!pets){showErr('fPetsErr');ok=false}
+  if(!ok)return;
+
+  FD.religion=getChip('fReligion')||'';
+  FD.food=food;FD.pets=pets;
+  FD.remarks=document.getElementById('fRemarks').value.trim();
+  FD.submittedAt=new Date().toISOString();
+
+  // Build requirement string for Col M
+  var reqStr=buildRequirementStr();
+
+  // Extract 10-digit phone (strip country code)
+  var rawPhone=document.getElementById('fPhone').value.trim();
+
+  // POST to Google Sheet
+  postToSheet({
+    name: FD.name,
+    phone: rawPhone,
+    lead_id: '13212222',
+    requirement: reqStr
+  });
+
+  console.log('ENQUIRY SUBMITTED:',JSON.stringify(FD,null,2));
+  console.log('Requirement string:',reqStr);
+  clearProgress();
+  showOnly('screenSuccess');
+}
+
+// ── Init visibility ────────────────────────────────────────────────────
+document.getElementById('screenQ1').style.display='flex';
+// Restore saved progress
+restoreProgress();
+</script>
+</body>
+</html>
