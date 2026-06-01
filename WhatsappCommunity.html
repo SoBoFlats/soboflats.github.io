@@ -166,9 +166,28 @@ a.nav-tray-item:active{background:rgba(255,255,255,.05)}
       <span class="nav-tray-label">Resale Portfolio</span>
       <span class="nav-tray-soon">Coming Soon</span>
     </div>
-    <a href="https://soboflats.github.io/enquire.html" class="nav-tray-item">
-      <span class="nav-tray-icon">&#128203;</span>
-      <span class="nav-tray-label">Enquire</span>
+    <div style="position:relative">
+      <a href="https://soboflats.github.io/enquire.html" class="nav-tray-item" style="padding-right:44px">
+        <span class="nav-tray-icon">&#128203;</span>
+        <span class="nav-tray-label">Enquire</span>
+      </a>
+      <button onclick="event.stopPropagation();var s=document.getElementById('enqSubItems');var c=document.getElementById('enqSubChev');if(s.style.display==='none'){s.style.display='block';c.textContent='&#9652;'}else{s.style.display='none';c.textContent='&#9662;'}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.45);font-size:16px;cursor:pointer;padding:8px" id="enqSubChev">&#9662;</button>
+    </div>
+    <div id="enqSubItems" style="display:none;background:rgba(255,255,255,.02)">
+      <a href="https://soboflats.github.io/enquire.html?flow=listingdetails" class="nav-tray-item" style="padding-left:38px;padding-top:10px;padding-bottom:10px">
+        <span class="nav-tray-icon" style="font-size:14px">&#128221;</span>
+        <span class="nav-tray-label" style="font-size:13px">Listing Details</span>
+        <span class="nav-tray-chevron">&#8250;</span>
+      </a>
+      <a href="https://soboflats.github.io/enquire.html?flow=requirement" class="nav-tray-item" style="padding-left:38px;padding-top:10px;padding-bottom:10px">
+        <span class="nav-tray-icon" style="font-size:14px">&#128203;</span>
+        <span class="nav-tray-label" style="font-size:13px">Post Your Requirement</span>
+        <span class="nav-tray-chevron">&#8250;</span>
+      </a>
+    </div>
+    <a href="https://soboflats.github.io/sitevisit.html" class="nav-tray-item">
+      <span class="nav-tray-icon">&#128197;</span>
+      <span class="nav-tray-label">Book Site Visit</span>
       <span class="nav-tray-chevron">&#8250;</span>
     </a>
   </div>

@@ -215,6 +215,41 @@ a.nav-tray-item:active{background:rgba(255,255,255,.05)}
 @keyframes oudspin{to{transform:rotate(360deg)}}
 .owner-upload-dialog .oud-title{font-size:16px;font-weight:700;margin-bottom:6px}
 .owner-upload-dialog .oud-sub{font-size:13px;color:var(--text2);line-height:1.5}
+
+/* ── Listing Picker (Listing Details flow) ──────────────────────────── */
+.ld-picker{flex:1;display:none;flex-direction:column;animation:wizIn .35s ease}
+.ld-picker.active{display:flex}
+.ld-picker-title{font-size:18px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px}
+.ld-picker-sub{font-size:12px;color:var(--text2);margin-bottom:14px}
+.ld-search{width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:13px;font-family:inherit;outline:none;margin-bottom:12px;transition:all .2s}
+.ld-search:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.ld-search::placeholder{color:var(--text3)}
+.ld-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:80px}
+.ld-card{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);cursor:pointer;transition:all .2s;position:relative}
+.ld-card:active{transform:scale(.98)}
+.ld-card.sel{border-color:var(--accent);background:var(--accent-bg);box-shadow:0 0 0 3px var(--accent-glow)}
+.ld-card.sel::after{content:'✓';position:absolute;top:-6px;right:-4px;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:800}
+.ld-card-thumb{width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0;background:var(--input-bg)}
+.ld-card-info{flex:1;min-width:0}
+.ld-card-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-card-loc{font-size:11px;color:var(--text2);margin-left:4px;font-weight:400}
+.ld-card-meta{font-size:11px;color:var(--text2);margin-top:2px}
+.ld-card-rent{font-size:14px;font-weight:800;color:var(--accent);margin-top:2px}
+.ld-card-id{font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;color:var(--gold);background:rgba(255,217,102,.14);border:1px solid rgba(255,217,102,.35);position:absolute;top:8px;right:10px}
+.ld-continue{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:14px 28px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px var(--accent-glow);z-index:60;display:none;transition:all .2s}
+.ld-continue:active{transform:translateX(-50%) scale(.97)}
+
+/* ── Listing Questions ──────────────────────────────────────────────── */
+.ld-q-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;padding:16px;margin-bottom:14px}
+.ld-q-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ld-q-thumb{width:44px;height:44px;border-radius:10px;object-fit:cover;flex-shrink:0}
+.ld-q-name{font-size:13px;font-weight:700}
+.ld-q-id{font-size:9px;font-weight:700;color:var(--gold);margin-left:6px}
+.ld-q-check{display:flex;align-items:center;gap:8px;margin-bottom:10px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text)}
+.ld-q-check input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.ld-q-textarea{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:13px;font-family:inherit;outline:none;resize:vertical;min-height:60px;transition:all .2s}
+.ld-q-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.ld-q-textarea::placeholder{color:var(--text3)}
 </style>
 </head>
 <body>
@@ -269,9 +304,28 @@ a.nav-tray-item:active{background:rgba(255,255,255,.05)}
       <span class="nav-tray-label">Resale Portfolio</span>
       <span class="nav-tray-soon">Coming Soon</span>
     </div>
-    <a href="./enquire.html" class="nav-tray-item active-item">
-      <span class="nav-tray-icon">&#128203;</span>
-      <span class="nav-tray-label">Enquire</span>
+    <div style="position:relative">
+      <a href="./enquire.html" class="nav-tray-item active-item" style="padding-right:44px">
+        <span class="nav-tray-icon">&#128203;</span>
+        <span class="nav-tray-label">Enquire</span>
+      </a>
+      <button onclick="event.stopPropagation();var s=document.getElementById('enqSubItems');var c=document.getElementById('enqSubChev');if(s.style.display==='none'){s.style.display='block';c.textContent='▴'}else{s.style.display='none';c.textContent='▾'}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.45);font-size:16px;cursor:pointer;padding:8px" id="enqSubChev">&#9662;</button>
+    </div>
+    <div id="enqSubItems" style="display:none;background:rgba(255,255,255,.02)">
+      <a href="./enquire.html?flow=listingdetails" class="nav-tray-item" style="padding-left:38px;padding-top:10px;padding-bottom:10px">
+        <span class="nav-tray-icon" style="font-size:14px">&#128221;</span>
+        <span class="nav-tray-label" style="font-size:13px">Listing Details</span>
+        <span class="nav-tray-chevron">&#8250;</span>
+      </a>
+      <a href="./enquire.html?flow=requirement" class="nav-tray-item" style="padding-left:38px;padding-top:10px;padding-bottom:10px">
+        <span class="nav-tray-icon" style="font-size:14px">&#128203;</span>
+        <span class="nav-tray-label" style="font-size:13px">Post Your Requirement</span>
+        <span class="nav-tray-chevron">&#8250;</span>
+      </a>
+    </div>
+    <a href="./sitevisit.html" class="nav-tray-item">
+      <span class="nav-tray-icon">&#128197;</span>
+      <span class="nav-tray-label">Book Site Visit</span>
       <span class="nav-tray-chevron">&#8250;</span>
     </a>
   </div>
@@ -500,6 +554,90 @@ a.nav-tray-item:active{background:rgba(255,255,255,.05)}
     <div class="end-icon">&#9989;</div>
     <div class="end-title" style="color:var(--accent)">Requirement Received!</div>
     <div class="end-text">Our property expert will call you soon.<br>You will receive a WhatsApp message shortly.<br><br>In the meanwhile, browse our portfolio:</div>
+    <a href="https://soboflats.github.io" class="end-link">&#127968; Browse Rent Portfolio</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- ══  TENANT / BROKER SUB-FLOW Q2  ════════════════════════════════ -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+
+  <div class="chat-area" id="screenTenantQ2" style="display:none">
+    <div class="chat-messages" id="tenantQ2Msgs"></div>
+    <div id="tenantQ2Opts"></div>
+  </div>
+
+  <div class="chat-area" id="screenBrokerQ2" style="display:none">
+    <div class="chat-messages" id="brokerQ2Msgs"></div>
+    <div id="brokerQ2Opts"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- ══  LISTING DETAILS FLOW  ═══════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+
+  <!-- Step 1: Pick listings -->
+  <div class="ld-picker" id="screenLdPicker">
+    <div class="ld-picker-title">Select Listings</div>
+    <div class="ld-picker-sub">Choose up to 3 listings to enquire about</div>
+    <input type="text" class="ld-search" id="ldSearch" placeholder="Search name, area or ID..." oninput="ldFilterListings(this.value)">
+    <div class="ld-list" id="ldList">
+      <div style="text-align:center;padding:40px;color:var(--text2)">Loading listings...</div>
+    </div>
+    <button class="ld-continue" id="ldContinueBtn" onclick="ldGoQuestions()">Continue &rarr;</button>
+  </div>
+
+  <!-- Step 2: Questions per listing -->
+  <div class="wiz-screen" id="screenLdQuestions">
+    <div class="wiz-persistent-title">Listing Enquiry</div>
+    <div class="wiz-step-header">
+      <div class="wiz-step-title">Your Questions</div>
+      <div class="wiz-step-sub">Ask about each selected listing</div>
+    </div>
+    <div style="overflow-y:auto;flex:1;padding-bottom:8px" id="ldQuestionsWrap"></div>
+    <div class="wiz-nav">
+      <button class="wiz-btn wiz-back" onclick="ldBackToPicker()">&larr; Back</button>
+      <button class="wiz-btn wiz-next" onclick="ldGoContact()">Continue &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Name & Phone -->
+  <div class="wiz-screen" id="screenLdContact">
+    <div class="wiz-persistent-title">Listing Enquiry</div>
+    <div class="wiz-step-header">
+      <div class="wiz-step-title">Your Details</div>
+      <div class="wiz-step-sub">So our expert can reach you</div>
+    </div>
+    <div style="overflow-y:auto;flex:1;padding-bottom:8px">
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128100;</span> Full Name</div>
+        <input class="wiz-input" id="ldName" type="text" placeholder="Enter your full name" autocomplete="name">
+        <div class="wiz-error" id="ldNameErr">Please enter your name</div>
+      </div>
+      <div class="wiz-field">
+        <div class="wiz-label"><span class="wiz-label-icon">&#128222;</span> WhatsApp Number</div>
+        <div class="phone-row">
+          <div class="country-picker" id="ldCountryPicker" onclick="toggleLdCountryDD(event)">
+            <span class="country-flag" id="ldSelFlag">&#127470;&#127475;</span>
+            <span class="country-code" id="ldSelCode">+91</span>
+            <span class="country-arrow">&#9662;</span>
+            <div class="country-dropdown" id="ldCountryDD"></div>
+          </div>
+          <input class="wiz-input" id="ldPhone" type="tel" placeholder="10-digit number" maxlength="10" autocomplete="tel" style="flex:1">
+        </div>
+        <div class="wiz-error" id="ldPhoneErr">Please enter a valid phone number</div>
+      </div>
+    </div>
+    <div class="wiz-nav">
+      <button class="wiz-btn wiz-back" onclick="ldBackToQuestions()">&larr; Back</button>
+      <button class="wiz-btn wiz-next" onclick="ldSubmit()">Send on WhatsApp &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Success / WA link -->
+  <div class="end-screen" id="screenLdSuccess">
+    <div class="end-icon">&#9989;</div>
+    <div class="end-title" style="color:var(--accent)">Enquiry Sent!</div>
+    <div class="end-text">Your questions have been sent to our property expert on WhatsApp.<br><br>Vandana will call you back soon.</div>
     <a href="https://soboflats.github.io" class="end-link">&#127968; Browse Rent Portfolio</a>
   </div>
 
@@ -910,7 +1048,7 @@ document.addEventListener('change',function(e){if(e.target.closest('.wiz-screen'
 
 // ── Screen management ──────────────────────────────────────────────────
 function showOnly(id){
-  ['screenQ1','wizStep1','wizStep2','wizStep3','screenBye','screenSuccess','screenOwnerQ2','ownerStep1','ownerStep2','ownerStep3','screenOwnerSuccess'].forEach(function(s){
+  ['screenQ1','screenTenantQ2','screenBrokerQ2','screenLdPicker','screenLdQuestions','screenLdContact','screenLdSuccess','wizStep1','wizStep2','wizStep3','screenBye','screenSuccess','screenOwnerQ2','ownerStep1','ownerStep2','ownerStep3','screenOwnerSuccess'].forEach(function(s){
     var el=document.getElementById(s);
     if(el){el.classList.remove('active');el.style.display='none'}
   });
@@ -937,16 +1075,31 @@ function addUser(text){
   document.getElementById('chatMsgs').appendChild(m);
 }
 
+var _enquireUserType=''; // 'tenant' or 'broker'
+
 (function initQ1(){
+  var sp=new URLSearchParams(window.location.search);
+  var flow=sp.get('flow');
+  if(flow==='requirement'){
+    _enquireUserType='tenant';
+    showOnly('wizStep1');
+    return;
+  }
+  if(flow==='listingdetails'){
+    _enquireUserType='tenant';
+    ldLoadAndShow();
+    return;
+  }
+
   setTimeout(function(){addBot('Welcome to Oswal Properties! 🏠')},200);
-  setTimeout(function(){addBot('I\'ll help you submit your requirement.<br><b>You are a...</b>',true)},1000);
+  setTimeout(function(){addBot('I\'ll help you with your enquiry.<br><b>You are a...</b>',true)},1000);
   setTimeout(function(){
     var wrap=document.getElementById('chatOpts');
     var grid=document.createElement('div');grid.className='q1-options';
     var items=[
       {icon:'🏠',label:'Tenant',sub:'Looking for a rental flat',val:'tenant'},
       {icon:'🏢',label:'Property Owner',sub:'List your property',val:'owner'},
-      {icon:'🤝',label:'Broker',val:'broker',soon:true},
+      {icon:'🤝',label:'Broker',sub:'Channel partner',val:'broker'},
       {icon:'🛒',label:'Buyer',val:'buyer',soon:true},
       {icon:'💬',label:'Others',val:'others',soon:true},
       {icon:'❌',label:'By Mistake',val:'bye'}
@@ -960,8 +1113,12 @@ function addUser(text){
           addUser(it.label);wrap.innerHTML='';
           if(it.val==='bye'){setTimeout(function(){showOnly('screenBye')},600)}
           else if(it.val==='tenant'){
-            setTimeout(function(){addBot('Great! Let me get a few details from you.')},500);
-            setTimeout(function(){showOnly('wizStep1')},2200);
+            _enquireUserType='tenant';
+            setTimeout(function(){initTenantQ2()},600);
+          }
+          else if(it.val==='broker'){
+            _enquireUserType='broker';
+            setTimeout(function(){initBrokerQ2()},600);
           }
           else if(it.val==='owner'){
             setTimeout(function(){initOwnerQ2()},600);
@@ -973,6 +1130,255 @@ function addUser(text){
     wrap.appendChild(grid);
   },1800);
 })();
+
+// ── Tenant Q2: Enquire About ──────────────────────────────────────────
+function addTenantBot(text,useHtml){
+  var d=document.getElementById('tenantQ2Msgs');
+  var t=document.createElement('div');t.className='chat-typing';
+  t.innerHTML='<span></span><span></span><span></span>';
+  d.appendChild(t);
+  setTimeout(function(){
+    if(t.parentNode)t.remove();
+    var m=document.createElement('div');m.className='chat-msg chat-bot';
+    if(useHtml){m.innerHTML=text}else{m.textContent=text}
+    d.appendChild(m);
+  },500);
+}
+function addTenantUser(text){
+  var m=document.createElement('div');m.className='chat-msg chat-user';m.textContent=text;
+  document.getElementById('tenantQ2Msgs').appendChild(m);
+}
+
+function initTenantQ2(){
+  showOnly('screenTenantQ2');
+  var msgs=document.getElementById('tenantQ2Msgs');msgs.innerHTML='';
+  setTimeout(function(){addTenantBot('Great! How can we help you?')},200);
+  setTimeout(function(){addTenantBot('<b>Enquire about:</b>',true)},900);
+  setTimeout(function(){
+    var wrap=document.getElementById('tenantQ2Opts');wrap.innerHTML='';
+    var grid=document.createElement('div');grid.className='q1-options';
+    var items=[
+      {icon:'📝',label:'Listing Details',sub:'Ask about specific listings',val:'details'},
+      {icon:'📋',label:'Post Your Requirement',sub:'Submit your rental requirement',val:'requirement'},
+      {icon:'📅',label:'Book Site Visit',sub:'Schedule a property tour',val:'sitevisit'}
+    ];
+    items.forEach(function(it){
+      var b=document.createElement('button');b.className='q1-btn';
+      b.innerHTML='<span class="q1-icon">'+it.icon+'</span>'+it.label+(it.sub?'<span class="q1-sub">'+it.sub+'</span>':'');
+      b.addEventListener('click',function(){
+        addTenantUser(it.label);wrap.innerHTML='';
+        if(it.val==='details'){
+          setTimeout(function(){ldLoadAndShow()},600);
+        } else if(it.val==='requirement'){
+          setTimeout(function(){addTenantBot('Let me get a few details from you.')},500);
+          setTimeout(function(){showOnly('wizStep1')},2200);
+        } else if(it.val==='sitevisit'){
+          window.location.href='./sitevisit.html?user=tenant&interest=rent';
+        }
+      });
+      grid.appendChild(b);
+    });
+    wrap.appendChild(grid);
+  },1600);
+}
+
+// ── Broker Q2: Enquire About ──────────────────────────────────────────
+function addBrokerBot(text,useHtml){
+  var d=document.getElementById('brokerQ2Msgs');
+  var t=document.createElement('div');t.className='chat-typing';
+  t.innerHTML='<span></span><span></span><span></span>';
+  d.appendChild(t);
+  setTimeout(function(){
+    if(t.parentNode)t.remove();
+    var m=document.createElement('div');m.className='chat-msg chat-bot';
+    if(useHtml){m.innerHTML=text}else{m.textContent=text}
+    d.appendChild(m);
+  },500);
+}
+function addBrokerUser(text){
+  var m=document.createElement('div');m.className='chat-msg chat-user';m.textContent=text;
+  document.getElementById('brokerQ2Msgs').appendChild(m);
+}
+
+function initBrokerQ2(){
+  showOnly('screenBrokerQ2');
+  var msgs=document.getElementById('brokerQ2Msgs');msgs.innerHTML='';
+  setTimeout(function(){addBrokerBot('Welcome, Channel Partner!')},200);
+  setTimeout(function(){addBrokerBot('<b>Enquire about:</b>',true)},900);
+  setTimeout(function(){
+    var wrap=document.getElementById('brokerQ2Opts');wrap.innerHTML='';
+    var grid=document.createElement('div');grid.className='q1-options';
+    var items=[
+      {icon:'📝',label:'Listing Details',sub:'Ask about specific listings',val:'details'},
+      {icon:'📅',label:'Book Site Visit',sub:'Schedule a property tour',val:'sitevisit'}
+    ];
+    items.forEach(function(it){
+      var b=document.createElement('button');b.className='q1-btn';
+      b.innerHTML='<span class="q1-icon">'+it.icon+'</span>'+it.label+(it.sub?'<span class="q1-sub">'+it.sub+'</span>':'');
+      b.addEventListener('click',function(){
+        addBrokerUser(it.label);wrap.innerHTML='';
+        if(it.val==='details'){
+          setTimeout(function(){ldLoadAndShow()},600);
+        } else if(it.val==='sitevisit'){
+          window.location.href='./sitevisit.html?user=broker&interest=rent';
+        }
+      });
+      grid.appendChild(b);
+    });
+    wrap.appendChild(grid);
+  },1600);
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// ══  LISTING DETAILS FLOW  ═══════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════════
+
+var ldAllListings=[];
+var ldSelected=[];
+var ldSelCountry=countries[0];
+
+function ldLoadAndShow(){
+  showOnly('screenLdPicker');
+  var list=document.getElementById('ldList');
+  list.innerHTML='<div style="text-align:center;padding:40px;color:var(--text2)">Loading listings...</div>';
+  fetch('./active.json').then(function(r){return r.json()}).then(function(data){
+    ldAllListings=data.listings||[];
+    // Pre-select if serial param
+    var sp=new URLSearchParams(window.location.search);
+    var sr=sp.get('serial');
+    if(sr){
+      var match=ldAllListings.find(function(l){return String(l.serial)===sr});
+      if(match&&!ldSelected.find(function(s){return s.serial===match.serial})){
+        ldSelected.push(match);
+      }
+    }
+    ldRenderListings(ldAllListings);
+    ldUpdateContinue();
+  }).catch(function(){
+    list.innerHTML='<div style="text-align:center;padding:40px;color:var(--danger)">Failed to load listings</div>';
+  });
+}
+
+function ldRenderListings(items){
+  var list=document.getElementById('ldList');list.innerHTML='';
+  if(items.length===0){list.innerHTML='<div style="text-align:center;padding:40px;color:var(--text2)">No listings found</div>';return}
+  items.forEach(function(l){
+    var card=document.createElement('div');card.className='ld-card';
+    if(ldSelected.find(function(s){return s.serial===l.serial}))card.classList.add('sel');
+    card.setAttribute('data-serial',l.serial);
+    var thumbSrc=l.thumb||'./placeholder.png';
+    card.innerHTML='<img class="ld-card-thumb" src="'+thumbSrc+'" onerror="this.src=\'./placeholder.png\'" alt="">'+
+      '<div class="ld-card-info">'+
+        '<div class="ld-card-name">'+l.project+(l.location?' <span class="ld-card-loc">· '+l.location+'</span>':'')+'</div>'+
+        '<div class="ld-card-meta">'+l.bhk+(l.carpet?' · '+l.carpet+' carpet':'')+(l.col_l&&l.col_l!=='-'?' · '+l.col_l:'')+'</div>'+
+        '<div class="ld-card-rent">'+l.rent_display+'</div>'+
+      '</div>'+
+      '<span class="ld-card-id">ID: '+l.serial+'</span>';
+    card.addEventListener('click',function(){ldToggleCard(l,card)});
+    list.appendChild(card);
+  });
+}
+
+function ldToggleCard(listing,card){
+  var idx=ldSelected.findIndex(function(s){return s.serial===listing.serial});
+  if(idx>=0){ldSelected.splice(idx,1);card.classList.remove('sel')}
+  else{
+    if(ldSelected.length>=3)return;
+    ldSelected.push(listing);card.classList.add('sel');
+  }
+  ldUpdateContinue();
+}
+
+function ldUpdateContinue(){
+  var btn=document.getElementById('ldContinueBtn');
+  if(ldSelected.length>0){btn.style.display='block';btn.textContent='Continue with '+ldSelected.length+' listing'+(ldSelected.length>1?'s':'')+' →'}
+  else{btn.style.display='none'}
+}
+
+function ldFilterListings(q){
+  q=q.toLowerCase().trim();
+  if(!q){ldRenderListings(ldAllListings);return}
+  var filtered=ldAllListings.filter(function(l){
+    return l.project.toLowerCase().indexOf(q)>=0||(l.location&&l.location.toLowerCase().indexOf(q)>=0)||String(l.serial).indexOf(q)>=0;
+  });
+  ldRenderListings(filtered);
+}
+
+function ldGoQuestions(){
+  if(ldSelected.length===0)return;
+  showOnly('screenLdQuestions');
+  var wrap=document.getElementById('ldQuestionsWrap');wrap.innerHTML='';
+  ldSelected.forEach(function(l,i){
+    var thumbSrc=l.thumb||'./placeholder.png';
+    var html='<div class="ld-q-card" data-idx="'+i+'">'+
+      '<div class="ld-q-header">'+
+        '<img class="ld-q-thumb" src="'+thumbSrc+'" onerror="this.src=\'./placeholder.png\'" alt="">'+
+        '<div><div class="ld-q-name">'+l.project+'<span class="ld-q-id">ID: '+l.serial+'</span></div>'+
+        '<div style="font-size:11px;color:var(--text2)">'+l.bhk+(l.carpet?' · '+l.carpet+' carpet':'')+'</div></div>'+
+      '</div>'+
+      '<label class="ld-q-check"><input type="checkbox" id="ldAvail_'+i+'"> Is it available now?</label>'+
+      '<textarea class="ld-q-textarea" id="ldQ_'+i+'" placeholder="Your question about this listing..."></textarea>'+
+    '</div>';
+    wrap.insertAdjacentHTML('beforeend',html);
+  });
+}
+
+function ldBackToPicker(){showOnly('screenLdPicker')}
+function ldBackToQuestions(){showOnly('screenLdQuestions')}
+
+function ldGoContact(){showOnly('screenLdContact')}
+
+// ── Listing Details country picker ────────────────────────────────────
+(function initLdCountryDD(){
+  var dd=document.getElementById('ldCountryDD');
+  countries.forEach(function(c){
+    var d=document.createElement('div');d.className='country-option';
+    d.innerHTML='<span class="country-option-flag">'+c.flag+'</span><span class="country-option-name">'+c.name+'</span><span class="country-option-code">'+c.code+'</span>';
+    d.addEventListener('click',function(e){
+      e.stopPropagation();
+      ldSelCountry=c;
+      document.getElementById('ldSelFlag').innerHTML=c.flag;
+      document.getElementById('ldSelCode').textContent=c.code;
+      document.getElementById('ldPhone').maxLength=c.digits;
+      document.getElementById('ldPhone').placeholder=c.digits+'-digit number';
+      dd.classList.remove('open');
+    });
+    dd.appendChild(d);
+  });
+})();
+function toggleLdCountryDD(e){e.stopPropagation();document.getElementById('ldCountryDD').classList.toggle('open')}
+document.addEventListener('click',function(){try{document.getElementById('ldCountryDD').classList.remove('open')}catch(e){}});
+
+function ldSubmit(){
+  hideAllErrs();var ok=true;
+  var name=document.getElementById('ldName').value.trim();
+  var phone=document.getElementById('ldPhone').value.trim();
+  if(!name){showErr('ldNameErr');markErr('ldName');ok=false}else{unmarkErr('ldName')}
+  var digs=ldSelCountry.digits;
+  var phoneRe=new RegExp('^\\d{'+digs+'}$');
+  if(!phoneRe.test(phone)){showErr('ldPhoneErr');markErr('ldPhone');ok=false}else{unmarkErr('ldPhone')}
+  if(!ok)return;
+
+  // Build WA message
+  var userLabel=_enquireUserType==='broker'?"I'm a Channel Partner (Broker)":"I'm a Tenant";
+  var lines=[userLabel+'.','','I have questions about the following listings:',''];
+  ldSelected.forEach(function(l,i){
+    var avail=document.getElementById('ldAvail_'+i);
+    var q=document.getElementById('ldQ_'+i).value.trim();
+    lines.push('*'+(i+1)+'. '+l.project+' (ID: '+l.serial+'), '+l.bhk+(l.carpet?', '+l.carpet+' carpet':'')+', '+l.rent_display+'*');
+    if(avail&&avail.checked)lines.push('   - Is it available now?');
+    if(q)lines.push('   - '+q);
+    lines.push('');
+  });
+  lines.push('*Name:* '+name);
+  lines.push('*Phone:* '+ldSelCountry.code+' '+phone);
+  lines.push('');
+  lines.push('Kindly call me back ASAP.');
+
+  var msg=lines.join('\n');
+  window.open('https://wa.me/917400494703?text='+encodeURIComponent(msg),'_blank');
+  showOnly('screenLdSuccess');
+}
 
 // ── Country Picker ─────────────────────────────────────────────────────
 var countries=[

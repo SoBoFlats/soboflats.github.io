@@ -305,7 +305,7 @@
   <div class="hero" id="hero">
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
-      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 264</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">30-May-26</span>
+      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 264</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">01-Jun-26</span>
     </div>
     <div class="hero-title">Ajay Apartment <span class="hero-loc">&nbsp;·&nbsp;Byculla (E)</span></div>
     <div class="sub-tag-row">
@@ -483,7 +483,7 @@
     <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
       <span style="font-size:7.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 7px;border-radius:20px;color:#1a1000;background:rgba(255,217,60,.92)">For Rent</span>
       <span style="font-size:7.5px;font-weight:700;padding:3px 7px;border-radius:20px;color:#ffd966;background:rgba(255,217,102,.14);border:1px solid rgba(255,217,102,.35)">ID: 264</span>
-      <span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">30-May-26</span>
+      <span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">01-Jun-26</span>
     </div>
     <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.3px">Ajay Apartment <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.42)">· Byculla (E)</span></div>
     <div style="font-size:11px;margin-top:4px;line-height:1.5"><span style="color:rgba(255,255,255,.58)">1 bhk</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.58)">500 carpet</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:#ffd966;font-weight:600">Everyone Welcome</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.40)">Immediately Available</span></div>
@@ -910,7 +910,7 @@
 
   // ── Enquiry ───────────────────────────────────────────────────────────────
   var _enqFor=null;
-  function openEnquiry(){_enqFor=null;['enqOptSelf','enqOptCp'].forEach(function(id){var b=document.getElementById(id);if(b)b.classList.remove('sel');});document.getElementById('enqStep1').style.display='block';document.getElementById('enqStep2').style.display='none';document.getElementById('enquiryModal').classList.add('open');}
+  function openEnquiry(){window.location.href='https://soboflats.github.io/enquire.html?serial=264';}
   function closeEnquiry(){document.getElementById('enquiryModal').classList.remove('open');}
   function setEnqFor(who){_enqFor=who;document.getElementById(who==='cp'?'enqOptCp':'enqOptSelf').classList.add('sel');document.getElementById(who==='cp'?'enqOptSelf':'enqOptCp').classList.remove('sel');document.getElementById('enqStep1').style.display='none';document.getElementById('enqStep2').style.display='block';}
   function enqBack(){document.getElementById('enqStep1').style.display='block';document.getElementById('enqStep2').style.display='none';}
@@ -1010,9 +1010,28 @@
       <span class="nav-tray-label">Resale Portfolio</span>
       <span class="nav-tray-soon">Coming Soon</span>
     </div>
-    <a href="https://soboflats.github.io/enquire.html" class="nav-tray-item">
-      <span class="nav-tray-icon">&#128203;</span>
-      <span class="nav-tray-label">Enquire</span>
+    <div style="position:relative">
+      <a href="https://soboflats.github.io/enquire.html" class="nav-tray-item" style="padding-right:44px">
+        <span class="nav-tray-icon">&#128203;</span>
+        <span class="nav-tray-label">Enquire</span>
+      </a>
+      <button onclick="event.stopPropagation();var s=document.getElementById('enqSubItems');var c=document.getElementById('enqSubChev');if(s.style.display==='none'){s.style.display='block';c.textContent='\u25B4'}else{s.style.display='none';c.textContent='\u25BE'}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.45);font-size:16px;cursor:pointer;padding:8px" id="enqSubChev">&#9662;</button>
+    </div>
+    <div id="enqSubItems" style="display:none;background:rgba(255,255,255,.02)">
+      <a href="https://soboflats.github.io/enquire.html?flow=listingdetails" class="nav-tray-item" style="padding-left:38px;padding-top:10px;padding-bottom:10px">
+        <span class="nav-tray-icon" style="font-size:14px">&#128221;</span>
+        <span class="nav-tray-label" style="font-size:13px">Listing Details</span>
+        <span class="nav-tray-chevron">&#8250;</span>
+      </a>
+      <a href="https://soboflats.github.io/enquire.html?flow=requirement" class="nav-tray-item" style="padding-left:38px;padding-top:10px;padding-bottom:10px">
+        <span class="nav-tray-icon" style="font-size:14px">&#128203;</span>
+        <span class="nav-tray-label" style="font-size:13px">Post Your Requirement</span>
+        <span class="nav-tray-chevron">&#8250;</span>
+      </a>
+    </div>
+    <a href="https://soboflats.github.io/sitevisit.html" class="nav-tray-item">
+      <span class="nav-tray-icon">&#128197;</span>
+      <span class="nav-tray-label">Book Site Visit</span>
       <span class="nav-tray-chevron">&#8250;</span>
     </a>
   </div>
@@ -1069,6 +1088,7 @@
   }
   function navToggleTheme(){var h=document.documentElement;var d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');var btn=document.getElementById('navThemeToggle');if(btn)btn.textContent=d?'☀':'☾';}
   (function(){var btn=document.getElementById('navThemeToggle');if(btn)btn.textContent=document.documentElement.getAttribute('data-theme')==='light'?'☀':'☾';})();
+  (function(){var m=window.location.pathname.match(/\/(\d+)\.html$/);if(!m)return;var s=m[1];document.querySelectorAll('.nav-tray-item').forEach(function(a){var h=a.getAttribute('href');if(!h)return;if(h.indexOf('sitevisit.html')>=0){a.setAttribute('href',h+'?serial='+s)}else if(h.indexOf('enquire.html')>=0){a.setAttribute('href',h+'?serial='+s)}});})();
 </script>
 </body>
 </html>
