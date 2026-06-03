@@ -1,4 +1,4 @@
-# Only HTML pages, active.json, and index.html belong here.
+# Only HTML pages, active.json, and RentPortfolio.html belong here.
 # Everything else stays on your laptop.
 *.py
 *.js
