@@ -1235,7 +1235,7 @@ function initBrokerQ2(){
 
 var ldAllListings=[];
 var ldSelected=[];
-var ldSelCountry=countries[0];
+var ldSelCountry=null;
 
 function ldLoadAndShow(){
   showOnly('screenLdPicker');
@@ -1326,28 +1326,31 @@ function ldGoQuestions(){
 function ldBackToPicker(){showOnly('screenLdPicker')}
 function ldBackToQuestions(){showOnly('screenLdQuestions')}
 
-function ldGoContact(){showOnly('screenLdContact')}
-
-// ── Listing Details country picker ────────────────────────────────────
-(function initLdCountryDD(){
-  var dd=document.getElementById('ldCountryDD');
-  countries.forEach(function(c){
-    var d=document.createElement('div');d.className='country-option';
-    d.innerHTML='<span class="country-option-flag">'+c.flag+'</span><span class="country-option-name">'+c.name+'</span><span class="country-option-code">'+c.code+'</span>';
-    d.addEventListener('click',function(e){
-      e.stopPropagation();
-      ldSelCountry=c;
-      document.getElementById('ldSelFlag').innerHTML=c.flag;
-      document.getElementById('ldSelCode').textContent=c.code;
-      document.getElementById('ldPhone').maxLength=c.digits;
-      document.getElementById('ldPhone').placeholder=c.digits+'-digit number';
-      dd.classList.remove('open');
+var ldCountryDDReady=false;
+function ldGoContact(){
+  showOnly('screenLdContact');
+  if(!ldCountryDDReady&&typeof countries!=='undefined'){
+    ldCountryDDReady=true;
+    ldSelCountry=countries[0];
+    var dd=document.getElementById('ldCountryDD');if(!dd)return;
+    countries.forEach(function(c){
+      var d=document.createElement('div');d.className='country-option';
+      d.innerHTML='<span class="country-option-flag">'+c.flag+'</span><span class="country-option-name">'+c.name+'</span><span class="country-option-code">'+c.code+'</span>';
+      d.addEventListener('click',function(e){
+        e.stopPropagation();
+        ldSelCountry=c;
+        document.getElementById('ldSelFlag').innerHTML=c.flag;
+        document.getElementById('ldSelCode').textContent=c.code;
+        document.getElementById('ldPhone').maxLength=c.digits;
+        document.getElementById('ldPhone').placeholder=c.digits+'-digit number';
+        dd.classList.remove('open');
+      });
+      dd.appendChild(d);
     });
-    dd.appendChild(d);
-  });
-})();
+  }
+}
+
 function toggleLdCountryDD(e){e.stopPropagation();document.getElementById('ldCountryDD').classList.toggle('open')}
-document.addEventListener('click',function(){try{document.getElementById('ldCountryDD').classList.remove('open')}catch(e){}});
 
 function ldSubmit(){
   hideAllErrs();var ok=true;
@@ -1420,7 +1423,10 @@ function toggleCountryDD(e){
   e.stopPropagation();
   document.getElementById('countryDD').classList.toggle('open');
 }
-document.addEventListener('click',function(){document.getElementById('countryDD').classList.remove('open')});
+document.addEventListener('click',function(){
+  document.getElementById('countryDD').classList.remove('open');
+  try{document.getElementById('ldCountryDD').classList.remove('open')}catch(e){}
+});
 
 // ── Chip selection ─────────────────────────────────────────────────────
 function selChip(btn){
