@@ -40,91 +40,6 @@
     #enquiryFloatBtn{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:50%;width:44px;height:44px;color:rgba(255,255,255,.80);cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .15s;box-shadow:0 2px 10px rgba(0,0,0,.25)}
     #enquiryFloatBtn:active{background:rgba(255,255,255,.22)}
     [data-theme="light"] #enquiryFloatBtn{background:rgba(255,255,255,.92);color:#333;border-color:rgba(0,0,0,.18);box-shadow:0 2px 10px rgba(0,0,0,.18)}
-    
-    .hamburger-btn{position:fixed;top:8px;left:8px;z-index:95;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
-    .nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
-    .nav-overlay.open{opacity:1;pointer-events:all}
-    .nav-tray{position:fixed;top:0;left:0;bottom:0;width:280px;max-width:85vw;background:#0d2318;border-right:1px solid rgba(255,255,255,.08);z-index:201;transform:translateX(-100%);transition:transform .28s ease;display:flex;flex-direction:column}
-    .nav-tray.open{transform:translateX(0)}
-    .nav-tray-header{display:none}
-    .nav-tray-logo{font-size:15px;font-weight:800;color:#fff;letter-spacing:.5px;line-height:1.2;text-transform:uppercase;white-space:nowrap}
-    .nav-tray-sub{font-size:7.5px;color:rgba(255,255,255,.40);letter-spacing:1.2px;font-weight:600;margin-top:2px;text-transform:uppercase;white-space:nowrap}
-    .nav-tray-close{position:absolute;top:12px;right:12px;background:none;border:none;color:rgba(255,255,255,.45);font-size:22px;cursor:pointer;padding:4px 8px;line-height:1;z-index:1}
-    .nav-intro{padding:20px 20px 12px;border-bottom:1px solid rgba(255,255,255,.08);position:relative}
-    .nav-intro-img{width:52px;height:52px;border-radius:12px;object-fit:cover;flex-shrink:0;cursor:pointer}
-    .nav-profile-photo,.nav-team-photo{cursor:pointer}
-    .nav-thumb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
-    .nav-thumb-overlay.show{opacity:1;pointer-events:all}
-    .nav-thumb-full{max-width:88vw;max-height:88vh;border-radius:50%;object-fit:cover}
-    .nav-thumb-close{position:fixed;top:14px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:22px;cursor:pointer;z-index:10000}
-    .nav-intro-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-    .nav-intro-name{font-size:15px;font-weight:700;color:rgba(255,255,255,.85)}
-    [data-theme="light"] .nav-intro-name{color:rgba(0,0,0,.80)}
-    .nav-intro-text{font-size:11px;line-height:1.55;color:rgba(255,255,255,.50);margin:0}
-    .nav-intro-text b{color:rgba(255,255,255,.75);font-weight:700}
-    [data-theme="light"] .nav-intro-text{color:rgba(0,0,0,.45)}
-    [data-theme="light"] .nav-intro-text b{color:rgba(0,0,0,.70)}
-    .nav-profile-row{display:flex;align-items:center;gap:13px;padding:8px 20px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
-    .nav-profile-photo{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.14);flex-shrink:0;background:rgba(255,255,255,.07)}
-    .nav-profile-info{flex:1;min-width:0}
-    .nav-profile-name{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.2px}
-    .nav-profile-phone{font-size:11px;font-weight:500;color:rgba(255,255,255,.45);margin-top:2px}
-    .nav-profile-phone a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:3px}
-    .nav-company-logo{width:34px;height:34px;object-fit:contain;flex-shrink:0;border-radius:6px;opacity:.9}
-    .nav-team-toggle{background:none;border:none;color:rgba(255,255,255,.4);font-size:16px;cursor:pointer;padding:2px 4px;line-height:1;margin-top:2px;display:block}
-    .nav-team-toggle:hover{color:rgba(255,255,255,.7)}
-    .nav-team-section{display:none;border-top:1px solid rgba(255,255,255,.06);margin:0 20px;padding:10px 0 4px}
-    .nav-team-section.open{display:block}
-    .nav-team-row{display:flex;align-items:center;gap:10px;padding:7px 0;text-decoration:none}
-    .nav-team-photo{width:46px;height:46px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.12);flex-shrink:0;background:rgba(255,255,255,.07)}
-    .nav-team-name{font-size:12.5px;font-weight:700;color:rgba(255,255,255,.80);line-height:1.2}
-    .nav-team-role{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px;line-height:1.3}
-    .nav-team-phone{font-size:11px;color:rgba(255,255,255,.40);margin-top:2px;display:inline-flex;align-items:center;gap:3px}
-    .nav-tray-items{padding:8px 0;flex:1}
-    .nav-tray-item{display:flex;align-items:center;gap:14px;padding:16px 20px;text-decoration:none;color:#fff;border-bottom:1px solid rgba(255,255,255,.05)}
-    a.nav-tray-item:active{background:rgba(255,255,255,.05)}
-    .nav-tray-item.active-item{background:rgba(72,199,142,.08);border-left:3px solid #48c78e;padding-left:17px}
-    .nav-tray-item.disabled-item{opacity:.4;cursor:default}
-    .nav-tray-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
-    .nav-tray-label{flex:1;font-size:14px;font-weight:600;letter-spacing:-.1px}
-    .nav-tray-chevron{font-size:20px;color:rgba(255,255,255,.35)}
-    .nav-tray-soon{font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);letter-spacing:.3px;white-space:nowrap}
-    .nav-tray-footer{margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding:14px 20px 32px}
-    .nav-build-btn{width:100%;text-align:left;background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.22);border-radius:14px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:11px}
-    .nav-build-btn:active{background:rgba(255,217,102,.15)}
-    .nav-build-label{font-size:12.5px;font-weight:700;color:#ffd966;line-height:1.35;flex:1}
-    .nav-build-sub{font-size:10.5px;color:rgba(255,217,102,.55);font-weight:400;display:block;margin-top:2px}
-    .nav-contact-card{display:none;margin-top:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px}
-    .nav-contact-card.open{display:block}
-    .nav-contact-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px}
-    .nav-contact-role{font-size:10.5px;color:rgba(255,255,255,.42);margin-bottom:12px}
-    .nav-contact-wa{display:flex;align-items:center;gap:10px;text-decoration:none;background:rgba(37,211,102,.14);border:1px solid rgba(37,211,102,.28);border-radius:12px;padding:11px 14px;color:#25d366;font-size:13px;font-weight:700}
-    .nav-contact-wa:active{background:rgba(37,211,102,.24)}
-    .nav-contact-wa svg{flex-shrink:0}
-    .nav-theme-row{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid rgba(255,255,255,.07);margin-top:4px}
-    .nav-theme-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.50)}
-    .nav-theme-btn{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);border-radius:50%;width:34px;height:34px;font-size:15px;color:rgba(255,255,255,.80);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .dl-toast-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:900;opacity:0;pointer-events:none;transition:opacity .3s}
-    .dl-toast-overlay.show{opacity:1;pointer-events:all}
-    .dl-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(10,26,23,.97);border:1.5px solid rgba(72,199,142,.40);color:#fff;padding:40px 44px;border-radius:24px;font-size:18px;line-height:1.65;opacity:0;pointer-events:none;transition:opacity .3s;z-index:901;text-align:center;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:normal;max-width:360px}
-    .dl-toast.show{opacity:1;pointer-events:all}
-    .dl-toast-ok{display:inline-block;margin-top:22px;padding:12px 56px;border-radius:16px;border:1.5px solid rgba(72,199,142,.55);background:rgba(72,199,142,.25);color:#48c78e;font-size:18px;font-weight:700;cursor:pointer}
-    .dl-toast-ok:active{background:rgba(72,199,142,.40)}
-    .enq-modal{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.65);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto}
-    .enq-modal.open{display:flex}
-    .enq-sheet{background:#0d2318;border-radius:22px 22px 0 0;padding:20px 20px 40px;width:100%;border-top:1px solid rgba(255,255,255,.12)}
-    [data-theme="light"] .enq-sheet{background:#f5f1e8;border-top-color:rgba(0,0,0,.10)}
-    .enq-handle{width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:0 auto 18px}
-    .enq-question{font-size:15px;font-weight:700;color:#fff;margin-bottom:14px;text-align:center}
-    [data-theme="light"] .enq-question{color:#111}
-    .enq-opts{display:flex;gap:10px;margin-bottom:4px}
-    .enq-opt{flex:1;padding:14px 10px;border-radius:14px;border:1.5px solid rgba(255,255,255,.20);background:rgba(255,255,255,.06);color:rgba(255,255,255,.75);font-size:14px;font-weight:600;cursor:pointer;text-align:center;transition:all .15s}
-    .enq-opt.sel,.enq-opt:active{border-color:#48c78e;background:rgba(72,199,142,.15);color:#48c78e}
-    [data-theme="light"] .enq-opt{border-color:rgba(0,0,0,.18);background:rgba(0,0,0,.04);color:rgba(0,0,0,.65)}
-    [data-theme="light"] .enq-opt.sel{border-color:var(--accent,#1a8a5a);background:rgba(26,138,90,.10);color:var(--accent,#1a8a5a)}
-    .enq-back{width:100%;margin-top:14px;padding:10px;border:none;background:none;color:rgba(255,255,255,.35);font-size:13px;cursor:pointer;border-radius:8px}
-    [data-theme="light"] .enq-back{color:rgba(0,0,0,.35)}
-
     .hero{padding:16px 18px 24px}
     .tag-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:14px;padding-left:42px}
     .tag{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:5px 12px;border-radius:20px;color:var(--tag-color);background:var(--tag-bg);border:1px solid var(--tag-border);backdrop-filter:blur(8px)}
@@ -283,6 +198,7 @@
     .modal-cancel{width:100%;padding:11px;border-radius:16px;background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:13px;cursor:pointer;display:block}
     .modal-ask-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.75);text-align:center;margin-bottom:12px}
   </style>
+  <link rel="stylesheet" href="./shared/nav.css">
 </head>
 <body>
 
@@ -305,7 +221,7 @@
   <div class="hero" id="hero">
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
-      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 208</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">03-Jun-26</span>
+      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 208</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">04-Jun-26</span>
     </div>
     <div class="hero-title">Salsette,<br>B <span class="hero-loc">&nbsp;·&nbsp;Byculla (E)</span></div>
     <div class="sub-tag-row">
@@ -513,7 +429,7 @@
     <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
       <span style="font-size:7.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 7px;border-radius:20px;color:#1a1000;background:rgba(255,217,60,.92)">For Rent</span>
       <span style="font-size:7.5px;font-weight:700;padding:3px 7px;border-radius:20px;color:#ffd966;background:rgba(255,217,102,.14);border:1px solid rgba(255,217,102,.35)">ID: 208</span>
-      <span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">03-Jun-26</span>
+      <span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">04-Jun-26</span>
     </div>
     <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.3px">Salsette <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.42)">· Byculla (E)</span></div>
     <div style="font-size:11px;margin-top:4px;line-height:1.5"><span style="color:rgba(255,255,255,.58)">2 bhk</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.58)">850 carpet</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:#ffd966;font-weight:600">From Oct</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.40)">From Oct</span></div>
@@ -948,7 +864,7 @@
 
   // ── Enquiry ───────────────────────────────────────────────────────────────
   var _enqFor=null;
-  function openEnquiry(){window.location.href='https://soboflats.github.io/enquire.html?serial=208';}
+  function openEnquiry(){window.location.href='https://soboflats.github.io/queries.html?serial=208';}
   function closeEnquiry(){document.getElementById('enquiryModal').classList.remove('open');}
   function setEnqFor(who){_enqFor=who;document.getElementById(who==='cp'?'enqOptCp':'enqOptSelf').classList.add('sel');document.getElementById(who==='cp'?'enqOptSelf':'enqOptCp').classList.remove('sel');document.getElementById('enqStep1').style.display='none';document.getElementById('enqStep2').style.display='block';}
   function enqBack(){document.getElementById('enqStep1').style.display='block';document.getElementById('enqStep2').style.display='none';}
@@ -998,135 +914,7 @@
     </div>
   </div>
 </div>
-
-<div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
-<div class="nav-tray" id="navTray">
-  <div class="nav-intro">
-    <button class="nav-tray-close" onclick="closeNav()">&#215;</button>
-    <div class="nav-intro-header">
-      <img src="./intro_oswal.jpeg" class="nav-intro-img" onerror="this.style.display='none'" alt="Oswal Properties" onclick="event.stopPropagation();openNavThumb(this.src)">
-      <div style="min-width:0"><div class="nav-tray-logo">Oswal Properties</div><div class="nav-tray-sub">Luxury &middot; Residential &middot; SoBo</div></div>
-    </div>
-    <p class="nav-intro-text"><b>RERA approved</b> Real Estate Consultancy firm, since 9 years professionally (30+ years locally). We specialise <b>ONLY</b> in <b>Luxury Residential Properties in South Bombay</b>.</p>
-    <p class="nav-intro-text" style="margin-top:6px;font-size:10px;color:rgba(255,255,255,.35)">RERA Reg. No: A51900031717</p>
-  </div>
-  <div class="nav-profile-row">
-    <img src="./photo.jpeg" class="nav-profile-photo" onerror="this.style.display='none'" alt="Vaibhav Oswal" onclick="event.stopPropagation();event.preventDefault();openNavThumb(this.src)">
-    <div class="nav-profile-info">
-      <div class="nav-profile-name">Vaibhav Oswal</div>
-      <div class="nav-profile-phone"><a href="https://wa.me/918828340668" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="#25d366" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>88283 40668</a></div>
-    </div>
-    <button class="nav-team-toggle" id="teamToggleBtn" onclick="toggleTeam()" title="Team">&#8964;</button>
-  </div>
-  <div class="nav-team-section" id="navTeamSection">
-    <a class="nav-team-row" href="https://wa.me/917400494703" target="_blank" rel="noopener">
-      <img src="./team_vandana.jpeg" class="nav-team-photo" onerror="this.style.display='none'" alt="" onclick="event.stopPropagation();event.preventDefault();openNavThumb(this.src)">
-      <div><div class="nav-team-name">Vandana Bhandari</div><div class="nav-team-role">Channel Sales, Rent</div><div class="nav-team-phone"><svg width="10" height="10" viewBox="0 0 24 24" fill="#25d366" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>74004 94703</div></div>
-    </a>
-    <a class="nav-team-row" href="https://wa.me/919324059959" target="_blank" rel="noopener">
-      <img src="./team_aditi.jpeg" class="nav-team-photo" onerror="this.style.display='none'" alt="" onclick="event.stopPropagation();event.preventDefault();openNavThumb(this.src)">
-      <div><div class="nav-team-name">Aditi Jain</div><div class="nav-team-role">Direct Sales, Rent</div><div class="nav-team-phone"><svg width="10" height="10" viewBox="0 0 24 24" fill="#25d366" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>93240 59959</div></div>
-    </a>
-    <a class="nav-team-row" href="https://wa.me/919137848224" target="_blank" rel="noopener">
-      <img src="./team_bhavin.jpeg" class="nav-team-photo" onerror="this.style.display='none'" alt="" onclick="event.stopPropagation();event.preventDefault();openNavThumb(this.src)">
-      <div><div class="nav-team-name">Bhavin Thakkar</div><div class="nav-team-role">Direct Sales, Rent</div><div class="nav-team-phone"><svg width="10" height="10" viewBox="0 0 24 24" fill="#25d366" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>91378 48224</div></div>
-    </a>
-  </div>
-  <div class="nav-tray-items">
-    <a href="https://soboflats.github.io/WhatsappCommunity.html" class="nav-tray-item">
-      <span class="nav-tray-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span>
-      <span class="nav-tray-label">Join WhatsApp Community</span>
-      <span class="nav-tray-chevron">&#8250;</span>
-    </a>
-    <a href="https://soboflats.github.io/RentPortfolio.html" class="nav-tray-item active-item">
-      <span class="nav-tray-icon">&#127968;</span>
-      <span class="nav-tray-label">Rent Portfolio</span>
-      <span class="nav-tray-chevron">&#8250;</span>
-    </a>
-    <div class="nav-tray-item disabled-item">
-      <span class="nav-tray-icon">&#127963;</span>
-      <span class="nav-tray-label">Resale Portfolio</span>
-      <span class="nav-tray-soon">Coming Soon</span>
-    </div>
-    <div style="position:relative">
-      <a href="https://soboflats.github.io/enquire.html" class="nav-tray-item" style="padding-right:44px">
-        <span class="nav-tray-icon">&#128203;</span>
-        <span class="nav-tray-label">Enquire</span>
-      </a>
-      <button onclick="event.stopPropagation();var s=document.getElementById('enqSubItems');var c=document.getElementById('enqSubChev');if(s.style.display==='none'){s.style.display='block';c.textContent='\u25B4'}else{s.style.display='none';c.textContent='\u25BE'}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.45);font-size:16px;cursor:pointer;padding:8px" id="enqSubChev">&#9662;</button>
-    </div>
-    <div id="enqSubItems" style="display:none;background:rgba(255,255,255,.02)">
-      <a href="https://soboflats.github.io/enquire.html?flow=listingdetails" class="nav-tray-item" style="padding-left:38px;padding-top:10px;padding-bottom:10px">
-        <span class="nav-tray-icon" style="font-size:14px">&#128221;</span>
-        <span class="nav-tray-label" style="font-size:13px">Listing Details</span>
-        <span class="nav-tray-chevron">&#8250;</span>
-      </a>
-      <a href="https://soboflats.github.io/enquire.html?flow=requirement" class="nav-tray-item" style="padding-left:38px;padding-top:10px;padding-bottom:10px">
-        <span class="nav-tray-icon" style="font-size:14px">&#128203;</span>
-        <span class="nav-tray-label" style="font-size:13px">Post Your Requirement</span>
-        <span class="nav-tray-chevron">&#8250;</span>
-      </a>
-    </div>
-    <a href="https://soboflats.github.io/sitevisit.html" class="nav-tray-item">
-      <span class="nav-tray-icon">&#128197;</span>
-      <span class="nav-tray-label">Book Site Visit</span>
-      <span class="nav-tray-chevron">&#8250;</span>
-    </a>
-  </div>
-  <div class="nav-theme-row">
-    <span class="nav-theme-label">Theme: Day / Night</span>
-    <button class="nav-theme-btn" id="navThemeToggle" onclick="navToggleTheme()">&#9790;</button>
-  </div>
-  <div class="nav-tray-footer">
-    <button class="nav-build-btn" onclick="toggleBuildContact()">
-      <span style="font-size:22px">&#128161;</span>
-      <span class="nav-build-label">Want an app like this?
-        <span class="nav-build-sub">Build your own portfolio</span>
-      </span>
-      <span id="buildChevron" style="font-size:16px;color:rgba(255,217,102,.55);transition:transform .2s">&#8250;</span>
-    </button>
-    <div class="nav-contact-card" id="navContactCard">
-      <div class="nav-contact-name">Vaibhav Oswal</div>
-      <div class="nav-contact-role">Real Estate &amp; Tech</div>
-      <a class="nav-contact-wa" href="https://wa.me/918828340668?text=I%20saw%20your%20Portfolio%20app%20and%20I%20want%20to%20build%20one%20for%20myself." target="_blank" rel="noopener">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp · 8828340668
-      </a>
-    </div>
-  </div>
-</div>
-<div id="navThumbOverlay" class="nav-thumb-overlay" onclick="closeNavThumb()">
-  <img id="navThumbImg" src="" alt="" class="nav-thumb-full">
-  <button class="nav-thumb-close" onclick="closeNavThumb()">&times;</button>
-</div>
-<button class="hamburger-btn" onclick="openNav()" aria-label="Menu">
-  <svg width="17" height="13" viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="17" height="2" rx="1" fill="currentColor"/>
-    <rect y="5.5" width="17" height="2" rx="1" fill="currentColor"/>
-    <rect y="11" width="17" height="2" rx="1" fill="currentColor"/>
-  </svg>
-</button>
-
-<script>
-  function openNav(){document.getElementById('navOverlay').classList.add('open');document.getElementById('navTray').classList.add('open');}
-  function closeNav(){document.getElementById('navOverlay').classList.remove('open');document.getElementById('navTray').classList.remove('open');}
-  function openNavThumb(src){if(!src)return;var ov=document.getElementById('navThumbOverlay');var im=document.getElementById('navThumbImg');if(!ov||!im)return;im.src=src;ov.classList.add('show');}
-  function closeNavThumb(){var ov=document.getElementById('navThumbOverlay');if(ov)ov.classList.remove('show');}
-  function toggleTeam(){
-    var s=document.getElementById('navTeamSection');
-    var b=document.getElementById('teamToggleBtn');
-    var open=s.classList.toggle('open');
-    if(b){b.style.transform=open?'rotate(180deg)':'';b.style.color=open?'rgba(255,255,255,.75)':'';}
-  }
-  function toggleBuildContact(){
-    var card=document.getElementById('navContactCard');
-    var chev=document.getElementById('buildChevron');
-    var open=card.classList.toggle('open');
-    if(chev){chev.style.transform=open?'rotate(90deg)':'';}
-  }
-  function navToggleTheme(){var h=document.documentElement;var d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');var btn=document.getElementById('navThemeToggle');if(btn)btn.textContent=d?'☀':'☾';}
-  (function(){var btn=document.getElementById('navThemeToggle');if(btn)btn.textContent=document.documentElement.getAttribute('data-theme')==='light'?'☀':'☾';})();
-  (function(){var m=window.location.pathname.match(/\/(\d+)\.html$/);if(!m)return;var s=m[1];document.querySelectorAll('.nav-tray-item').forEach(function(a){var h=a.getAttribute('href');if(!h)return;if(h.indexOf('sitevisit.html')>=0){a.setAttribute('href',h+'?serial='+s)}else if(h.indexOf('enquire.html')>=0){a.setAttribute('href',h+'?serial='+s)}});})();
-</script>
+<script src="./shared/theme.js"></script>
+<script src="./shared/nav.js"></script>
 </body>
 </html>

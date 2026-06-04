@@ -1,11 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=RentPortfolio.html">
-  <title>Redirecting to Rent Portfolio…</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Oswal Properties · South Bombay Luxury Rentals</title>
+<meta name="description" content="Luxury residential rental flats in South Bombay — Oswal Properties. Browse portfolio, book site visits, post requirements.">
+<link rel="stylesheet" href="./shared/common.css">
+<link rel="stylesheet" href="./shared/nav.css">
+<style>
+.quick-links{display:none;animation:wizIn .35s ease}
+.quick-links.active{display:block}
+.quick-links-title{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:12px;letter-spacing:.3px}
+.ql-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ql-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 12px;border-radius:16px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);text-decoration:none;transition:all .2s;text-align:center}
+.ql-card:active{transform:scale(.97);border-color:var(--accent);background:var(--accent-bg)}
+.ql-card-icon{font-size:28px}
+.ql-card-label{font-size:13px;font-weight:700}
+.ql-card-sub{font-size:10px;color:var(--text2);font-weight:400;margin-top:-4px}
+.chat-back-btn{display:none;width:100%;padding:10px;border:none;background:none;color:var(--text3);font-size:13px;cursor:pointer;border-radius:8px;margin-top:4px}
+.chat-back-btn:active{background:var(--input-bg)}
+</style>
 </head>
 <body>
-  <p>Redirecting to <a href="RentPortfolio.html">Rent Portfolio</a>…</p>
+<button class="header-theme-btn" id="themeToggle" onclick="toggleTheme()">&#9790;</button>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <img src="./intro_oswal.jpeg" class="page-logo" onerror="this.style.display='none'" alt="">
+    <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
+  </div>
+
+  <div class="chat-area" id="chatArea"></div>
+
+  <div class="quick-links" id="quickLinks">
+    <div class="quick-links-title">What would you like to do?</div>
+    <div class="ql-grid">
+      <a class="ql-card" id="qlPortfolio" href="./RentPortfolio.html">
+        <span class="ql-card-icon">&#127968;</span>
+        <span class="ql-card-label">Rent Portfolio</span>
+        <span class="ql-card-sub">Browse listings</span>
+      </a>
+      <a class="ql-card" id="qlSiteVisit" href="./sitevisit.html">
+        <span class="ql-card-icon">&#128197;</span>
+        <span class="ql-card-label">Book Site Visit</span>
+        <span class="ql-card-sub">Schedule a tour</span>
+      </a>
+      <a class="ql-card" id="qlRequirement" href="./requirement.html">
+        <span class="ql-card-icon">&#128203;</span>
+        <span class="ql-card-label">Post Requirement</span>
+        <span class="ql-card-sub">Tell us what you need</span>
+      </a>
+      <a class="ql-card" id="qlQueries" href="./queries.html">
+        <span class="ql-card-icon">&#128221;</span>
+        <span class="ql-card-label">Listing Details</span>
+        <span class="ql-card-sub">Ask about a flat</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="end-screen" id="screenBye">
+    <div class="end-icon">&#128075;</div>
+    <div class="end-title">No worries, goodbye!</div>
+    <div class="end-text">Whenever you're ready to explore luxury rental properties in South Bombay, we're here for you.</div>
+    <a href="./RentPortfolio.html" class="end-link">&#127968; Browse Rent Portfolio</a>
+  </div>
+
+  <div class="end-screen" id="screenComingSoon">
+    <div class="end-icon">&#128679;</div>
+    <div class="end-title">Coming Soon!</div>
+    <div class="end-text">Sale &amp; purchase listings are coming soon.<br>In the meanwhile, explore our rental portfolio.</div>
+    <a href="./RentPortfolio.html" class="end-link">&#127968; Browse Rent Portfolio</a>
+  </div>
+</div>
+
+<script src="./shared/theme.js"></script>
+<script src="./shared/nav.js"></script>
+<script src="./shared/chat.js"></script>
+<script>
+var chat=new SoBoChat('chatArea');
+
+function addParams(userType){
+  var p='?user='+encodeURIComponent(userType)+'&interest=rent';
+  ['qlPortfolio','qlSiteVisit','qlRequirement','qlQueries'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){var base=el.getAttribute('href').split('?')[0];el.setAttribute('href',base+p)}
+  });
+}
+
+function showQuickLinks(){
+  document.getElementById('quickLinks').classList.add('active');
+}
+
+function hideAll(){
+  document.getElementById('quickLinks').classList.remove('active');
+  document.getElementById('screenBye').classList.remove('active');
+  document.getElementById('screenBye').style.display='none';
+  document.getElementById('screenComingSoon').classList.remove('active');
+  document.getElementById('screenComingSoon').style.display='none';
+}
+
+function handleQ1(val){
+  hideAll();
+  if(val==='bye'){
+    document.getElementById('screenBye').style.display='flex';
+    document.getElementById('screenBye').classList.add('active');
+    return;
+  }
+  if(val==='owner'){
+    window.location.href='./PostYourProperty.html?interest=rent';
+    return;
+  }
+  if(val==='buyer'){
+    document.getElementById('screenComingSoon').style.display='flex';
+    document.getElementById('screenComingSoon').classList.add('active');
+    return;
+  }
+  if(val==='tenant'||val==='broker'){
+    addParams(val);
+  }
+  chat.addBot('Great! Here\'s what I can help you with:',false,400).then(function(){
+    showQuickLinks();
+  });
+}
+
+function startChat(){
+  chat.addBot('Welcome to Oswal Properties! 🏠',false,200).then(function(){
+    return chat.addBot('I\'ll help you find your perfect luxury home in South Bombay.<br><b>You are a...</b>',true,800);
+  }).then(function(){
+    chat.showOptions([
+      {icon:'🏠',label:'Tenant',sub:'Looking for a rental flat',val:'tenant'},
+      {icon:'🤝',label:'Broker',sub:'Channel partner',val:'broker'},
+      {icon:'🏢',label:'Owner',sub:'List your property',val:'owner'},
+      {icon:'🛒',label:'Buyer',val:'buyer',disabled:true,soon:true},
+      {icon:'👥',label:'Others',sub:'Just browsing',val:'others'},
+      {icon:'❌',label:'By Mistake',val:'bye'}
+    ],handleQ1);
+  });
+}
+
+startChat();
+</script>
 </body>
 </html>
