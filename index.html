@@ -8,15 +8,15 @@
 <link rel="stylesheet" href="./shared/common.css">
 <link rel="stylesheet" href="./shared/nav.css">
 <style>
-.quick-links{display:none;animation:wizIn .35s ease}
-.quick-links.active{display:block}
-.quick-links-title{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:12px;letter-spacing:.3px}
-.ql-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ql-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 12px;border-radius:16px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);text-decoration:none;transition:all .2s;text-align:center}
+.ql-section{margin-top:8px;margin-bottom:20px}
+.ql-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;letter-spacing:.3px;text-transform:uppercase}
+.ql-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.ql-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 8px;border-radius:16px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);text-decoration:none;transition:all .2s;text-align:center}
 .ql-card:active{transform:scale(.97);border-color:var(--accent);background:var(--accent-bg)}
-.ql-card-icon{font-size:28px}
-.ql-card-label{font-size:13px;font-weight:700}
-.ql-card-sub{font-size:10px;color:var(--text2);font-weight:400;margin-top:-4px}
+.ql-card-icon{font-size:24px}
+.ql-card-label{font-size:11px;font-weight:700;line-height:1.3}
+.ql-wa{border-color:rgba(37,211,102,.25);background:rgba(37,211,102,.06)}
+.ql-wa:active{border-color:rgba(37,211,102,.50);background:rgba(37,211,102,.15)}
 .chat-back-btn{display:none;width:100%;padding:10px;border:none;background:none;color:var(--text3);font-size:13px;cursor:pointer;border-radius:8px;margin-top:4px}
 .chat-back-btn:active{background:var(--input-bg)}
 </style>
@@ -30,34 +30,29 @@
     <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
   </div>
 
-  <div class="chat-area" id="chatArea"></div>
-
-  <div class="quick-links" id="quickLinks">
-    <div class="quick-links-title">What would you like to do?</div>
+  <!-- Quick Links — always visible -->
+  <div class="ql-section">
+    <div class="ql-title">Quick Links</div>
     <div class="ql-grid">
-      <a class="ql-card" id="qlPortfolio" href="./RentPortfolio.html">
+      <a class="ql-card" href="./RentPortfolio.html">
         <span class="ql-card-icon">&#127968;</span>
         <span class="ql-card-label">Rent Portfolio</span>
-        <span class="ql-card-sub">Browse listings</span>
       </a>
-      <a class="ql-card" id="qlSiteVisit" href="./sitevisit.html">
+      <a class="ql-card" href="./sitevisit.html">
         <span class="ql-card-icon">&#128197;</span>
         <span class="ql-card-label">Book Site Visit</span>
-        <span class="ql-card-sub">Schedule a tour</span>
       </a>
-      <a class="ql-card" id="qlRequirement" href="./requirement.html">
-        <span class="ql-card-icon">&#128203;</span>
-        <span class="ql-card-label">Post Requirement</span>
-        <span class="ql-card-sub">Tell us what you need</span>
-      </a>
-      <a class="ql-card" id="qlQueries" href="./queries.html">
-        <span class="ql-card-icon">&#128221;</span>
-        <span class="ql-card-label">Listing Details</span>
-        <span class="ql-card-sub">Ask about a flat</span>
+      <a class="ql-card ql-wa" href="./WhatsappCommunity.html">
+        <span class="ql-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span>
+        <span class="ql-card-label">Join WhatsApp</span>
       </a>
     </div>
   </div>
 
+  <!-- Chat Q1 -->
+  <div class="chat-area" id="chatArea"></div>
+
+  <!-- End screens -->
   <div class="end-screen" id="screenBye">
     <div class="end-icon">&#128075;</div>
     <div class="end-title">No worries, goodbye!</div>
@@ -79,20 +74,7 @@
 <script>
 var chat=new SoBoChat('chatArea');
 
-function addParams(userType){
-  var p='?user='+encodeURIComponent(userType)+'&interest=rent';
-  ['qlPortfolio','qlSiteVisit','qlRequirement','qlQueries'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el){var base=el.getAttribute('href').split('?')[0];el.setAttribute('href',base+p)}
-  });
-}
-
-function showQuickLinks(){
-  document.getElementById('quickLinks').classList.add('active');
-}
-
 function hideAll(){
-  document.getElementById('quickLinks').classList.remove('active');
   document.getElementById('screenBye').classList.remove('active');
   document.getElementById('screenBye').style.display='none';
   document.getElementById('screenComingSoon').classList.remove('active');
@@ -115,17 +97,14 @@ function handleQ1(val){
     document.getElementById('screenComingSoon').classList.add('active');
     return;
   }
-  if(val==='tenant'||val==='broker'){
-    addParams(val);
-  }
-  chat.addBot('Great! Here\'s what I can help you with:',false,400).then(function(){
-    showQuickLinks();
-  });
+  // tenant, broker, others — redirect to portfolio with params
+  var p = (val==='tenant'||val==='broker') ? '?user='+val+'&interest=rent' : '';
+  window.location.href='./RentPortfolio.html'+p;
 }
 
 function startChat(){
-  chat.addBot('Welcome to Oswal Properties! 🏠',false,200).then(function(){
-    return chat.addBot('I\'ll help you find your perfect luxury home in South Bombay.<br><b>You are a...</b>',true,800);
+  chat.addBot('Welcome! How can we help you today?',false,200).then(function(){
+    return chat.addBot('You are a...',false,600);
   }).then(function(){
     chat.showOptions([
       {icon:'🏠',label:'Tenant',sub:'Looking for a rental flat',val:'tenant'},
