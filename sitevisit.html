@@ -506,13 +506,12 @@ function initQ2(){
   setTimeout(function(){
     var wrap=document.getElementById('chatOpts2');
     var grid=document.createElement('div');grid.className='q1-options';
-    [{icon:'\u{1F3E0}',label:'Rent',val:'Rent'},{icon:'\u{1F3E2}',label:'Sale',val:'Sale'}].forEach(function(it){
-      var b=document.createElement('button');b.className='q1-btn';
-      b.innerHTML='<span class="q1-icon">'+it.icon+'</span>'+it.label;
-      b.addEventListener('click',function(){
+    [{icon:'\u{1F3E0}',label:'Rent',val:'Rent'},{icon:'\u{1F3E2}',label:'Sale',val:'Sale',soon:true}].forEach(function(it){
+      var b=document.createElement('button');b.className='q1-btn'+(it.soon?' disabled':'');
+      b.innerHTML='<span class="q1-icon">'+it.icon+'</span>'+it.label+(it.soon?'<span class="q1-soon">COMING SOON</span>':'');
+      if(!it.soon) b.addEventListener('click',function(){
         addUserTo('chatMsgs2',it.label);wrap.innerHTML='';
         FD.interestType=it.val;
-        if(it.val==='Sale'){setTimeout(function(){showOnly('screenComingSoon')},600);return}
         setTimeout(function(){initQ3()},600);
       });
       grid.appendChild(b);
@@ -1018,7 +1017,7 @@ function submitSiteVisit(){
   };
 
   var url=SHEET_URL+'?source=site_visit';
-  fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(){
+  fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)}).then(function(){
     showSuccess(waMsg);
   }).catch(function(){
     showSuccess(waMsg);

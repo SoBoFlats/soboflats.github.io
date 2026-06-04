@@ -190,7 +190,7 @@
 
       <div class="wiz-field">
         <div class="wiz-label"><span class="wiz-label-icon">&#128176;</span> Budget Maximum</div>
-        <input class="wiz-input" id="s2Budget" type="text" placeholder="Example: 2L" autocomplete="off" oninput="saveProgress()">
+        <input class="wiz-input" id="s2Budget" type="text" placeholder="Example: 2,00,000" autocomplete="off" oninput="fmtBudget(this);saveProgress()">
         <div class="wiz-error" id="s2BudgetErr">Please enter a budget</div>
       </div>
     </div>
@@ -342,7 +342,7 @@ function initQ1(){
     var grid=document.createElement('div');grid.className='q1-options';
     var items=[
       {icon:'\u{1F3E0}',label:'Tenant',sub:'Looking for a rental flat',val:'tenant'},
-      {icon:'\u{1F91D}',label:'Broker',sub:'Channel partner',val:'broker'},
+      {icon:'\u{1F91D}',label:'Broker',sub:'Channel partner',val:'broker',soon:true},
       {icon:'\u{1F6D2}',label:'Buyer',val:'buyer',soon:true},
       {icon:'❌',label:'By Mistake',val:'bye'}
     ];
@@ -373,14 +373,13 @@ function initQ2(){
   setTimeout(function(){
     var wrap=document.getElementById('chatOpts2');wrap.innerHTML='';
     var grid=document.createElement('div');grid.className='q1-options';
-    [{icon:'\u{1F3E0}',label:'Rent',val:'rent'},{icon:'\u{1F3EC}',label:'Sale',val:'sale'}].forEach(function(it){
-      var b=document.createElement('button');b.className='q1-btn';
-      b.innerHTML='<span class="q1-icon">'+it.icon+'</span>'+it.label;
-      b.addEventListener('click',function(){
+    [{icon:'\u{1F3E0}',label:'Rent',val:'rent'},{icon:'\u{1F3EC}',label:'Sale',val:'sale',soon:true}].forEach(function(it){
+      var b=document.createElement('button');b.className='q1-btn'+(it.soon?' disabled':'');
+      b.innerHTML='<span class="q1-icon">'+it.icon+'</span>'+it.label+(it.soon?'<span class="q1-soon">COMING SOON</span>':'');
+      if(!it.soon) b.addEventListener('click',function(){
         addUserTo('chatMsgs2',it.label);
         wrap.innerHTML='';
         interestType=it.val;
-        if(it.val==='sale'){setTimeout(function(){showOnly('screenComingSoon')},600);return}
         setTimeout(function(){showStep(1)},600);
       });
       grid.appendChild(b);
@@ -404,6 +403,24 @@ function goBackFromStep1(){
   } else {
     showOnly('screenQ2');
   }
+}
+
+// ── Indian number formatting ─────────────────────────────────────────────
+function fmtBudget(inp){
+  var raw=inp.value.replace(/[^0-9]/g,'');
+  if(!raw){inp.value='';return}
+  var last3=raw.slice(-3);
+  var rest=raw.slice(0,-3);
+  var formatted=last3;
+  while(rest.length>0){
+    formatted=rest.slice(-2)+','+formatted;
+    rest=rest.slice(0,-2);
+  }
+  var pos=inp.selectionStart;
+  var oldLen=inp.value.length;
+  inp.value=formatted;
+  var newLen=inp.value.length;
+  inp.selectionStart=inp.selectionEnd=pos+(newLen-oldLen);
 }
 
 // ── Chip helpers ─────────────────────────────────────────────────────────
@@ -660,7 +677,8 @@ function submitRequirement(){
 
   fetch(SHEET_URL+'?source=enquire',{
     method:'POST',
-    headers:{'Content-Type':'application/json'},
+    mode:'no-cors',
+    headers:{'Content-Type':'text/plain'},
     body:JSON.stringify(payload)
   }).then(function(){
     clearProgress();
