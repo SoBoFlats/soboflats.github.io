@@ -2,6 +2,7 @@
 # Everything else stays on your laptop.
 *.py
 *.js
+!shared/*.js
 *.bat
 *.json
 !active.json
