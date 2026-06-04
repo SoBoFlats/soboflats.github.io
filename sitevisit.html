@@ -197,13 +197,13 @@
   <!-- Reorder -->
   <div class="picker-screen" id="screenReorder">
     <div class="picker-header">
-      <div class="picker-title">Confirm Visit Order</div>
+      <div class="picker-title">Confirm Site Visit</div>
       <div class="picker-sub">Arrange the order of your site visits</div>
     </div>
     <div id="reorderList" style="flex:1;overflow-y:auto;padding-bottom:8px"></div>
     <div class="wiz-nav">
       <button class="wiz-btn wiz-back" onclick="goBackToPicker()">&#8592; Back</button>
-      <button class="wiz-btn wiz-next" onclick="goToStep1()">Confirm Order &#8594;</button>
+      <button class="wiz-btn wiz-next" onclick="goToStep1()">Confirm &#8594;</button>
     </div>
   </div>
 
@@ -1018,7 +1018,7 @@ function submitSiteVisit(){
   };
 
   var url=SHEET_URL+'?source=site_visit';
-  fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(){
+  fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(){
     showSuccess(waMsg);
   }).catch(function(){
     showSuccess(waMsg);
