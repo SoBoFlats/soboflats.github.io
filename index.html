@@ -8,9 +8,10 @@
 <link rel="stylesheet" href="./shared/common.css">
 <link rel="stylesheet" href="./shared/nav.css">
 <style>
-.ql-section{margin-top:8px;margin-bottom:20px}
+.divider{height:1px;background:var(--border);margin:20px 0 16px}
+.ql-section{margin-bottom:24px}
 .ql-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;letter-spacing:.3px;text-transform:uppercase}
-.ql-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.ql-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ql-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 8px;border-radius:16px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);text-decoration:none;transition:all .2s;text-align:center}
 .ql-card:active{transform:scale(.97);border-color:var(--accent);background:var(--accent-bg)}
 .ql-card-icon{font-size:24px}
@@ -30,6 +31,12 @@
     <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
   </div>
 
+  <!-- Chat Q1 + sub-options -->
+  <div class="chat-area" id="chatArea"></div>
+
+  <!-- Divider -->
+  <div class="divider"></div>
+
   <!-- Quick Links — always visible -->
   <div class="ql-section">
     <div class="ql-title">Quick Links</div>
@@ -42,28 +49,22 @@
         <span class="ql-card-icon">&#128197;</span>
         <span class="ql-card-label">Book Site Visit</span>
       </a>
+      <a class="ql-card" href="./requirement.html">
+        <span class="ql-card-icon">&#128203;</span>
+        <span class="ql-card-label">Post Your Requirement</span>
+      </a>
       <a class="ql-card ql-wa" href="./WhatsappCommunity.html">
         <span class="ql-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span>
-        <span class="ql-card-label">Join WhatsApp</span>
+        <span class="ql-card-label">Join WhatsApp Community</span>
       </a>
     </div>
   </div>
 
-  <!-- Chat Q1 -->
-  <div class="chat-area" id="chatArea"></div>
-
   <!-- End screens -->
-  <div class="end-screen" id="screenBye">
-    <div class="end-icon">&#128075;</div>
-    <div class="end-title">No worries, goodbye!</div>
-    <div class="end-text">Whenever you're ready to explore luxury rental properties in South Bombay, we're here for you.</div>
-    <a href="./RentPortfolio.html" class="end-link">&#127968; Browse Rent Portfolio</a>
-  </div>
-
   <div class="end-screen" id="screenComingSoon">
     <div class="end-icon">&#128679;</div>
     <div class="end-title">Coming Soon!</div>
-    <div class="end-text">Sale &amp; purchase listings are coming soon.<br>In the meanwhile, explore our rental portfolio.</div>
+    <div class="end-text">Sale &amp; resale listings are coming soon.<br>In the meanwhile, explore our rental portfolio.</div>
     <a href="./RentPortfolio.html" class="end-link">&#127968; Browse Rent Portfolio</a>
   </div>
 </div>
@@ -73,51 +74,91 @@
 <script src="./shared/chat.js"></script>
 <script>
 var chat=new SoBoChat('chatArea');
+var userType='';
 
-function hideAll(){
-  document.getElementById('screenBye').classList.remove('active');
-  document.getElementById('screenBye').style.display='none';
-  document.getElementById('screenComingSoon').classList.remove('active');
-  document.getElementById('screenComingSoon').style.display='none';
+function hideEndScreens(){
+  var s=document.getElementById('screenComingSoon');
+  s.classList.remove('active');s.style.display='none';
 }
 
-function handleQ1(val){
-  hideAll();
-  if(val==='bye'){
-    document.getElementById('screenBye').style.display='flex';
-    document.getElementById('screenBye').classList.add('active');
-    return;
-  }
-  if(val==='owner'){
-    window.location.href='./PostYourProperty.html?interest=rent';
-    return;
-  }
-  if(val==='buyer'){
-    document.getElementById('screenComingSoon').style.display='flex';
-    document.getElementById('screenComingSoon').classList.add('active');
-    return;
-  }
-  // tenant, broker, others — redirect to portfolio with params
-  var p = (val==='tenant'||val==='broker') ? '?user='+val+'&interest=rent' : '';
-  window.location.href='./RentPortfolio.html'+p;
-}
-
-function startChat(){
-  chat.addBot('Welcome! How can we help you today?',false,200).then(function(){
-    return chat.addBot('You are a...',false,600);
-  }).then(function(){
-    chat.showOptions([
-      {icon:'🏠',label:'Tenant',sub:'Looking for a rental flat',val:'tenant'},
-      {icon:'🤝',label:'Broker',sub:'Channel partner',val:'broker'},
-      {icon:'🏢',label:'Owner',sub:'List your property',val:'owner'},
-      {icon:'🛒',label:'Buyer',val:'buyer',disabled:true,soon:true},
-      {icon:'👥',label:'Others',sub:'Just browsing',val:'others'},
-      {icon:'❌',label:'By Mistake',val:'bye'}
-    ],handleQ1);
+// ── Rent/Sale sub-choice (used by Tenant portfolio, Broker portfolio, Owner) ──
+function showRentSale(context){
+  chat.addBot('Are you interested in...',false,400).then(function(){
+    var items=[
+      {icon:'🏠',label:'Rent',val:'rent'},
+      {icon:'🏢',label:'Sale',val:'sale',disabled:true,soon:true}
+    ];
+    chat.showOptions(items,function(val){
+      if(context==='portfolio'){
+        window.location.href='./RentPortfolio.html?user='+userType+'&interest=rent';
+      } else if(context==='owner'){
+        window.location.href='./PostYourProperty.html?interest=rent';
+      }
+    });
   });
 }
 
-startChat();
+// ── Tenant sub-options ──
+function showTenantOptions(){
+  chat.addBot('What would you like to do?',false,400).then(function(){
+    chat.showOptions([
+      {icon:'📋',label:'View Portfolio',val:'portfolio'},
+      {icon:'📝',label:'Listing Details',val:'queries'},
+      {icon:'📋',label:'Post Requirement',val:'requirement'},
+      {icon:'📅',label:'Book Site Visit',val:'sitevisit'}
+    ],function(val){
+      if(val==='portfolio') showRentSale('portfolio');
+      else if(val==='queries') window.location.href='./queries.html?user='+userType+'&interest=rent';
+      else if(val==='requirement') window.location.href='./requirement.html?user='+userType+'&interest=rent';
+      else if(val==='sitevisit') window.location.href='./sitevisit.html?user='+userType+'&interest=rent';
+    });
+  });
+}
+
+// ── Broker sub-options ──
+function showBrokerOptions(){
+  chat.addBot('What would you like to do?',false,400).then(function(){
+    chat.showOptions([
+      {icon:'📋',label:'View Portfolio',val:'portfolio'},
+      {icon:'📝',label:'Listing Details',val:'queries'},
+      {icon:'📅',label:'Book Site Visit',val:'sitevisit'}
+    ],function(val){
+      if(val==='portfolio') showRentSale('portfolio');
+      else if(val==='queries') window.location.href='./queries.html?user='+userType+'&interest=rent';
+      else if(val==='sitevisit') window.location.href='./sitevisit.html?user='+userType+'&interest=rent';
+    });
+  });
+}
+
+// ── Owner sub-options ──
+function showOwnerOptions(){
+  showRentSale('owner');
+}
+
+// ── Q1 handler ──
+function handleQ1(val){
+  hideEndScreens();
+  userType=val;
+  if(val==='tenant') showTenantOptions();
+  else if(val==='broker') showBrokerOptions();
+  else if(val==='owner') showOwnerOptions();
+  else if(val==='buyer'){
+    document.getElementById('screenComingSoon').style.display='flex';
+    document.getElementById('screenComingSoon').classList.add('active');
+  }
+}
+
+// ── Start ──
+chat.addBot('Welcome to Oswal Properties! 🏠',false,200).then(function(){
+  return chat.addBot('How can we help you today?<br><b>You are a...</b>',true,600);
+}).then(function(){
+  chat.showOptions([
+    {icon:'🏠',label:'Tenant',sub:'Looking for a rental flat',val:'tenant'},
+    {icon:'🤝',label:'Broker',sub:'Channel partner',val:'broker'},
+    {icon:'🏢',label:'Property Owner',sub:'List your property',val:'owner'},
+    {icon:'🛒',label:'Buyer',val:'buyer',disabled:true,soon:true}
+  ],handleQ1);
+});
 </script>
 </body>
 </html>

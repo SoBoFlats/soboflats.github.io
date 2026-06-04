@@ -9,7 +9,7 @@ var NAV_HTML='\
     <button class="nav-tray-close" onclick="closeNav()">&#215;</button>\
     <div class="nav-intro-header">\
       <img src="./intro_oswal.jpeg" class="nav-intro-img" onerror="this.style.display=\'none\'" alt="Oswal Properties" onclick="event.stopPropagation();openNavThumb(this.src)">\
-      <div style="min-width:0"><div class="nav-tray-logo">Oswal Properties</div><div class="nav-tray-sub">Luxury &middot; Residential &middot; SoBo</div></div>\
+      <a href="./index.html" style="min-width:0;text-decoration:none"><div class="nav-tray-logo">Oswal Properties</div><div class="nav-tray-sub">Luxury &middot; Residential &middot; SoBo</div></a>\
     </div>\
     <p class="nav-intro-text"><b>RERA approved</b> Real Estate Consultancy firm, since 9 years professionally (30+ years locally). We specialise <b>ONLY</b> in <b>Luxury Residential Properties in South Bombay</b>.</p>\
     <p class="nav-intro-text" style="margin-top:6px;font-size:10px;color:rgba(255,255,255,.35)">RERA Reg. No: A51900031717</p>\
@@ -37,13 +37,13 @@ var NAV_HTML='\
     </a>\
   </div>\
   <div class="nav-tray-items">\
-    <a href="./WhatsappCommunity.html" class="nav-tray-item" data-nav="community">\
-      <span class="nav-tray-icon">'+wa(18,18)+'</span>\
-      <span class="nav-tray-label">Join WhatsApp Community</span>\
+    <a href="./index.html" class="nav-tray-item" data-nav="home">\
+      <span class="nav-tray-icon">&#127968;</span>\
+      <span class="nav-tray-label">Home</span>\
       <span class="nav-tray-chevron">&#8250;</span>\
     </a>\
     <a href="./RentPortfolio.html" class="nav-tray-item" data-nav="portfolio">\
-      <span class="nav-tray-icon">&#127968;</span>\
+      <span class="nav-tray-icon">&#128203;</span>\
       <span class="nav-tray-label">Rent Portfolio</span>\
       <span class="nav-tray-chevron">&#8250;</span>\
     </a>\
@@ -52,28 +52,29 @@ var NAV_HTML='\
       <span class="nav-tray-label">Resale Portfolio</span>\
       <span class="nav-tray-soon">Coming Soon</span>\
     </div>\
-    <div style="position:relative">\
-      <a href="./index.html" class="nav-tray-item" data-nav="enquire" style="padding-right:44px">\
-        <span class="nav-tray-icon">&#128203;</span>\
-        <span class="nav-tray-label">Enquire</span>\
-      </a>\
-      <button onclick="event.stopPropagation();var s=document.getElementById(\'enqSubItems\');var c=document.getElementById(\'enqSubChev\');if(s.style.display===\'none\'){s.style.display=\'block\';c.textContent=\'\\u25B4\'}else{s.style.display=\'none\';c.textContent=\'\\u25BE\'}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.45);font-size:16px;cursor:pointer;padding:8px" id="enqSubChev">&#9662;</button>\
-    </div>\
-    <div id="enqSubItems" style="display:none;background:rgba(255,255,255,.02)">\
-      <a href="./queries.html" class="nav-tray-item" data-nav="queries" style="padding-left:38px;padding-top:10px;padding-bottom:10px">\
-        <span class="nav-tray-icon" style="font-size:14px">&#128221;</span>\
-        <span class="nav-tray-label" style="font-size:13px">Listing Details</span>\
-        <span class="nav-tray-chevron">&#8250;</span>\
-      </a>\
-      <a href="./requirement.html" class="nav-tray-item" data-nav="requirement" style="padding-left:38px;padding-top:10px;padding-bottom:10px">\
-        <span class="nav-tray-icon" style="font-size:14px">&#128203;</span>\
-        <span class="nav-tray-label" style="font-size:13px">Post Your Requirement</span>\
-        <span class="nav-tray-chevron">&#8250;</span>\
-      </a>\
-    </div>\
     <a href="./sitevisit.html" class="nav-tray-item" data-nav="sitevisit">\
       <span class="nav-tray-icon">&#128197;</span>\
       <span class="nav-tray-label">Book Site Visit</span>\
+      <span class="nav-tray-chevron">&#8250;</span>\
+    </a>\
+    <a href="./queries.html" class="nav-tray-item" data-nav="queries">\
+      <span class="nav-tray-icon">&#128221;</span>\
+      <span class="nav-tray-label">Listing Details</span>\
+      <span class="nav-tray-chevron">&#8250;</span>\
+    </a>\
+    <a href="./requirement.html" class="nav-tray-item" data-nav="requirement">\
+      <span class="nav-tray-icon">&#128203;</span>\
+      <span class="nav-tray-label">Post Your Requirement</span>\
+      <span class="nav-tray-chevron">&#8250;</span>\
+    </a>\
+    <a href="./PostYourProperty.html" class="nav-tray-item" data-nav="postproperty">\
+      <span class="nav-tray-icon">&#128206;</span>\
+      <span class="nav-tray-label">List Your Property</span>\
+      <span class="nav-tray-chevron">&#8250;</span>\
+    </a>\
+    <a href="./WhatsappCommunity.html" class="nav-tray-item" data-nav="community">\
+      <span class="nav-tray-icon">'+wa(18,18)+'</span>\
+      <span class="nav-tray-label">Join WhatsApp Community</span>\
       <span class="nav-tray-chevron">&#8250;</span>\
     </a>\
   </div>\
@@ -112,12 +113,12 @@ var NAV_HTML='\
 </button>';
 
 var ACTIVE_MAP={
-  'index.html':'enquire',
+  'index.html':'home',
   'RentPortfolio.html':'portfolio',
   'queries.html':'queries',
   'requirement.html':'requirement',
   'sitevisit.html':'sitevisit',
-  'PostYourProperty.html':'enquire',
+  'PostYourProperty.html':'postproperty',
   'WhatsappCommunity.html':'community'
 };
 
@@ -130,12 +131,6 @@ function inject(){
   if(navId){
     var el=document.querySelector('[data-nav="'+navId+'"]');
     if(el)el.classList.add('active-item');
-    if(navId==='queries'||navId==='requirement'){
-      var sub=document.getElementById('enqSubItems');
-      if(sub)sub.style.display='block';
-      var chev=document.getElementById('enqSubChev');
-      if(chev)chev.textContent='▴';
-    }
   }
   var m=file.match(/^(\d+)\.html$/);
   if(m){
