@@ -25,7 +25,6 @@
 </style>
 </head>
 <body>
-<button class="header-theme-btn" id="themeToggle" onclick="toggleTheme()">&#9790;</button>
 
 <div class="page-wrap">
   <div class="page-header">
@@ -112,10 +111,12 @@ function hideEndScreens(){
 
 // ── Rent/Sale sub-choice ──
 function showRentSale(context){
+  var rentSub=context==='owner'?'List your rental property':'Rental properties';
+  var saleSub=context==='owner'?'List your resale property':'Coming soon';
   chat.addBot('Are you interested in...',false,400).then(function(){
     chat.showOptions([
-      {icon:'🏠',label:'Rent',sub:'Rental properties',val:'rent'},
-      {icon:'🏢',label:'Sale',sub:'Coming soon',val:'sale',disabled:true,soon:true}
+      {icon:'🏠',label:'Rent',sub:rentSub,val:'rent'},
+      {icon:'🏢',label:'Sale',sub:saleSub,val:'sale',disabled:true,soon:true}
     ],function(val){
       if(context==='portfolio'){
         window.location.href='./RentPortfolio.html?user='+userType+'&interest=rent';
@@ -160,7 +161,15 @@ function showBrokerOptions(){
 
 // ── Owner sub-options ──
 function showOwnerOptions(){
-  showRentSale('owner');
+  chat.addBot('What would you like to do?',false,400).then(function(){
+    chat.showOptions([
+      {icon:'🏠',label:'List Your Property',sub:'Rent or sell your property',val:'list'},
+      {icon:'📝',label:'Rental Agreement',sub:'Coming soon',val:'agreement',disabled:true,soon:true},
+      {icon:'🎨',label:'Interiors',sub:'Coming soon',val:'interiors',disabled:true,soon:true}
+    ],function(val){
+      if(val==='list') showRentSale('owner');
+    });
+  });
 }
 
 // ── Q1 handler ──
@@ -179,7 +188,9 @@ function handleQ1(val){
 
 // ── Start ──
 chat.addBot('Welcome to Oswal Properties! 🏠',false,200).then(function(){
-  return chat.addBot('How can we help you today?<br><b>You are a...</b>',true,600);
+  return chat.addBot('<b>RERA Approved</b> Real Estate Consultancy Firm, since 9 years professionally specializing <b>ONLY</b> in <b>Luxury Residential Properties</b> across South Bombay.',true,600);
+}).then(function(){
+  return chat.addBot('I\'m <b>Propie</b>, an AI bot of <b>OSWAL PROPERTIES</b>. How can we help you today?<br><b>You are a...</b>',true,800);
 }).then(function(){
   chat.showOptions([
     {icon:'🏠',label:'Tenant',sub:'Looking for a rental flat',val:'tenant'},

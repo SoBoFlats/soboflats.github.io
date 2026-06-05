@@ -66,6 +66,9 @@ a{color:inherit;text-decoration:none}
 .wiz-chip.sel{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
 .wiz-chip.sel::before{content:'\2713';position:absolute;top:-5px;right:-3px;width:16px;height:16px;border-radius:50%;background:var(--accent);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:800}
 .wiz-chip.disabled{opacity:.3;cursor:default;pointer-events:none}
+.wiz-textarea{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:14px;font-family:inherit;outline:none;resize:vertical;min-height:80px;transition:all .2s}
+.wiz-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.wiz-textarea::placeholder{color:var(--text3)}
 .wiz-nav{display:flex;gap:10px;padding:14px 0 32px;margin-top:auto}
 .wiz-btn{flex:1;padding:15px;border-radius:14px;border:none;font-size:14px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;letter-spacing:-.1px}
 .wiz-btn:active{transform:scale(.97)}

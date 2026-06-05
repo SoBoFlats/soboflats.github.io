@@ -12,7 +12,6 @@
 </head>
 <body>
 
-<button class="header-theme-btn" id="themeToggle" onclick="toggleTheme()">&#9790;</button>
 
 <!-- ── Page Content ───────────────────────────────────────────────────── -->
 <div class="page-wrap">
@@ -36,6 +35,7 @@
   <!-- Listing Picker -->
   <div class="ld-picker" id="screenPicker">
     <div class="ld-picker-title">Select Listings</div>
+    <div class="ld-picker-sub">Choose up to 3 listings to enquire about</div>
     <div class="ld-picker-sub">Choose up to 3 listings to enquire about</div>
     <input type="text" class="ld-search" id="ldSearch" placeholder="Search name, area or ID..." oninput="ldFilter(this.value)">
     <div class="ld-list" id="ldList"><div style="text-align:center;padding:40px;color:var(--text2)">Loading listings...</div></div>
