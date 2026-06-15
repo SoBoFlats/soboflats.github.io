@@ -12,7 +12,7 @@ var NAV_HTML='\
       <a href="./index.html" style="min-width:0;text-decoration:none"><div class="nav-tray-logo">Oswal Properties</div><div class="nav-tray-sub">Luxury &middot; Residential &middot; SoBo</div></a>\
     </div>\
     <p class="nav-intro-text"><b>RERA approved</b> Real Estate Consultancy firm, since 9 years professionally (30+ years locally). We specialise <b>ONLY</b> in <b>Luxury Residential Properties in South Bombay</b>.</p>\
-    <p class="nav-intro-text" style="margin-top:6px;font-size:10px;color:rgba(255,255,255,.35)">RERA Reg. No: A51900031717</p>\
+    <p class="nav-intro-text nav-rera-text" style="margin-top:6px;font-size:10px">RERA Reg. No: A51900031717</p>\
   </div>\
   <div class="nav-profile-row">\
     <img src="./photo.jpeg" class="nav-profile-photo" onerror="this.style.display=\'none\'" alt="Vaibhav Oswal" onclick="event.stopPropagation();event.preventDefault();openNavThumb(this.src)">\
@@ -155,7 +155,8 @@ window.closeNavThumb=function(){var ov=document.getElementById('navThumbOverlay'
 window.toggleTeam=function(){
   var s=document.getElementById('navTeamSection');var b=document.getElementById('teamToggleBtn');
   var open=s.classList.toggle('open');
-  if(b){b.style.transform=open?'rotate(180deg)':'';b.style.color=open?'rgba(255,255,255,.75)':'';}
+  var isLight=document.documentElement.getAttribute('data-theme')==='light';
+  if(b){b.style.transform=open?'rotate(180deg)':'';b.style.color=open?(isLight?'rgba(0,0,0,.75)':'rgba(255,255,255,.75)'):'';}
 };
 window.toggleBuildContact=function(){
   var card=document.getElementById('navContactCard');var chev=document.getElementById('buildChevron');

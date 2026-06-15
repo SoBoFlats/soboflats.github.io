@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Piramal Mahalaxmi, South · 2 bhk · For Rent</title>
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://soboflats.github.io/254.html">
@@ -20,16 +20,19 @@
       --sticky-bg:rgba(5,20,17,.88);--sticky-border:rgba(255,255,255,.08);
     }
     [data-theme="light"] {
-      --body-bg:#f0ece3;--overlay:linear-gradient(to bottom,rgba(240,236,227,.10) 0%,rgba(240,236,227,.32) 32%,rgba(240,236,227,.90) 66%,rgba(240,236,227,.98) 100%);
-      --card-bg:rgba(255,255,251,.82);--card-border:rgba(0,0,0,.09);--text-primary:#111;--text-secondary:rgba(20,20,20,.85);
+      --body-bg:#f4f1ea;--overlay:linear-gradient(to bottom,rgba(244,241,234,.10) 0%,rgba(244,241,234,.32) 32%,rgba(244,241,234,.90) 66%,rgba(244,241,234,.98) 100%);
+      --card-bg:rgba(255,255,251,.82);--card-border:rgba(0,0,0,.07);--text-primary:#1a1a1a;--text-secondary:rgba(20,20,20,.85);
       --text-muted:rgba(20,20,20,.50);--text-label:rgba(20,20,20,.40);--chip-bg:rgba(0,0,0,.06);--chip-border:rgba(0,0,0,.11);
       --chip-color:rgba(20,20,20,.82);--divider:rgba(0,0,0,.08);--tag-bg:rgba(0,0,0,.08);--tag-border:rgba(0,0,0,.18);
       --tag-color:rgba(20,20,20,.88);--sub-tag-bg:rgba(0,0,0,.07);--sub-tag-border:rgba(0,0,0,.15);--link-border:rgba(0,0,0,.07);
-      --fade-right:rgba(240,236,227,.62);--toggle-bg:rgba(0,0,0,.08);--toggle-border:rgba(0,0,0,.18);--toggle-color:rgba(20,20,20,.70);
-      --sticky-bg:rgba(240,236,227,.92);--sticky-border:rgba(0,0,0,.08);
+      --fade-right:rgba(244,241,234,.62);--toggle-bg:rgba(0,0,0,.08);--toggle-border:rgba(0,0,0,.18);--toggle-color:rgba(20,20,20,.70);
+      --sticky-bg:rgba(244,241,234,.92);--sticky-border:rgba(0,0,0,.06);
+      --card-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.03);
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--body-bg);min-height:100vh;max-width:430px;margin:0 auto}
+    @keyframes pageIn{from{opacity:0}to{opacity:1}}
+    [data-theme="light"] body{animation:pageIn .4s ease}
     .bg{position:fixed;inset:0;max-width:430px;margin:0 auto;background:#000;z-index:0;overflow:hidden}
     .bg::after{content:'';position:absolute;inset:0;background:var(--overlay);transition:background .35s;pointer-events:none;z-index:1}
     .scroll{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
@@ -57,6 +60,7 @@
     [data-theme="light"] .sub-tag:not(.gold){color:rgba(255,255,255,.92)!important;background:rgba(255,255,255,.13)!important;border-color:rgba(255,255,255,.28)!important}
     [data-theme="light"] .sub-tag.gold{color:#1a1000;background:rgba(255,217,60,.90);border-color:rgba(200,165,0,.55)}
     .card{margin:0 12px 16px;border-radius:22px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+    [data-theme="light"] .card{box-shadow:var(--card-shadow)}
     .price-block{padding:15px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--divider)}
     .price-left{display:flex;flex-direction:column;gap:3px}
     .price-rent-row{display:flex;align-items:baseline;gap:4px}
@@ -197,7 +201,8 @@
     .modal-dl-btn:active{background:rgba(72,199,142,.35)}
     .modal-cancel{width:100%;padding:11px;border-radius:16px;background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:13px;cursor:pointer;display:block}
     .modal-ask-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.75);text-align:center;margin-bottom:12px}
-  </style>
+  @media(min-width:600px){body{max-width:680px}.bg{max-width:680px}.sticky-bar{max-width:680px}.lightbox{max-width:680px}#browseDrawer{max-width:680px}.modal-overlay{max-width:680px}.enq-modal{max-width:680px}}
+</style>
   <link rel="stylesheet" href="./shared/nav.css">
 </head>
 <body>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Join WhatsApp Community · Oswal Properties</title>
 <meta name="description" content="Join Oswal Properties' private WhatsApp community for regular updates on South Bombay's residential rental market.">
 <meta property="og:title" content="Join Our WhatsApp Community · Oswal Properties">
@@ -13,46 +13,60 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a1a14;color:#fff}
+[data-theme="light"] body{background:#f4f1ea;color:#1a1a1a;animation:pageIn .4s ease}
+@keyframes pageIn{from{opacity:0}to{opacity:1}}
 a{color:inherit;text-decoration:none}
 .serif{font-family:Georgia,'Times New Roman',Times,serif}
 
 /* ── Page Layout ────────────────────────────────────────────────────── */
 .page-wrap{max-width:430px;margin:0 auto;height:100%;display:flex;flex-direction:column;padding:0 18px}
+@media(min-width:600px){.page-wrap{max-width:680px;padding:0 32px}}
 
 /* ── Header ─────────────────────────────────────────────────────────── */
 .page-header{display:flex;align-items:center;gap:12px;padding:44px 0 6px}
 .page-logo{width:52px;height:52px;border-radius:14px;object-fit:cover;border:1.5px solid rgba(255,255,255,.10);flex-shrink:0}
+[data-theme="light"] .page-logo{border-color:rgba(0,0,0,.10)}
 .header-text{flex:1}
 .page-title{font-size:21px;font-weight:700;letter-spacing:1.5px}
 .page-subtitle{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase}
+[data-theme="light"] .page-subtitle{color:rgba(0,0,0,.40)}
 
 /* ── Main Card ──────────────────────────────────────────────────────── */
 .community-card{margin-top:16px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
 
 /* ── Sections (shared style) ────────────────────────────────────────── */
 .info-section{padding:16px 18px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px}
+[data-theme="light"] .info-section{background:rgba(255,255,255,.55);border-color:rgba(0,0,0,.06);box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.03)}
 .info-section-title{font-size:10.5px;font-weight:700;color:rgba(72,199,142,.55);margin-bottom:10px;letter-spacing:1.2px;text-transform:uppercase}
+[data-theme="light"] .info-section-title{color:rgba(26,138,90,.70)}
 .info-row{display:flex;align-items:center;gap:10px;padding:5px 0}
 .info-emoji{font-size:15px;width:20px;text-align:center;flex-shrink:0}
 .info-text{font-size:13px;color:rgba(255,255,255,.60);line-height:1.35}
+[data-theme="light"] .info-text{color:rgba(0,0,0,.60)}
 
 /* ── Broadcast Note ─────────────────────────────────────────────────── */
 .broadcast-note{text-align:center;font-size:11px;color:rgba(255,217,102,.85);line-height:1.5;padding:12px 16px;background:rgba(255,217,102,.06);border-radius:14px;border:1px solid rgba(255,217,102,.12)}
+[data-theme="light"] .broadcast-note{color:rgba(138,104,0,.85);background:rgba(180,130,0,.06);border-color:rgba(180,130,0,.15)}
 
 /* ── Join Button ────────────────────────────────────────────────────── */
 .join-section{padding:16px 18px;background:rgba(37,211,102,.04);border:1px solid rgba(37,211,102,.12);border-radius:16px}
+[data-theme="light"] .join-section{background:rgba(37,211,102,.03);border-color:rgba(37,211,102,.10)}
 .join-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px 20px;border:none;border-radius:14px;background:#25d366;color:#fff;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;transition:background .15s,transform .1s;box-shadow:0 4px 24px rgba(37,211,102,.30)}
 .join-btn:active{background:#1da851;transform:scale(.98)}
 .join-btn svg{flex-shrink:0}
 .free-note{text-align:center;font-size:10px;color:rgba(255,255,255,.25);margin-top:10px}
+[data-theme="light"] .free-note{color:rgba(0,0,0,.30)}
 
 /* ── Contact Card ───────────────────────────────────────────────────── */
 .contact-section{margin-top:auto;padding:12px 0 24px;flex-shrink:0}
 .contact-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+[data-theme="light"] .contact-card{background:rgba(255,255,255,.55);border-color:rgba(0,0,0,.06);box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.03)}
 .contact-photo{width:40px;height:40px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.10);flex-shrink:0}
+[data-theme="light"] .contact-photo{border-color:rgba(0,0,0,.10)}
 .contact-info{flex:1;min-width:0}
 .contact-name{font-size:12.5px;font-weight:700}
 .contact-desc{font-size:10px;color:rgba(255,255,255,.30);margin-top:1px}
+[data-theme="light"] .contact-desc{color:rgba(0,0,0,.35)}
 .contact-wa-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.18);flex-shrink:0;text-decoration:none}
 .contact-wa-btn:active{background:rgba(37,211,102,.28)}
 </style>

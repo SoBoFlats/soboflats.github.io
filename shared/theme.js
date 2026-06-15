@@ -7,10 +7,9 @@ function toggleTheme(){
 }
 (function(){
   try{
-    var t=localStorage.getItem('theme');
-    if(t){document.documentElement.setAttribute('data-theme',t);
-      var sym=t==='light'?'☀':'☮';
-      ['themeToggle','navThemeToggle'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=sym});
-    }
+    var t=localStorage.getItem('theme')||'light';
+    document.documentElement.setAttribute('data-theme',t);
+    var sym=t==='light'?'☀':'☮';
+    ['themeToggle','navThemeToggle'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=sym});
   }catch(e){}
 })();
