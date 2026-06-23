@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Area Converter · Real Estate Tools · Oswal Properties</title>
+<meta name="description" content="Convert between sq ft, sq m, sq yd, acres, bigha, guntha and more. Free area converter for Indian real estate.">
+<link rel="stylesheet" href="../shared/common.css">
+<link rel="stylesheet" href="../shared/nav.css">
+<style>
+.tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
+.tool-back:active{color:var(--accent)}
+.tool-title-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.tool-icon{font-size:28px}
+.tool-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.tool-subtitle{font-size:12px;color:var(--text2);margin-bottom:20px;line-height:1.5}
+
+.calc-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:18px;margin-bottom:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+[data-theme="light"] .calc-card{box-shadow:var(--card-shadow)}
+
+.input-group{margin-bottom:16px}
+.input-group:last-child{margin-bottom:0}
+.input-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:5px;letter-spacing:.3px}
+.input-label-icon{font-size:13px}
+
+.input-row{display:flex;align-items:center;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);overflow:hidden;transition:border-color .2s}
+.input-row:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.input-field{flex:1;padding:12px 14px;border:none;background:transparent;color:var(--text);font-size:15px;font-weight:600;font-family:inherit;outline:none;min-width:0}
+.input-field::placeholder{color:var(--text3);font-weight:400}
+
+.select-wrap{position:relative}
+.select-field{width:100%;padding:12px 36px 12px 14px;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:13px;font-weight:600;font-family:inherit;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border-color .2s}
+.select-field:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.select-arrow{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text3);pointer-events:none}
+
+.swap-btn{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin:8px auto;border-radius:50%;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text2);font-size:18px;cursor:pointer;transition:all .2s}
+[data-theme="light"] .swap-btn{background:rgba(255,255,255,.65)}
+.swap-btn:active{border-color:var(--accent);color:var(--accent);transform:rotate(180deg)}
+
+.quick-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.quick-chip{padding:7px 12px;border-radius:20px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:10px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+[data-theme="light"] .quick-chip{background:rgba(255,255,255,.65)}
+.quick-chip:active,.quick-chip.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+
+.results-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;letter-spacing:.3px;text-transform:uppercase}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.result-row:last-child{border-bottom:none}
+.result-unit{font-size:13px;font-weight:600}
+.result-val{font-size:14px;font-weight:700;color:var(--accent);text-align:right}
+.result-val-abbr{font-size:10px;color:var(--text2);font-weight:500}
+
+.info-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;letter-spacing:.3px;text-transform:uppercase}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-item{padding:10px 12px;border-radius:12px;background:var(--input-bg);border:1px solid var(--input-border)}
+[data-theme="light"] .info-item{background:rgba(255,255,255,.5)}
+.info-item-label{font-size:10px;color:var(--text2);font-weight:600}
+.info-item-value{font-size:12px;font-weight:700;margin-top:2px}
+
+.faq-section{margin-top:20px}
+.faq-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;letter-spacing:.3px;text-transform:uppercase}
+.faq-item{margin-bottom:10px}
+.faq-q{font-size:13px;font-weight:700;padding:12px 14px;border-radius:12px;background:var(--input-bg);border:1px solid var(--input-border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .2s;gap:8px}
+[data-theme="light"] .faq-q{background:rgba(255,255,255,.65)}
+.faq-q:active{border-color:var(--accent)}
+.faq-chevron{font-size:14px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.faq-q.open .faq-chevron{transform:rotate(90deg);color:var(--accent)}
+.faq-a{font-size:12px;color:var(--text2);line-height:1.6;padding:0 14px;max-height:0;overflow:hidden;transition:max-height .4s,padding .3s}
+.faq-a.open{max-height:500px;padding:10px 14px 14px}
+.faq-a ul{margin:6px 0 0 16px;padding:0}
+.faq-a li{margin-bottom:4px}
+.faq-a p{margin-bottom:6px}
+
+.quick-links{margin-top:24px}
+.quick-links-title{font-size:10px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
+.quick-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick-link{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--glass);color:var(--text);text-decoration:none;transition:all .2s;backdrop-filter:blur(8px)}
+[data-theme="light"] .quick-link{background:var(--card);box-shadow:var(--card-shadow);border-color:var(--glass-border)}
+.quick-link:active{transform:scale(.97);border-color:var(--accent)}
+.quick-link-icon{font-size:18px;flex-shrink:0}
+.quick-link-text{font-size:11px;font-weight:700;line-height:1.3}
+.quick-link-sub{font-size:9px;color:var(--text2);font-weight:400}
+
+.tools-footer{text-align:center;padding:20px 0 40px;font-size:10px;color:var(--text3);line-height:1.6}
+.tools-footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <img src="../intro_oswal.jpeg" class="page-logo" onerror="this.style.display='none'" alt="">
+    <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
+  </div>
+
+  <a href="../BrokerTools.html" class="tool-back">&#8249; Real Estate Tools</a>
+
+  <div class="tool-title-row">
+    <span class="tool-icon">&#128208;</span>
+    <span class="tool-title">Area Converter</span>
+  </div>
+  <div class="tool-subtitle">Convert between different area units used in Indian real estate. Select your state for regional units like Bigha, Guntha and Katha.</div>
+
+  <!-- State selector -->
+  <div class="calc-card">
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#127463;</span> State (for regional units)</div>
+      <div class="select-wrap">
+        <select class="select-field" id="stateSelect">
+          <option value="maharashtra" selected>Maharashtra (Default)</option>
+          <option value="standard">Standard (No regional units)</option>
+          <option value="rajasthan">Rajasthan</option>
+          <option value="up">Uttar Pradesh</option>
+          <option value="bihar">Bihar</option>
+          <option value="wb">West Bengal</option>
+          <option value="assam">Assam</option>
+          <option value="mp">Madhya Pradesh</option>
+          <option value="gujarat">Gujarat</option>
+          <option value="punjab">Punjab</option>
+          <option value="hp">Himachal Pradesh</option>
+          <option value="uttarakhand">Uttarakhand</option>
+          <option value="karnataka">Karnataka</option>
+          <option value="kerala">Kerala</option>
+          <option value="tn">Tamil Nadu</option>
+          <option value="ap">Andhra Pradesh / Telangana</option>
+        </select>
+        <span class="select-arrow">&#9662;</span>
+      </div>
+    </div>
+
+    <!-- From -->
+    <div class="input-group">
+      <div class="input-label">From</div>
+      <div class="select-wrap" style="margin-bottom:8px">
+        <select class="select-field" id="fromUnit"></select>
+        <span class="select-arrow">&#9662;</span>
+      </div>
+      <div class="input-row">
+        <input type="text" class="input-field" id="fromValue" value="1,000" inputmode="decimal">
+      </div>
+    </div>
+
+    <!-- Swap -->
+    <button class="swap-btn" id="swapBtn" title="Swap units">&#8645;</button>
+
+    <!-- To -->
+    <div class="input-group">
+      <div class="input-label">To</div>
+      <div class="select-wrap" style="margin-bottom:8px">
+        <select class="select-field" id="toUnit"></select>
+        <span class="select-arrow">&#9662;</span>
+      </div>
+      <div class="input-row" style="background:var(--accent-bg);border-color:var(--accent-border)">
+        <input type="text" class="input-field" id="toValue" readonly style="color:var(--accent);font-size:18px">
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick conversions -->
+  <div class="quick-chips" id="quickChips"></div>
+
+  <!-- All conversions -->
+  <div class="calc-card">
+    <div class="results-title" id="allTitle">1,000 Square Feet equals:</div>
+    <div id="allResults"></div>
+  </div>
+
+  <!-- Reference -->
+  <div class="calc-card">
+    <div class="info-title">Common Reference</div>
+    <div class="info-grid">
+      <div class="info-item"><div class="info-item-label">1 Acre</div><div class="info-item-value">43,560 sq ft</div></div>
+      <div class="info-item"><div class="info-item-label">1 Hectare</div><div class="info-item-value">2.471 Acres</div></div>
+      <div class="info-item"><div class="info-item-label">1 Sq Meter</div><div class="info-item-value">10.764 sq ft</div></div>
+      <div class="info-item"><div class="info-item-label">1 Sq Yard</div><div class="info-item-value">9 sq ft</div></div>
+      <div class="info-item"><div class="info-item-label">1 Guntha (MH)</div><div class="info-item-value">1,089 sq ft</div></div>
+      <div class="info-item"><div class="info-item-label">40 Gunthas</div><div class="info-item-value">1 Acre</div></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">Common Questions</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the most common unit in Mumbai real estate?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Square Feet (sq ft)</b> is the standard unit in Mumbai and all urban Indian real estate</li>
+          <li>Carpet area, built-up area and super built-up area are all quoted in sq ft</li>
+          <li><b>RERA mandates</b> carpet area disclosure in sq ft for all projects</li>
+          <li>For land parcels in rural Maharashtra, <b>Guntha</b> and <b>Acre</b> are more common</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is a Guntha?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Guntha</b> (also spelled Gunta) is used mainly in Maharashtra, Karnataka, and Andhra Pradesh</li>
+          <li>In Maharashtra: <b>1 Guntha = 1,089 sq ft</b> (33 ft &times; 33 ft)</li>
+          <li><b>40 Gunthas = 1 Acre</b></li>
+          <li>Commonly used for agricultural land and NA (non-agricultural) plots</li>
+          <li>7/12 extracts and property cards in Maharashtra quote area in Gunthas or Hectares</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why does Bigha vary by state?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <p>Bigha is a traditional land measurement that was never standardised nationally:</p>
+        <ul>
+          <li><b>Rajasthan</b> &mdash; 1 Bigha = 27,225 sq ft (largest)</li>
+          <li><b>UP / Bihar</b> &mdash; 1 Bigha = ~27,000 sq ft</li>
+          <li><b>Gujarat</b> &mdash; 1 Bigha = 17,424 sq ft</li>
+          <li><b>West Bengal / Assam</b> &mdash; 1 Bigha = 14,400 sq ft</li>
+          <li><b>Madhya Pradesh</b> &mdash; 1 Bigha = 12,000 sq ft</li>
+          <li><b>Uttarakhand</b> &mdash; 1 Bigha = 6,804 sq ft (smallest)</li>
+        </ul>
+        <p>Always verify the local standard before any transaction.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the difference between Carpet, Built-up and Super Built-up area?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Carpet Area</b> &mdash; Usable floor area within the walls. What you actually walk on. RERA standard.</li>
+          <li><b>Built-up Area</b> &mdash; Carpet + wall thickness + balcony. Typically 10&ndash;15% more than carpet.</li>
+          <li><b>Super Built-up Area</b> &mdash; Built-up + share of common areas (lobby, stairs, gym etc.). Typically 25&ndash;40% more than carpet.</li>
+          <li><b>Loading factor</b> &mdash; The % added for common areas. In SoBo, typically 30&ndash;35% for new buildings.</li>
+          <li><b>Tip</b>: Always ask for <b>carpet area</b> when comparing properties. Super built-up varies widely between builders.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How are plots measured in Maharashtra?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Urban plots</b> &mdash; Square Feet or Square Meters</li>
+          <li><b>Agricultural land</b> &mdash; Gunthas, Acres, or Hectares</li>
+          <li><b>Revenue records</b> (7/12, property card) &mdash; Usually in Hectares and Ares (1 Are = 100 sq m)</li>
+          <li><b>NA plots</b> &mdash; Guntha is most common. Example: "5 Guntha NA plot" = 5,445 sq ft</li>
+          <li><b>Old documents</b> may use <b>Square Yards</b> — common in pre-1990s SoBo property deeds</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What are Kanal, Marla and Biswa?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <p>These are regional units used mainly in North India:</p>
+        <ul>
+          <li><b>Kanal</b> &mdash; Used in Punjab, Haryana, J&amp;K. 1 Kanal = 5,445 sq ft. 8 Kanals = 1 Acre.</li>
+          <li><b>Marla</b> &mdash; Sub-unit of Kanal. 1 Marla = 272.25 sq ft. 20 Marlas = 1 Kanal.</li>
+          <li><b>Biswa</b> &mdash; Used in UP, MP, Rajasthan. Size varies: 1 Biswa = 1,350 sq ft (UP) to 600 sq ft (MP).</li>
+          <li><b>Katha</b> &mdash; Used in Bihar, Bengal, Assam. 1 Katha = 1,361 sq ft (Bihar) vs 720 sq ft (Bengal).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="quick-links">
+    <div class="quick-links-title">Explore More</div>
+    <div class="quick-links-grid">
+      <a class="quick-link" href="../BrokerTools.html">
+        <span class="quick-link-icon">&#128736;</span>
+        <div><div class="quick-link-text">All Real Estate Tools</div><div class="quick-link-sub">Calculators &amp; utilities</div></div>
+      </a>
+      <a class="quick-link" href="./emi.html">
+        <span class="quick-link-icon">&#8377;</span>
+        <div><div class="quick-link-text">EMI Calculator</div><div class="quick-link-sub">Home loan EMI &amp; schedule</div></div>
+      </a>
+      <a class="quick-link" href="../RentPortfolio.html">
+        <span class="quick-link-icon">&#127968;</span>
+        <div><div class="quick-link-text">Rent Portfolio</div><div class="quick-link-sub">Browse SoBo listings</div></div>
+      </a>
+      <a class="quick-link" href="../index.html">
+        <span class="quick-link-icon">&#128100;</span>
+        <div><div class="quick-link-text">Home</div><div class="quick-link-sub">Oswal Properties</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="tools-footer">
+    Area conversions are for reference. Regional units may vary locally.<br>
+    Powered by <a href="https://housieai.com" target="_blank" rel="noopener">HousieAi.com</a>
+  </div>
+</div>
+
+<script src="../shared/theme.js"></script>
+<script src="../shared/nav.js"></script>
+<script>
+(function(){
+
+var STANDARD_UNITS=[
+  {id:'sqft',name:'Square Feet',abbr:'sq ft',toSqft:1},
+  {id:'sqm',name:'Square Meters',abbr:'sq m',toSqft:10.7639},
+  {id:'sqyd',name:'Square Yards',abbr:'sq yd',toSqft:9},
+  {id:'acre',name:'Acres',abbr:'acre',toSqft:43560},
+  {id:'hectare',name:'Hectares',abbr:'ha',toSqft:107639.104}
+];
+
+var REGIONAL={
+  maharashtra:[
+    {id:'guntha',name:'Guntha',abbr:'guntha',toSqft:1089},
+    {id:'bigha_mh',name:'Bigha',abbr:'bigha',toSqft:1089*20}
+  ],
+  rajasthan:[
+    {id:'bigha_rj',name:'Bigha',abbr:'bigha',toSqft:27225},
+    {id:'biswa_rj',name:'Biswa',abbr:'biswa',toSqft:1361.25}
+  ],
+  up:[
+    {id:'bigha_up',name:'Bigha',abbr:'bigha',toSqft:27000},
+    {id:'biswa_up',name:'Biswa',abbr:'biswa',toSqft:1350}
+  ],
+  bihar:[
+    {id:'bigha_br',name:'Bigha',abbr:'bigha',toSqft:27220},
+    {id:'katha_br',name:'Katha',abbr:'katha',toSqft:1361},
+    {id:'dhur_br',name:'Dhur',abbr:'dhur',toSqft:68.05}
+  ],
+  wb:[
+    {id:'bigha_wb',name:'Bigha',abbr:'bigha',toSqft:14400},
+    {id:'katha_wb',name:'Katha',abbr:'katha',toSqft:720},
+    {id:'chatak_wb',name:'Chatak',abbr:'chatak',toSqft:45}
+  ],
+  assam:[
+    {id:'bigha_as',name:'Bigha',abbr:'bigha',toSqft:14400},
+    {id:'katha_as',name:'Katha',abbr:'katha',toSqft:2880},
+    {id:'lecha_as',name:'Lecha',abbr:'lecha',toSqft:144}
+  ],
+  mp:[
+    {id:'bigha_mp',name:'Bigha',abbr:'bigha',toSqft:12000},
+    {id:'biswa_mp',name:'Biswa',abbr:'biswa',toSqft:600}
+  ],
+  gujarat:[
+    {id:'bigha_gj',name:'Bigha',abbr:'bigha',toSqft:17424},
+    {id:'vigha_gj',name:'Vigha',abbr:'vigha',toSqft:17424}
+  ],
+  punjab:[
+    {id:'bigha_pb',name:'Bigha',abbr:'bigha',toSqft:9072},
+    {id:'kanal_pb',name:'Kanal',abbr:'kanal',toSqft:5445},
+    {id:'marla_pb',name:'Marla',abbr:'marla',toSqft:272.25}
+  ],
+  hp:[
+    {id:'bigha_hp',name:'Bigha',abbr:'bigha',toSqft:8712},
+    {id:'biswa_hp',name:'Biswa',abbr:'biswa',toSqft:435.6}
+  ],
+  uttarakhand:[
+    {id:'bigha_uk',name:'Bigha',abbr:'bigha',toSqft:6804},
+    {id:'biswa_uk',name:'Biswa',abbr:'biswa',toSqft:340.2},
+    {id:'nali_uk',name:'Nali',abbr:'nali',toSqft:2160}
+  ],
+  karnataka:[
+    {id:'guntha_ka',name:'Guntha',abbr:'guntha',toSqft:1089},
+    {id:'acre_ka',name:'Acre',abbr:'acre',toSqft:43560}
+  ],
+  kerala:[
+    {id:'cent_kl',name:'Cent',abbr:'cent',toSqft:435.6}
+  ],
+  tn:[
+    {id:'cent_tn',name:'Cent',abbr:'cent',toSqft:435.6},
+    {id:'ground_tn',name:'Ground',abbr:'ground',toSqft:2400}
+  ],
+  ap:[
+    {id:'guntha_ap',name:'Guntha',abbr:'guntha',toSqft:1089},
+    {id:'cent_ap',name:'Cent',abbr:'cent',toSqft:435.6}
+  ]
+};
+
+var QUICK=[
+  {from:'sqft',to:'sqm',label:'Sq Ft → Sq M'},
+  {from:'sqm',to:'sqft',label:'Sq M → Sq Ft'},
+  {from:'sqyd',to:'sqft',label:'Sq Yd → Sq Ft'},
+  {from:'acre',to:'sqft',label:'Acre → Sq Ft'},
+  {from:'hectare',to:'acre',label:'Hectare → Acre'},
+  {from:'sqft',to:'guntha',label:'Sq Ft → Guntha'}
+];
+
+var fromSelect=document.getElementById('fromUnit');
+var toSelect=document.getElementById('toUnit');
+var fromInput=document.getElementById('fromValue');
+var toOutput=document.getElementById('toValue');
+var stateSelect=document.getElementById('stateSelect');
+var swapBtn=document.getElementById('swapBtn');
+var quickContainer=document.getElementById('quickChips');
+
+function formatIndian(n){
+  n=Math.round(n);
+  if(n<0)return '-'+formatIndian(-n);
+  var s=n.toString();
+  if(s.length<=3)return s;
+  var last3=s.slice(-3);
+  var rest=s.slice(0,-3);
+  if(rest)rest=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',');
+  return rest?rest+','+last3:last3;
+}
+
+function liveFormatIndian(input){
+  var pos=input.selectionStart;
+  var oldVal=input.value;
+  var raw=oldVal.replace(/[^0-9.]/g,'');
+  if(!raw){input.value='';return}
+  var parts=raw.split('.');
+  var intPart=parts[0];
+  if(!intPart)intPart='0';
+  var formatted=formatIndian(parseInt(intPart));
+  if(parts.length>1)formatted+='.'+parts[1];
+  input.value=formatted;
+  var oldCommasBefore=oldVal.slice(0,pos).split(',').length-1;
+  var newCommasBefore=formatted.slice(0,pos).split(',').length-1;
+  var newPos=pos+(newCommasBefore-oldCommasBefore);
+  if(newPos<0)newPos=0;
+  if(newPos>formatted.length)newPos=formatted.length;
+  input.setSelectionRange(newPos,newPos);
+}
+
+function getAllUnits(){
+  var state=stateSelect.value;
+  var units=STANDARD_UNITS.slice();
+  if(state!=='standard'&&REGIONAL[state]){
+    REGIONAL[state].forEach(function(u){
+      if(!units.some(function(e){return e.id===u.id}))units.push(u);
+    });
+  }
+  return units;
+}
+
+function populateSelects(keepFrom,keepTo){
+  var units=getAllUnits();
+  var prevFrom=keepFrom||fromSelect.value||'sqft';
+  var prevTo=keepTo||toSelect.value||'sqm';
+  fromSelect.innerHTML='';
+  toSelect.innerHTML='';
+  units.forEach(function(u){
+    fromSelect.add(new Option(u.name+' ('+u.abbr+')',u.id));
+    toSelect.add(new Option(u.name+' ('+u.abbr+')',u.id));
+  });
+  if(units.some(function(u){return u.id===prevFrom}))fromSelect.value=prevFrom;
+  if(units.some(function(u){return u.id===prevTo}))toSelect.value=prevTo;
+  if(fromSelect.value===toSelect.value){
+    var idx=units.findIndex(function(u){return u.id===toSelect.value});
+    toSelect.value=units[(idx+1)%units.length].id;
+  }
+}
+
+function getUnit(id){
+  var all=getAllUnits();
+  return all.find(function(u){return u.id===id})||all[0];
+}
+
+function convert(val,fromId,toId){
+  var from=getUnit(fromId);
+  var to=getUnit(toId);
+  var sqft=val*from.toSqft;
+  return sqft/to.toSqft;
+}
+
+function formatNum(n){
+  if(n===0)return '0';
+  if(n>=10000000)return (n/10000000).toFixed(2).replace(/\.?0+$/,'')+' Cr';
+  if(n>=100000)return (n/100000).toFixed(2).replace(/\.?0+$/,'')+' L';
+  if(Math.abs(n)<0.001)return n.toExponential(2);
+  if(Math.abs(n)<1)return n.toFixed(4).replace(/0+$/,'').replace(/\.$/,'');
+  if(n>=1000){
+    var s=n.toFixed(2).replace(/\.?0+$/,'');
+    var parts=s.split('.');
+    var intPart=parts[0];
+    var last3=intPart.slice(-3);
+    var rest=intPart.slice(0,-3);
+    if(rest)rest=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',');
+    parts[0]=rest?rest+','+last3:last3;
+    return parts.join('.');
+  }
+  return n.toFixed(2).replace(/\.?0+$/,'');
+}
+
+function update(){
+  var val=parseFloat(String(fromInput.value).replace(/,/g,''))||0;
+  var fromId=fromSelect.value;
+  var toId=toSelect.value;
+  var result=convert(val,fromId,toId);
+  toOutput.value=formatNum(result);
+
+  var fromUnit=getUnit(fromId);
+  document.getElementById('allTitle').textContent=formatNum(val)+' '+fromUnit.name+' equals:';
+
+  var allDiv=document.getElementById('allResults');
+  allDiv.innerHTML='';
+  var units=getAllUnits();
+  units.forEach(function(u){
+    if(u.id===fromId)return;
+    var v=convert(val,fromId,u.id);
+    var row=document.createElement('div');
+    row.className='result-row';
+    row.innerHTML='<div><div class="result-unit">'+u.name+'</div></div><div class="result-val">'+formatNum(v)+' <span class="result-val-abbr">'+u.abbr+'</span></div>';
+    allDiv.appendChild(row);
+  });
+}
+
+function buildQuickChips(){
+  quickContainer.innerHTML='';
+  var units=getAllUnits();
+  var chips=QUICK.filter(function(q){
+    return units.some(function(u){return u.id===q.from})&&units.some(function(u){return u.id===q.to});
+  });
+  chips.forEach(function(q){
+    var btn=document.createElement('button');
+    btn.className='quick-chip';
+    btn.textContent=q.label;
+    btn.addEventListener('click',function(){
+      fromSelect.value=q.from;
+      toSelect.value=q.to;
+      document.querySelectorAll('.quick-chip').forEach(function(c){c.classList.remove('active')});
+      btn.classList.add('active');
+      update();
+    });
+    quickContainer.appendChild(btn);
+  });
+}
+
+stateSelect.addEventListener('change',function(){
+  populateSelects();
+  buildQuickChips();
+  update();
+});
+
+fromSelect.addEventListener('change',function(){
+  if(fromSelect.value===toSelect.value){
+    var units=getAllUnits();
+    var idx=units.findIndex(function(u){return u.id===toSelect.value});
+    toSelect.value=units[(idx+1)%units.length].id;
+  }
+  update();
+});
+toSelect.addEventListener('change',function(){
+  if(fromSelect.value===toSelect.value){
+    var units=getAllUnits();
+    var idx=units.findIndex(function(u){return u.id===fromSelect.value});
+    fromSelect.value=units[(idx+1)%units.length].id;
+  }
+  update();
+});
+fromInput.addEventListener('input',function(){
+  liveFormatIndian(this);
+  update();
+});
+
+swapBtn.addEventListener('click',function(){
+  var f=fromSelect.value;
+  var t=toSelect.value;
+  var v=toOutput.value;
+  fromSelect.value=t;
+  toSelect.value=f;
+  fromInput.value=v.replace(/[^\d.,]/g,'');
+  update();
+});
+
+populateSelects('sqft','sqm');
+buildQuickChips();
+update();
+})();
+
+function toggleFaq(el){
+  var a=el.nextElementSibling;
+  var isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(function(q){q.classList.remove('open')});
+  document.querySelectorAll('.faq-a').forEach(function(a){a.classList.remove('open')});
+  if(!isOpen){el.classList.add('open');a.classList.add('open')}
+}
+</script>
+</body>
+</html>

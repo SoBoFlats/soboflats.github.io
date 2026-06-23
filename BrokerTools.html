@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Real Estate Tools · Oswal Properties</title>
+<meta name="description" content="Free real estate tools for brokers — EMI Calculator, Area Converter, Rent Agreement Calculator, Stamp Duty, ROI and more.">
+<link rel="stylesheet" href="./shared/common.css">
+<link rel="stylesheet" href="./shared/nav.css">
+<style>
+.tools-hero{padding:18px 0 6px}
+.tools-hero-row{display:flex;align-items:center;gap:12px}
+.tools-hero-icon{width:44px;height:44px;border-radius:14px;background:var(--accent-bg);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.tools-hero-text{}
+.tools-hero-title{font-size:20px;font-weight:800;letter-spacing:-.4px}
+.tools-hero-sub{font-size:11px;color:var(--text2);margin-top:2px;line-height:1.4}
+
+.tools-section{margin-top:22px}
+.tools-section-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-left:2px}
+.tools-section-bar{width:3px;height:16px;border-radius:2px;background:var(--accent);flex-shrink:0}
+.tools-section-title{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1.2px;text-transform:uppercase}
+
+.tool-card{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;border:1.5px solid var(--input-border);background:var(--glass);color:var(--text);text-decoration:none;transition:all .2s;margin-bottom:8px;position:relative;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+[data-theme="light"] .tool-card{background:var(--card);box-shadow:var(--card-shadow);border-color:var(--glass-border)}
+.tool-card:active{transform:scale(.98);border-color:var(--accent);background:var(--accent-bg)}
+
+.tool-card-icon{width:40px;height:40px;border-radius:12px;background:var(--accent-bg);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.tool-card-info{flex:1;min-width:0}
+.tool-card-name{font-size:14px;font-weight:700;line-height:1.3}
+.tool-card-desc{font-size:11px;color:var(--text2);margin-top:2px;line-height:1.4}
+.tool-card-chevron{font-size:16px;color:var(--text3);flex-shrink:0;transition:color .2s}
+.tool-card:active .tool-card-chevron{color:var(--accent)}
+
+.tool-card.coming-soon{opacity:.4;pointer-events:none}
+.tool-card.coming-soon .tool-card-badge{display:inline-block;font-size:8px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-left:6px;vertical-align:middle;background:var(--input-bg);border:1px solid var(--input-border);border-radius:6px;padding:1px 5px}
+
+.tools-footer{text-align:center;padding:24px 0 40px;font-size:10px;color:var(--text3);line-height:1.6}
+.tools-footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <img src="./intro_oswal.jpeg" class="page-logo" onerror="this.style.display='none'" alt="">
+    <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
+  </div>
+
+  <div class="tools-hero">
+    <div class="tools-hero-row">
+      <div class="tools-hero-icon">&#128736;</div>
+      <div class="tools-hero-text">
+        <div class="tools-hero-title">Real Estate Tools</div>
+        <div class="tools-hero-sub">Free calculators &amp; tools to help you close deals faster.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rent & Agreement Tools -->
+  <div class="tools-section">
+    <div class="tools-section-header">
+      <div class="tools-section-bar"></div>
+      <div class="tools-section-title">Rent &amp; Agreement Tools</div>
+    </div>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#128220;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">Rent Agreement Calculator <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">L&amp;L stamp duty, registration &amp; all charges</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#128181;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">TDS on Rent <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">TDS deduction on rent above &#8377;50,000/month</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#128200;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">Rental Yield <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">Annual rental yield % from rent vs property value</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+  </div>
+
+  <!-- Property & Investment Tools -->
+  <div class="tools-section">
+    <div class="tools-section-header">
+      <div class="tools-section-bar"></div>
+      <div class="tools-section-title">Property &amp; Investment Tools</div>
+    </div>
+
+    <a class="tool-card" href="./tools/emi.html">
+      <div class="tool-card-icon">&#8377;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">EMI Calculator</div>
+        <div class="tool-card-desc">Monthly home loan EMI with amortization schedule</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#128200;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">ROI Calculator <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">Return on investment including rental income &amp; appreciation</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#128196;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">Stamp Duty Calculator <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">Stamp duty &amp; registration charges for property purchase</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#127970;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">Society Transfer <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">Transfer fees &amp; NOC charges for Mumbai societies</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#127968;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">Home Loan Eligibility <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">Max loan amount based on your salary &amp; existing EMIs</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+  </div>
+
+  <!-- Converter Tools -->
+  <div class="tools-section">
+    <div class="tools-section-header">
+      <div class="tools-section-bar"></div>
+      <div class="tools-section-title">Converters &amp; Utilities</div>
+    </div>
+
+    <a class="tool-card" href="./tools/area.html">
+      <div class="tool-card-icon">&#128208;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">Area Converter</div>
+        <div class="tool-card-desc">Sq ft, sq m, sq yd, acres, bigha, guntha &amp; more</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#128207;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">Carpet vs Built-up <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">Convert between carpet, built-up &amp; super built-up area</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+  </div>
+
+  <!-- Business Tools -->
+  <div class="tools-section">
+    <div class="tools-section-header">
+      <div class="tools-section-bar"></div>
+      <div class="tools-section-title">Business &amp; Branding</div>
+    </div>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#128187;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">Business Card <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">Create &amp; download a professional digital business card</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+
+    <a class="tool-card coming-soon" href="#">
+      <div class="tool-card-icon">&#128100;</div>
+      <div class="tool-card-info">
+        <div class="tool-card-name">Business Profile <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-desc">Detailed broker profile with RERA, specialisations &amp; more</div>
+      </div>
+      <span class="tool-card-chevron">&#8250;</span>
+    </a>
+  </div>
+
+  <div class="tools-footer">
+    All calculations are for reference only. Verify with your legal/financial advisor.<br>
+    Powered by <a href="https://housieai.com" target="_blank" rel="noopener">HousieAi.com</a>
+  </div>
+</div>
+
+<script src="./shared/theme.js"></script>
+<script src="./shared/nav.js"></script>
+</body>
+</html>

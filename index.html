@@ -150,11 +150,13 @@ function showBrokerOptions(){
     chat.showOptions([
       {icon:'📋',label:'View Portfolio',sub:'Browse our listings',val:'portfolio'},
       {icon:'📝',label:'Listing Details',sub:'Ask about a flat',val:'queries'},
-      {icon:'📅',label:'Book Site Visit',sub:'Schedule a property tour',val:'sitevisit'}
+      {icon:'📅',label:'Book Site Visit',sub:'Schedule a property tour',val:'sitevisit'},
+      {icon:'🛠',label:'Real Estate Tools',sub:'EMI, Area, Stamp Duty & more',val:'tools'}
     ],function(val){
       if(val==='portfolio') showRentSale('portfolio');
       else if(val==='queries') window.location.href='./queries.html?user='+userType+'&interest=rent';
       else if(val==='sitevisit') window.location.href='./sitevisit.html?user='+userType+'&interest=rent';
+      else if(val==='tools') window.location.href='./BrokerTools.html';
     });
   });
 }

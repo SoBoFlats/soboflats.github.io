@@ -72,6 +72,11 @@ var NAV_HTML='\
       <span class="nav-tray-label">List Your Property</span>\
       <span class="nav-tray-chevron">&#8250;</span>\
     </a>\
+    <a href="./BrokerTools.html" class="nav-tray-item" data-nav="retools">\
+      <span class="nav-tray-icon">&#128736;</span>\
+      <span class="nav-tray-label">Real Estate Tools</span>\
+      <span class="nav-tray-chevron">&#8250;</span>\
+    </a>\
     <a href="./WhatsappCommunity.html" class="nav-tray-item" data-nav="community">\
       <span class="nav-tray-icon">'+wa(18,18)+'</span>\
       <span class="nav-tray-label">Join WhatsApp Community</span>\
@@ -119,6 +124,7 @@ var ACTIVE_MAP={
   'requirement.html':'requirement',
   'sitevisit.html':'sitevisit',
   'PostYourProperty.html':'postproperty',
+  'BrokerTools.html':'retools',
   'WhatsappCommunity.html':'community'
 };
 

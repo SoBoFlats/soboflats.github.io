@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EMI Calculator · Real Estate Tools · Oswal Properties</title>
+<meta name="description" content="Calculate your monthly home loan EMI with detailed payment breakdown. Free tool by Oswal Properties.">
+<link rel="stylesheet" href="../shared/common.css">
+<link rel="stylesheet" href="../shared/nav.css">
+<style>
+.tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
+.tool-back:active{color:var(--accent)}
+
+.tool-title-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.tool-icon{font-size:28px}
+.tool-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.tool-subtitle{font-size:12px;color:var(--text2);margin-bottom:20px;line-height:1.5}
+
+.calc-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:18px;margin-bottom:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+[data-theme="light"] .calc-card{box-shadow:var(--card-shadow)}
+
+.input-group{margin-bottom:18px}
+.input-group:last-child{margin-bottom:0}
+.input-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:5px;letter-spacing:.3px}
+.input-label-icon{font-size:13px}
+
+.input-row{display:flex;align-items:center;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);overflow:hidden;transition:border-color .2s}
+.input-row:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.input-prefix,.input-suffix{padding:0 10px;font-size:13px;font-weight:600;color:var(--text2);flex-shrink:0;user-select:none}
+.input-field{flex:1;padding:12px 4px;border:none;background:transparent;color:var(--text);font-size:15px;font-weight:600;font-family:inherit;outline:none;min-width:0}
+.input-field::placeholder{color:var(--text3);font-weight:400}
+
+.range-row{display:flex;align-items:center;gap:0;margin-top:8px}
+.range-label{font-size:10px;color:var(--text3);flex-shrink:0;min-width:28px}
+.range-label.right{text-align:right}
+.range-slider{flex:1;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:var(--input-border);outline:none;margin:0 8px}
+.range-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.range-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.range-current{font-size:10px;color:var(--accent);font-weight:700;text-align:center;margin-top:4px}
+
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.result-card{padding:14px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);text-align:center}
+[data-theme="light"] .result-card{background:rgba(255,255,255,.65);box-shadow:var(--card-shadow)}
+.result-card.primary{background:var(--accent);border-color:var(--accent);grid-column:1/-1}
+.result-card.primary .result-label,.result-card.primary .result-value,.result-card.primary .result-sub{color:#fff}
+.result-label{font-size:10px;font-weight:600;color:var(--text2);margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:4px}
+.result-label-icon{font-size:12px}
+.result-value{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.result-sub{font-size:10px;color:var(--text3);margin-top:2px}
+
+.breakdown-bar{height:12px;border-radius:6px;display:flex;overflow:hidden;margin-bottom:8px}
+.breakdown-bar-principal{background:var(--accent);transition:width .4s}
+.breakdown-bar-interest{background:var(--gold);transition:width .4s}
+.breakdown-legend{display:flex;gap:16px;justify-content:center}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-dot.principal{background:var(--accent)}
+.legend-dot.interest{background:var(--gold)}
+
+.yearly-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:11px}
+.yearly-table th{text-align:left;font-weight:700;color:var(--text2);padding:8px 6px;border-bottom:1px solid var(--border);font-size:10px;letter-spacing:.3px}
+.yearly-table td{padding:8px 6px;border-bottom:1px solid var(--border);font-weight:500}
+.yearly-table tr:last-child td{border-bottom:none}
+
+.tab-row{display:flex;gap:0;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1.5px solid var(--input-border)}
+.tab-btn{flex:1;padding:10px 8px;border:none;background:var(--input-bg);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit}
+.tab-btn.active{background:var(--accent);color:#fff}
+
+.faq-section{margin-top:20px}
+.faq-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;letter-spacing:.3px;text-transform:uppercase}
+.faq-item{margin-bottom:10px}
+.faq-q{font-size:13px;font-weight:700;padding:12px 14px;border-radius:12px;background:var(--input-bg);border:1px solid var(--input-border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .2s;gap:8px}
+[data-theme="light"] .faq-q{background:rgba(255,255,255,.65)}
+.faq-q:active{border-color:var(--accent)}
+.faq-chevron{font-size:14px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.faq-q.open .faq-chevron{transform:rotate(90deg);color:var(--accent)}
+.faq-a{font-size:12px;color:var(--text2);line-height:1.6;padding:0 14px;max-height:0;overflow:hidden;transition:max-height .4s,padding .3s}
+.faq-a.open{max-height:500px;padding:10px 14px 14px}
+.faq-a ul{margin:6px 0 0 16px;padding:0}
+.faq-a li{margin-bottom:4px}
+.faq-a p{margin-bottom:6px}
+
+.quick-links{margin-top:24px}
+.quick-links-title{font-size:10px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
+.quick-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick-link{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--glass);color:var(--text);text-decoration:none;transition:all .2s;backdrop-filter:blur(8px)}
+[data-theme="light"] .quick-link{background:var(--card);box-shadow:var(--card-shadow);border-color:var(--glass-border)}
+.quick-link:active{transform:scale(.97);border-color:var(--accent)}
+.quick-link-icon{font-size:18px;flex-shrink:0}
+.quick-link-text{font-size:11px;font-weight:700;line-height:1.3}
+.quick-link-sub{font-size:9px;color:var(--text2);font-weight:400}
+
+.tools-footer{text-align:center;padding:20px 0 40px;font-size:10px;color:var(--text3);line-height:1.6}
+.tools-footer a{color:var(--accent);text-decoration:none}
+
+@media(min-width:600px){.results-grid{grid-template-columns:repeat(4,1fr)}.result-card.primary{grid-column:auto}}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <img src="../intro_oswal.jpeg" class="page-logo" onerror="this.style.display='none'" alt="">
+    <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
+  </div>
+
+  <a href="../BrokerTools.html" class="tool-back">&#8249; Real Estate Tools</a>
+
+  <div class="tool-title-row">
+    <span class="tool-icon">&#8377;</span>
+    <span class="tool-title">EMI Calculator</span>
+  </div>
+  <div class="tool-subtitle">Calculate your monthly home loan EMI. Adjust loan amount, interest rate and tenure to see how your payments break down.</div>
+
+  <!-- Inputs -->
+  <div class="calc-card">
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#8377;</span> Loan Amount</div>
+      <div class="input-row">
+        <span class="input-prefix">&#8377;</span>
+        <input type="text" class="input-field" id="loanAmt" value="50,00,000" inputmode="numeric">
+      </div>
+      <div class="range-row">
+        <span class="range-label">&#8377;10L</span>
+        <input type="range" class="range-slider" id="loanSlider" min="1000000" max="50000000" step="100000" value="5000000">
+        <span class="range-label right">&#8377;5Cr</span>
+      </div>
+      <div class="range-current" id="loanCurrent">50.00 Lakhs</div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">%</span> Interest Rate (per annum)</div>
+      <div class="input-row">
+        <input type="text" class="input-field" id="rate" value="8.5" inputmode="decimal">
+        <span class="input-suffix">%</span>
+      </div>
+      <div class="range-row">
+        <span class="range-label">5%</span>
+        <input type="range" class="range-slider" id="rateSlider" min="5" max="15" step="0.1" value="8.5">
+        <span class="range-label right">15%</span>
+      </div>
+      <div class="range-current" id="rateCurrent">8.5% p.a.</div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#128197;</span> Loan Tenure</div>
+      <div class="input-row">
+        <input type="text" class="input-field" id="tenure" value="20" inputmode="numeric">
+        <span class="input-suffix">years</span>
+      </div>
+      <div class="range-row">
+        <span class="range-label">1 yr</span>
+        <input type="range" class="range-slider" id="tenureSlider" min="1" max="30" step="1" value="20">
+        <span class="range-label right">30 yrs</span>
+      </div>
+      <div class="range-current" id="tenureCurrent">20 Years (240 months)</div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-grid">
+    <div class="result-card primary">
+      <div class="result-label"><span class="result-label-icon">&#128176;</span> Monthly EMI</div>
+      <div class="result-value" id="emiValue">--</div>
+      <div class="result-sub">per month</div>
+    </div>
+    <div class="result-card">
+      <div class="result-label">Principal</div>
+      <div class="result-value" id="principalValue">--</div>
+    </div>
+    <div class="result-card">
+      <div class="result-label">Total Interest</div>
+      <div class="result-value" id="interestValue">--</div>
+      <div class="result-sub" id="interestPct"></div>
+    </div>
+    <div class="result-card">
+      <div class="result-label">Total Payment</div>
+      <div class="result-value" id="totalValue">--</div>
+    </div>
+  </div>
+
+  <!-- Breakdown -->
+  <div class="calc-card">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="showTab('breakdown')">Breakdown</button>
+      <button class="tab-btn" onclick="showTab('yearly')">Year-by-Year</button>
+    </div>
+
+    <div id="tabBreakdown">
+      <div class="breakdown-bar">
+        <div class="breakdown-bar-principal" id="barPrincipal" style="width:50%"></div>
+        <div class="breakdown-bar-interest" id="barInterest" style="width:50%"></div>
+      </div>
+      <div class="breakdown-legend">
+        <div class="legend-item"><span class="legend-dot principal"></span> Principal <span id="legendPrincipal"></span></div>
+        <div class="legend-item"><span class="legend-dot interest"></span> Interest <span id="legendInterest"></span></div>
+      </div>
+    </div>
+
+    <div id="tabYearly" style="display:none">
+      <table class="yearly-table">
+        <thead><tr><th>Year</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
+        <tbody id="yearlyBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">Common Questions</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How is EMI calculated?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <p>EMI is calculated using the standard banking formula:</p>
+        <ul>
+          <li><b>EMI = P &times; r &times; (1+r)<sup>n</sup> &divide; ((1+r)<sup>n</sup> &minus; 1)</b></li>
+          <li><b>P</b> = Loan amount (principal)</li>
+          <li><b>r</b> = Monthly interest rate (annual rate &divide; 12 &divide; 100)</li>
+          <li><b>n</b> = Total number of months (tenure &times; 12)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What other charges come with a home loan?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <p>Apart from EMI, banks charge several one-time and recurring fees:</p>
+        <ul>
+          <li><b>Processing Fee</b> &mdash; 0.25% to 1% of loan amount (one-time)</li>
+          <li><b>Legal &amp; Technical Charges</b> &mdash; &#8377;5,000&ndash;15,000 for property verification</li>
+          <li><b>Stamp Duty &amp; Registration</b> &mdash; On the loan agreement (varies by state)</li>
+          <li><b>MODT / CERSAI Charges</b> &mdash; Mortgage registration fees</li>
+          <li><b>Insurance</b> &mdash; Home loan protection plan (optional but recommended)</li>
+          <li><b>Prepayment/Foreclosure Fee</b> &mdash; Nil for floating rate (RBI rule), up to 2% for fixed rate</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What EMI can I afford?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <p>Banks use the <b>FOIR (Fixed Obligations to Income Ratio)</b> to decide eligibility:</p>
+        <ul>
+          <li>Total EMIs (all loans) should be <b>below 40&ndash;50%</b> of monthly take-home salary</li>
+          <li>Example: &#8377;1,00,000 salary &rarr; max EMI around &#8377;40,000&ndash;50,000</li>
+          <li>Higher salary brackets may get slightly relaxed ratios</li>
+          <li>Existing car loan, credit card EMIs etc. reduce your eligible amount</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How can I reduce my EMI?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Larger down payment</b> &mdash; reduces loan principal directly</li>
+          <li><b>Longer tenure</b> &mdash; lowers EMI but increases total interest paid</li>
+          <li><b>Lower interest rate</b> &mdash; negotiate with your bank, or consider balance transfer to another bank</li>
+          <li><b>Part-prepayments</b> &mdash; even &#8377;1&ndash;2 lakh/year extra can save lakhs in interest over the loan life</li>
+          <li><b>Floating vs Fixed</b> &mdash; floating rates are typically 0.5&ndash;1% lower than fixed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What tax benefits do I get on a home loan?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <p>Under the old tax regime:</p>
+        <ul>
+          <li><b>Section 80C</b> &mdash; Up to &#8377;1.5 lakh deduction on principal repayment</li>
+          <li><b>Section 24(b)</b> &mdash; Up to &#8377;2 lakh deduction on interest paid (self-occupied)</li>
+          <li><b>Section 80EEA</b> &mdash; Additional &#8377;1.5 lakh for first-time buyers (stamp value up to &#8377;45 lakh)</li>
+          <li><b>Joint loan</b> &mdash; Both co-borrowers can claim deductions separately</li>
+        </ul>
+        <p>Note: New tax regime offers lower rates but fewer deductions. Consult your CA.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Fixed vs Floating rate &mdash; which is better?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Floating rate</b> &mdash; Changes with RBI repo rate. Currently cheaper (8&ndash;9%). No prepayment penalty. Best for most borrowers.</li>
+          <li><b>Fixed rate</b> &mdash; Stays same for the entire tenure (or initial years). Usually 0.5&ndash;1.5% higher. Good if you expect rates to rise significantly.</li>
+          <li><b>Hybrid</b> &mdash; Fixed for first 2&ndash;3 years, then switches to floating. Offered by some banks.</li>
+          <li>Most Indian home loans today are on <b>floating rate linked to EBLR/RLLR</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I prepay or foreclose my loan early?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Floating rate loans</b> &mdash; Zero prepayment/foreclosure charges (RBI mandate since 2012)</li>
+          <li><b>Fixed rate loans</b> &mdash; Banks may charge up to 2&ndash;4% of outstanding principal</li>
+          <li><b>Best strategy</b> &mdash; Make partial prepayments annually; even small amounts in early years save significantly since interest component is highest then</li>
+          <li>You can choose to <b>reduce tenure</b> (keeps EMI same, saves more interest) or <b>reduce EMI</b> (keeps tenure same, gives monthly relief)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="quick-links">
+    <div class="quick-links-title">Explore More</div>
+    <div class="quick-links-grid">
+      <a class="quick-link" href="../BrokerTools.html">
+        <span class="quick-link-icon">&#128736;</span>
+        <div><div class="quick-link-text">All Real Estate Tools</div><div class="quick-link-sub">Calculators &amp; utilities</div></div>
+      </a>
+      <a class="quick-link" href="./area.html">
+        <span class="quick-link-icon">&#128208;</span>
+        <div><div class="quick-link-text">Area Converter</div><div class="quick-link-sub">Sq ft, sq m, guntha &amp; more</div></div>
+      </a>
+      <a class="quick-link" href="../RentPortfolio.html">
+        <span class="quick-link-icon">&#127968;</span>
+        <div><div class="quick-link-text">Rent Portfolio</div><div class="quick-link-sub">Browse SoBo listings</div></div>
+      </a>
+      <a class="quick-link" href="../index.html">
+        <span class="quick-link-icon">&#128100;</span>
+        <div><div class="quick-link-text">Home</div><div class="quick-link-sub">Oswal Properties</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="tools-footer">
+    EMI values are approximate. Actual EMI may vary based on bank terms.<br>
+    Powered by <a href="https://housieai.com" target="_blank" rel="noopener">HousieAi.com</a>
+  </div>
+</div>
+
+<script src="../shared/theme.js"></script>
+<script src="../shared/nav.js"></script>
+<script>
+(function(){
+var loanInput=document.getElementById('loanAmt');
+var rateInput=document.getElementById('rate');
+var tenureInput=document.getElementById('tenure');
+var loanSlider=document.getElementById('loanSlider');
+var rateSlider=document.getElementById('rateSlider');
+var tenureSlider=document.getElementById('tenureSlider');
+
+function parseNum(s){return parseFloat(String(s).replace(/,/g,''))||0}
+
+function formatIndian(n){
+  n=Math.round(n);
+  if(n<0)return '-'+formatIndian(-n);
+  var s=n.toString();
+  if(s.length<=3)return s;
+  var last3=s.slice(-3);
+  var rest=s.slice(0,-3);
+  if(rest)rest=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',');
+  return rest?rest+','+last3:last3;
+}
+
+function formatShort(n){
+  if(n>=10000000)return (n/10000000).toFixed(2).replace(/\.?0+$/,'')+' Cr';
+  if(n>=100000)return (n/100000).toFixed(2).replace(/\.?0+$/,'')+' L';
+  if(n>=1000)return (n/1000).toFixed(1).replace(/\.?0+$/,'')+'K';
+  return formatIndian(n);
+}
+
+function liveFormatIndian(input){
+  var pos=input.selectionStart;
+  var oldVal=input.value;
+  var digits=oldVal.replace(/[^0-9]/g,'');
+  if(!digits){input.value='';return}
+  var formatted=formatIndian(parseInt(digits));
+  input.value=formatted;
+  var oldCommasBefore=oldVal.slice(0,pos).split(',').length-1;
+  var newCommasBefore=formatted.slice(0,pos).split(',').length-1;
+  var newPos=pos+(newCommasBefore-oldCommasBefore);
+  if(newPos<0)newPos=0;
+  if(newPos>formatted.length)newPos=formatted.length;
+  input.setSelectionRange(newPos,newPos);
+}
+
+function calcEMI(P,annualRate,years){
+  var r=annualRate/12/100;
+  var n=years*12;
+  if(r===0)return P/n;
+  return P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+}
+
+function getYearlySchedule(P,annualRate,years){
+  var r=annualRate/12/100;
+  var emi=calcEMI(P,annualRate,years);
+  var balance=P;
+  var schedule=[];
+  for(var y=1;y<=years;y++){
+    var yPrincipal=0,yInterest=0;
+    for(var m=0;m<12;m++){
+      if(balance<=0)break;
+      var mi=balance*r;
+      var mp=emi-mi;
+      if(mp>balance)mp=balance;
+      yInterest+=mi;
+      yPrincipal+=mp;
+      balance-=mp;
+    }
+    schedule.push({year:y,principal:yPrincipal,interest:yInterest,balance:Math.max(0,balance)});
+    if(balance<=0)break;
+  }
+  return schedule;
+}
+
+function update(){
+  var P=parseNum(loanInput.value);
+  var rate=parseFloat(rateInput.value)||0;
+  var years=parseInt(tenureInput.value)||0;
+
+  if(P<=0||rate<=0||years<=0){
+    document.getElementById('emiValue').textContent='--';
+    document.getElementById('principalValue').textContent='--';
+    document.getElementById('interestValue').textContent='--';
+    document.getElementById('interestPct').textContent='';
+    document.getElementById('totalValue').textContent='--';
+    return;
+  }
+
+  var emi=calcEMI(P,rate,years);
+  var totalPayment=emi*years*12;
+  var totalInterest=totalPayment-P;
+  var pctInterest=((totalInterest/totalPayment)*100).toFixed(1);
+
+  document.getElementById('emiValue').textContent=formatIndian(Math.round(emi));
+  document.getElementById('principalValue').textContent=formatShort(P);
+  document.getElementById('interestValue').textContent=formatShort(totalInterest);
+  document.getElementById('interestPct').textContent=pctInterest+'% of total';
+  document.getElementById('totalValue').textContent=formatShort(totalPayment);
+
+  var pPct=(P/totalPayment*100).toFixed(1);
+  var iPct=(totalInterest/totalPayment*100).toFixed(1);
+  document.getElementById('barPrincipal').style.width=pPct+'%';
+  document.getElementById('barInterest').style.width=iPct+'%';
+  document.getElementById('legendPrincipal').textContent=formatShort(P);
+  document.getElementById('legendInterest').textContent=formatShort(totalInterest);
+
+  document.getElementById('loanCurrent').textContent=formatShort(P);
+  document.getElementById('rateCurrent').textContent=rate+'% p.a.';
+  document.getElementById('tenureCurrent').textContent=years+' Year'+(years>1?'s':'')+' ('+years*12+' months)';
+
+  var schedule=getYearlySchedule(P,rate,years);
+  var tbody=document.getElementById('yearlyBody');
+  tbody.innerHTML='';
+  for(var i=0;i<schedule.length;i++){
+    var s=schedule[i];
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+s.year+'</td><td>'+formatShort(s.principal)+'</td><td>'+formatShort(s.interest)+'</td><td>'+formatShort(s.balance)+'</td>';
+    tbody.appendChild(tr);
+  }
+}
+
+loanInput.addEventListener('input',function(){
+  liveFormatIndian(this);
+  var v=parseNum(this.value);
+  if(v>=1000000&&v<=50000000)loanSlider.value=v;
+  else if(v>50000000)loanSlider.value=50000000;
+  update();
+});
+loanInput.addEventListener('blur',function(){
+  var v=parseNum(this.value);
+  if(v)this.value=formatIndian(v);
+});
+loanSlider.addEventListener('input',function(){
+  loanInput.value=formatIndian(parseInt(this.value));
+  update();
+});
+
+rateInput.addEventListener('input',function(){
+  var v=parseFloat(this.value);
+  if(v>=5&&v<=15)rateSlider.value=v;
+  update();
+});
+rateSlider.addEventListener('input',function(){
+  rateInput.value=parseFloat(this.value).toFixed(1);
+  update();
+});
+
+tenureInput.addEventListener('input',function(){
+  var v=parseInt(this.value);
+  if(v>=1&&v<=30)tenureSlider.value=v;
+  update();
+});
+tenureSlider.addEventListener('input',function(){
+  tenureInput.value=this.value;
+  update();
+});
+
+update();
+})();
+
+function showTab(name){
+  document.getElementById('tabBreakdown').style.display=name==='breakdown'?'':'none';
+  document.getElementById('tabYearly').style.display=name==='yearly'?'':'none';
+  var btns=document.querySelectorAll('.tab-btn');
+  btns[0].classList.toggle('active',name==='breakdown');
+  btns[1].classList.toggle('active',name==='yearly');
+}
+
+function toggleFaq(el){
+  var a=el.nextElementSibling;
+  var isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(function(q){q.classList.remove('open')});
+  document.querySelectorAll('.faq-a').forEach(function(a){a.classList.remove('open')});
+  if(!isOpen){el.classList.add('open');a.classList.add('open')}
+}
+</script>
+</body>
+</html>
