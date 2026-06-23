@@ -34,6 +34,16 @@
 .tool-card.coming-soon{opacity:.4;pointer-events:none}
 .tool-card.coming-soon .tool-card-badge{display:inline-block;font-size:8px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-left:6px;vertical-align:middle;background:var(--input-bg);border:1px solid var(--input-border);border-radius:6px;padding:1px 5px}
 
+.quick-links{margin-top:24px}
+.quick-links-title{font-size:10px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
+.quick-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick-link{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--glass);color:var(--text);text-decoration:none;transition:all .2s;backdrop-filter:blur(8px)}
+[data-theme="light"] .quick-link{background:var(--card);box-shadow:var(--card-shadow);border-color:var(--glass-border)}
+.quick-link:active{transform:scale(.97);border-color:var(--accent)}
+.quick-link-icon{font-size:18px;flex-shrink:0}
+.quick-link-text{font-size:11px;font-weight:700;line-height:1.3}
+.quick-link-sub{font-size:9px;color:var(--text2);font-weight:400}
+
 .tools-footer{text-align:center;padding:24px 0 40px;font-size:10px;color:var(--text3);line-height:1.6}
 .tools-footer a{color:var(--accent);text-decoration:none}
 </style>
@@ -107,19 +117,19 @@
       <span class="tool-card-chevron">&#8250;</span>
     </a>
 
-    <a class="tool-card coming-soon" href="#">
+    <a class="tool-card" href="./tools/roi.html">
       <div class="tool-card-icon">&#128200;</div>
       <div class="tool-card-info">
-        <div class="tool-card-name">ROI Calculator <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-name">ROI Calculator</div>
         <div class="tool-card-desc">Return on investment including rental income &amp; appreciation</div>
       </div>
       <span class="tool-card-chevron">&#8250;</span>
     </a>
 
-    <a class="tool-card coming-soon" href="#">
+    <a class="tool-card" href="./tools/stamp-duty.html">
       <div class="tool-card-icon">&#128196;</div>
       <div class="tool-card-info">
-        <div class="tool-card-name">Stamp Duty Calculator <span class="tool-card-badge">Soon</span></div>
+        <div class="tool-card-name">Stamp Duty Calculator</div>
         <div class="tool-card-desc">Stamp duty &amp; registration charges for property purchase</div>
       </div>
       <span class="tool-card-chevron">&#8250;</span>
@@ -194,6 +204,29 @@
       </div>
       <span class="tool-card-chevron">&#8250;</span>
     </a>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="quick-links">
+    <div class="quick-links-title">Explore More</div>
+    <div class="quick-links-grid">
+      <a class="quick-link" href="./RentPortfolio.html">
+        <span class="quick-link-icon">&#127968;</span>
+        <div><div class="quick-link-text">Rent Portfolio</div><div class="quick-link-sub">Browse SoBo listings</div></div>
+      </a>
+      <a class="quick-link" href="./WhatsappCommunity.html">
+        <span class="quick-link-icon">&#128172;</span>
+        <div><div class="quick-link-text">Join Community</div><div class="quick-link-sub">WhatsApp group</div></div>
+      </a>
+      <a class="quick-link" href="./sitevisit.html">
+        <span class="quick-link-icon">&#128197;</span>
+        <div><div class="quick-link-text">Book Site Visit</div><div class="quick-link-sub">Schedule a showing</div></div>
+      </a>
+      <a class="quick-link" href="./index.html">
+        <span class="quick-link-icon">&#128100;</span>
+        <div><div class="quick-link-text">Home</div><div class="quick-link-sub">Oswal Properties</div></div>
+      </a>
+    </div>
   </div>
 
   <div class="tools-footer">

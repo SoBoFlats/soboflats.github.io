@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROI Calculator · Real Estate Tools · Oswal Properties</title>
+<meta name="description" content="Calculate return on investment for your property including rental income, appreciation and expenses. Compare with FD, Gold, Nifty and more. Free tool by Oswal Properties.">
+<link rel="stylesheet" href="../shared/common.css">
+<link rel="stylesheet" href="../shared/nav.css">
+<style>
+.tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
+.tool-back:active{color:var(--accent)}
+
+.tool-title-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.tool-icon{font-size:28px}
+.tool-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.tool-subtitle{font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.5}
+
+.calc-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:18px;margin-bottom:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+[data-theme="light"] .calc-card{box-shadow:var(--card-shadow)}
+
+.section-label{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+.preset-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.preset-chip{padding:7px 12px;border-radius:20px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:10px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+[data-theme="light"] .preset-chip{background:rgba(255,255,255,.65)}
+.preset-chip:active,.preset-chip.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+
+.input-group{margin-bottom:18px}
+.input-group:last-child{margin-bottom:0}
+.input-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:5px;letter-spacing:.3px}
+.input-label-icon{font-size:13px}
+
+.input-row{display:flex;align-items:center;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);overflow:hidden;transition:border-color .2s}
+.input-row:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.input-prefix,.input-suffix{padding:0 10px;font-size:13px;font-weight:600;color:var(--text2);flex-shrink:0;user-select:none}
+.input-field{flex:1;padding:12px 4px;border:none;background:transparent;color:var(--text);font-size:15px;font-weight:600;font-family:inherit;outline:none;min-width:0}
+.input-field::placeholder{color:var(--text3);font-weight:400}
+
+.range-row{display:flex;align-items:center;gap:0;margin-top:8px}
+.range-label{font-size:10px;color:var(--text3);flex-shrink:0;min-width:28px}
+.range-label.right{text-align:right}
+.range-slider{flex:1;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:var(--input-border);outline:none;margin:0 8px}
+.range-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.range-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.range-current{font-size:10px;color:var(--accent);font-weight:700;text-align:center;margin-top:4px}
+
+.tip{font-size:10px;color:var(--text3);margin-top:4px;padding-left:2px;line-height:1.4;font-style:italic}
+.tip b{color:var(--text2);font-style:normal}
+
+.freq-toggle{display:inline-flex;border-radius:8px;overflow:hidden;border:1.5px solid var(--input-border);margin-left:auto}
+.freq-btn{padding:5px 12px;border:none;background:var(--input-bg);color:var(--text2);font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.freq-btn.active{background:var(--accent);color:#fff}
+
+.check-row{display:flex;align-items:center;gap:8px;margin:14px 0 6px;cursor:pointer;user-select:none}
+.check-input{display:none}
+.check-mark{width:18px;height:18px;border:1.5px solid var(--input-border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;background:var(--input-bg);font-size:11px;color:transparent;font-weight:700}
+.check-input:checked~.check-mark{background:var(--accent);border-color:var(--accent);color:#fff}
+.check-label{font-size:12px;font-weight:600;color:var(--text)}
+.check-tip{font-size:10px;color:var(--text3);font-style:italic;margin-left:auto;font-weight:500}
+.sub-inputs{max-height:0;overflow:hidden;transition:max-height .3s;padding-left:26px}
+.sub-inputs.open{max-height:200px}
+
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.result-card{padding:14px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);text-align:center}
+[data-theme="light"] .result-card{background:rgba(255,255,255,.65);box-shadow:var(--card-shadow)}
+.result-card.primary{background:var(--accent);border-color:var(--accent);grid-column:1/-1}
+.result-card.primary .result-label,.result-card.primary .result-value,.result-card.primary .result-sub{color:#fff}
+.result-label{font-size:10px;font-weight:600;color:var(--text2);margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:4px}
+.result-label-icon{font-size:12px}
+.result-value{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.result-sub{font-size:10px;color:var(--text3);margin-top:2px}
+
+.result-card.positive .result-value{color:#22c55e}
+.result-card.negative .result-value{color:#ef4444}
+.result-card.primary .result-value{color:#fff}
+
+.breakdown-bar{height:12px;border-radius:6px;display:flex;overflow:hidden;margin-bottom:8px}
+.breakdown-bar-capital{background:var(--accent);transition:width .4s}
+.breakdown-bar-rental{background:var(--gold);transition:width .4s}
+.breakdown-bar-expense{background:#ef4444;transition:width .4s}
+.breakdown-legend{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-dot.capital{background:var(--accent)}
+.legend-dot.rental{background:var(--gold)}
+.legend-dot.expense{background:#ef4444}
+
+.tab-row{display:flex;gap:0;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1.5px solid var(--input-border)}
+.tab-btn{flex:1;padding:10px 8px;border:none;background:var(--input-bg);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit}
+.tab-btn.active{background:var(--accent);color:#fff}
+
+.yearly-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:11px}
+.yearly-table th{text-align:left;font-weight:700;color:var(--text2);padding:8px 6px;border-bottom:1px solid var(--border);font-size:10px;letter-spacing:.3px}
+.yearly-table td{padding:8px 6px;border-bottom:1px solid var(--border);font-weight:500}
+.yearly-table tr:last-child td{border-bottom:none}
+
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.summary-row:last-child{border-bottom:none}
+.summary-label{font-size:12px;color:var(--text2);font-weight:600}
+.summary-value{font-size:13px;font-weight:700;text-align:right}
+.summary-sub{font-size:10px;color:var(--text3);font-weight:500}
+
+.compare-section-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;letter-spacing:.3px;text-transform:uppercase}
+.compare-row{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--border)}
+.compare-row:last-child{border-bottom:none}
+.compare-icon{font-size:16px;flex-shrink:0;width:22px;text-align:center}
+.compare-info{flex:1;min-width:0}
+.compare-name{font-size:12px;font-weight:700}
+.compare-rate{font-size:10px;color:var(--text3)}
+.compare-bar-wrap{flex:1;max-width:80px}
+.compare-bar{height:8px;border-radius:4px;transition:width .4s}
+.compare-amt{font-size:11px;font-weight:700;text-align:right;min-width:48px;flex-shrink:0}
+.compare-row.winner .compare-name{color:var(--accent)}
+.compare-row.winner .compare-amt{color:var(--accent)}
+
+.verdict-box{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:12px;line-height:1.5;font-weight:600}
+.verdict-box.win{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#16a34a}
+[data-theme="light"] .verdict-box.win{background:rgba(34,197,94,.08)}
+.verdict-box.lose{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444}
+[data-theme="light"] .verdict-box.lose{background:rgba(239,68,68,.08)}
+.verdict-box.tie{background:var(--accent-bg);border:1px solid var(--accent-border);color:var(--accent)}
+
+.faq-section{margin-top:20px}
+.faq-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;letter-spacing:.3px;text-transform:uppercase}
+.faq-item{margin-bottom:10px}
+.faq-q{font-size:13px;font-weight:700;padding:12px 14px;border-radius:12px;background:var(--input-bg);border:1px solid var(--input-border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .2s;gap:8px}
+[data-theme="light"] .faq-q{background:rgba(255,255,255,.65)}
+.faq-q:active{border-color:var(--accent)}
+.faq-chevron{font-size:14px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.faq-q.open .faq-chevron{transform:rotate(90deg);color:var(--accent)}
+.faq-a{font-size:12px;color:var(--text2);line-height:1.6;padding:0 14px;max-height:0;overflow:hidden;transition:max-height .4s,padding .3s}
+.faq-a.open{max-height:500px;padding:10px 14px 14px}
+.faq-a ul{margin:6px 0 0 16px;padding:0}
+.faq-a li{margin-bottom:4px}
+.faq-a p{margin-bottom:6px}
+
+.quick-links{margin-top:24px}
+.quick-links-title{font-size:10px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
+.quick-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick-link{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--glass);color:var(--text);text-decoration:none;transition:all .2s;backdrop-filter:blur(8px)}
+[data-theme="light"] .quick-link{background:var(--card);box-shadow:var(--card-shadow);border-color:var(--glass-border)}
+.quick-link:active{transform:scale(.97);border-color:var(--accent)}
+.quick-link-icon{font-size:18px;flex-shrink:0}
+.quick-link-text{font-size:11px;font-weight:700;line-height:1.3}
+.quick-link-sub{font-size:9px;color:var(--text2);font-weight:400}
+
+.tools-footer{text-align:center;padding:20px 0 40px;font-size:10px;color:var(--text3);line-height:1.6}
+.tools-footer a{color:var(--accent);text-decoration:none}
+
+@media(min-width:600px){.results-grid{grid-template-columns:repeat(4,1fr)}.result-card.primary{grid-column:auto}}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <img src="../intro_oswal.jpeg" class="page-logo" onerror="this.style.display='none'" alt="">
+    <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
+  </div>
+
+  <a href="../BrokerTools.html" class="tool-back">&#8249; Real Estate Tools</a>
+
+  <div class="tool-title-row">
+    <span class="tool-icon">&#128200;</span>
+    <span class="tool-title">ROI Calculator</span>
+  </div>
+  <div class="tool-subtitle">Calculate return on investment for your property including capital appreciation, rental income and expenses. Compare against FD, Gold, Nifty &amp; PPF.</div>
+
+  <!-- Presets -->
+  <div class="preset-chips" id="presetChips">
+    <button class="preset-chip" data-preset="sobo2">2 BHK SoBo</button>
+    <button class="preset-chip" data-preset="sobo3">3 BHK SoBo</button>
+    <button class="preset-chip" data-preset="suburb">2 BHK Suburbs</button>
+    <button class="preset-chip" data-preset="commercial">Commercial</button>
+    <button class="preset-chip" data-preset="plot">Plot / Land</button>
+  </div>
+
+  <!-- Property Inputs -->
+  <div class="calc-card">
+    <div class="section-label">&#127968; Property Details</div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#8377;</span> Purchase Price</div>
+      <div class="input-row">
+        <span class="input-prefix">&#8377;</span>
+        <input type="text" class="input-field" id="purchasePrice" value="50,00,000" inputmode="numeric">
+      </div>
+      <div class="range-row">
+        <span class="range-label">&#8377;10L</span>
+        <input type="range" class="range-slider" id="purchaseSlider" min="1000000" max="100000000" step="100000" value="5000000">
+        <span class="range-label right">&#8377;10Cr</span>
+      </div>
+      <div class="range-current" id="purchaseCurrent">50.00 Lakhs</div>
+      <div class="tip">Total amount paid including stamp duty, registration &amp; all charges</div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#8377;</span> Current / Expected Value</div>
+      <div class="input-row">
+        <span class="input-prefix">&#8377;</span>
+        <input type="text" class="input-field" id="currentValue" value="75,00,000" inputmode="numeric">
+      </div>
+      <div class="range-row">
+        <span class="range-label">&#8377;10L</span>
+        <input type="range" class="range-slider" id="currentSlider" min="1000000" max="200000000" step="100000" value="7500000">
+        <span class="range-label right">&#8377;20Cr</span>
+      </div>
+      <div class="range-current" id="currentCurrent">75.00 Lakhs</div>
+      <div class="tip">Market value today or expected value at sale. Check ready reckoner or recent sales nearby</div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#128197;</span> Holding Period</div>
+      <div class="input-row">
+        <input type="text" class="input-field" id="holdingYears" value="5" inputmode="numeric">
+        <span class="input-suffix">years</span>
+      </div>
+      <div class="range-row">
+        <span class="range-label">1 yr</span>
+        <input type="range" class="range-slider" id="holdingSlider" min="1" max="30" step="1" value="5">
+        <span class="range-label right">30 yrs</span>
+      </div>
+      <div class="range-current" id="holdingCurrent">5 Years</div>
+      <div class="tip">Longer holding periods typically show better returns due to compounding</div>
+    </div>
+  </div>
+
+  <!-- Rental Income -->
+  <div class="calc-card">
+    <div class="section-label" style="justify-content:space-between">
+      <span>&#127968; Rental Income</span>
+      <div class="freq-toggle" id="freqToggle">
+        <button class="freq-btn active" data-freq="monthly">Monthly</button>
+        <button class="freq-btn" data-freq="annual">Annual</button>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#8377;</span> <span id="rentLabel">Monthly Rent</span></div>
+      <div class="input-row">
+        <span class="input-prefix">&#8377;</span>
+        <input type="text" class="input-field" id="rentalIncome" value="20,000" inputmode="numeric" placeholder="0 if not rented">
+      </div>
+      <div class="range-row">
+        <span class="range-label" id="rentMinLabel">&#8377;0</span>
+        <input type="range" class="range-slider" id="rentalSlider" min="0" max="500000" step="1000" value="20000">
+        <span class="range-label right" id="rentMaxLabel">&#8377;5L</span>
+      </div>
+      <div class="range-current" id="rentalCurrent">20,000/month</div>
+      <div class="tip">Typical rental yield &mdash; <b>SoBo: 2-3%</b> | Suburbs: 3-4% | Commercial: 6-9% of property value annually</div>
+    </div>
+
+    <label class="check-row" id="incrCheckRow">
+      <input type="checkbox" class="check-input" id="incrCheck">
+      <span class="check-mark">&#10003;</span>
+      <span class="check-label">Annual Rent Increment</span>
+      <span class="check-tip">Standard: 5%</span>
+    </label>
+    <div class="sub-inputs" id="incrSub">
+      <div class="input-group" style="margin-top:8px">
+        <div class="input-row" style="max-width:160px">
+          <input type="text" class="input-field" id="incrPct" value="5" inputmode="decimal">
+          <span class="input-suffix">% / year</span>
+        </div>
+        <div class="range-row">
+          <span class="range-label">1%</span>
+          <input type="range" class="range-slider" id="incrSlider" min="1" max="15" step="0.5" value="5">
+          <span class="range-label right">15%</span>
+        </div>
+        <div class="tip">L&amp;L agreements typically have 5-8% annual increment clause</div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#128197;</span> Vacancy Loss</div>
+      <div class="input-row">
+        <input type="text" class="input-field" id="vacancy" value="1" inputmode="numeric">
+        <span class="input-suffix">months/year</span>
+      </div>
+      <div class="range-row">
+        <span class="range-label">0</span>
+        <input type="range" class="range-slider" id="vacancySlider" min="0" max="6" step="1" value="1">
+        <span class="range-label right">6 mo</span>
+      </div>
+      <div class="range-current" id="vacancyCurrent">1 month</div>
+      <div class="tip">Average vacancy in Mumbai: 1-2 months between tenants per year</div>
+    </div>
+  </div>
+
+  <!-- Expenses -->
+  <div class="calc-card">
+    <div class="section-label">&#128181; Expenses</div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#128181;</span> Annual Expenses (maintenance, tax, insurance, repairs, brokerage)</div>
+      <div class="input-row">
+        <span class="input-prefix">&#8377;</span>
+        <input type="text" class="input-field" id="expenses" value="48,000" inputmode="numeric" placeholder="0 if none">
+      </div>
+      <div class="range-row">
+        <span class="range-label">&#8377;0</span>
+        <input type="range" class="range-slider" id="expenseSlider" min="0" max="1000000" step="5000" value="48000">
+        <span class="range-label right">&#8377;10L</span>
+      </div>
+      <div class="range-current" id="expenseCurrent">48,000/year</div>
+      <div class="tip">Include society maintenance + property tax + insurance + repairs (~1% of value) + brokerage for finding tenants</div>
+    </div>
+
+    <label class="check-row" id="intCheckRow">
+      <input type="checkbox" class="check-input" id="intCheck">
+      <span class="check-mark">&#10003;</span>
+      <span class="check-label">Interior / Furnishing Cost</span>
+      <span class="check-tip">One-time</span>
+    </label>
+    <div class="sub-inputs" id="intSub">
+      <div class="input-group" style="margin-top:8px">
+        <div class="input-row">
+          <span class="input-prefix">&#8377;</span>
+          <input type="text" class="input-field" id="intCost" value="5,00,000" inputmode="numeric">
+        </div>
+        <div class="range-row">
+          <span class="range-label">&#8377;0</span>
+          <input type="range" class="range-slider" id="intSlider" min="0" max="5000000" step="25000" value="500000">
+          <span class="range-label right">&#8377;50L</span>
+        </div>
+        <div class="tip">Added to total investment, affects ROI. Typical: &#8377;500&ndash;2000/sq ft for furnishing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-grid">
+    <div class="result-card primary">
+      <div class="result-label"><span class="result-label-icon">&#128200;</span> Total ROI</div>
+      <div class="result-value" id="totalRoi">--</div>
+      <div class="result-sub" id="totalRoiAmt"></div>
+    </div>
+    <div class="result-card">
+      <div class="result-label">Annualized ROI (CAGR)</div>
+      <div class="result-value" id="annualRoi">--</div>
+    </div>
+    <div class="result-card">
+      <div class="result-label">Capital Gains</div>
+      <div class="result-value" id="capitalGains">--</div>
+      <div class="result-sub" id="capitalPct"></div>
+    </div>
+    <div class="result-card">
+      <div class="result-label">Net Rental Income</div>
+      <div class="result-value" id="netRental">--</div>
+      <div class="result-sub" id="rentalYield"></div>
+    </div>
+  </div>
+
+  <!-- Beat the Market -->
+  <div class="calc-card">
+    <div class="compare-section-title">Did your property beat the market?</div>
+    <div id="compareList"></div>
+    <div id="verdictBox" class="verdict-box win" style="display:none"></div>
+  </div>
+
+  <!-- Breakdown -->
+  <div class="calc-card">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="showTab('summary')">Summary</button>
+      <button class="tab-btn" onclick="showTab('projection')">10-Year Projection</button>
+    </div>
+
+    <div id="tabSummary">
+      <div class="breakdown-bar">
+        <div class="breakdown-bar-capital" id="barCapital" style="width:50%"></div>
+        <div class="breakdown-bar-rental" id="barRental" style="width:30%"></div>
+        <div class="breakdown-bar-expense" id="barExpense" style="width:20%"></div>
+      </div>
+      <div class="breakdown-legend">
+        <div class="legend-item"><span class="legend-dot capital"></span> Capital Gain <span id="legendCapital"></span></div>
+        <div class="legend-item"><span class="legend-dot rental"></span> Rental <span id="legendRental"></span></div>
+        <div class="legend-item"><span class="legend-dot expense"></span> Expenses <span id="legendExpense"></span></div>
+      </div>
+
+      <div style="margin-top:16px">
+        <div class="summary-row">
+          <span class="summary-label">Total Investment</span>
+          <div><div class="summary-value" id="sumInvestment">--</div><div class="summary-sub" id="sumInvestmentSub">Including ~7% purchase costs</div></div>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Current Equity</span>
+          <div class="summary-value" id="sumEquity">--</div>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Total Rental Income</span>
+          <div><div class="summary-value" id="sumTotalRental">--</div><div class="summary-sub" id="sumRentalNote"></div></div>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Total Expenses</span>
+          <div class="summary-value" id="sumTotalExpense">--</div>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Cash on Cash Return</span>
+          <div class="summary-value" id="sumCashOnCash">--</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tabProjection" style="display:none">
+      <table class="yearly-table">
+        <thead><tr><th>Year</th><th>Value</th><th>Rent</th><th>Expenses</th><th>Cumulative</th></tr></thead>
+        <tbody id="projectionBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">Common Questions</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How is property ROI calculated?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <p>Property ROI combines two components:</p>
+        <ul>
+          <li><b>Capital Appreciation</b> &mdash; (Current Value &minus; Purchase Price) as % of purchase price</li>
+          <li><b>Net Rental Yield</b> &mdash; (Annual Rent &minus; Vacancy &minus; Expenses) &divide; Purchase Price &times; 100</li>
+          <li><b>Total ROI</b> = Capital Gains + Total Net Rental over holding period, as % of total investment (purchase + ~7% costs + interiors if any)</li>
+          <li><b>CAGR</b> (Compound Annual Growth Rate) annualizes the total return for easy comparison</li>
+          <li><b>Vacancy &amp; increment</b> adjustments make the calculation more realistic than flat annual projections</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is a good ROI for real estate in India?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>8&ndash;12% annually</b> is considered good, combining rental yield + appreciation</li>
+          <li><b>Rental yield</b> in Indian metros: 2&ndash;4% for residential, 6&ndash;9% for commercial</li>
+          <li><b>Capital appreciation</b> in prime areas: 5&ndash;10% annually over 5+ year periods</li>
+          <li><b>Mumbai South (SoBo)</b> typically sees 4&ndash;7% appreciation with 2&ndash;3% rental yield</li>
+          <li>Compare against alternatives: FD (7%), mutual funds (12&ndash;15%), gold (8&ndash;10%)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What expenses should I include?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Society maintenance</b> &mdash; Monthly charges (&#8377;5&ndash;25/sq ft in Mumbai)</li>
+          <li><b>Property tax</b> &mdash; Annual municipal tax (varies by city)</li>
+          <li><b>Insurance</b> &mdash; Home insurance premium (~0.1% of property value)</li>
+          <li><b>Repairs &amp; upkeep</b> &mdash; Budget 0.5&ndash;1% of property value annually</li>
+          <li><b>Brokerage</b> &mdash; 1&ndash;2 months rent when finding new tenants (average over years)</li>
+          <li><b>Interior depreciation</b> &mdash; If furnished, factor in wear and replacement costs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How does vacancy loss affect returns?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>1 month vacancy</b> reduces annual rental income by ~8.3%</li>
+          <li><b>Premium properties</b> in SoBo typically see 1&ndash;2 months vacancy between tenants</li>
+          <li><b>Furnished apartments</b> may have shorter vacancy if priced right</li>
+          <li><b>Commercial property</b> can have longer vacancies (3&ndash;6 months) but higher rents compensate</li>
+          <li><b>Tip</b>: Factor in 1 month minimum even for good locations &mdash; tenant transitions take time</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is a standard rent increment in India?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>5% annually</b> is the most common increment in Leave &amp; License agreements</li>
+          <li><b>Range</b>: 5&ndash;8% is typical, with 10%+ for prime commercial spaces</li>
+          <li><b>11-month L&amp;L</b> agreements in Maharashtra typically specify 5% escalation on renewal</li>
+          <li><b>Lock-in period</b>: First year is usually fixed; increment starts from year 2</li>
+          <li><b>Market conditions</b> affect actual increments &mdash; high demand areas may command higher increases</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How does leverage (home loan) affect ROI?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Leverage amplifies returns</b> &mdash; If you pay 20% down (&#8377;10L on a &#8377;50L property), a 10% appreciation gives you 50% return on YOUR cash</li>
+          <li><b>Interest cost</b> eats into returns &mdash; EMI interest on an 80% loan at 8.5% is significant</li>
+          <li><b>Tax benefit</b> on home loan interest (Sec 24b: up to &#8377;2L) and principal (Sec 80C: up to &#8377;1.5L) partially offsets</li>
+          <li><b>Break-even</b>: Property must appreciate + yield above your loan interest rate for positive leveraged returns</li>
+          <li><b>Risk</b>: Leverage works both ways &mdash; if property value drops, losses are magnified</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Should I include interior cost in my ROI calculation?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Yes</b> &mdash; interiors are part of your total investment and affect true ROI</li>
+          <li><b>Typical costs</b>: &#8377;500&ndash;1000/sq ft (basic), &#8377;1000&ndash;2000/sq ft (premium), &#8377;2000+/sq ft (luxury)</li>
+          <li><b>Furnished properties</b> command 15&ndash;30% higher rent, partially offsetting the investment</li>
+          <li><b>Depreciation</b>: Interiors lose value over 5&ndash;8 years and may need refresh</li>
+          <li><b>Resale impact</b>: Good interiors can increase sale price, but buyer taste varies</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Real estate vs mutual funds &mdash; which is better?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Mutual funds</b> &mdash; Higher liquidity, lower entry barrier, 12&ndash;15% CAGR (Nifty 50), no maintenance. But: no rental income, no leverage, more volatile</li>
+          <li><b>Real estate</b> &mdash; Tangible asset, rental cash flow, leverage via home loan, tax benefits. But: illiquid, high entry cost, maintenance, tenant risk</li>
+          <li><b>Best approach</b>: Diversify &mdash; use the comparison above to see how your property stacks up</li>
+          <li><b>Emotional value</b>: Owning a home provides security that financial instruments don&rsquo;t</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="quick-links">
+    <div class="quick-links-title">Explore More</div>
+    <div class="quick-links-grid">
+      <a class="quick-link" href="../BrokerTools.html">
+        <span class="quick-link-icon">&#128736;</span>
+        <div><div class="quick-link-text">All Real Estate Tools</div><div class="quick-link-sub">Calculators &amp; utilities</div></div>
+      </a>
+      <a class="quick-link" href="./stamp-duty.html">
+        <span class="quick-link-icon">&#128196;</span>
+        <div><div class="quick-link-text">Stamp Duty &amp; GST</div><div class="quick-link-sub">State-wise charges</div></div>
+      </a>
+      <a class="quick-link" href="./emi.html">
+        <span class="quick-link-icon">&#8377;</span>
+        <div><div class="quick-link-text">EMI Calculator</div><div class="quick-link-sub">Home loan EMI &amp; schedule</div></div>
+      </a>
+      <a class="quick-link" href="./area.html">
+        <span class="quick-link-icon">&#128208;</span>
+        <div><div class="quick-link-text">Area Converter</div><div class="quick-link-sub">Sq ft, sq m, guntha &amp; more</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="tools-footer">
+    ROI values are approximate. Actual returns depend on market conditions, location and timing.<br>
+    Powered by <a href="https://housieai.com" target="_blank" rel="noopener">HousieAi.com</a>
+  </div>
+</div>
+
+<script src="../shared/theme.js"></script>
+<script src="../shared/nav.js"></script>
+<script>
+(function(){
+var purchaseInput=document.getElementById('purchasePrice');
+var currentInput=document.getElementById('currentValue');
+var holdingInput=document.getElementById('holdingYears');
+var rentalInput=document.getElementById('rentalIncome');
+var expenseInput=document.getElementById('expenses');
+var vacancyInput=document.getElementById('vacancy');
+var incrPctInput=document.getElementById('incrPct');
+var intCostInput=document.getElementById('intCost');
+
+var purchaseSlider=document.getElementById('purchaseSlider');
+var currentSlider=document.getElementById('currentSlider');
+var holdingSlider=document.getElementById('holdingSlider');
+var rentalSlider=document.getElementById('rentalSlider');
+var expenseSlider=document.getElementById('expenseSlider');
+var vacancySlider=document.getElementById('vacancySlider');
+var incrSlider=document.getElementById('incrSlider');
+var intSlider=document.getElementById('intSlider');
+
+var incrCheck=document.getElementById('incrCheck');
+var intCheck=document.getElementById('intCheck');
+var freqMode='monthly';
+
+var PRESETS={
+  sobo2:{purchase:25000000,current:35000000,years:5,monthlyRent:50000,expense:180000,vacancy:1},
+  sobo3:{purchase:50000000,current:70000000,years:5,monthlyRent:100000,expense:360000,vacancy:1},
+  suburb:{purchase:8000000,current:12000000,years:5,monthlyRent:20000,expense:60000,vacancy:1},
+  commercial:{purchase:15000000,current:19500000,years:5,monthlyRent:100000,expense:180000,vacancy:0},
+  plot:{purchase:5000000,current:10000000,years:7,monthlyRent:0,expense:12000,vacancy:0}
+};
+
+var ALTERNATIVES=[
+  {id:'property',name:'Your Property',icon:'&#127968;',rate:0,color:'var(--accent)'},
+  {id:'nifty',name:'Nifty 50',icon:'&#128200;',rate:12.5,color:'#22c55e'},
+  {id:'gold',name:'Gold',icon:'&#129689;',rate:9,color:'#eab308'},
+  {id:'fd',name:'Bank FD',icon:'&#127974;',rate:7,color:'#3b82f6'},
+  {id:'ppf',name:'PPF',icon:'&#128176;',rate:7.1,color:'#a855f7'}
+];
+
+function parseNum(s){return parseFloat(String(s).replace(/,/g,''))||0}
+
+function formatIndian(n){
+  n=Math.round(n);
+  if(n<0)return '-'+formatIndian(-n);
+  var s=n.toString();
+  if(s.length<=3)return s;
+  var last3=s.slice(-3);
+  var rest=s.slice(0,-3);
+  if(rest)rest=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',');
+  return rest?rest+','+last3:last3;
+}
+
+function formatShort(n){
+  if(n<0)return '-'+formatShort(-n);
+  if(n>=10000000)return (n/10000000).toFixed(2).replace(/\.?0+$/,'')+' Cr';
+  if(n>=100000)return (n/100000).toFixed(2).replace(/\.?0+$/,'')+' L';
+  if(n>=1000)return (n/1000).toFixed(1).replace(/\.?0+$/,'')+'K';
+  return formatIndian(n);
+}
+
+function liveFormatIndian(input){
+  var pos=input.selectionStart;
+  var oldVal=input.value;
+  var digits=oldVal.replace(/[^0-9]/g,'');
+  if(!digits){input.value='';return}
+  var formatted=formatIndian(parseInt(digits));
+  input.value=formatted;
+  var oldCommasBefore=oldVal.slice(0,pos).split(',').length-1;
+  var newCommasBefore=formatted.slice(0,pos).split(',').length-1;
+  var newPos=pos+(newCommasBefore-oldCommasBefore);
+  if(newPos<0)newPos=0;
+  if(newPos>formatted.length)newPos=formatted.length;
+  input.setSelectionRange(newPos,newPos);
+}
+
+function getBaseAnnualRent(){
+  var v=parseNum(rentalInput.value);
+  return freqMode==='monthly'?v*12:v;
+}
+
+function applyPreset(key){
+  var p=PRESETS[key];if(!p)return;
+  purchaseInput.value=formatIndian(p.purchase);
+  currentInput.value=formatIndian(p.current);
+  holdingInput.value=p.years;
+  var rentVal=freqMode==='monthly'?p.monthlyRent:p.monthlyRent*12;
+  rentalInput.value=formatIndian(rentVal);
+  expenseInput.value=formatIndian(p.expense);
+  vacancyInput.value=p.vacancy;
+  vacancySlider.value=p.vacancy;
+  if(p.purchase>=1000000&&p.purchase<=100000000)purchaseSlider.value=p.purchase;
+  if(p.current>=1000000&&p.current<=200000000)currentSlider.value=p.current;
+  holdingSlider.value=p.years;
+  var sliderMax=freqMode==='monthly'?500000:6000000;
+  if(rentVal<=sliderMax)rentalSlider.value=rentVal;
+  if(p.expense<=1000000)expenseSlider.value=p.expense;
+  incrCheck.checked=false;
+  document.getElementById('incrSub').classList.remove('open');
+  intCheck.checked=false;
+  document.getElementById('intSub').classList.remove('open');
+  update();
+}
+
+document.getElementById('presetChips').addEventListener('click',function(e){
+  var btn=e.target.closest('.preset-chip');if(!btn)return;
+  this.querySelectorAll('.preset-chip').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  applyPreset(btn.dataset.preset);
+});
+
+document.getElementById('freqToggle').addEventListener('click',function(e){
+  var btn=e.target.closest('.freq-btn');if(!btn)return;
+  var newFreq=btn.dataset.freq;
+  if(newFreq===freqMode)return;
+  var curVal=parseNum(rentalInput.value);
+  var newVal;
+  if(newFreq==='monthly'){
+    newVal=Math.round(curVal/12);
+    rentalSlider.min=0;rentalSlider.max=500000;rentalSlider.step=1000;
+    document.getElementById('rentMinLabel').textContent='₹0';
+    document.getElementById('rentMaxLabel').textContent='₹5L';
+    document.getElementById('rentLabel').textContent='Monthly Rent';
+  }else{
+    newVal=curVal*12;
+    rentalSlider.min=0;rentalSlider.max=6000000;rentalSlider.step=10000;
+    document.getElementById('rentMinLabel').textContent='₹0';
+    document.getElementById('rentMaxLabel').textContent='₹60L';
+    document.getElementById('rentLabel').textContent='Annual Rental Income';
+  }
+  this.querySelectorAll('.freq-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  freqMode=newFreq;
+  rentalInput.value=formatIndian(newVal);
+  if(newVal<=parseInt(rentalSlider.max))rentalSlider.value=newVal;
+  update();
+});
+
+incrCheck.addEventListener('change',function(){
+  document.getElementById('incrSub').classList.toggle('open',this.checked);
+  update();
+});
+intCheck.addEventListener('change',function(){
+  document.getElementById('intSub').classList.toggle('open',this.checked);
+  update();
+});
+
+function calcTotalRent(baseAnnual,years,vacancyMonths,useIncrement,incrRate){
+  var total=0;
+  for(var y=0;y<years;y++){
+    var yearRent=baseAnnual;
+    if(useIncrement&&y>0)yearRent=baseAnnual*Math.pow(1+incrRate/100,y);
+    yearRent=yearRent*(12-vacancyMonths)/12;
+    total+=yearRent;
+  }
+  return total;
+}
+
+function getYearRent(baseAnnual,year,vacancyMonths,useIncrement,incrRate){
+  var r=baseAnnual;
+  if(useIncrement&&year>0)r=baseAnnual*Math.pow(1+incrRate/100,year);
+  return r*(12-vacancyMonths)/12;
+}
+
+function update(){
+  var purchase=parseNum(purchaseInput.value);
+  var current=parseNum(currentInput.value);
+  var years=parseInt(holdingInput.value)||0;
+  var baseAnnualRent=getBaseAnnualRent();
+  var annualExp=parseNum(expenseInput.value);
+  var vacancyMonths=parseInt(vacancyInput.value)||0;
+  var useIncrement=incrCheck.checked;
+  var incrRate=parseFloat(incrPctInput.value)||5;
+  var useInteriors=intCheck.checked;
+  var interiorsAmt=useInteriors?parseNum(intCostInput.value):0;
+
+  document.getElementById('purchaseCurrent').textContent=formatShort(purchase);
+  document.getElementById('currentCurrent').textContent=formatShort(current);
+  document.getElementById('holdingCurrent').textContent=years+' Year'+(years!==1?'s':'');
+  if(freqMode==='monthly'){
+    var mv=parseNum(rentalInput.value);
+    document.getElementById('rentalCurrent').textContent=formatIndian(mv)+'/month';
+  }else{
+    document.getElementById('rentalCurrent').textContent=formatShort(baseAnnualRent)+'/year';
+  }
+  document.getElementById('expenseCurrent').textContent=formatIndian(annualExp)+'/year';
+  document.getElementById('vacancyCurrent').textContent=vacancyMonths+' month'+(vacancyMonths!==1?'s':'');
+
+  if(purchase<=0||current<=0||years<=0){
+    document.getElementById('totalRoi').textContent='--';
+    document.getElementById('totalRoiAmt').textContent='';
+    document.getElementById('annualRoi').textContent='--';
+    document.getElementById('capitalGains').textContent='--';
+    document.getElementById('capitalPct').textContent='';
+    document.getElementById('netRental').textContent='--';
+    document.getElementById('rentalYield').textContent='';
+    document.getElementById('compareList').innerHTML='';
+    document.getElementById('verdictBox').style.display='none';
+    return;
+  }
+
+  var purchaseCosts=purchase*0.07;
+  var totalInvestment=purchase+purchaseCosts+interiorsAmt;
+  var capitalGain=current-purchase;
+  var totalRent=calcTotalRent(baseAnnualRent,years,vacancyMonths,useIncrement,incrRate);
+  var totalExp=annualExp*years;
+  var netRentalTotal=totalRent-totalExp;
+  var totalReturn=capitalGain+netRentalTotal;
+  var totalRoiPct=(totalReturn/totalInvestment)*100;
+
+  var totalEndValue=current+netRentalTotal;
+  var cagr=(Math.pow(totalEndValue/totalInvestment,1/years)-1)*100;
+
+  var capitalPctVal=purchase>0?((capitalGain/purchase)*100).toFixed(1):'0';
+  var effectiveYear1Rent=getYearRent(baseAnnualRent,0,vacancyMonths,false,0);
+  var avgNetRental=effectiveYear1Rent-annualExp;
+  var yieldPct=purchase>0?((avgNetRental/purchase)*100).toFixed(2):'0';
+  var cashOnCash=totalInvestment>0?((avgNetRental/totalInvestment)*100).toFixed(2):'0';
+
+  document.getElementById('totalRoi').textContent=(totalRoiPct>=0?'+':'')+totalRoiPct.toFixed(2)+'%';
+  document.getElementById('totalRoiAmt').textContent=formatShort(Math.abs(totalReturn));
+
+  document.getElementById('annualRoi').textContent=cagr.toFixed(2)+'%';
+
+  var cgEl=document.getElementById('capitalGains');
+  cgEl.textContent=formatShort(Math.abs(capitalGain));
+  var cgCard=cgEl.parentElement;
+  cgCard.classList.remove('positive','negative');
+  cgCard.classList.add(capitalGain>=0?'positive':'negative');
+  document.getElementById('capitalPct').textContent=(capitalGain>=0?'+':'')+capitalPctVal+'%';
+
+  document.getElementById('netRental').textContent=formatShort(Math.abs(netRentalTotal));
+  document.getElementById('rentalYield').textContent='Yield: '+yieldPct+'%';
+
+  var absCapital=Math.abs(capitalGain);
+  var absRental=totalRent;
+  var absExpense=totalExp;
+  var barTotal=absCapital+absRental+absExpense;
+  if(barTotal>0){
+    document.getElementById('barCapital').style.width=(absCapital/barTotal*100).toFixed(1)+'%';
+    document.getElementById('barRental').style.width=(absRental/barTotal*100).toFixed(1)+'%';
+    document.getElementById('barExpense').style.width=(absExpense/barTotal*100).toFixed(1)+'%';
+  }
+  document.getElementById('legendCapital').textContent=formatShort(capitalGain);
+  document.getElementById('legendRental').textContent=formatShort(totalRent);
+  document.getElementById('legendExpense').textContent=formatShort(totalExp);
+
+  document.getElementById('sumInvestment').textContent=formatShort(totalInvestment);
+  var investNote='Including ~7% purchase costs';
+  if(interiorsAmt>0)investNote+=' + '+formatShort(interiorsAmt)+' interiors';
+  document.getElementById('sumInvestmentSub').textContent=investNote;
+  document.getElementById('sumEquity').textContent=formatShort(current);
+  document.getElementById('sumTotalRental').textContent=formatShort(totalRent);
+  var rentalNote='';
+  if(useIncrement)rentalNote='With '+incrRate+'% annual increment';
+  if(vacancyMonths>0)rentalNote+=(rentalNote?' | ':'')+vacancyMonths+'mo vacancy/yr';
+  document.getElementById('sumRentalNote').textContent=rentalNote;
+  document.getElementById('sumTotalExpense').textContent=formatShort(totalExp);
+  document.getElementById('sumCashOnCash').textContent=cashOnCash+'%';
+
+  buildComparison(totalInvestment,totalEndValue,years,cagr);
+  buildProjection(purchase,current,years,baseAnnualRent,annualExp,vacancyMonths,useIncrement,incrRate);
+}
+
+function buildComparison(investment,propEndValue,years,propCagr){
+  var results=[];
+  ALTERNATIVES.forEach(function(alt){
+    var endValue,annualReturn;
+    if(alt.id==='property'){
+      endValue=propEndValue;
+      annualReturn=propCagr;
+    }else{
+      endValue=investment*Math.pow(1+alt.rate/100,years);
+      annualReturn=alt.rate;
+    }
+    var profit=endValue-investment;
+    results.push({id:alt.id,name:alt.name,icon:alt.icon,rate:annualReturn,endValue:endValue,profit:profit,color:alt.color});
+  });
+
+  results.sort(function(a,b){return b.profit-a.profit});
+  var maxProfit=results[0].profit;
+  var winnerId=results[0].id;
+
+  var container=document.getElementById('compareList');
+  container.innerHTML='';
+
+  results.forEach(function(r,i){
+    var row=document.createElement('div');
+    row.className='compare-row'+(r.id===winnerId?' winner':'');
+    var barW=maxProfit>0?(Math.max(0,r.profit)/maxProfit*100).toFixed(1):0;
+    row.innerHTML='<span class="compare-icon">'+r.icon+'</span>'+
+      '<div class="compare-info"><div class="compare-name">'+r.name+(i===0?' &#9733;':'')+'</div>'+
+      '<div class="compare-rate">'+r.rate.toFixed(1)+'% p.a.</div></div>'+
+      '<div class="compare-bar-wrap"><div class="compare-bar" style="width:'+barW+'%;background:'+r.color+'"></div></div>'+
+      '<span class="compare-amt" style="color:'+(r.id===winnerId?'var(--accent)':'var(--text)')+'">'+formatShort(r.profit)+'</span>';
+    container.appendChild(row);
+  });
+
+  var vBox=document.getElementById('verdictBox');
+  vBox.style.display='';
+  var propResult=results.find(function(r){return r.id==='property'});
+  var propRank=results.indexOf(propResult)+1;
+  var niftyResult=results.find(function(r){return r.id==='nifty'});
+
+  if(propRank===1){
+    vBox.className='verdict-box win';
+    var secondBest=results[1];
+    var diff=propResult.profit-secondBest.profit;
+    vBox.innerHTML='&#9989; Your property beat all alternatives! You earned <b>'+formatShort(diff)+'</b> more than '+secondBest.name+' over '+years+' years.';
+  }else if(propResult.profit>=niftyResult.profit){
+    vBox.className='verdict-box win';
+    vBox.innerHTML='&#9989; Your property beat equity markets (Nifty 50). Ranked #'+propRank+' overall &mdash; solid performance with a tangible asset and rental income.';
+  }else{
+    vBox.className='verdict-box lose';
+    var best=results[0];
+    var gap=best.profit-propResult.profit;
+    vBox.innerHTML='&#9888; '+best.name+' would have earned <b>'+formatShort(gap)+'</b> more over '+years+' years. But remember: unlike stocks, you don&rsquo;t need the full amount upfront &mdash; a home loan lets you leverage 80% of the cost. Plus, rental income provides stable monthly cash flow, you get tax benefits on both interest (Sec 24) and principal (Sec 80C), and you own a tangible asset that serves as a home.';
+  }
+}
+
+function buildProjection(purchase,current,years,baseAnnualRent,annualExp,vacancyMonths,useIncrement,incrRate){
+  var growthRate=years>0?Math.pow(current/purchase,1/years)-1:0;
+  var tbody=document.getElementById('projectionBody');
+  tbody.innerHTML='';
+  var projYears=Math.max(years,10);
+  var cumRent=0,cumExp=0;
+  for(var y=1;y<=projYears;y++){
+    var projValue=purchase*Math.pow(1+growthRate,y);
+    var yearRent=getYearRent(baseAnnualRent,y-1,vacancyMonths,useIncrement,incrRate);
+    cumRent+=yearRent;
+    cumExp+=annualExp;
+    var cumReturn=(projValue-purchase)+(cumRent-cumExp);
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+y+'</td><td>'+formatShort(projValue)+'</td><td>'+formatShort(yearRent)+'</td><td>'+formatShort(annualExp)+'</td><td>'+formatShort(cumReturn)+'</td>';
+    if(y===years)tr.style.fontWeight='800';
+    tbody.appendChild(tr);
+  }
+}
+
+function bindInput(input,slider,min,max){
+  input.addEventListener('input',function(){
+    liveFormatIndian(this);
+    var v=parseNum(this.value);
+    if(v>=min&&v<=max)slider.value=v;
+    else if(v>max)slider.value=max;
+    clearActivePreset();
+    update();
+  });
+  input.addEventListener('blur',function(){
+    var v=parseNum(this.value);
+    if(v)this.value=formatIndian(v);
+  });
+  slider.addEventListener('input',function(){
+    input.value=formatIndian(parseInt(this.value));
+    clearActivePreset();
+    update();
+  });
+}
+
+function clearActivePreset(){
+  document.querySelectorAll('.preset-chip').forEach(function(b){b.classList.remove('active')});
+}
+
+bindInput(purchaseInput,purchaseSlider,1000000,100000000);
+bindInput(currentInput,currentSlider,1000000,200000000);
+bindInput(rentalInput,rentalSlider,0,500000);
+bindInput(expenseInput,expenseSlider,0,1000000);
+bindInput(intCostInput,intSlider,0,5000000);
+
+holdingInput.addEventListener('input',function(){
+  var v=parseInt(this.value);
+  if(v>=1&&v<=30)holdingSlider.value=v;
+  clearActivePreset();
+  update();
+});
+holdingSlider.addEventListener('input',function(){
+  holdingInput.value=this.value;
+  clearActivePreset();
+  update();
+});
+
+vacancyInput.addEventListener('input',function(){
+  var v=parseInt(this.value);
+  if(v>=0&&v<=6)vacancySlider.value=v;
+  update();
+});
+vacancySlider.addEventListener('input',function(){
+  vacancyInput.value=this.value;
+  update();
+});
+
+incrPctInput.addEventListener('input',function(){
+  var v=parseFloat(this.value);
+  if(v>=1&&v<=15)incrSlider.value=v;
+  update();
+});
+incrSlider.addEventListener('input',function(){
+  incrPctInput.value=this.value;
+  update();
+});
+
+update();
+})();
+
+function showTab(name){
+  document.getElementById('tabSummary').style.display=name==='summary'?'':'none';
+  document.getElementById('tabProjection').style.display=name==='projection'?'':'none';
+  var btns=document.querySelectorAll('.tab-btn');
+  btns[0].classList.toggle('active',name==='summary');
+  btns[1].classList.toggle('active',name==='projection');
+}
+
+function toggleFaq(el){
+  var a=el.nextElementSibling;
+  var isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(function(q){q.classList.remove('open')});
+  document.querySelectorAll('.faq-a').forEach(function(a){a.classList.remove('open')});
+  if(!isOpen){el.classList.add('open');a.classList.add('open')}
+}
+</script>
+</body>
+</html>
