@@ -151,6 +151,16 @@ function inject(){
   if(btn)btn.textContent=document.documentElement.getAttribute('data-theme')==='light'?'☀':'☮';
 }
 
+function fixSubdirPaths(){
+  if(window.location.pathname.indexOf('/tools/')< 0)return;
+  var tray=document.getElementById('navTray');if(!tray)return;
+  tray.querySelectorAll('a[href^="./"]').forEach(function(a){a.setAttribute('href','../'+a.getAttribute('href').substring(2))});
+  tray.querySelectorAll('img[src^="./"]').forEach(function(img){img.setAttribute('src','../'+img.getAttribute('src').substring(2))});
+}
+
+var origInject=inject;
+inject=function(){origInject();fixSubdirPaths()};
+
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',inject);
 else inject();
 

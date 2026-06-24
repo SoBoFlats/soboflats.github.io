@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TDS on Rent Calculator · Real Estate Tools · Oswal Properties</title>
+<meta name="description" content="Calculate TDS deduction on rent under Section 194-IB. Know when TDS applies, how much to deduct, and how to file Form 26QC. Free tool by Oswal Properties.">
+<link rel="stylesheet" href="../shared/common.css">
+<link rel="stylesheet" href="../shared/nav.css">
+<style>
+.tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
+.tool-back:active{color:var(--accent)}
+.tool-title-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.tool-icon{font-size:28px}
+.tool-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.tool-subtitle{font-size:12px;color:var(--text2);margin-bottom:20px;line-height:1.5}
+
+.calc-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:18px;margin-bottom:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+[data-theme="light"] .calc-card{box-shadow:var(--card-shadow)}
+
+.section-label{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+.input-group{margin-bottom:18px}
+.input-group:last-child{margin-bottom:0}
+.input-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:5px;letter-spacing:.3px}
+.input-label-icon{font-size:13px}
+
+.input-row{display:flex;align-items:center;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);overflow:hidden;transition:border-color .2s}
+.input-row:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.input-prefix,.input-suffix{padding:0 10px;font-size:13px;font-weight:600;color:var(--text2);flex-shrink:0;user-select:none}
+.input-field{flex:1;padding:12px 4px;border:none;background:transparent;color:var(--text);font-size:15px;font-weight:600;font-family:inherit;outline:none;min-width:0}
+.input-field::placeholder{color:var(--text3);font-weight:400}
+
+.range-row{display:flex;align-items:center;gap:0;margin-top:8px}
+.range-label{font-size:11px;color:var(--text3);flex-shrink:0;min-width:28px}
+.range-label.right{text-align:right}
+.range-slider{flex:1;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:var(--input-border);outline:none;margin:0 8px}
+.range-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.range-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.range-current{font-size:11px;color:var(--accent);font-weight:700;text-align:center;margin-top:4px}
+
+.tip{font-size:11px;color:var(--text3);margin-top:6px;padding-left:2px;line-height:1.4;font-style:italic}
+.tip b{color:var(--text2);font-style:normal}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:6px}
+.chip-btn{padding:8px 14px;border-radius:20px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+[data-theme="light"] .chip-btn{background:rgba(255,255,255,.65)}
+.chip-btn.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+
+.quick-val-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.qv-chip{padding:8px 14px;border-radius:20px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+[data-theme="light"] .qv-chip{background:rgba(255,255,255,.65)}
+.qv-chip.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+
+.freq-toggle{display:inline-flex;border-radius:8px;overflow:hidden;border:1.5px solid var(--input-border);margin-left:auto}
+.freq-btn{padding:5px 12px;border:none;background:var(--input-bg);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.freq-btn.active{background:var(--accent);color:#fff}
+
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.result-card{padding:14px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);text-align:center}
+[data-theme="light"] .result-card{background:rgba(255,255,255,.65);box-shadow:var(--card-shadow)}
+.result-card.primary{background:var(--accent);border-color:var(--accent);grid-column:1/-1}
+.result-card.primary .result-label,.result-card.primary .result-value,.result-card.primary .result-sub{color:#fff}
+.result-card.no-tds{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.25);grid-column:1/-1}
+.result-card.no-tds .result-value{color:#16a34a}
+.result-label{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:4px}
+.result-label-icon{font-size:12px}
+.result-value{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.result-sub{font-size:11px;color:var(--text3);margin-top:2px}
+
+.status-banner{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;margin-bottom:14px}
+.status-banner.applicable{background:rgba(234,179,8,.08);border:1.5px solid rgba(234,179,8,.25)}
+[data-theme="light"] .status-banner.applicable{background:rgba(234,179,8,.06)}
+.status-banner.not-applicable{background:rgba(34,197,94,.08);border:1.5px solid rgba(34,197,94,.25)}
+[data-theme="light"] .status-banner.not-applicable{background:rgba(34,197,94,.06)}
+.status-icon{font-size:28px;flex-shrink:0}
+.status-title{font-size:14px;font-weight:800}
+.status-sub{font-size:11px;color:var(--text2);margin-top:2px;line-height:1.4}
+.status-banner.applicable .status-title{color:#b45309}
+.status-banner.not-applicable .status-title{color:#16a34a}
+
+.breakdown-title{font-size:13px;font-weight:800;margin-bottom:2px}
+.breakdown-sub{font-size:11px;color:var(--text2);margin-bottom:14px}
+.bd-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.bd-row:last-of-type{border-bottom:none}
+.bd-label{color:var(--text2);font-weight:600;flex:1;min-width:0}
+.bd-note{font-size:11px;color:var(--text3);font-weight:500}
+.bd-value{font-weight:700;text-align:right;white-space:nowrap}
+.bd-row.total{border-top:2px solid var(--accent);border-bottom:none;padding-top:12px;margin-top:4px}
+.bd-row.total .bd-label{font-weight:800;color:var(--text)}
+.bd-row.total .bd-value{font-weight:800;color:var(--accent);font-size:14px}
+
+.note-box{font-size:11px;color:var(--text2);line-height:1.5;margin-top:12px;padding:10px 12px;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:10px}
+
+.timeline-card{padding:0}
+.timeline-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.timeline-item:last-child{border-bottom:none}
+.timeline-step{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+.timeline-info{flex:1}
+.timeline-title{font-size:12px;font-weight:700;margin-bottom:2px}
+.timeline-desc{font-size:11px;color:var(--text2);line-height:1.4}
+
+.faq-section{margin-top:24px}
+.faq-title{font-size:14px;font-weight:800;margin-bottom:12px}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-q{padding:14px 0;font-size:13px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);user-select:none}
+.faq-chevron{font-size:16px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.faq-q.open .faq-chevron{transform:rotate(90deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s;font-size:12px;color:var(--text2);line-height:1.7}
+.faq-a.open{max-height:500px;padding-bottom:14px}
+.faq-a ul{padding-left:16px;margin:0}
+.faq-a li{margin-bottom:4px}
+
+.quick-links{margin-top:24px}
+.quick-links-title{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
+.quick-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick-link{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--glass);color:var(--text);text-decoration:none;transition:all .2s;backdrop-filter:blur(8px)}
+[data-theme="light"] .quick-link{background:var(--card);box-shadow:var(--card-shadow);border-color:var(--glass-border)}
+.quick-link:active{transform:scale(.97);border-color:var(--accent)}
+.quick-link-icon{font-size:18px;flex-shrink:0}
+.quick-link-text{font-size:11px;font-weight:700;line-height:1.3}
+.quick-link-sub{font-size:11px;color:var(--text2);font-weight:400}
+
+.tools-footer{text-align:center;padding:24px 0 40px;font-size:11px;color:var(--text3);line-height:1.6}
+.tools-footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <img src="../intro_oswal.jpeg" class="page-logo" onerror="this.style.display='none'" alt="">
+    <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
+  </div>
+
+  <a class="tool-back" href="../BrokerTools.html">&#8249; All Tools</a>
+  <div class="tool-title-row"><span class="tool-icon">&#128181;</span><span class="tool-title">TDS on Rent</span></div>
+  <div class="tool-subtitle">Check if TDS is applicable on your rent payment and calculate the deduction amount under Section 194-IB of the Income Tax Act.</div>
+
+  <!-- Tenant Type -->
+  <div class="calc-card">
+    <div class="section-label">&#128100; Tenant Type</div>
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#128188;</span> Who is paying the rent?</div>
+      <div class="chip-row" id="tenantChips">
+        <button class="chip-btn active" data-val="individual">Individual / HUF</button>
+        <button class="chip-btn" data-val="business">Business (Company/Firm)</button>
+      </div>
+      <div class="tip" id="tenantTip">Section 194-IB: TDS applicable if monthly rent exceeds &#8377;50,000</div>
+    </div>
+  </div>
+
+  <!-- Rent Details -->
+  <div class="calc-card">
+    <div class="section-label">&#128176; Rent Details</div>
+
+    <div class="input-group">
+      <div class="input-label" style="justify-content:space-between">
+        <span><span class="input-label-icon">&#8377;</span> <span id="rentLabel">Monthly Rent</span></span>
+        <div class="freq-toggle" id="rentFreqToggle">
+          <button class="freq-btn active" data-freq="monthly">Monthly</button>
+          <button class="freq-btn" data-freq="annual">Annual</button>
+        </div>
+      </div>
+      <div class="input-row">
+        <span class="input-prefix">&#8377;</span>
+        <input type="text" class="input-field" id="rentInput" value="75,000" inputmode="numeric" placeholder="75,000">
+      </div>
+      <div class="range-row">
+        <span class="range-label" id="rentMinLabel">10K</span>
+        <input type="range" class="range-slider" id="rentSlider" min="10000" max="500000" step="1000" value="75000">
+        <span class="range-label right" id="rentMaxLabel">5L</span>
+      </div>
+      <div class="range-current" id="rentCurrent">&#8377;75,000/mo</div>
+      <div class="quick-val-chips" id="rentChips">
+        <button class="qv-chip" data-val="50000">&#8377;50K</button>
+        <button class="qv-chip active" data-val="75000">&#8377;75K</button>
+        <button class="qv-chip" data-val="100000">&#8377;1L</button>
+        <button class="qv-chip" data-val="200000">&#8377;2L</button>
+        <button class="qv-chip" data-val="300000">&#8377;3L</button>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#128196;</span> Landlord PAN Status</div>
+      <div class="chip-row" id="panChips">
+        <button class="chip-btn active" data-val="available">PAN Available</button>
+        <button class="chip-btn" data-val="unavailable">PAN Not Available</button>
+      </div>
+      <div class="tip" id="panTip">Higher TDS rate applies if landlord doesn&rsquo;t provide PAN</div>
+    </div>
+  </div>
+
+  <!-- Status Banner -->
+  <div id="statusBanner" class="status-banner applicable">
+    <span class="status-icon">&#9888;</span>
+    <div>
+      <div class="status-title" id="statusTitle">TDS Applicable</div>
+      <div class="status-sub" id="statusSub">You must deduct TDS before paying rent to your landlord</div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="calc-card" id="resultsCard">
+    <div class="section-label">&#128178; TDS Calculation</div>
+    <div class="results-grid">
+      <div class="result-card primary" id="mainResult">
+        <div class="result-label" id="mainLabel">Monthly TDS Deduction</div>
+        <div class="result-value" id="tdsMonthly">--</div>
+        <div class="result-sub" id="tdsMonthlySub"></div>
+      </div>
+      <div class="result-card">
+        <div class="result-label"><span class="result-label-icon">&#128176;</span> Pay to Landlord</div>
+        <div class="result-value" id="payLandlord">--</div>
+        <div class="result-sub">After TDS deduction</div>
+      </div>
+      <div class="result-card">
+        <div class="result-label"><span class="result-label-icon">&#128197;</span> Annual TDS</div>
+        <div class="result-value" id="tdsAnnual">--</div>
+        <div class="result-sub" id="tdsAnnualSub">Total TDS for 12 months</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breakdown -->
+  <div class="calc-card" id="breakdownCard">
+    <div class="breakdown-title">Payment Breakdown</div>
+    <div class="breakdown-sub">Monthly rent payment split</div>
+    <div id="breakdownList"></div>
+    <div class="note-box" id="noteBox"></div>
+  </div>
+
+  <!-- How to Deposit TDS -->
+  <div class="calc-card">
+    <div class="breakdown-title">How to Deposit TDS</div>
+    <div class="breakdown-sub">Step-by-step process for tenants</div>
+    <div class="timeline-card">
+      <div class="timeline-item">
+        <div class="timeline-step">1</div>
+        <div class="timeline-info">
+          <div class="timeline-title">Deduct TDS from Rent</div>
+          <div class="timeline-desc">Deduct the TDS amount before paying rent to your landlord. Keep the landlord&rsquo;s PAN handy.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-step">2</div>
+        <div class="timeline-info">
+          <div class="timeline-title" id="formTitle">File Form 26QC Online</div>
+          <div class="timeline-desc" id="formDesc">Visit the Income Tax e-filing portal. Fill Form 26QC with rent details, landlord PAN, and TDS amount. Due within 30 days from the end of the month in which TDS was deducted.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-step">3</div>
+        <div class="timeline-info">
+          <div class="timeline-title">Pay TDS via Challan</div>
+          <div class="timeline-desc">Pay the TDS amount to the government via net banking or authorized bank. You&rsquo;ll receive a challan receipt as proof.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-step">4</div>
+        <div class="timeline-info">
+          <div class="timeline-title" id="certTitle">Issue TDS Certificate (Form 16C)</div>
+          <div class="timeline-desc" id="certDesc">Download Form 16C from TRACES portal and share with your landlord. The landlord uses this to claim TDS credit in their ITR.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Rules -->
+  <div class="calc-card">
+    <div class="breakdown-title">Key Rules to Remember</div>
+    <div class="breakdown-sub">Don&rsquo;t miss these important points</div>
+    <div id="rulesList">
+      <div class="bd-row">
+        <span class="bd-label">&#128204; TDS is deducted from <b>last month&rsquo;s rent</b> of the FY (or last payment if mid-year)</span>
+      </div>
+      <div class="bd-row">
+        <span class="bd-label">&#128204; No TDS certificate (Form 16A/16C) needed from the tenant &mdash; it&rsquo;s auto-generated</span>
+      </div>
+      <div class="bd-row">
+        <span class="bd-label">&#128204; Late deposit penalty: <b>1.5% per month</b> on TDS amount</span>
+      </div>
+      <div class="bd-row">
+        <span class="bd-label">&#128204; Late filing penalty: &#8377;200/day up to TDS amount</span>
+      </div>
+      <div class="bd-row">
+        <span class="bd-label">&#128204; Tenant does <b>NOT</b> need a TAN (Tax Deduction Account Number) for 194-IB</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">Common Questions</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is TDS on rent?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>TDS (Tax Deducted at Source)</b> is a mechanism where the payer deducts tax before making a payment</li>
+          <li>For rent, the tenant deducts TDS and deposits it with the government on behalf of the landlord</li>
+          <li>The landlord can claim this TDS as <b>credit while filing their income tax return</b></li>
+          <li><b>Section 194-IB</b>: Applies to individual/HUF tenants paying rent &gt; &#8377;50,000/month</li>
+          <li><b>Section 194-I</b>: Applies to business entities paying rent &gt; &#8377;2,40,000/year</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">When does TDS on rent apply?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Individual/HUF (194-IB)</b>: Monthly rent exceeds &#8377;50,000 &mdash; TDS at <b>2%</b></li>
+          <li><b>Business entities (194-I)</b>: Annual rent exceeds &#8377;2,40,000 &mdash; TDS at <b>10%</b> for buildings</li>
+          <li><b>No PAN</b>: Rate increases to <b>20%</b> if the landlord doesn&rsquo;t provide PAN</li>
+          <li>TDS applies on the <b>total rent amount</b> (not just the portion above the threshold)</li>
+          <li><b>Multiple properties</b>: Threshold is per landlord, not per property</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the difference between 194-I and 194-IB?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Section 194-I</b>: For <b>business deductors</b> (companies, firms, individuals/HUF whose books are audited)</li>
+          <li><b>Section 194-IB</b>: For <b>individual/HUF</b> tenants whose books are NOT required to be audited</li>
+          <li><b>194-I rate</b>: 10% for building/furniture rent, 2% for plant/machinery</li>
+          <li><b>194-IB rate</b>: 2% (flat rate for all types)</li>
+          <li><b>194-I threshold</b>: &#8377;2,40,000 per year. <b>194-IB threshold</b>: &#8377;50,000 per month</li>
+          <li><b>194-I</b>: Quarterly filing (Form 26Q), TAN required. <b>194-IB</b>: Annual filing (Form 26QC), no TAN needed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can the landlord ask me not to deduct TDS?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>No</b> &mdash; TDS deduction is a <b>legal obligation</b> of the tenant (deductor)</li>
+          <li>The tenant is <b>liable for penalties</b> if TDS is not deducted when applicable</li>
+          <li>Even if the landlord says their income is below taxable limit, TDS must still be deducted</li>
+          <li>The landlord can file their ITR and <b>claim a refund</b> of the TDS if their total income is below the taxable slab</li>
+          <li><b>Landlord&rsquo;s remedy</b>: Apply for a <b>lower deduction certificate</b> (Section 197) from the AO</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What if I forgot to deduct TDS?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Interest on late deduction</b>: 1% per month from the date TDS was deductible to the date of actual deduction</li>
+          <li><b>Interest on late deposit</b>: 1.5% per month from deduction date to actual deposit date</li>
+          <li><b>Late filing fee</b>: &#8377;200 per day (Section 234E) until TDS return is filed, capped at TDS amount</li>
+          <li><b>Penalty</b>: Equal to TDS amount under Section 271H (minimum &#8377;10,000, maximum &#8377;1,00,000)</li>
+          <li><b>Disallowance</b>: 30% of rent paid will be <b>disallowed as business expense</b> (for 194-I non-compliance)</li>
+          <li><b>Best approach</b>: Deduct and deposit immediately with interest &mdash; voluntary compliance reduces penalty risk</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How to file Form 26QC?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li>Visit <b>incometax.gov.in</b> &rarr; e-File &rarr; e-Pay Tax &rarr; Form 26QC</li>
+          <li>Enter your <b>PAN, landlord&rsquo;s PAN</b>, property address, rent period, and TDS amount</li>
+          <li>Pay TDS via <b>net banking, debit card, or at authorized bank</b></li>
+          <li>After payment, download the <b>challan receipt</b></li>
+          <li>Within <b>15 days</b> of filing 26QC, download <b>Form 16C</b> from TRACES</li>
+          <li>Form 26QC is due within <b>30 days</b> from the end of the month in which TDS was deducted</li>
+          <li>No <b>TAN is required</b> &mdash; you file using your PAN directly</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is TDS applicable on commercial rent?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Yes</b> &mdash; TDS applies to both residential and commercial property rent</li>
+          <li>For <b>commercial rent</b> paid by a business: Section 194-I at <b>10%</b></li>
+          <li>For <b>commercial rent</b> paid by an individual: Section 194-IB at <b>2%</b> (if &gt; &#8377;50,000/month)</li>
+          <li><b>GST</b>: Commercial rent also attracts 18% GST if landlord is GST-registered. TDS is on <b>rent excluding GST</b></li>
+          <li><b>Plant &amp; machinery</b> rent: TDS at 2% under 194-I (lower rate than building rent)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="quick-links">
+    <div class="quick-links-title">Explore More</div>
+    <div class="quick-links-grid">
+      <a class="quick-link" href="../index.html">
+        <span class="quick-link-icon">&#127968;</span>
+        <div><div class="quick-link-text">Home</div><div class="quick-link-sub">Oswal Properties</div></div>
+      </a>
+      <a class="quick-link" href="../BrokerTools.html">
+        <span class="quick-link-icon">&#128736;</span>
+        <div><div class="quick-link-text">All Tools</div><div class="quick-link-sub">Real Estate Tools</div></div>
+      </a>
+      <a class="quick-link" href="./rent-agreement.html">
+        <span class="quick-link-icon">&#128220;</span>
+        <div><div class="quick-link-text">Rent Agreement</div><div class="quick-link-sub">L&amp;L stamp duty &amp; charges</div></div>
+      </a>
+      <a class="quick-link" href="./stamp-duty.html">
+        <span class="quick-link-icon">&#128196;</span>
+        <div><div class="quick-link-text">Stamp Duty</div><div class="quick-link-sub">Property purchase charges</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="tools-footer">
+    TDS rates and thresholds are as per current Income Tax Act. Verify with your CA before filing.<br>
+    Powered by <a href="https://housieai.com" target="_blank" rel="noopener">HousieAi.com</a>
+  </div>
+</div>
+
+<script src="../shared/theme.js"></script>
+<script src="../shared/nav.js"></script>
+<script>
+(function(){
+
+var tenantType='individual';
+var panStatus='available';
+var rentFreq='monthly';
+
+var rentInput=document.getElementById('rentInput');
+var rentSlider=document.getElementById('rentSlider');
+
+function parseNum(s){return parseFloat(String(s).replace(/,/g,''))||0}
+
+function formatIndian(n){
+  n=Math.round(n);
+  if(n<0)return '-'+formatIndian(-n);
+  var s=n.toString();
+  if(s.length<=3)return s;
+  var last3=s.slice(-3);
+  var rest=s.slice(0,-3);
+  if(rest)rest=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',');
+  return rest?rest+','+last3:last3;
+}
+
+function liveFormatIndian(input){
+  var pos=input.selectionStart;
+  var oldVal=input.value;
+  var digits=oldVal.replace(/[^0-9]/g,'');
+  if(!digits){input.value='';return}
+  var formatted=formatIndian(parseInt(digits));
+  input.value=formatted;
+  var oldCommasBefore=oldVal.slice(0,pos).split(',').length-1;
+  var newCommasBefore=formatted.slice(0,pos).split(',').length-1;
+  var newPos=pos+(newCommasBefore-oldCommasBefore);
+  if(newPos<0)newPos=0;
+  if(newPos>formatted.length)newPos=formatted.length;
+  input.setSelectionRange(newPos,newPos);
+}
+
+function getMonthlyRent(){
+  var v=parseNum(rentInput.value);
+  return rentFreq==='annual'?Math.round(v/12):v;
+}
+
+// Tenant type chips
+document.getElementById('tenantChips').addEventListener('click',function(e){
+  var btn=e.target.closest('.chip-btn');if(!btn)return;
+  this.querySelectorAll('.chip-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  tenantType=btn.dataset.val;
+  document.getElementById('tenantTip').innerHTML=tenantType==='individual'
+    ?'Section 194-IB: TDS applicable if monthly rent exceeds &#8377;50,000'
+    :'Section 194-I: TDS applicable if annual rent exceeds &#8377;2,40,000';
+  update();
+});
+
+// PAN chips
+document.getElementById('panChips').addEventListener('click',function(e){
+  var btn=e.target.closest('.chip-btn');if(!btn)return;
+  this.querySelectorAll('.chip-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  panStatus=btn.dataset.val;
+  update();
+});
+
+// Rent frequency toggle
+document.getElementById('rentFreqToggle').addEventListener('click',function(e){
+  var btn=e.target.closest('.freq-btn');if(!btn||btn.dataset.freq===rentFreq)return;
+  var curVal=parseNum(rentInput.value);
+  var newFreq=btn.dataset.freq;
+  var newVal=newFreq==='annual'?curVal*12:Math.round(curVal/12);
+  this.querySelectorAll('.freq-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');rentFreq=newFreq;
+  rentInput.value=formatIndian(newVal);
+  if(newFreq==='monthly'){
+    rentSlider.min=10000;rentSlider.max=500000;rentSlider.step=1000;
+    document.getElementById('rentMinLabel').textContent='10K';
+    document.getElementById('rentMaxLabel').textContent='5L';
+    document.getElementById('rentLabel').textContent='Monthly Rent';
+    document.getElementById('rentChips').innerHTML='<button class="qv-chip" data-val="50000">₹50K</button><button class="qv-chip" data-val="75000">₹75K</button><button class="qv-chip" data-val="100000">₹1L</button><button class="qv-chip" data-val="200000">₹2L</button><button class="qv-chip" data-val="300000">₹3L</button>';
+  }else{
+    rentSlider.min=120000;rentSlider.max=6000000;rentSlider.step=12000;
+    document.getElementById('rentMinLabel').textContent='1.2L';
+    document.getElementById('rentMaxLabel').textContent='60L';
+    document.getElementById('rentLabel').textContent='Annual Rent';
+    document.getElementById('rentChips').innerHTML='<button class="qv-chip" data-val="600000">₹6L</button><button class="qv-chip" data-val="900000">₹9L</button><button class="qv-chip" data-val="1200000">₹12L</button><button class="qv-chip" data-val="2400000">₹24L</button><button class="qv-chip" data-val="3600000">₹36L</button>';
+  }
+  if(newVal>=parseInt(rentSlider.min)&&newVal<=parseInt(rentSlider.max))rentSlider.value=newVal;
+  setupRentChipListeners();
+  update();
+});
+
+// Rent input
+rentInput.addEventListener('input',function(){
+  liveFormatIndian(this);
+  var v=parseNum(this.value);
+  if(v>=parseInt(rentSlider.min)&&v<=parseInt(rentSlider.max))rentSlider.value=v;
+  document.getElementById('rentChips').querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});
+  update();
+});
+rentInput.addEventListener('blur',function(){
+  var v=parseNum(this.value);
+  if(v)this.value=formatIndian(v);
+});
+rentSlider.addEventListener('input',function(){
+  rentInput.value=formatIndian(parseInt(this.value));
+  document.getElementById('rentChips').querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});
+  update();
+});
+
+function setupRentChipListeners(){
+  document.getElementById('rentChips').addEventListener('click',function(e){
+    var btn=e.target.closest('.qv-chip');if(!btn)return;
+    this.querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});
+    btn.classList.add('active');
+    var v=parseInt(btn.dataset.val);rentInput.value=formatIndian(v);
+    if(v>=parseInt(rentSlider.min)&&v<=parseInt(rentSlider.max))rentSlider.value=v;
+    update();
+  });
+}
+setupRentChipListeners();
+
+function getTdsRate(){
+  if(panStatus==='unavailable')return 20;
+  if(tenantType==='business')return 10;
+  return 2;
+}
+
+function isApplicable(monthlyRent){
+  if(tenantType==='individual')return monthlyRent>50000;
+  return (monthlyRent*12)>240000;
+}
+
+function update(){
+  var monthlyRent=getMonthlyRent();
+  var displayVal=parseNum(rentInput.value);
+  document.getElementById('rentCurrent').innerHTML='&#8377;'+formatIndian(displayVal)+'/'+(rentFreq==='annual'?'yr':'mo');
+
+  var applicable=isApplicable(monthlyRent);
+  var tdsRate=getTdsRate();
+  var banner=document.getElementById('statusBanner');
+  var resultsCard=document.getElementById('resultsCard');
+  var breakdownCard=document.getElementById('breakdownCard');
+
+  if(!applicable){
+    banner.className='status-banner not-applicable';
+    document.getElementById('statusTitle').textContent='No TDS Required';
+    if(tenantType==='individual'){
+      document.getElementById('statusSub').textContent='Monthly rent is ₹'+formatIndian(monthlyRent)+' — TDS applies only above ₹50,000/month';
+    }else{
+      document.getElementById('statusSub').textContent='Annual rent is ₹'+formatIndian(monthlyRent*12)+' — TDS applies only above ₹2,40,000/year';
+    }
+    banner.querySelector('.status-icon').textContent='✓';
+    resultsCard.style.display='none';
+    breakdownCard.style.display='none';
+    return;
+  }
+
+  banner.className='status-banner applicable';
+  document.getElementById('statusTitle').textContent='TDS Applicable @ '+tdsRate+'%';
+  banner.querySelector('.status-icon').textContent='⚠';
+  resultsCard.style.display='';
+  breakdownCard.style.display='';
+
+  var section=tenantType==='individual'?'194-IB':'194-I';
+  document.getElementById('statusSub').textContent='Section '+section+': You must deduct '+tdsRate+'% TDS before paying rent'+(panStatus==='unavailable'?' (higher rate — no PAN)':'');
+
+  var monthlyTds=Math.round(monthlyRent*tdsRate/100);
+  var payToLandlord=monthlyRent-monthlyTds;
+  var annualTds=monthlyTds*12;
+
+  document.getElementById('tdsMonthly').textContent='₹'+formatIndian(monthlyTds);
+  document.getElementById('tdsMonthlySub').textContent=tdsRate+'% of ₹'+formatIndian(monthlyRent);
+  document.getElementById('payLandlord').textContent='₹'+formatIndian(payToLandlord);
+  document.getElementById('tdsAnnual').textContent='₹'+formatIndian(annualTds);
+  document.getElementById('tdsAnnualSub').textContent='₹'+formatIndian(monthlyTds)+' × 12 months';
+
+  document.getElementById('mainLabel').textContent=tenantType==='individual'?'Monthly TDS Deduction':'TDS per Payment';
+
+  // Breakdown
+  var container=document.getElementById('breakdownList');
+  container.innerHTML='';
+  var items=[
+    {label:'Monthly Rent',value:'₹'+formatIndian(monthlyRent)},
+    {label:'TDS Rate ('+section+')',value:tdsRate+'%'},
+    {label:'TDS Amount',value:'₹'+formatIndian(monthlyTds)},
+    {label:'Net Payment to Landlord',value:'₹'+formatIndian(payToLandlord),bold:true},
+    {label:'Annual Rent (12 months)',value:'₹'+formatIndian(monthlyRent*12)},
+    {label:'Annual TDS',value:'₹'+formatIndian(annualTds),bold:true}
+  ];
+  items.forEach(function(it){
+    var row=document.createElement('div');
+    row.className='bd-row'+(it.bold?' total':'');
+    row.innerHTML='<span class="bd-label"'+(it.bold?' style="font-weight:800"':'')+'>'+it.label+'</span><span class="bd-value"'+(it.bold?' style="color:var(--accent)"':'')+'>'+it.value+'</span>';
+    container.appendChild(row);
+  });
+
+  // Note
+  var noteBox=document.getElementById('noteBox');
+  if(panStatus==='unavailable'){
+    noteBox.style.display='';
+    noteBox.innerHTML='&#9888; <b>Higher TDS rate (20%)</b> applied because landlord PAN is not available. Ask your landlord to provide PAN to reduce TDS to '+(tenantType==='individual'?'2':'10')+'%.';
+  }else if(tenantType==='individual'){
+    noteBox.style.display='';
+    noteBox.innerHTML='&#128161; <b>Tip:</b> Under Section 194-IB, you can deduct the entire annual TDS from the <b>last month\'s rent</b> of the financial year instead of monthly deductions. This simplifies compliance — one Form 26QC filing per year.';
+  }else{
+    noteBox.style.display='';
+    noteBox.innerHTML='&#128161; <b>Business deductors</b> must file quarterly TDS returns (Form 26Q) and need a TAN. TDS must be deposited by the 7th of the following month.';
+  }
+
+  // Update process steps based on tenant type
+  if(tenantType==='business'){
+    document.getElementById('formTitle').textContent='File Form 26Q (Quarterly)';
+    document.getElementById('formDesc').textContent='File quarterly TDS return (Form 26Q) via your TAN. Due by 31st of the month following the quarter end. TAN is mandatory for business deductors.';
+    document.getElementById('certTitle').textContent='Issue TDS Certificate (Form 16A)';
+    document.getElementById('certDesc').textContent='Download Form 16A from TRACES and issue to your landlord within 15 days of filing the quarterly return.';
+  }else{
+    document.getElementById('formTitle').textContent='File Form 26QC Online';
+    document.getElementById('formDesc').textContent='Visit the Income Tax e-filing portal. Fill Form 26QC with rent details, landlord PAN, and TDS amount. Due within 30 days from the end of the month in which TDS was deducted.';
+    document.getElementById('certTitle').textContent='Issue TDS Certificate (Form 16C)';
+    document.getElementById('certDesc').textContent='Download Form 16C from TRACES portal and share with your landlord. The landlord uses this to claim TDS credit in their ITR.';
+  }
+}
+
+update();
+})();
+
+function toggleFaq(el){
+  var a=el.nextElementSibling;
+  var isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(function(q){q.classList.remove('open')});
+  document.querySelectorAll('.faq-a').forEach(function(a){a.classList.remove('open')});
+  if(!isOpen){el.classList.add('open');a.classList.add('open')}
+}
+</script>
+</body>
+</html>

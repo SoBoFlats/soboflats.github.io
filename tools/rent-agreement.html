@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rent Agreement Calculator · Real Estate Tools · Oswal Properties</title>
+<meta name="description" content="Calculate Leave & License stamp duty, registration and all charges for rental agreements in Maharashtra and other Indian states. Free tool by Oswal Properties.">
+<link rel="stylesheet" href="../shared/common.css">
+<link rel="stylesheet" href="../shared/nav.css">
+<style>
+.tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
+.tool-back:active{color:var(--accent)}
+.tool-title-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.tool-icon{font-size:28px}
+.tool-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.tool-subtitle{font-size:12px;color:var(--text2);margin-bottom:20px;line-height:1.5}
+
+.calc-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:18px;margin-bottom:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+[data-theme="light"] .calc-card{box-shadow:var(--card-shadow)}
+
+.section-label{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+.input-group{margin-bottom:18px}
+.input-group:last-child{margin-bottom:0}
+.input-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:5px;letter-spacing:.3px}
+.input-label-icon{font-size:13px}
+
+.input-row{display:flex;align-items:center;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);overflow:hidden;transition:border-color .2s}
+.input-row:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.input-prefix,.input-suffix{padding:0 10px;font-size:13px;font-weight:600;color:var(--text2);flex-shrink:0;user-select:none}
+.input-field{flex:1;padding:12px 4px;border:none;background:transparent;color:var(--text);font-size:15px;font-weight:600;font-family:inherit;outline:none;min-width:0}
+.input-field::placeholder{color:var(--text3);font-weight:400}
+
+.range-row{display:flex;align-items:center;gap:0;margin-top:8px}
+.range-label{font-size:11px;color:var(--text3);flex-shrink:0;min-width:28px}
+.range-label.right{text-align:right}
+.range-slider{flex:1;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:var(--input-border);outline:none;margin:0 8px}
+.range-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.range-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.range-current{font-size:11px;color:var(--accent);font-weight:700;text-align:center;margin-top:4px}
+
+.tip{font-size:11px;color:var(--text3);margin-top:6px;padding-left:2px;line-height:1.4;font-style:italic}
+.tip b{color:var(--text2);font-style:normal}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:6px}
+.chip-btn{padding:8px 14px;border-radius:20px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+[data-theme="light"] .chip-btn{background:rgba(255,255,255,.65)}
+.chip-btn.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+
+.quick-val-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.qv-chip{padding:8px 14px;border-radius:20px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+[data-theme="light"] .qv-chip{background:rgba(255,255,255,.65)}
+.qv-chip.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+
+.freq-toggle{display:inline-flex;border-radius:8px;overflow:hidden;border:1.5px solid var(--input-border);margin-left:auto}
+.freq-btn{padding:5px 12px;border:none;background:var(--input-bg);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.freq-btn.active{background:var(--accent);color:#fff}
+
+.dep-mode-toggle{display:inline-flex;border-radius:8px;overflow:hidden;border:1.5px solid var(--input-border);margin-left:auto}
+.dep-mode-btn{padding:5px 12px;border:none;background:var(--input-bg);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.dep-mode-btn.active{background:var(--accent);color:#fff}
+
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.result-card{padding:14px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);text-align:center}
+[data-theme="light"] .result-card{background:rgba(255,255,255,.65);box-shadow:var(--card-shadow)}
+.result-card.primary{background:var(--accent);border-color:var(--accent);grid-column:1/-1}
+.result-card.primary .result-label,.result-card.primary .result-value,.result-card.primary .result-sub{color:#fff}
+.result-label{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:4px}
+.result-label-icon{font-size:12px}
+.result-value{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.result-sub{font-size:11px;color:var(--text3);margin-top:2px}
+
+.breakdown-title{font-size:13px;font-weight:800;margin-bottom:2px}
+.breakdown-sub{font-size:11px;color:var(--text2);margin-bottom:14px}
+.bd-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.bd-row:last-of-type{border-bottom:none}
+.bd-label{color:var(--text2);font-weight:600;display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+.bd-note{font-size:11px;color:var(--text3);font-weight:500}
+.bd-value{font-weight:700;text-align:right;white-space:nowrap}
+.bd-row.total{border-top:2px solid var(--accent);border-bottom:none;padding-top:12px;margin-top:4px}
+.bd-row.total .bd-label{font-weight:800;color:var(--text)}
+.bd-row.total .bd-value{font-weight:800;color:var(--accent);font-size:14px}
+.bd-row.sub-total{background:var(--accent-bg);margin:4px -18px;padding:8px 18px;border-bottom:none}
+.bd-row.sub-total .bd-label{font-weight:700;color:var(--accent)}
+.bd-row.sub-total .bd-value{font-weight:700;color:var(--accent)}
+
+.search-wrap{position:relative}
+.search-input{width:100%;padding:12px 36px 12px 14px;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:13px;font-weight:600;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box}
+.search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.search-arrow{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text3);pointer-events:none}
+.search-dropdown{position:absolute;top:100%;left:0;right:0;max-height:220px;overflow-y:auto;background:var(--card,#fff);border:1.5px solid var(--input-border);border-radius:12px;margin-top:4px;z-index:50;display:none;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.search-dropdown.open{display:block}
+.search-option{padding:10px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;color:var(--text)}
+.search-option:hover,.search-option.highlighted{background:var(--accent-bg);color:var(--accent)}
+.search-option.active{color:var(--accent);font-weight:700}
+
+.increment-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--accent-bg);border:1px solid var(--accent-border)}
+.increment-label{font-size:11px;font-weight:600;color:var(--text);flex:1}
+.increment-pct{width:50px;padding:6px 8px;border-radius:8px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:12px;font-weight:700;text-align:center;font-family:inherit;outline:none}
+.increment-pct:focus{border-color:var(--accent)}
+
+.advanced-toggle{display:flex;align-items:center;gap:8px;padding:12px 0 4px;cursor:pointer;user-select:none}
+.advanced-toggle-icon{font-size:14px;color:var(--text3);transition:transform .2s}
+.advanced-toggle.open .advanced-toggle-icon{transform:rotate(90deg);color:var(--accent)}
+.advanced-toggle-label{font-size:12px;font-weight:700;color:var(--text2)}
+.advanced-toggle-sub{font-size:11px;color:var(--text3);font-weight:500}
+.advanced-content{max-height:0;overflow:hidden;transition:max-height .3s}
+.advanced-content.open{max-height:600px}
+
+.zone-badge{display:inline-block;padding:3px 10px;border-radius:8px;font-size:11px;font-weight:700;margin-top:6px}
+.zone-badge.local{background:rgba(34,197,94,.1);color:#16a34a;border:1px solid rgba(34,197,94,.25)}
+.zone-badge.state{background:rgba(234,179,8,.1);color:#b45309;border:1px solid rgba(234,179,8,.25)}
+.zone-badge.national{background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.25)}
+.zone-badge.intl{background:rgba(99,102,241,.1);color:#4f46e5;border:1px solid rgba(99,102,241,.25)}
+
+.cta-card{background:linear-gradient(135deg,var(--accent),#1a8a5a);border-radius:18px;padding:20px 18px;margin-bottom:14px;cursor:pointer;transition:transform .15s;position:relative;overflow:hidden}
+.cta-card:active{transform:scale(.98)}
+.cta-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.cta-sub{font-size:11px;color:rgba(255,255,255,.8);line-height:1.5;margin-bottom:10px}
+.cta-badge{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,.2);color:#fff;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,.3)}
+.cta-docs{font-size:10px;color:rgba(255,255,255,.6);margin-top:10px;line-height:1.5}
+.cta-arrow{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:24px;color:rgba(255,255,255,.5)}
+
+.float-btn-pair{position:fixed;bottom:20px;right:16px;display:flex;flex-direction:row;gap:10px;z-index:40;max-width:430px}
+.float-btn{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:50%;width:44px;height:44px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .15s;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+[data-theme="light"] .float-btn{background:rgba(255,255,255,.92);border-color:rgba(0,0,0,.12);box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.float-btn:active{background:var(--accent-bg)}
+
+.modal-overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.55);align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:var(--card,#fff);border-radius:22px 22px 0 0;padding:14px 18px 32px;width:100%;max-width:430px;max-height:80vh;overflow-y:auto}
+[data-theme="light"] .modal-sheet{box-shadow:0 -4px 24px rgba(0,0,0,.12)}
+.modal-handle{width:36px;height:4px;background:var(--input-border);border-radius:2px;margin:0 auto 16px}
+.modal-title{font-size:14px;font-weight:700;color:var(--text);text-align:center;margin-bottom:16px}
+.modal-note{font-size:11px;color:var(--text3);text-align:center;margin-bottom:14px}
+.modal-btn{width:100%;padding:13px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;text-align:center;margin-bottom:8px;display:block;transition:all .15s}
+.modal-btn:active{background:var(--accent-bg);border-color:var(--accent)}
+.modal-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.modal-btn.primary:active{opacity:.85}
+.modal-cancel{width:100%;padding:11px;border-radius:16px;background:transparent;border:1px solid var(--border);color:var(--text3);font-size:13px;cursor:pointer;display:block;margin-top:4px}
+.utype-row{display:flex;gap:8px;margin-bottom:14px}
+.utype-btn{flex:1;padding:12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text2);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;text-align:center}
+.utype-btn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+.modal-input{width:100%;padding:12px 14px;border:1.5px solid var(--input-border);border-radius:12px;background:var(--input-bg);color:var(--text);font-size:13px;font-weight:600;font-family:inherit;outline:none;margin-bottom:10px;box-sizing:border-box}
+.modal-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.modal-input::placeholder{color:var(--text3);font-weight:400}
+.modal-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px;display:block}
+.modal-error{font-size:11px;color:#dc2626;margin-top:-6px;margin-bottom:8px;display:none}
+.phone-row{display:flex;gap:8px;margin-bottom:10px}
+.phone-prefix{padding:12px;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text2);font-size:13px;font-weight:700;flex-shrink:0;display:flex;align-items:center;gap:4px}
+
+.dl-toast-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4)}
+.dl-toast{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:201;background:var(--card,#fff);border-radius:18px;padding:20px 24px;text-align:center;font-size:13px;color:var(--text);line-height:1.6;box-shadow:0 8px 32px rgba(0,0,0,.25);max-width:280px}
+.dl-toast-ok{margin-top:12px;padding:8px 28px;border-radius:12px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer}
+
+.faq-section{margin-top:24px}
+.faq-title{font-size:14px;font-weight:800;margin-bottom:12px}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-q{padding:14px 0;font-size:13px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);user-select:none}
+.faq-chevron{font-size:16px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.faq-q.open .faq-chevron{transform:rotate(90deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s;font-size:12px;color:var(--text2);line-height:1.7}
+.faq-a.open{max-height:800px;padding-bottom:14px}
+.faq-a ul{padding-left:16px;margin:0}
+.faq-a li{margin-bottom:4px}
+
+.quick-links{margin-top:24px}
+.quick-links-title{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
+.quick-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick-link{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--glass);color:var(--text);text-decoration:none;transition:all .2s;backdrop-filter:blur(8px)}
+[data-theme="light"] .quick-link{background:var(--card);box-shadow:var(--card-shadow);border-color:var(--glass-border)}
+.quick-link:active{transform:scale(.97);border-color:var(--accent)}
+.quick-link-icon{font-size:18px;flex-shrink:0}
+.quick-link-text{font-size:11px;font-weight:700;line-height:1.3}
+.quick-link-sub{font-size:11px;color:var(--text2);font-weight:400}
+
+.tools-footer{text-align:center;padding:24px 0 40px;font-size:11px;color:var(--text3);line-height:1.6}
+.tools-footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <img src="../intro_oswal.jpeg" class="page-logo" onerror="this.style.display='none'" alt="">
+    <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
+  </div>
+
+  <a class="tool-back" href="../BrokerTools.html">&#8249; All Tools</a>
+  <div class="tool-title-row"><span class="tool-icon">&#128220;</span><span class="tool-title">Rent Agreement</span></div>
+  <div class="tool-subtitle">Calculate Leave &amp; License stamp duty, registration fees and all associated charges for your rental agreement.</div>
+
+  <!-- State Selection -->
+  <div class="calc-card">
+    <div class="section-label">&#127970; Location</div>
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#127463;</span> State</div>
+      <div class="search-wrap" id="stateSearchWrap">
+        <input type="text" class="search-input" id="stateSearch" value="Maharashtra" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
+        <span class="search-arrow">&#9662;</span>
+        <div class="search-dropdown" id="stateDropdown"></div>
+      </div>
+    </div>
+    <div class="input-group" id="cityGroup">
+      <div class="input-label"><span class="input-label-icon">&#127961;</span> City</div>
+      <div class="chip-row" id="cityChips">
+        <button class="chip-btn active" data-val="mumbai">Mumbai</button>
+        <button class="chip-btn" data-val="pune">Pune</button>
+        <button class="chip-btn" data-val="other">Other Maharashtra</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agreement Details -->
+  <div class="calc-card">
+    <div class="section-label">&#128221; Agreement Details</div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#128197;</span> Tenure (Months)</div>
+      <div class="input-row">
+        <span class="input-prefix">&#128197;</span>
+        <input type="text" class="input-field" id="tenureInput" value="11" inputmode="numeric" placeholder="11">
+        <span class="input-suffix">months</span>
+      </div>
+      <div class="range-row">
+        <span class="range-label">6</span>
+        <input type="range" class="range-slider" id="tenureSlider" min="6" max="60" value="11">
+        <span class="range-label right">60</span>
+      </div>
+      <div class="range-current" id="tenureCurrent">11 months</div>
+      <div class="quick-val-chips" id="tenureChips">
+        <button class="qv-chip" data-val="6">6</button>
+        <button class="qv-chip active" data-val="11">11</button>
+        <button class="qv-chip" data-val="12">12</button>
+        <button class="qv-chip" data-val="24">24</button>
+        <button class="qv-chip" data-val="36">36</button>
+        <button class="qv-chip" data-val="48">48</button>
+        <button class="qv-chip" data-val="60">60</button>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label" style="justify-content:space-between">
+        <span><span class="input-label-icon">&#8377;</span> <span id="rentLabel">Monthly Rent</span></span>
+        <div class="freq-toggle" id="rentFreqToggle">
+          <button class="freq-btn active" data-freq="monthly">Monthly</button>
+          <button class="freq-btn" data-freq="annual">Annual</button>
+        </div>
+      </div>
+      <div class="input-row">
+        <span class="input-prefix">&#8377;</span>
+        <input type="text" class="input-field" id="rentInput" value="50,000" inputmode="numeric" placeholder="50,000">
+      </div>
+      <div class="range-row">
+        <span class="range-label" id="rentMinLabel">5K</span>
+        <input type="range" class="range-slider" id="rentSlider" min="5000" max="500000" step="1000" value="50000">
+        <span class="range-label right" id="rentMaxLabel">5L</span>
+      </div>
+      <div class="range-current" id="rentCurrent">&#8377;50,000/mo</div>
+      <div class="quick-val-chips" id="rentChips">
+        <button class="qv-chip" data-val="15000">&#8377;15K</button>
+        <button class="qv-chip" data-val="25000">&#8377;25K</button>
+        <button class="qv-chip active" data-val="50000">&#8377;50K</button>
+        <button class="qv-chip" data-val="100000">&#8377;1L</button>
+        <button class="qv-chip" data-val="200000">&#8377;2L</button>
+      </div>
+    </div>
+
+    <div class="increment-row">
+      <label class="increment-label">Annual rent increment</label>
+      <input type="text" class="increment-pct" id="incrementPct" value="5" inputmode="decimal">
+      <span style="font-size:12px;font-weight:700;color:var(--text2)">%</span>
+    </div>
+    <div class="tip" id="incrementTip" style="display:none"></div>
+
+    <div class="input-group" style="margin-top:18px">
+      <div class="input-label" style="justify-content:space-between">
+        <span><span class="input-label-icon">&#128176;</span> Refundable Deposit</span>
+        <div class="dep-mode-toggle" id="depModeToggle">
+          <button class="dep-mode-btn" data-mode="months">&#215; Months</button>
+          <button class="dep-mode-btn active" data-mode="amount">&#8377; Amount</button>
+        </div>
+      </div>
+      <div id="depAmountWrap">
+        <div class="input-row">
+          <span class="input-prefix">&#8377;</span>
+          <input type="text" class="input-field" id="depositInput" value="1,50,000" inputmode="numeric" placeholder="1,50,000">
+        </div>
+      </div>
+      <div id="depMonthsWrap" style="display:none">
+        <div class="input-row">
+          <span class="input-prefix">&#215;</span>
+          <input type="text" class="input-field" id="depositMonths" value="3" inputmode="numeric" placeholder="3">
+          <span class="input-suffix">months rent</span>
+        </div>
+        <div class="quick-val-chips" id="depMonthChips">
+          <button class="qv-chip active" data-val="3">3 months</button>
+          <button class="qv-chip" data-val="4">4 months</button>
+          <button class="qv-chip" data-val="6">6 months</button>
+          <button class="qv-chip" data-val="10">10 months</button>
+        </div>
+        <div class="tip" id="depCalcTip">Deposit = 3 &#215; &#8377;50,000 = <b>&#8377;1,50,000</b></div>
+      </div>
+      <div class="tip" style="margin-top:4px">Fully refundable at end of tenure.</div>
+    </div>
+  </div>
+
+  <!-- Advanced: Registration Officer Visits -->
+  <div class="calc-card">
+    <div class="advanced-toggle" id="advancedToggle" onclick="toggleAdvanced()">
+      <span class="advanced-toggle-icon">&#8250;</span>
+      <div>
+        <div class="advanced-toggle-label">Registration Officer Visit Charges</div>
+        <div class="advanced-toggle-sub">Door visit, biometrics &amp; location-based charges</div>
+      </div>
+    </div>
+    <div class="advanced-content" id="advancedContent">
+      <div class="tip" style="margin:8px 0 14px">The Sub-Registrar&rsquo;s officer visits for biometric verification. All signing parties (tenant &amp; owner) must be at the same location.</div>
+
+      <div class="input-group">
+        <div class="input-label"><span class="input-label-icon">&#128101;</span> Number of Visits</div>
+        <div class="input-row">
+          <span class="input-prefix">&#128101;</span>
+          <input type="text" class="input-field" id="visitsInput" value="1" inputmode="numeric" placeholder="1">
+          <span class="input-suffix">visit(s)</span>
+        </div>
+        <div class="quick-val-chips">
+          <button class="qv-chip active visit-chip" data-val="1">1</button>
+          <button class="qv-chip visit-chip" data-val="2">2</button>
+          <button class="qv-chip visit-chip" data-val="3">3</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-label"><span class="input-label-icon">&#127758;</span> Visit Location Country</div>
+        <div class="search-wrap" id="countrySearchWrap">
+          <input type="text" class="search-input" id="countrySearch" value="India" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
+          <span class="search-arrow">&#9662;</span>
+          <div class="search-dropdown" id="countryDropdown"></div>
+        </div>
+      </div>
+
+      <div class="input-group" id="pincodeGroup">
+        <div class="input-label"><span class="input-label-icon">&#128205;</span> Pincode</div>
+        <div class="input-row">
+          <span class="input-prefix">&#128205;</span>
+          <input type="text" class="input-field" id="pincodeInput" value="" inputmode="numeric" placeholder="e.g. 400001" maxlength="6">
+        </div>
+        <div id="zoneResult"></div>
+      </div>
+
+      <div class="input-group" id="visitChargeResult" style="display:none">
+        <div class="bd-row" style="border:none;padding:4px 0">
+          <span class="bd-label">Per visit charge</span>
+          <span class="bd-value" id="perVisitCharge">--</span>
+        </div>
+        <div class="bd-row total" style="margin-top:0">
+          <span class="bd-label">Total visit charges</span>
+          <span class="bd-value" id="totalVisitCharge">--</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="calc-card">
+    <div class="section-label">&#128178; Total Agreement Charges</div>
+    <div class="result-card primary" style="border-radius:14px;text-align:center;padding:14px;margin-bottom:4px">
+      <div class="result-label">Total Agreement Cost</div>
+      <div class="result-value" id="totalCharges">--</div>
+      <div class="result-sub" id="totalChargesSub"></div>
+    </div>
+  </div>
+
+  <!-- Full Breakdown -->
+  <div class="calc-card" id="breakdownCard">
+    <div class="breakdown-title">Complete Cost Breakdown</div>
+    <div class="breakdown-sub">All charges for your rent agreement</div>
+    <div id="breakdownList"></div>
+  </div>
+
+  <!-- CTA: Make Rent Agreement -->
+  <div class="cta-card" onclick="openEnquiryModal()">
+    <div class="cta-title">&#128220; Get Free Draft Agreement</div>
+    <div class="cta-sub">No commitments &mdash; review the draft first, pay only if you proceed.</div>
+    <div class="cta-badge">Free Consultation &#8250;</div>
+    <div class="cta-docs">&#9989; Registered Agreement &middot; Index 2 &middot; Police Verification Report &middot; Stamp Duty Challans &middot; Receipts &middot; All official documents</div>
+    <span class="cta-arrow">&#8250;</span>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">Common Questions</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How is stamp duty calculated for rent agreements?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <div id="faqFormulaContent"></div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is a Leave &amp; License agreement?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Leave &amp; License</b> is the standard rental agreement format in Maharashtra</li>
+          <li>The landlord (licensor) grants the tenant (licensee) permission to <b>use the property</b> for a fixed period</li>
+          <li>Maximum tenure is <b>60 months</b> (5 years). Commonly 11 months</li>
+          <li><b>Must be registered</b> with the Sub-Registrar office &mdash; unregistered agreements have no legal standing</li>
+          <li>The licensee does not get any <b>ownership or tenancy rights</b> &mdash; this protects the landlord</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Who pays the agreement charges?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Common practice</b>: Stamp duty &amp; registration split equally (50:50) between landlord and tenant</li>
+          <li>There is <b>no legal mandate</b> on who pays &mdash; it&rsquo;s a matter of negotiation</li>
+          <li>In premium properties, landlords often cover all charges as a <b>goodwill gesture</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What documents are needed for registration?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Aadhaar card</b> of both landlord and tenant (original + photocopy)</li>
+          <li><b>PAN card</b> of both parties</li>
+          <li><b>Passport-size photographs</b> (2 each for landlord and tenant)</li>
+          <li><b>2 witnesses</b> with their Aadhaar &amp; photos</li>
+          <li><b>Property documents</b>: Index-II / ownership proof / society NOC</li>
+          <li><b>Stamp paper</b> of appropriate value (physical or e-stamp)</li>
+          <li><b>Typed agreement draft</b> with all terms and conditions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What if tenant is from outside India (NRI/USA)?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li>Agreement registration process is the <b>same</b> for NRI tenants</li>
+          <li><b>Passport</b> serves as identity proof (instead of Aadhaar for the foreign party)</li>
+          <li>Registration officer visit charges are <b>higher</b> for international locations</li>
+          <li><b>Power of Attorney</b> can be given if the party cannot be physically present</li>
+          <li>Police verification is <b>still mandatory</b> and may involve FRRO registration</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is online (e-registration) available?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Yes</b> &mdash; Maharashtra offers online L&amp;L registration via <b>igrmaharashtra.gov.in</b></li>
+          <li><b>E-stamp</b> can be purchased online through SHCIL or Stock Holding</li>
+          <li>Both parties need <b>Aadhaar-linked biometric verification</b></li>
+          <li>Most advocates handle <b>end-to-end online registration</b> for a service fee</li>
+          <li>Online registration is <b>legally equivalent</b> to physical registration</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is police verification?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Mandatory in Maharashtra</b> for all rental agreements</li>
+          <li>Landlord must submit tenant details to the <b>local police station</b> within 1 month</li>
+          <li>Can be done online via the <b>Tenant Information System</b> (TIS) in some cities</li>
+          <li>Failure to inform police can result in a <b>fine of up to &#8377;5,000</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="quick-links">
+    <div class="quick-links-title">Explore More</div>
+    <div class="quick-links-grid">
+      <a class="quick-link" href="../index.html">
+        <span class="quick-link-icon">&#127968;</span>
+        <div><div class="quick-link-text">Home</div><div class="quick-link-sub">Oswal Properties</div></div>
+      </a>
+      <a class="quick-link" href="../BrokerTools.html">
+        <span class="quick-link-icon">&#128736;</span>
+        <div><div class="quick-link-text">All Tools</div><div class="quick-link-sub">Real Estate Tools</div></div>
+      </a>
+      <a class="quick-link" href="./tds.html">
+        <span class="quick-link-icon">&#128181;</span>
+        <div><div class="quick-link-text">TDS on Rent</div><div class="quick-link-sub">Deduction calculator</div></div>
+      </a>
+      <a class="quick-link" href="./stamp-duty.html">
+        <span class="quick-link-icon">&#128196;</span>
+        <div><div class="quick-link-text">Stamp Duty</div><div class="quick-link-sub">Property purchase charges</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="tools-footer">
+    Charges are indicative. Verify with your advocate or Sub-Registrar before payment.<br>
+    Powered by <a href="https://housieai.com" target="_blank" rel="noopener">HousieAi.com</a>
+  </div>
+</div>
+
+<!-- Floating Buttons -->
+<div class="float-btn-pair">
+  <button class="float-btn" id="downloadFloatBtn" onclick="openSaveModal()" title="Download charges">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  </button>
+  <button class="float-btn" id="shareFloatBtn" onclick="openShareModal()" title="Share">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+  </button>
+</div>
+
+<!-- Share Choice Modal -->
+<div class="modal-overlay" id="shareModal" onclick="if(event.target===this)closeModal('shareModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Share Agreement Charges</div>
+    <button class="modal-btn" onclick="doShareLink()">&#128279; Share Calculator Link</button>
+    <button class="modal-btn" onclick="closeModal('shareModal');openSaveModal()">&#128247; Share as Image</button>
+    <button class="modal-cancel" onclick="closeModal('shareModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- Save/Download Modal -->
+<div class="modal-overlay" id="saveModal" onclick="if(event.target===this)closeModal('saveModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div id="saveStep1">
+      <div class="modal-title">Download Agreement Charges</div>
+      <div class="modal-note">Choose how you want to download</div>
+      <div class="utype-row">
+        <button class="utype-btn active" id="btnEndUser" onclick="setSaveType('end')">End User</button>
+        <button class="utype-btn" id="btnCP" onclick="setSaveType('cp')">Broker / CP</button>
+      </div>
+      <div id="cpForm" style="display:none">
+        <label class="modal-label">Full Name</label>
+        <input type="text" class="modal-input" id="cpName" placeholder="Your name">
+        <label class="modal-label">Contact Number</label>
+        <input type="tel" class="modal-input" id="cpPhone" placeholder="Phone number">
+        <label class="modal-label">Company (Optional)</label>
+        <input type="text" class="modal-input" id="cpCompany" placeholder="Company name">
+      </div>
+      <button class="modal-btn primary" onclick="doDownloadImage()">&#128247; Download Image</button>
+      <button class="modal-cancel" onclick="closeModal('saveModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Enquiry Modal: Make Rent Agreement -->
+<div class="modal-overlay" id="enquiryModal" onclick="if(event.target===this)closeModal('enquiryModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div id="enqStep1">
+      <div class="modal-title">&#128220; Get Free Draft Agreement</div>
+      <div class="modal-note">Tell us about yourself</div>
+      <div class="utype-row">
+        <button class="utype-btn" id="enqTenantBtn" onclick="setEnqType('tenant')">&#128100; Tenant</button>
+        <button class="utype-btn" id="enqBrokerBtn" onclick="setEnqType('broker')">&#128188; Broker / CP</button>
+      </div>
+      <div id="enqFormWrap" style="display:none">
+        <label class="modal-label">Full Name</label>
+        <input type="text" class="modal-input" id="enqName" placeholder="Enter your full name" autocomplete="name">
+        <div class="modal-error" id="enqNameErr">Please enter your name</div>
+        <label class="modal-label">WhatsApp Number</label>
+        <div class="phone-row">
+          <div class="phone-prefix">&#127470;&#127475; +91</div>
+          <input type="tel" class="modal-input" id="enqPhone" placeholder="10-digit number" maxlength="10" autocomplete="tel" style="flex:1;margin-bottom:0">
+        </div>
+        <div class="modal-error" id="enqPhoneErr">Please enter a valid 10-digit number</div>
+        <button class="modal-btn primary" style="margin-top:14px" onclick="submitEnquiry()">Send on WhatsApp &#8594;</button>
+      </div>
+      <button class="modal-cancel" onclick="closeModal('enquiryModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Download Toast -->
+<div id="dlToastOverlay" class="dl-toast-overlay" onclick="dismissDlToast()"></div>
+<div id="dlToast" class="dl-toast">Image Downloaded!<br>Share on WhatsApp in <b>HD quality</b><br><button class="dl-toast-ok" onclick="dismissDlToast()">OK</button></div>
+
+<!-- Hidden Capture Area for Screenshot -->
+<div id="captureArea" style="display:none;background:#f4f1ea;max-width:430px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow:hidden;border-radius:16px;color:#1a1a1a">
+  <div style="padding:16px 18px 12px;border-bottom:1px solid rgba(0,0,0,.08)">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <span style="font-size:22px">&#128220;</span>
+      <span style="font-size:18px;font-weight:800;letter-spacing:-.3px">Rent Agreement Charges</span>
+    </div>
+    <div id="capSubtitle" style="font-size:11px;color:#666;line-height:1.4"></div>
+  </div>
+  <div id="capBreakdown" style="padding:12px 18px"></div>
+  <div id="capFooter" style="display:none;background:rgba(72,199,142,.12);border-top:2px solid rgba(72,199,142,.3);padding:10px 18px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div id="capFooterName" style="font-size:14px;font-weight:800;color:#1a1a1a"></div>
+        <div id="capFooterPhone" style="font-size:12px;color:#666;margin-top:1px"></div>
+      </div>
+      <div id="capFooterCompany" style="font-size:13px;font-weight:800;color:#1a1a1a;text-align:right;max-width:140px"></div>
+    </div>
+  </div>
+  <div style="padding:8px 18px 10px;text-align:center;border-top:1px solid rgba(0,0,0,.05)">
+    <span style="font-size:10px;color:#999">soboflats.github.io/tools/rent-agreement.html</span>
+  </div>
+</div>
+
+<script src="../shared/theme.js"></script>
+<script src="../shared/nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script>
+(function(){
+
+var SHEET_URL='https://script.google.com/macros/s/AKfycbyxX8r0cPCr332m9O2s-6u8o3SH-tJhcNEHZCfgC9ksreMnTRJk5HlH-MTkUetMw1A/exec';
+
+var STATES={
+  maharashtra:{name:'Maharashtra',stampPct:0.25,regFee:1000,dhc:300,police:1000,minStamp:100,service:1500,note:'L&L stamp duty: 0.25% of (Total Rent + Deposit). Registration: ₹1,000.'},
+  delhi:{name:'Delhi',stampPct:2,regFee:1100,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 2% of annual rent. Registration: ₹1,100.'},
+  karnataka:{name:'Karnataka',stampPct:1,regFee:500,dhc:0,police:500,minStamp:200,service:1500,note:'Stamp duty: 1% of total rent + deposit. Registration: ₹500.'},
+  tamilnadu:{name:'Tamil Nadu',stampPct:1,regFee:500,dhc:0,police:500,minStamp:20,service:1500,note:'Stamp duty: 1% of annual rent. Registration: ₹500.'},
+  telangana:{name:'Telangana',stampPct:0.5,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 0.5% of annual rent amount. Registration: ₹1,000.'},
+  ap:{name:'Andhra Pradesh',stampPct:0.5,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 0.5% of annual rent. Registration: ₹1,000.'},
+  up:{name:'Uttar Pradesh',stampPct:2,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 2% of annual rent. Registration: ₹1,000.'},
+  rajasthan:{name:'Rajasthan',stampPct:1,regFee:1000,dhc:0,police:500,minStamp:50,service:1500,note:'Stamp duty: 1% of annual rent. Registration: ₹1,000.'},
+  gujarat:{name:'Gujarat',stampPct:1,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 1% of annual rent + deposit. Registration: ₹1,000.'},
+  wb:{name:'West Bengal',stampPct:0.25,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 0.25% of total consideration. Registration: ₹1,000.'},
+  punjab:{name:'Punjab',stampPct:2,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 2% of annual rent. Registration: ₹1,000.'},
+  haryana:{name:'Haryana',stampPct:1.5,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 1.5% of annual rent. Registration: ₹1,000.'},
+  mp:{name:'Madhya Pradesh',stampPct:2,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 2% of annual rent. Registration: ₹1,000.'},
+  kerala:{name:'Kerala',stampPct:1,regFee:500,dhc:0,police:500,minStamp:50,service:1500,note:'Stamp duty: 1% of annual rent. Registration: ₹500.'},
+  goa:{name:'Goa',stampPct:0.5,regFee:500,dhc:0,police:500,minStamp:50,service:1500,note:'Stamp duty: 0.5% of annual rent. Registration: ₹500.'},
+  odisha:{name:'Odisha',stampPct:1,regFee:500,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 1% of annual rent. Registration: ₹500.'},
+  bihar:{name:'Bihar',stampPct:2,regFee:1500,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 2% of annual rent. Registration: ₹1,500.'},
+  jharkhand:{name:'Jharkhand',stampPct:2,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 2% of annual rent. Registration: ₹1,000.'},
+  chhattisgarh:{name:'Chhattisgarh',stampPct:2,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 2% of annual rent. Registration: ₹1,000.'},
+  uttarakhand:{name:'Uttarakhand',stampPct:2,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 2% of annual rent. Registration: ₹1,000.'},
+  himachal:{name:'Himachal Pradesh',stampPct:2,regFee:1000,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 2% of annual rent. Registration: ₹1,000.'},
+  assam:{name:'Assam',stampPct:1,regFee:500,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 1% of annual rent. Registration: ₹500.'},
+  jk:{name:'Jammu & Kashmir',stampPct:1,regFee:500,dhc:0,police:500,minStamp:100,service:1500,note:'Stamp duty: 1% of annual rent. Registration: ₹500.'}
+};
+
+var COUNTRIES=[
+  {name:'India',charge:0,zone:'pincode'},
+  {name:'UAE / Dubai',charge:6000,zone:'intl'},
+  {name:'USA',charge:10000,zone:'intl'},
+  {name:'UK',charge:10000,zone:'intl'},
+  {name:'Canada',charge:10000,zone:'intl'},
+  {name:'Germany',charge:10000,zone:'intl'},
+  {name:'France',charge:10000,zone:'intl'},
+  {name:'Australia',charge:8000,zone:'intl'},
+  {name:'Singapore',charge:8000,zone:'intl'},
+  {name:'Other Asia',charge:5000,zone:'intl'},
+  {name:'Other Europe',charge:10000,zone:'intl'},
+  {name:'Other',charge:5000,zone:'intl'}
+];
+
+var stateKey='maharashtra',cityType='mumbai',rentFreq='monthly',depMode='amount',selectedCountry='India',advancedOpen=false;
+var saveType='end',enqType='';
+
+var tenureInput=document.getElementById('tenureInput'),tenureSlider=document.getElementById('tenureSlider');
+var rentInput=document.getElementById('rentInput'),rentSlider=document.getElementById('rentSlider');
+var depositInput=document.getElementById('depositInput'),depositMonthsInput=document.getElementById('depositMonths');
+var incrementPctInput=document.getElementById('incrementPct');
+var stateSearchInput=document.getElementById('stateSearch'),stateDropdown=document.getElementById('stateDropdown');
+var visitsInput=document.getElementById('visitsInput'),pincodeInput=document.getElementById('pincodeInput');
+var countrySearchInput=document.getElementById('countrySearch'),countryDropdown=document.getElementById('countryDropdown');
+
+function parseNum(s){return parseFloat(String(s).replace(/,/g,''))||0}
+function formatIndian(n){
+  n=Math.round(n);if(n<0)return '-'+formatIndian(-n);
+  var s=n.toString();if(s.length<=3)return s;
+  var last3=s.slice(-3),rest=s.slice(0,-3);
+  if(rest)rest=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',');
+  return rest?rest+','+last3:last3;
+}
+function liveFormatIndian(input){
+  var pos=input.selectionStart,oldVal=input.value,digits=oldVal.replace(/[^0-9]/g,'');
+  if(!digits){input.value='';return}
+  var formatted=formatIndian(parseInt(digits));input.value=formatted;
+  var oldC=oldVal.slice(0,pos).split(',').length-1,newC=formatted.slice(0,pos).split(',').length-1;
+  var newPos=Math.max(0,Math.min(formatted.length,pos+(newC-oldC)));
+  input.setSelectionRange(newPos,newPos);
+}
+
+function getMonthlyRent(){var v=parseNum(rentInput.value);return rentFreq==='annual'?Math.round(v/12):v}
+function getDeposit(){
+  if(depMode==='months')return(parseInt(depositMonthsInput.value)||0)*getMonthlyRent();
+  return parseNum(depositInput.value);
+}
+function calcTotalRent(monthlyRent,tenureMonths,incrementPct){
+  if(incrementPct<=0||tenureMonths<=12)return monthlyRent*tenureMonths;
+  var total=0,cur=monthlyRent;
+  for(var m=0;m<tenureMonths;m++){if(m>0&&m%12===0)cur=Math.round(cur*(1+incrementPct/100));total+=cur;}
+  return total;
+}
+function calcStampDuty(totalRent,deposit,state){
+  if(stateKey==='maharashtra')return Math.max(Math.round((totalRent+deposit)*state.stampPct/100),state.minStamp);
+  var tenure=parseInt(tenureInput.value)||12;
+  return Math.max(Math.round((totalRent/(tenure/12)+deposit)*state.stampPct/100),state.minStamp);
+}
+
+function getPerVisitCharge(){
+  if(selectedCountry!=='India'){var c=COUNTRIES.find(function(c){return c.name===selectedCountry});return c?c.charge:5000;}
+  var pin=pincodeInput.value.replace(/\D/g,'');if(pin.length<3)return 1500;
+  var p3=parseInt(pin.substring(0,3));
+  if(p3===400||p3===410||p3===421)return 1500;
+  if(p3>=401&&p3<=449)return 3000;
+  return 3000;
+}
+function getVisitCharge(){
+  var visits=advancedOpen?(parseInt(visitsInput.value)||1):1;
+  return visits*getPerVisitCharge();
+}
+function getZoneLabel(pv){
+  if(pv<=1500)return{text:'Mumbai / Thane / Navi Mumbai',cls:'local'};
+  if(pv<=3000)return{text:'Other Maharashtra / India',cls:'state'};
+  if(pv<=6000)return{text:'Dubai / Asia',cls:'intl'};
+  return{text:'International (USA/Europe)',cls:'intl'};
+}
+
+// State dropdown
+function buildStateDropdown(filter){
+  stateDropdown.innerHTML='';
+  var keys=Object.keys(STATES).filter(function(k){return !filter||STATES[k].name.toLowerCase().indexOf(filter.toLowerCase())>=0});
+  if(!keys.length){stateDropdown.innerHTML='<div class="search-option" style="color:var(--text3)">No match</div>';return}
+  keys.forEach(function(k){
+    var opt=document.createElement('div');opt.className='search-option'+(k===stateKey?' active':'');opt.textContent=STATES[k].name;
+    opt.addEventListener('click',function(){stateKey=k;stateSearchInput.value=STATES[k].name;stateDropdown.classList.remove('open');
+      document.getElementById('cityGroup').style.display=(k==='maharashtra')?'':'none';update()});
+    stateDropdown.appendChild(opt);
+  });
+}
+stateSearchInput.addEventListener('focus',function(){buildStateDropdown('');stateDropdown.classList.add('open');this.select()});
+stateSearchInput.addEventListener('input',function(){buildStateDropdown(this.value);stateDropdown.classList.add('open')});
+document.addEventListener('click',function(e){
+  if(!document.getElementById('stateSearchWrap').contains(e.target)){stateDropdown.classList.remove('open');stateSearchInput.value=STATES[stateKey].name}
+  if(!document.getElementById('countrySearchWrap').contains(e.target)){countryDropdown.classList.remove('open');countrySearchInput.value=selectedCountry}
+});
+
+// Country dropdown
+function buildCountryDropdown(filter){
+  countryDropdown.innerHTML='';
+  var filtered=COUNTRIES.filter(function(c){return !filter||c.name.toLowerCase().indexOf(filter.toLowerCase())>=0});
+  if(!filtered.length){countryDropdown.innerHTML='<div class="search-option" style="color:var(--text3)">No match</div>';return}
+  filtered.forEach(function(c){
+    var opt=document.createElement('div');opt.className='search-option'+(c.name===selectedCountry?' active':'');opt.textContent=c.name;
+    opt.addEventListener('click',function(){selectedCountry=c.name;countrySearchInput.value=c.name;countryDropdown.classList.remove('open');
+      document.getElementById('pincodeGroup').style.display=(c.name==='India')?'':'none';update()});
+    countryDropdown.appendChild(opt);
+  });
+}
+countrySearchInput.addEventListener('focus',function(){buildCountryDropdown('');countryDropdown.classList.add('open');this.select()});
+countrySearchInput.addEventListener('input',function(){buildCountryDropdown(this.value);countryDropdown.classList.add('open')});
+
+// City chips
+document.getElementById('cityChips').addEventListener('click',function(e){var btn=e.target.closest('.chip-btn');if(!btn)return;
+  this.querySelectorAll('.chip-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');cityType=btn.dataset.val;update()});
+
+// Tenure
+tenureInput.addEventListener('input',function(){var v=parseInt(this.value.replace(/[^0-9]/g,''))||0;this.value=v||'';
+  if(v>=6&&v<=60)tenureSlider.value=v;
+  document.getElementById('tenureChips').querySelectorAll('.qv-chip').forEach(function(b){b.classList.toggle('active',parseInt(b.dataset.val)===v)});update()});
+tenureSlider.addEventListener('input',function(){tenureInput.value=this.value;
+  document.getElementById('tenureChips').querySelectorAll('.qv-chip').forEach(function(b){b.classList.toggle('active',b.dataset.val===tenureSlider.value)});update()});
+document.getElementById('tenureChips').addEventListener('click',function(e){var btn=e.target.closest('.qv-chip');if(!btn)return;
+  this.querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');
+  tenureInput.value=btn.dataset.val;tenureSlider.value=btn.dataset.val;update()});
+
+// Rent frequency toggle
+document.getElementById('rentFreqToggle').addEventListener('click',function(e){
+  var btn=e.target.closest('.freq-btn');if(!btn||btn.dataset.freq===rentFreq)return;
+  var curVal=parseNum(rentInput.value),newFreq=btn.dataset.freq;
+  var newVal=newFreq==='annual'?curVal*12:Math.round(curVal/12);
+  this.querySelectorAll('.freq-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');rentFreq=newFreq;
+  rentInput.value=formatIndian(newVal);
+  if(newFreq==='monthly'){rentSlider.min=5000;rentSlider.max=500000;rentSlider.step=1000;document.getElementById('rentMinLabel').textContent='5K';document.getElementById('rentMaxLabel').textContent='5L';document.getElementById('rentLabel').textContent='Monthly Rent';
+    document.getElementById('rentChips').innerHTML='<button class="qv-chip" data-val="15000">₹15K</button><button class="qv-chip" data-val="25000">₹25K</button><button class="qv-chip" data-val="50000">₹50K</button><button class="qv-chip" data-val="100000">₹1L</button><button class="qv-chip" data-val="200000">₹2L</button>';
+  }else{rentSlider.min=60000;rentSlider.max=6000000;rentSlider.step=12000;document.getElementById('rentMinLabel').textContent='60K';document.getElementById('rentMaxLabel').textContent='60L';document.getElementById('rentLabel').textContent='Annual Rent';
+    document.getElementById('rentChips').innerHTML='<button class="qv-chip" data-val="180000">₹1.8L</button><button class="qv-chip" data-val="300000">₹3L</button><button class="qv-chip" data-val="600000">₹6L</button><button class="qv-chip" data-val="1200000">₹12L</button><button class="qv-chip" data-val="2400000">₹24L</button>';
+  }
+  if(newVal>=parseInt(rentSlider.min)&&newVal<=parseInt(rentSlider.max))rentSlider.value=newVal;
+  setupRentChipListeners();update();
+});
+
+rentInput.addEventListener('input',function(){liveFormatIndian(this);var v=parseNum(this.value);
+  if(v>=parseInt(rentSlider.min)&&v<=parseInt(rentSlider.max))rentSlider.value=v;
+  document.getElementById('rentChips').querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});update()});
+rentInput.addEventListener('blur',function(){var v=parseNum(this.value);if(v)this.value=formatIndian(v)});
+rentSlider.addEventListener('input',function(){rentInput.value=formatIndian(parseInt(this.value));
+  document.getElementById('rentChips').querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});update()});
+
+function setupRentChipListeners(){document.getElementById('rentChips').addEventListener('click',function(e){
+  var btn=e.target.closest('.qv-chip');if(!btn)return;this.querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');
+  var v=parseInt(btn.dataset.val);rentInput.value=formatIndian(v);if(v>=parseInt(rentSlider.min)&&v<=parseInt(rentSlider.max))rentSlider.value=v;update()});}
+setupRentChipListeners();
+
+// Deposit
+document.getElementById('depModeToggle').addEventListener('click',function(e){var btn=e.target.closest('.dep-mode-btn');if(!btn)return;
+  this.querySelectorAll('.dep-mode-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');depMode=btn.dataset.mode;
+  document.getElementById('depAmountWrap').style.display=depMode==='amount'?'':'none';
+  document.getElementById('depMonthsWrap').style.display=depMode==='months'?'':'none';
+  if(depMode==='months')depositInput.value=formatIndian((parseInt(depositMonthsInput.value)||3)*getMonthlyRent());update()});
+depositInput.addEventListener('input',function(){liveFormatIndian(this);update()});
+depositInput.addEventListener('blur',function(){var v=parseNum(this.value);if(v)this.value=formatIndian(v)});
+depositMonthsInput.addEventListener('input',function(){update()});
+document.getElementById('depMonthChips').addEventListener('click',function(e){var btn=e.target.closest('.qv-chip');if(!btn)return;
+  this.querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');depositMonthsInput.value=btn.dataset.val;update()});
+incrementPctInput.addEventListener('input',function(){update()});
+
+// Visits
+visitsInput.addEventListener('input',function(){update()});
+document.querySelectorAll('.visit-chip').forEach(function(chip){chip.addEventListener('click',function(){
+  document.querySelectorAll('.visit-chip').forEach(function(b){b.classList.remove('active')});this.classList.add('active');visitsInput.value=this.dataset.val;update()})});
+pincodeInput.addEventListener('input',function(){update()});
+
+window.toggleAdvanced=function(){advancedOpen=!advancedOpen;
+  document.getElementById('advancedToggle').classList.toggle('open',advancedOpen);
+  document.getElementById('advancedContent').classList.toggle('open',advancedOpen);update()};
+
+// Last computed values for capture
+var lastBreakdown={};
+
+function update(){
+  var monthlyRent=getMonthlyRent(),tenure=parseInt(tenureInput.value)||0,deposit=getDeposit(),incrementPct=parseFloat(incrementPctInput.value)||0;
+  var state=STATES[stateKey];
+  document.getElementById('tenureCurrent').textContent=tenure+' month'+(tenure!==1?'s':'');
+  document.getElementById('rentCurrent').innerHTML='&#8377;'+formatIndian(parseNum(rentInput.value))+'/'+(rentFreq==='annual'?'yr':'mo');
+
+  if(depMode==='months'){var dm=parseInt(depositMonthsInput.value)||0;
+    document.getElementById('depCalcTip').innerHTML='Deposit = '+dm+' &times; &#8377;'+formatIndian(monthlyRent)+' = <b>&#8377;'+formatIndian(dm*monthlyRent)+'</b>';
+    depositInput.value=formatIndian(dm*monthlyRent);}
+
+  var incTip=document.getElementById('incrementTip');
+  if(incrementPct>0&&tenure>12){var tw=calcTotalRent(monthlyRent,tenure,incrementPct),tno=monthlyRent*tenure;
+    incTip.style.display='';incTip.innerHTML='With '+incrementPct+'% annual increment, total rent = <b>&#8377;'+formatIndian(tw)+'</b> (vs &#8377;'+formatIndian(tno)+' without)';
+  }else incTip.style.display='none';
+
+  // Visit charges
+  var perVisit=getPerVisitCharge(),visits=advancedOpen?(parseInt(visitsInput.value)||1):1,totalVisit=visits*perVisit;
+  if(advancedOpen){
+    document.getElementById('visitChargeResult').style.display=(visits>0)?'':'none';
+    document.getElementById('perVisitCharge').textContent='₹'+formatIndian(perVisit);
+    document.getElementById('totalVisitCharge').textContent='₹'+formatIndian(totalVisit);
+    var zoneResult=document.getElementById('zoneResult');
+    if(selectedCountry==='India'){var pin=pincodeInput.value.replace(/\D/g,'');
+      if(pin.length>=3){var z=getZoneLabel(perVisit);zoneResult.innerHTML='<div class="zone-badge '+z.cls+'">'+z.text+' &mdash; &#8377;'+formatIndian(perVisit)+'/visit</div>';}
+      else zoneResult.innerHTML='';
+    }else{var z=getZoneLabel(perVisit);zoneResult.innerHTML='<div class="zone-badge '+z.cls+'">'+selectedCountry+' &mdash; &#8377;'+formatIndian(perVisit)+'/visit</div>';
+      document.getElementById('pincodeGroup').style.display='none';}
+  }
+
+  if(!monthlyRent||!tenure){document.getElementById('totalCharges').textContent='--';return}
+
+  var totalRent=calcTotalRent(monthlyRent,tenure,incrementPct);
+  var stampDuty=calcStampDuty(totalRent,deposit,state);
+  var regFee=state.regFee,dhc=state.dhc||0,police=state.police||0,service=state.service||1500;
+  var visitCharge=totalVisit;
+  var govtTotal=stampDuty+regFee+dhc+police;
+  var grandTotal=govtTotal+service+visitCharge;
+
+  document.getElementById('totalCharges').textContent='₹'+formatIndian(grandTotal);
+  document.getElementById('totalChargesSub').textContent='All charges for your agreement';
+  // Breakdown
+  var container=document.getElementById('breakdownList');container.innerHTML='';
+  var items=[];
+  items.push({isSub:true,subLabel:'Government Charges',subValue:govtTotal});
+  items.push({label:'Stamp Duty',value:stampDuty,note:state.stampPct+'%'});
+  items.push({label:'Registration Fee',value:regFee,note:'Fixed'});
+  if(dhc>0)items.push({label:'Document Handling Charge',value:dhc,note:'DHC'});
+  if(police>0)items.push({label:'Police Verification',value:police,note:''});
+
+  items.push({isSub:true,subLabel:'Service Charges',subValue:service});
+  items.push({label:'Advocate / Typing / Drafting',value:service,note:'Service'});
+
+  items.push({isSub:true,subLabel:'Registration Visit Charges',subValue:visitCharge});
+  items.push({label:'Officer visits ('+visits+')',value:visitCharge,note:'₹'+formatIndian(perVisit)+'/visit'});
+
+  items.forEach(function(it){var row=document.createElement('div');
+    if(it.isSub){row.className='bd-row sub-total';row.innerHTML='<span class="bd-label">'+it.subLabel+'</span><span class="bd-value">₹'+formatIndian(it.subValue)+'</span>';}
+    else{row.className='bd-row';row.innerHTML='<span class="bd-label">'+it.label+(it.note?' <span class="bd-note">('+it.note+')</span>':'')+'</span><span class="bd-value">₹'+formatIndian(it.value)+'</span>';}
+    container.appendChild(row);
+  });
+  var totalRow=document.createElement('div');totalRow.className='bd-row total';
+  totalRow.innerHTML='<span class="bd-label">Total Agreement Cost</span><span class="bd-value">₹'+formatIndian(grandTotal)+'</span>';
+  container.appendChild(totalRow);
+
+  // Store for capture
+  lastBreakdown={state:STATES[stateKey].name,tenure:tenure,monthlyRent:monthlyRent,deposit:deposit,stampDuty:stampDuty,regFee:regFee,dhc:dhc,police:police,service:service,visitCharge:visitCharge,visits:visits,perVisit:perVisit,grandTotal:grandTotal,govtTotal:govtTotal,totalRent:totalRent,incrementPct:incrementPct};
+
+  buildFormula(monthlyRent,tenure,deposit,totalRent,stampDuty,state,incrementPct);
+}
+
+function buildFormula(rent,tenure,deposit,totalRent,stampDuty,state,incrementPct){
+  var el=document.getElementById('faqFormulaContent');
+  var html='<ul>';
+  if(stateKey==='maharashtra'){
+    var consideration=totalRent+deposit;
+    html+='<li><b>Maharashtra formula</b>: Stamp Duty = 0.25% × (Total Rent + Deposit)</li>';
+    html+='<li><b>Minimum stamp duty</b>: ₹100</li>';
+    html+='</ul><div style="margin-top:10px;padding:12px;background:var(--accent-bg);border-radius:10px;font-size:12px;line-height:1.7">';
+    html+='<div style="font-weight:800;margin-bottom:6px">Your Calculation:</div>';
+    if(incrementPct>0&&tenure>12)html+='<div><b>Step 1:</b> Total Rent = ₹'+formatIndian(rent)+'/mo × '+tenure+' months (with '+incrementPct+'% increment) = <b>₹'+formatIndian(totalRent)+'</b></div>';
+    else html+='<div><b>Step 1:</b> Total Rent = ₹'+formatIndian(rent)+' × '+tenure+' = <b>₹'+formatIndian(totalRent)+'</b></div>';
+    html+='<div><b>Step 2:</b> Deposit = <b>₹'+formatIndian(deposit)+'</b></div>';
+    html+='<div><b>Step 3:</b> Consideration = ₹'+formatIndian(totalRent)+' + ₹'+formatIndian(deposit)+' = <b>₹'+formatIndian(consideration)+'</b></div>';
+    html+='<div><b>Step 4:</b> Stamp Duty = 0.25% × ₹'+formatIndian(consideration)+' = <b>₹'+formatIndian(stampDuty)+'</b>';
+    if(stampDuty===state.minStamp)html+=' (minimum ₹'+state.minStamp+' applied)';
+    html+='</div></div>';
+  }else{
+    html+='<li><b>'+state.name+'</b>: '+state.stampPct+'% of consideration</li>';
+    html+='</ul><div style="margin-top:10px;padding:12px;background:var(--accent-bg);border-radius:10px;font-size:12px;line-height:1.7">';
+    html+='<div>Stamp Duty = '+state.stampPct+'% × (Annual Rent + Deposit) = <b>₹'+formatIndian(stampDuty)+'</b></div></div>';
+  }
+  el.innerHTML=html;
+}
+
+update();
+
+// === Modals ===
+window.openShareModal=function(){document.getElementById('shareModal').classList.add('open')};
+window.openSaveModal=function(){document.getElementById('saveModal').classList.add('open');
+  try{var s=JSON.parse(localStorage.getItem('cp_details')||'null');if(s){document.getElementById('cpName').value=s.name||'';document.getElementById('cpPhone').value=s.phone||'';document.getElementById('cpCompany').value=s.company||'';}}catch(e){}};
+window.closeModal=function(id){document.getElementById(id).classList.remove('open')};
+window.openEnquiryModal=function(){enqType='';document.getElementById('enqTenantBtn').classList.remove('active');document.getElementById('enqBrokerBtn').classList.remove('active');
+  document.getElementById('enqFormWrap').style.display='none';document.getElementById('enqNameErr').style.display='none';document.getElementById('enqPhoneErr').style.display='none';
+  document.getElementById('enquiryModal').classList.add('open')};
+
+window.doShareLink=function(){var url='https://soboflats.github.io/tools/rent-agreement.html';
+  if(navigator.share)navigator.share({title:'Rent Agreement Calculator',url:url}).catch(function(){});
+  else{navigator.clipboard.writeText(url).then(function(){alert('Link copied!')}).catch(function(){var t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);alert('Link copied!')})}
+  closeModal('shareModal')};
+
+// Save type
+window.setSaveType=function(t){saveType=t;
+  document.getElementById('btnEndUser').classList.toggle('active',t==='end');document.getElementById('btnCP').classList.toggle('active',t==='cp');
+  document.getElementById('cpForm').style.display=t==='cp'?'block':'none'};
+
+// Download image
+window.doDownloadImage=function(){
+  var cap=document.getElementById('captureArea');
+  var b=lastBreakdown;
+  document.getElementById('capSubtitle').textContent=b.state+' · '+b.tenure+' months · ₹'+formatIndian(b.monthlyRent)+'/mo · Deposit ₹'+formatIndian(b.deposit);
+
+  var bdHtml='';
+  bdHtml+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">Government Charges</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.govtTotal)+'</span></div>';
+  bdHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Stamp Duty ('+STATES[stateKey].stampPct+'%)</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.stampDuty)+'</span></div>';
+  bdHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Registration Fee</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.regFee)+'</span></div>';
+  if(b.dhc>0)bdHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Document Handling</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.dhc)+'</span></div>';
+  if(b.police>0)bdHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Police Verification</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.police)+'</span></div>';
+  bdHtml+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;margin-top:4px"><span style="color:#666;font-weight:600">Service Charges</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.service)+'</span></div>';
+  bdHtml+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;margin-top:4px"><span style="color:#666;font-weight:600">Visit Charges ('+b.visits+')</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.visitCharge)+'</span></div>';
+  bdHtml+='<div style="display:flex;justify-content:space-between;padding:10px 0 4px;border-top:2px solid #1a8a5a;margin-top:8px;font-size:14px"><span style="font-weight:800">Total Agreement Cost</span><span style="font-weight:800;color:#1a8a5a">₹'+formatIndian(b.grandTotal)+'</span></div>';
+  document.getElementById('capBreakdown').innerHTML=bdHtml;
+
+  var capFooter=document.getElementById('capFooter');
+  if(saveType==='cp'){
+    var name=document.getElementById('cpName').value.trim(),phone=document.getElementById('cpPhone').value.trim(),company=document.getElementById('cpCompany').value.trim();
+    if(!name||!phone){alert('Please enter your name and phone number.');return}
+    try{localStorage.setItem('cp_details',JSON.stringify({name:name,phone:phone,company:company}))}catch(e){}
+    document.getElementById('capFooterName').textContent=name;document.getElementById('capFooterPhone').textContent=phone;
+    document.getElementById('capFooterCompany').textContent=company;capFooter.style.display='block';
+  }else capFooter.style.display='none';
+
+  cap.style.display='block';closeModal('saveModal');
+
+  setTimeout(function(){
+    if(typeof html2canvas==='undefined'){alert('Image library loading. Please try again.');cap.style.display='none';return}
+    html2canvas(cap,{allowTaint:false,useCORS:false,backgroundColor:'#f4f1ea',scale:2,logging:false}).then(function(canvas){
+      cap.style.display='none';
+      var dataUrl=canvas.toDataURL('image/jpeg',0.92);
+      var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+      if(isIOS){window.open(dataUrl,'_blank')}
+      else{var a=document.createElement('a');a.download='rent-agreement-charges.jpg';a.href=dataUrl;document.body.appendChild(a);a.click();document.body.removeChild(a)}
+      showDlToast();
+    }).catch(function(){cap.style.display='none';alert('Screenshot failed. Please try again.')});
+  },100);
+};
+
+function showDlToast(){document.getElementById('dlToastOverlay').style.display='block';document.getElementById('dlToast').style.display='block'}
+window.dismissDlToast=function(){document.getElementById('dlToastOverlay').style.display='none';document.getElementById('dlToast').style.display='none'};
+
+// Enquiry
+window.setEnqType=function(t){enqType=t;
+  document.getElementById('enqTenantBtn').classList.toggle('active',t==='tenant');document.getElementById('enqBrokerBtn').classList.toggle('active',t==='broker');
+  document.getElementById('enqFormWrap').style.display='block'};
+
+window.submitEnquiry=function(){
+  document.getElementById('enqNameErr').style.display='none';document.getElementById('enqPhoneErr').style.display='none';
+  var name=document.getElementById('enqName').value.trim(),phone=document.getElementById('enqPhone').value.trim(),ok=true;
+  if(!name){document.getElementById('enqNameErr').style.display='block';ok=false}
+  if(!/^\d{10}$/.test(phone)){document.getElementById('enqPhoneErr').style.display='block';ok=false}
+  if(!ok)return;
+
+  var who=enqType==='broker'?'Broker':'Tenant';
+  var payload={sheet:'Enquiry_Rent Agreements',date:new Date().toLocaleDateString('en-IN'),who:who,name:name,phone:phone,contactNumber:'91'+phone,source:'Form',type:'Rent Agreement',stage:'Enquiry'};
+  fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)}).catch(function(){});
+
+  var msg="I'm a "+who+".%0A%0AMy name is "+encodeURIComponent(name)+".%0A%0AI want free draft agreement and if i like it, might want to make a Rent Agreement.%0A%0AKindly call me ASAP to discuss further";
+  var waUrl='https://wa.me/918828340668?text='+msg;
+  closeModal('enquiryModal');
+  window.open(waUrl,'_blank');
+};
+
+})();
+
+function toggleFaq(el){var a=el.nextElementSibling;var isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(function(q){q.classList.remove('open')});
+  document.querySelectorAll('.faq-a').forEach(function(a){a.classList.remove('open')});
+  if(!isOpen){el.classList.add('open');a.classList.add('open')}}
+</script>
+</body>
+</html>
