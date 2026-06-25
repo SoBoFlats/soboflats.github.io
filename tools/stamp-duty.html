@@ -7,6 +7,7 @@
 <meta name="description" content="Calculate stamp duty, registration, GST and total acquisition cost for property purchase across all Indian states. Free tool by Oswal Properties.">
 <link rel="stylesheet" href="../shared/common.css">
 <link rel="stylesheet" href="../shared/nav.css">
+<link rel="stylesheet" href="../shared/share-download.css">
 <style>
 .tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
 .tool-back:active{color:var(--accent)}
@@ -1034,6 +1035,42 @@ propSlider.addEventListener('input',function(){
 
 buildDutyTable();
 update();
+
+window.sdConfig={toolName:'Stamp Duty & GST',toolIcon:'&#128196;',shareTitle:'Stamp Duty Details',shareUrl:'https://soboflats.github.io/tools/stamp-duty.html',fileName:'stamp-duty-gst'};
+
+window.buildCaptureContent=function(){
+  var val=parseNum(propInput.value);
+  if(val<=0)return null;
+  var state=STATES[stateKey];var withMetro=metroCess.checked;
+  var c=calcCharges(val,stateKey,buyerType,withMetro);
+  var subtitle=(state?state.name:'')+ ' · '+buyerType.charAt(0).toUpperCase()+buyerType.slice(1)+' · '+(propStatus==='ready'?'Ready':'Under Construction')+' · ₹'+formatShort(val);
+  var h='';
+  h+='<div style="background:#1a8a5a;border-radius:12px;padding:12px;text-align:center;margin-bottom:8px">';
+  h+='<div style="font-size:11px;color:rgba(255,255,255,.8);font-weight:600">Total Government Charges</div>';
+  h+='<div style="font-size:24px;font-weight:800;color:#fff">₹'+formatShort(c.total)+'</div>';
+  h+='<div style="font-size:11px;color:rgba(255,255,255,.7)">Effective: '+(c.total/val*100).toFixed(1)+'%</div></div>';
+  h+='<div style="display:flex;gap:8px;margin-bottom:10px">';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Stamp Duty</div><div style="font-size:16px;font-weight:800">₹'+formatShort(c.stamp)+'</div><div style="font-size:10px;color:#666">'+c.stampRate+'%</div></div>';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Registration</div><div style="font-size:16px;font-weight:800">₹'+formatShort(c.reg)+'</div><div style="font-size:10px;color:#666">'+c.regRate+'%</div></div></div>';
+  if(c.gst>0||c.metro>0){
+    h+='<div style="display:flex;gap:8px;margin-bottom:10px">';
+    if(c.gst>0){h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">GST</div><div style="font-size:16px;font-weight:800">₹'+formatShort(c.gst)+'</div><div style="font-size:10px;color:#666">'+c.gstRate+'%</div></div>';}
+    if(c.metro>0){h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Metro Cess</div><div style="font-size:16px;font-weight:800">₹'+formatShort(c.metro)+'</div><div style="font-size:10px;color:#666">1%</div></div>';}
+    h+='</div>';
+  }
+  h+='<div style="font-size:10px;font-weight:700;color:#1a8a5a;letter-spacing:1px;text-transform:uppercase;margin:12px 0 6px">Charges Breakdown</div>';
+  [{l:'Property Value',v:'₹'+formatShort(val)},{l:'Stamp Duty ('+c.stampRate+'%)',v:'₹'+formatShort(c.stamp)},{l:'Registration ('+c.regRate+'%)',v:'₹'+formatShort(c.reg)}].forEach(function(r){
+    h+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">'+r.l+'</span><span style="font-weight:600;color:#333">'+r.v+'</span></div>';
+  });
+  if(c.gst>0)h+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">GST ('+c.gstRate+'%)</span><span style="font-weight:600;color:#333">₹'+formatShort(c.gst)+'</span></div>';
+  if(c.metro>0)h+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">Metro Cess (1%)</span><span style="font-weight:600;color:#333">₹'+formatShort(c.metro)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:10px 0 4px;border-top:2px solid #1a8a5a;margin-top:6px;font-size:13px"><span style="font-weight:800">Total Govt. Charges</span><span style="font-weight:800;color:#1a8a5a">₹'+formatShort(c.total)+'</span></div>';
+  var acqTotal=val+c.total;
+  h+='<div style="display:flex;justify-content:space-between;padding:8px 0 4px;border-top:2px solid #1a8a5a;margin-top:4px;font-size:13px"><span style="font-weight:800">Total Acquisition Cost</span><span style="font-weight:800;color:#1a8a5a">₹'+formatShort(acqTotal)+'</span></div>';
+  if(state&&state.note){h+='<div style="margin-top:8px;padding:8px 10px;background:rgba(26,138,90,.06);border-radius:8px;font-size:10px;color:#666;line-height:1.5">'+state.note+'</div>';}
+  return{subtitle:subtitle,body:h};
+};
+
 })();
 
 function showTab(name){
@@ -1052,5 +1089,7 @@ function toggleFaq(el){
   if(!isOpen){el.classList.add('open');a.classList.add('open')}
 }
 </script>
+<script src="../shared/share-download.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 </body>
 </html>

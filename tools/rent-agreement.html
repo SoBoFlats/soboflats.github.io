@@ -7,6 +7,7 @@
 <meta name="description" content="Calculate Leave & License stamp duty, registration and all charges for rental agreements in Maharashtra and other Indian states. Free tool by Oswal Properties.">
 <link rel="stylesheet" href="../shared/common.css">
 <link rel="stylesheet" href="../shared/nav.css">
+<link rel="stylesheet" href="../shared/share-download.css">
 <style>
 .tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
 .tool-back:active{color:var(--accent)}
@@ -121,11 +122,6 @@
 .cta-docs{font-size:10px;color:rgba(255,255,255,.6);margin-top:10px;line-height:1.5}
 .cta-arrow{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:24px;color:rgba(255,255,255,.5)}
 
-.float-btn-pair{position:fixed;bottom:20px;right:16px;display:flex;flex-direction:row;gap:10px;z-index:40;max-width:430px}
-.float-btn{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:50%;width:44px;height:44px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .15s;box-shadow:0 2px 10px rgba(0,0,0,.15)}
-[data-theme="light"] .float-btn{background:rgba(255,255,255,.92);border-color:rgba(0,0,0,.12);box-shadow:0 2px 10px rgba(0,0,0,.18)}
-.float-btn:active{background:var(--accent-bg)}
-
 .modal-overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.55);align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal-sheet{background:var(--card,#fff);border-radius:22px 22px 0 0;padding:14px 18px 32px;width:100%;max-width:430px;max-height:80vh;overflow-y:auto}
@@ -148,10 +144,6 @@
 .modal-error{font-size:11px;color:#dc2626;margin-top:-6px;margin-bottom:8px;display:none}
 .phone-row{display:flex;gap:8px;margin-bottom:10px}
 .phone-prefix{padding:12px;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text2);font-size:13px;font-weight:700;flex-shrink:0;display:flex;align-items:center;gap:4px}
-
-.dl-toast-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4)}
-.dl-toast{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:201;background:var(--card,#fff);border-radius:18px;padding:20px 24px;text-align:center;font-size:13px;color:var(--text);line-height:1.6;box-shadow:0 8px 32px rgba(0,0,0,.25);max-width:280px}
-.dl-toast-ok{margin-top:12px;padding:8px 28px;border-radius:12px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer}
 
 .faq-section{margin-top:24px}
 .faq-title{font-size:14px;font-weight:800;margin-bottom:12px}
@@ -506,52 +498,6 @@
   </div>
 </div>
 
-<!-- Floating Buttons -->
-<div class="float-btn-pair">
-  <button class="float-btn" id="downloadFloatBtn" onclick="openSaveModal()" title="Download charges">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-  </button>
-  <button class="float-btn" id="shareFloatBtn" onclick="openShareModal()" title="Share">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-  </button>
-</div>
-
-<!-- Share Choice Modal -->
-<div class="modal-overlay" id="shareModal" onclick="if(event.target===this)closeModal('shareModal')">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title">Share Agreement Charges</div>
-    <button class="modal-btn" onclick="doShareLink()">&#128279; Share Calculator Link</button>
-    <button class="modal-btn" onclick="closeModal('shareModal');openSaveModal()">&#128247; Share as Image</button>
-    <button class="modal-cancel" onclick="closeModal('shareModal')">Cancel</button>
-  </div>
-</div>
-
-<!-- Save/Download Modal -->
-<div class="modal-overlay" id="saveModal" onclick="if(event.target===this)closeModal('saveModal')">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div id="saveStep1">
-      <div class="modal-title">Download Agreement Charges</div>
-      <div class="modal-note">Choose how you want to download</div>
-      <div class="utype-row">
-        <button class="utype-btn active" id="btnEndUser" onclick="setSaveType('end')">End User</button>
-        <button class="utype-btn" id="btnCP" onclick="setSaveType('cp')">Broker / CP</button>
-      </div>
-      <div id="cpForm" style="display:none">
-        <label class="modal-label">Full Name</label>
-        <input type="text" class="modal-input" id="cpName" placeholder="Your name">
-        <label class="modal-label">Contact Number</label>
-        <input type="tel" class="modal-input" id="cpPhone" placeholder="Phone number">
-        <label class="modal-label">Company (Optional)</label>
-        <input type="text" class="modal-input" id="cpCompany" placeholder="Company name">
-      </div>
-      <button class="modal-btn primary" onclick="doDownloadImage()">&#128247; Download Image</button>
-      <button class="modal-cancel" onclick="closeModal('saveModal')">Cancel</button>
-    </div>
-  </div>
-</div>
-
 <!-- Enquiry Modal: Make Rent Agreement -->
 <div class="modal-overlay" id="enquiryModal" onclick="if(event.target===this)closeModal('enquiryModal')">
   <div class="modal-sheet">
@@ -580,37 +526,8 @@
   </div>
 </div>
 
-<!-- Download Toast -->
-<div id="dlToastOverlay" class="dl-toast-overlay" onclick="dismissDlToast()"></div>
-<div id="dlToast" class="dl-toast">Image Downloaded!<br>Share on WhatsApp in <b>HD quality</b><br><button class="dl-toast-ok" onclick="dismissDlToast()">OK</button></div>
-
-<!-- Hidden Capture Area for Screenshot -->
-<div id="captureArea" style="display:none;background:#f4f1ea;max-width:430px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow:hidden;border-radius:16px;color:#1a1a1a">
-  <div style="padding:16px 18px 12px;border-bottom:1px solid rgba(0,0,0,.08)">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-      <span style="font-size:22px">&#128220;</span>
-      <span style="font-size:18px;font-weight:800;letter-spacing:-.3px">Rent Agreement Charges</span>
-    </div>
-    <div id="capSubtitle" style="font-size:11px;color:#666;line-height:1.4"></div>
-  </div>
-  <div id="capBreakdown" style="padding:12px 18px"></div>
-  <div id="capFooter" style="display:none;background:rgba(72,199,142,.12);border-top:2px solid rgba(72,199,142,.3);padding:10px 18px">
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <div>
-        <div id="capFooterName" style="font-size:14px;font-weight:800;color:#1a1a1a"></div>
-        <div id="capFooterPhone" style="font-size:12px;color:#666;margin-top:1px"></div>
-      </div>
-      <div id="capFooterCompany" style="font-size:13px;font-weight:800;color:#1a1a1a;text-align:right;max-width:140px"></div>
-    </div>
-  </div>
-  <div style="padding:8px 18px 10px;text-align:center;border-top:1px solid rgba(0,0,0,.05)">
-    <span style="font-size:10px;color:#999">soboflats.github.io/tools/rent-agreement.html</span>
-  </div>
-</div>
-
 <script src="../shared/theme.js"></script>
 <script src="../shared/nav.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <script>
 (function(){
 
@@ -658,7 +575,7 @@ var COUNTRIES=[
 ];
 
 var stateKey='maharashtra',cityType='mumbai',rentFreq='monthly',depMode='amount',selectedCountry='India',advancedOpen=false;
-var saveType='end',enqType='';
+var enqType='';
 
 var tenureInput=document.getElementById('tenureInput'),tenureSlider=document.getElementById('tenureSlider');
 var rentInput=document.getElementById('rentInput'),rentSlider=document.getElementById('rentSlider');
@@ -920,67 +837,11 @@ function buildFormula(rent,tenure,deposit,totalRent,stampDuty,state,incrementPct
 update();
 
 // === Modals ===
-window.openShareModal=function(){document.getElementById('shareModal').classList.add('open')};
-window.openSaveModal=function(){document.getElementById('saveModal').classList.add('open');
-  try{var s=JSON.parse(localStorage.getItem('cp_details')||'null');if(s){document.getElementById('cpName').value=s.name||'';document.getElementById('cpPhone').value=s.phone||'';document.getElementById('cpCompany').value=s.company||'';}}catch(e){}};
 window.closeModal=function(id){document.getElementById(id).classList.remove('open')};
+
 window.openEnquiryModal=function(){enqType='';document.getElementById('enqTenantBtn').classList.remove('active');document.getElementById('enqBrokerBtn').classList.remove('active');
   document.getElementById('enqFormWrap').style.display='none';document.getElementById('enqNameErr').style.display='none';document.getElementById('enqPhoneErr').style.display='none';
   document.getElementById('enquiryModal').classList.add('open')};
-
-window.doShareLink=function(){var url='https://soboflats.github.io/tools/rent-agreement.html';
-  if(navigator.share)navigator.share({title:'Rent Agreement Calculator',url:url}).catch(function(){});
-  else{navigator.clipboard.writeText(url).then(function(){alert('Link copied!')}).catch(function(){var t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);alert('Link copied!')})}
-  closeModal('shareModal')};
-
-// Save type
-window.setSaveType=function(t){saveType=t;
-  document.getElementById('btnEndUser').classList.toggle('active',t==='end');document.getElementById('btnCP').classList.toggle('active',t==='cp');
-  document.getElementById('cpForm').style.display=t==='cp'?'block':'none'};
-
-// Download image
-window.doDownloadImage=function(){
-  var cap=document.getElementById('captureArea');
-  var b=lastBreakdown;
-  document.getElementById('capSubtitle').textContent=b.state+' · '+b.tenure+' months · ₹'+formatIndian(b.monthlyRent)+'/mo · Deposit ₹'+formatIndian(b.deposit);
-
-  var bdHtml='';
-  bdHtml+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">Government Charges</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.govtTotal)+'</span></div>';
-  bdHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Stamp Duty ('+STATES[stateKey].stampPct+'%)</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.stampDuty)+'</span></div>';
-  bdHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Registration Fee</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.regFee)+'</span></div>';
-  if(b.dhc>0)bdHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Document Handling</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.dhc)+'</span></div>';
-  if(b.police>0)bdHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Police Verification</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.police)+'</span></div>';
-  bdHtml+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;margin-top:4px"><span style="color:#666;font-weight:600">Service Charges</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.service)+'</span></div>';
-  bdHtml+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;margin-top:4px"><span style="color:#666;font-weight:600">Visit Charges ('+b.visits+')</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.visitCharge)+'</span></div>';
-  bdHtml+='<div style="display:flex;justify-content:space-between;padding:10px 0 4px;border-top:2px solid #1a8a5a;margin-top:8px;font-size:14px"><span style="font-weight:800">Total Agreement Cost</span><span style="font-weight:800;color:#1a8a5a">₹'+formatIndian(b.grandTotal)+'</span></div>';
-  document.getElementById('capBreakdown').innerHTML=bdHtml;
-
-  var capFooter=document.getElementById('capFooter');
-  if(saveType==='cp'){
-    var name=document.getElementById('cpName').value.trim(),phone=document.getElementById('cpPhone').value.trim(),company=document.getElementById('cpCompany').value.trim();
-    if(!name||!phone){alert('Please enter your name and phone number.');return}
-    try{localStorage.setItem('cp_details',JSON.stringify({name:name,phone:phone,company:company}))}catch(e){}
-    document.getElementById('capFooterName').textContent=name;document.getElementById('capFooterPhone').textContent=phone;
-    document.getElementById('capFooterCompany').textContent=company;capFooter.style.display='block';
-  }else capFooter.style.display='none';
-
-  cap.style.display='block';closeModal('saveModal');
-
-  setTimeout(function(){
-    if(typeof html2canvas==='undefined'){alert('Image library loading. Please try again.');cap.style.display='none';return}
-    html2canvas(cap,{allowTaint:false,useCORS:false,backgroundColor:'#f4f1ea',scale:2,logging:false}).then(function(canvas){
-      cap.style.display='none';
-      var dataUrl=canvas.toDataURL('image/jpeg',0.92);
-      var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
-      if(isIOS){window.open(dataUrl,'_blank')}
-      else{var a=document.createElement('a');a.download='rent-agreement-charges.jpg';a.href=dataUrl;document.body.appendChild(a);a.click();document.body.removeChild(a)}
-      showDlToast();
-    }).catch(function(){cap.style.display='none';alert('Screenshot failed. Please try again.')});
-  },100);
-};
-
-function showDlToast(){document.getElementById('dlToastOverlay').style.display='block';document.getElementById('dlToast').style.display='block'}
-window.dismissDlToast=function(){document.getElementById('dlToastOverlay').style.display='none';document.getElementById('dlToast').style.display='none'};
 
 // Enquiry
 window.setEnqType=function(t){enqType=t;
@@ -1004,6 +865,25 @@ window.submitEnquiry=function(){
   window.open(waUrl,'_blank');
 };
 
+// === Share/Download config ===
+window.sdConfig={toolName:'Rent Agreement Charges',toolIcon:'&#128220;',shareTitle:'Agreement Charges',shareUrl:'https://soboflats.github.io/tools/rent-agreement.html',fileName:'rent-agreement-charges'};
+
+window.buildCaptureContent=function(){
+  var b=lastBreakdown;
+  if(!b||!b.grandTotal)return null;
+  var subtitle=b.state+' · '+b.tenure+' months · ₹'+formatIndian(b.monthlyRent)+'/mo · Deposit ₹'+formatIndian(b.deposit);
+  var h='';
+  h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">Government Charges</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.govtTotal)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Stamp Duty ('+STATES[stateKey].stampPct+'%)</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.stampDuty)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Registration Fee</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.regFee)+'</span></div>';
+  if(b.dhc>0)h+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Document Handling</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.dhc)+'</span></div>';
+  if(b.police>0)h+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Police Verification</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.police)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;margin-top:4px"><span style="color:#666;font-weight:600">Service Charges</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.service)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;margin-top:4px"><span style="color:#666;font-weight:600">Visit Charges ('+b.visits+')</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.visitCharge)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:10px 0 4px;border-top:2px solid #1a8a5a;margin-top:8px;font-size:14px"><span style="font-weight:800">Total Agreement Cost</span><span style="font-weight:800;color:#1a8a5a">₹'+formatIndian(b.grandTotal)+'</span></div>';
+  return{subtitle:subtitle,body:h};
+};
+
 })();
 
 function toggleFaq(el){var a=el.nextElementSibling;var isOpen=el.classList.contains('open');
@@ -1011,5 +891,7 @@ function toggleFaq(el){var a=el.nextElementSibling;var isOpen=el.classList.conta
   document.querySelectorAll('.faq-a').forEach(function(a){a.classList.remove('open')});
   if(!isOpen){el.classList.add('open');a.classList.add('open')}}
 </script>
+<script src="../shared/share-download.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 </body>
 </html>

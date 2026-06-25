@@ -7,6 +7,7 @@
 <meta name="description" content="Calculate return on investment for your property including rental income, appreciation and expenses. Compare with FD, Gold, Nifty and more. Free tool by Oswal Properties.">
 <link rel="stylesheet" href="../shared/common.css">
 <link rel="stylesheet" href="../shared/nav.css">
+<link rel="stylesheet" href="../shared/share-download.css">
 <style>
 .tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
 .tool-back:active{color:var(--accent)}
@@ -953,6 +954,48 @@ incrSlider.addEventListener('input',function(){
 });
 
 update();
+
+window.sdConfig={toolName:'ROI Calculator',toolIcon:'&#128200;',shareTitle:'ROI Details',shareUrl:'https://soboflats.github.io/tools/roi.html',fileName:'roi-calculator'};
+
+window.buildCaptureContent=function(){
+  var purchase=parseNum(purchaseInput.value);var current=parseNum(currentInput.value);var years=parseInt(holdingInput.value)||0;
+  if(purchase<=0||current<=0||years<=0)return null;
+  var baseAnnualRent=getBaseAnnualRent();var annualExp=parseNum(expenseInput.value);
+  var vacancyMonths=parseInt(vacancyInput.value)||0;
+  var useIncrement=incrCheck.checked;var incrRate=parseFloat(incrPctInput.value)||5;
+  var useInteriors=intCheck.checked;var interiorsAmt=useInteriors?parseNum(intCostInput.value):0;
+  var purchaseCosts=purchase*0.07;var totalInvestment=purchase+purchaseCosts+interiorsAmt;
+  var capitalGain=current-purchase;
+  var totalRent=calcTotalRent(baseAnnualRent,years,vacancyMonths,useIncrement,incrRate);
+  var totalExp=annualExp*years;var netRental=totalRent-totalExp;
+  var totalReturn=capitalGain+netRental;var totalRoiPct=(totalReturn/totalInvestment)*100;
+  var totalEndValue=current+netRental;var cagr=(Math.pow(totalEndValue/totalInvestment,1/years)-1)*100;
+  var capitalPctVal=((capitalGain/purchase)*100).toFixed(1);
+  var effectiveYear1Rent=getYearRent(baseAnnualRent,0,vacancyMonths,false,0);
+  var avgNetRental=effectiveYear1Rent-annualExp;
+  var yieldPct=((avgNetRental/purchase)*100).toFixed(2);
+  var cashOnCash=((avgNetRental/totalInvestment)*100).toFixed(2);
+
+  var subtitle='₹'+formatShort(purchase)+' → ₹'+formatShort(current)+' · '+years+' Year'+(years>1?'s':'');
+  var h='';
+  h+='<div style="background:#1a8a5a;border-radius:12px;padding:12px;text-align:center;margin-bottom:8px">';
+  h+='<div style="font-size:11px;color:rgba(255,255,255,.8);font-weight:600">Total ROI</div>';
+  h+='<div style="font-size:24px;font-weight:800;color:#fff">'+(totalRoiPct>=0?'+':'')+totalRoiPct.toFixed(2)+'%</div>';
+  h+='<div style="font-size:11px;color:rgba(255,255,255,.7)">'+formatShort(Math.abs(totalReturn))+'</div></div>';
+  h+='<div style="display:flex;gap:8px;margin-bottom:10px">';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">CAGR</div><div style="font-size:16px;font-weight:800">'+cagr.toFixed(2)+'%</div></div>';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Capital Gains</div><div style="font-size:16px;font-weight:800;color:'+(capitalGain>=0?'#1a8a5a':'#dc2626')+'">'+formatShort(capitalGain)+'</div></div></div>';
+  h+='<div style="display:flex;gap:8px;margin-bottom:10px">';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Net Rental Income</div><div style="font-size:16px;font-weight:800">'+formatShort(netRental)+'</div><div style="font-size:10px;color:#666">Yield: '+yieldPct+'%</div></div>';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Cash on Cash</div><div style="font-size:16px;font-weight:800">'+cashOnCash+'%</div></div></div>';
+  h+='<div style="font-size:10px;font-weight:700;color:#1a8a5a;letter-spacing:1px;text-transform:uppercase;margin:12px 0 6px">Investment Summary</div>';
+  [{l:'Total Investment',v:'₹'+formatShort(totalInvestment)},{l:'Current Equity',v:'₹'+formatShort(current)},{l:'Total Rental ('+years+'yr)',v:'₹'+formatShort(totalRent)},{l:'Total Expenses',v:'₹'+formatShort(totalExp)},{l:'Capital Appreciation',v:(capitalGain>=0?'+':'')+capitalPctVal+'%'}].forEach(function(r){
+    h+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">'+r.l+'</span><span style="font-weight:600;color:#333">'+r.v+'</span></div>';
+  });
+  h+='<div style="display:flex;justify-content:space-between;padding:10px 0 4px;border-top:2px solid #1a8a5a;margin-top:6px;font-size:13px"><span style="font-weight:800">Total Return</span><span style="font-weight:800;color:#1a8a5a">₹'+formatShort(totalReturn)+'</span></div>';
+  return{subtitle:subtitle,body:h};
+};
+
 })();
 
 function showTab(name){
@@ -971,5 +1014,7 @@ function toggleFaq(el){
   if(!isOpen){el.classList.add('open');a.classList.add('open')}
 }
 </script>
+<script src="../shared/share-download.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 </body>
 </html>

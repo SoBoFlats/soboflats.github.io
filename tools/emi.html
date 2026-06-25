@@ -7,6 +7,7 @@
 <meta name="description" content="Calculate your monthly home loan EMI with detailed payment breakdown. Free tool by Oswal Properties.">
 <link rel="stylesheet" href="../shared/common.css">
 <link rel="stylesheet" href="../shared/nav.css">
+<link rel="stylesheet" href="../shared/share-download.css">
 <style>
 .tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
 .tool-back:active{color:var(--accent)}
@@ -490,6 +491,45 @@ tenureSlider.addEventListener('input',function(){
 });
 
 update();
+
+window.sdConfig={toolName:'EMI Calculator',toolIcon:'&#8377;',shareTitle:'EMI Details',shareUrl:'https://soboflats.github.io/tools/emi.html',fileName:'emi-calculator'};
+
+window.buildCaptureContent=function(){
+  var P=parseNum(loanInput.value);var rate=parseFloat(rateInput.value)||0;var years=parseInt(tenureInput.value)||0;
+  if(P<=0||rate<=0||years<=0)return null;
+  var emi=calcEMI(P,rate,years);var total=emi*years*12;var interest=total-P;
+  var pPct=(P/total*100).toFixed(1);var iPct=(interest/total*100).toFixed(1);
+  var subtitle='₹'+formatIndian(P)+' · '+rate+'% p.a. · '+years+' Year'+(years>1?'s':'');
+  var h='';
+  h+='<div style="background:#1a8a5a;border-radius:12px;padding:12px;text-align:center;margin-bottom:8px">';
+  h+='<div style="font-size:11px;color:rgba(255,255,255,.8);font-weight:600">Monthly EMI</div>';
+  h+='<div style="font-size:24px;font-weight:800;color:#fff">₹'+formatIndian(Math.round(emi))+'</div></div>';
+  h+='<div style="display:flex;gap:8px;margin-bottom:10px">';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Loan Amount</div><div style="font-size:15px;font-weight:800">₹'+formatShort(P)+'</div></div>';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Interest Rate</div><div style="font-size:15px;font-weight:800">'+rate+'%</div></div></div>';
+  h+='<div style="display:flex;gap:8px;margin-bottom:10px">';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Tenure</div><div style="font-size:15px;font-weight:800">'+years+' Yr'+(years>1?'s':'')+'</div></div>';
+  h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Total Interest</div><div style="font-size:15px;font-weight:800">₹'+formatShort(interest)+'</div></div></div>';
+  h+='<div style="font-size:10px;font-weight:700;color:#1a8a5a;letter-spacing:1px;text-transform:uppercase;margin:12px 0 6px">Payment Breakdown</div>';
+  h+='<div style="display:flex;height:10px;border-radius:5px;overflow:hidden;margin-bottom:6px">';
+  h+='<div style="width:'+pPct+'%;background:#1a8a5a"></div><div style="width:'+iPct+'%;background:#f59e0b"></div></div>';
+  h+='<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:10px"><span style="color:#1a8a5a;font-weight:700">Principal '+pPct+'%</span><span style="color:#f59e0b;font-weight:700">Interest '+iPct+'%</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">Principal</span><span style="font-weight:600;color:#333">₹'+formatIndian(Math.round(P))+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">Total Interest</span><span style="font-weight:600;color:#333">₹'+formatIndian(Math.round(interest))+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:10px 0 4px;border-top:2px solid #1a8a5a;margin-top:6px;font-size:13px"><span style="font-weight:800">Total Payment</span><span style="font-weight:800;color:#1a8a5a">₹'+formatIndian(Math.round(total))+'</span></div>';
+  var schedule=getYearlySchedule(P,rate,years);
+  if(schedule.length>0){
+    h+='<div style="font-size:10px;font-weight:700;color:#1a8a5a;letter-spacing:1px;text-transform:uppercase;margin:14px 0 6px">Year-by-Year Schedule</div>';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:10px">';
+    h+='<tr style="border-bottom:1.5px solid rgba(0,0,0,.1)"><th style="text-align:left;padding:4px 2px;color:#666;font-weight:700">Year</th><th style="text-align:right;padding:4px 2px;color:#666;font-weight:700">Principal</th><th style="text-align:right;padding:4px 2px;color:#666;font-weight:700">Interest</th><th style="text-align:right;padding:4px 2px;color:#666;font-weight:700">Balance</th></tr>';
+    schedule.forEach(function(s){
+      h+='<tr style="border-bottom:1px solid rgba(0,0,0,.04)"><td style="padding:3px 2px">'+s.year+'</td><td style="text-align:right;padding:3px 2px">₹'+formatShort(s.principal)+'</td><td style="text-align:right;padding:3px 2px">₹'+formatShort(s.interest)+'</td><td style="text-align:right;padding:3px 2px">₹'+formatShort(s.balance)+'</td></tr>';
+    });
+    h+='</table>';
+  }
+  return{subtitle:subtitle,body:h};
+};
+
 })();
 
 function showTab(name){
@@ -508,5 +548,7 @@ function toggleFaq(el){
   if(!isOpen){el.classList.add('open');a.classList.add('open')}
 }
 </script>
+<script src="../shared/share-download.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 </body>
 </html>

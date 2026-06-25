@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TDS on Rent Calculator · Real Estate Tools · Oswal Properties</title>
-<meta name="description" content="Calculate TDS deduction on rent under Section 194-IB. Know when TDS applies, how much to deduct, and how to file Form 26QC. Free tool by Oswal Properties.">
+<title>TDS &amp; GST on Rent Calculator · Real Estate Tools · Oswal Properties</title>
+<meta name="description" content="Calculate TDS deduction and GST on rent for residential &amp; commercial properties. Know when TDS &amp; GST apply, rates, RCM rules, and how to file. Free tool by Oswal Properties.">
 <link rel="stylesheet" href="../shared/common.css">
 <link rel="stylesheet" href="../shared/nav.css">
+<link rel="stylesheet" href="../shared/share-download.css">
 <style>
 .tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
 .tool-back:active{color:var(--accent)}
@@ -123,6 +124,7 @@
 
 .tools-footer{text-align:center;padding:24px 0 40px;font-size:11px;color:var(--text3);line-height:1.6}
 .tools-footer a{color:var(--accent);text-decoration:none}
+
 </style>
 </head>
 <body>
@@ -134,8 +136,21 @@
   </div>
 
   <a class="tool-back" href="../BrokerTools.html">&#8249; All Tools</a>
-  <div class="tool-title-row"><span class="tool-icon">&#128181;</span><span class="tool-title">TDS on Rent</span></div>
-  <div class="tool-subtitle">Check if TDS is applicable on your rent payment and calculate the deduction amount under Section 194-IB of the Income Tax Act.</div>
+  <div class="tool-title-row"><span class="tool-icon">&#128181;</span><span class="tool-title">TDS &amp; GST on Rent</span></div>
+  <div class="tool-subtitle">Check if TDS &amp; GST are applicable on your rent payment. Calculate deductions under Section 194-IB / 194-I and GST rates for residential &amp; commercial properties.</div>
+
+  <!-- Property Type -->
+  <div class="calc-card">
+    <div class="section-label">&#127970; Property Type</div>
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#127968;</span> What type of property are you renting?</div>
+      <div class="chip-row" id="propertyChips">
+        <button class="chip-btn active" data-val="residential">Residential</button>
+        <button class="chip-btn" data-val="commercial">Commercial</button>
+      </div>
+      <div class="tip" id="propertyTip">GST rules differ based on whether the property is residential or commercial</div>
+    </div>
+  </div>
 
   <!-- Tenant Type -->
   <div class="calc-card">
@@ -220,6 +235,29 @@
         <div class="result-sub" id="tdsAnnualSub">Total TDS for 12 months</div>
       </div>
     </div>
+  </div>
+
+  <!-- GST Section -->
+  <div class="calc-card" id="gstCard">
+    <div class="section-label">&#128176; GST on Rent</div>
+    <div class="results-grid">
+      <div class="result-card primary" id="gstMainResult">
+        <div class="result-label" id="gstMainLabel">Monthly GST</div>
+        <div class="result-value" id="gstMonthly">--</div>
+        <div class="result-sub" id="gstMonthlySub"></div>
+      </div>
+      <div class="result-card">
+        <div class="result-label"><span class="result-label-icon">&#128203;</span> GST Rate</div>
+        <div class="result-value" id="gstRateDisplay">--</div>
+        <div class="result-sub" id="gstRateSub"></div>
+      </div>
+      <div class="result-card">
+        <div class="result-label"><span class="result-label-icon">&#128197;</span> Annual GST</div>
+        <div class="result-value" id="gstAnnual">--</div>
+        <div class="result-sub" id="gstAnnualSub"></div>
+      </div>
+    </div>
+    <div class="note-box" id="gstNoteBox"></div>
   </div>
 
   <!-- Breakdown -->
@@ -387,6 +425,33 @@
         </ul>
       </div>
     </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">When is GST applicable on rent?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Residential + Individual tenant</b>: <b>Exempt (0% GST)</b> &mdash; renting a home for personal use has no GST</li>
+          <li><b>Residential + Business tenant</b>: <b>18% GST under RCM</b> &mdash; if a GST-registered business rents a residential property (e.g., employee housing, guest house), the tenant pays 18% GST directly to the government</li>
+          <li><b>Commercial + Any tenant</b>: <b>18% GST</b> &mdash; if the landlord&rsquo;s turnover exceeds &#8377;20 lakh, they must charge GST. If landlord is unregistered and tenant is a registered business, RCM applies</li>
+          <li><b>ITC (Input Tax Credit)</b>: Businesses can claim ITC on GST paid on rent if the property is used for business purposes</li>
+          <li><b>TDS on rent with GST</b>: TDS is calculated on the <b>base rent excluding GST</b> component</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is RCM (Reverse Charge) on rent?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>RCM</b> means the <b>tenant</b> (not the landlord) is responsible for paying GST directly to the government</li>
+          <li>Applies when a <b>GST-registered business</b> rents a <b>residential property</b> &mdash; 18% GST under RCM (Notification 05/2022, effective 18 July 2022)</li>
+          <li>Also applies when a <b>registered business</b> rents <b>commercial property</b> from an <b>unregistered landlord</b></li>
+          <li>The tenant must <b>self-invoice</b> and pay GST in their regular GSTR-3B return</li>
+          <li><b>ITC can be claimed</b> on RCM GST if the property is used for business</li>
+          <li>Failure to pay RCM attracts <b>18% interest</b> and penalties during audit</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <!-- Quick Links -->
@@ -413,16 +478,19 @@
   </div>
 
   <div class="tools-footer">
-    TDS rates and thresholds are as per current Income Tax Act. Verify with your CA before filing.<br>
+    TDS &amp; GST rates are as per current Income Tax Act and GST Act. Verify with your CA before filing.<br>
     Powered by <a href="https://housieai.com" target="_blank" rel="noopener">HousieAi.com</a>
   </div>
 </div>
 
+
 <script src="../shared/theme.js"></script>
 <script src="../shared/nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <script>
 (function(){
 
+var propertyType='residential';
 var tenantType='individual';
 var panStatus='available';
 var rentFreq='monthly';
@@ -462,6 +530,18 @@ function getMonthlyRent(){
   var v=parseNum(rentInput.value);
   return rentFreq==='annual'?Math.round(v/12):v;
 }
+
+// Property type chips
+document.getElementById('propertyChips').addEventListener('click',function(e){
+  var btn=e.target.closest('.chip-btn');if(!btn)return;
+  this.querySelectorAll('.chip-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  propertyType=btn.dataset.val;
+  document.getElementById('propertyTip').innerHTML=propertyType==='residential'
+    ?'GST exempt for individual tenants. 18% GST under RCM if tenant is a business'
+    :'18% GST applicable. TDS is calculated on rent <b>excluding</b> GST';
+  update();
+});
 
 // Tenant type chips
 document.getElementById('tenantChips').addEventListener('click',function(e){
@@ -552,6 +632,21 @@ function isApplicable(monthlyRent){
   return (monthlyRent*12)>240000;
 }
 
+function getGstRate(){
+  if(propertyType==='residential'){
+    if(tenantType==='business')return 18;
+    return 0;
+  }
+  return 18;
+}
+
+function getGstMechanism(){
+  if(propertyType==='residential'&&tenantType==='business')return 'RCM';
+  if(propertyType==='commercial'&&tenantType==='business')return 'Forward/RCM';
+  if(propertyType==='commercial'&&tenantType==='individual')return 'Forward';
+  return 'Exempt';
+}
+
 function update(){
   var monthlyRent=getMonthlyRent();
   var displayVal=parseNum(rentInput.value);
@@ -559,9 +654,48 @@ function update(){
 
   var applicable=isApplicable(monthlyRent);
   var tdsRate=getTdsRate();
+  var gstRate=getGstRate();
+  var gstMechanism=getGstMechanism();
   var banner=document.getElementById('statusBanner');
   var resultsCard=document.getElementById('resultsCard');
   var breakdownCard=document.getElementById('breakdownCard');
+  var gstCard=document.getElementById('gstCard');
+
+  // GST section — always visible
+  var monthlyGst=Math.round(monthlyRent*gstRate/100);
+  var annualGst=monthlyGst*12;
+
+  if(gstRate===0){
+    gstCard.style.display='';
+    document.getElementById('gstMainResult').className='result-card no-tds';
+    document.getElementById('gstMainLabel').textContent='GST Status';
+    document.getElementById('gstMonthly').textContent='Exempt (0%)';
+    document.getElementById('gstMonthlySub').textContent='No GST on residential rent for individuals';
+    document.getElementById('gstRateDisplay').textContent='0%';
+    document.getElementById('gstRateSub').textContent='Fully exempt';
+    document.getElementById('gstAnnual').textContent='₹0';
+    document.getElementById('gstAnnualSub').textContent='No GST payable';
+    document.getElementById('gstNoteBox').style.display='';
+    document.getElementById('gstNoteBox').innerHTML='&#9989; <b>GST Exempt:</b> Renting a residential property to an individual/HUF for personal use is fully exempt from GST. No registration or compliance needed.';
+  }else{
+    gstCard.style.display='';
+    document.getElementById('gstMainResult').className='result-card primary';
+    document.getElementById('gstMainLabel').textContent='Monthly GST';
+    document.getElementById('gstMonthly').textContent='₹'+formatIndian(monthlyGst);
+    document.getElementById('gstMonthlySub').textContent=gstRate+'% of ₹'+formatIndian(monthlyRent);
+    document.getElementById('gstRateDisplay').textContent=gstRate+'%';
+    document.getElementById('gstRateSub').textContent=gstMechanism;
+    document.getElementById('gstAnnual').textContent='₹'+formatIndian(annualGst);
+    document.getElementById('gstAnnualSub').textContent='₹'+formatIndian(monthlyGst)+' × 12 months';
+    document.getElementById('gstNoteBox').style.display='';
+    if(propertyType==='residential'&&tenantType==='business'){
+      document.getElementById('gstNoteBox').innerHTML='&#9888; <b>RCM (Reverse Charge):</b> When a GST-registered business rents a residential property, the <b>tenant must pay 18% GST</b> directly to the government under RCM. ITC can be claimed if used for business purposes.';
+    }else if(propertyType==='commercial'&&tenantType==='business'){
+      document.getElementById('gstNoteBox').innerHTML='&#128161; <b>Commercial Rent GST:</b> 18% GST applies. If landlord is GST-registered, they charge GST (Forward Charge). If unregistered, tenant pays under <b>RCM</b>. ITC is claimable. TDS is calculated on rent <b>excluding</b> GST.';
+    }else{
+      document.getElementById('gstNoteBox').innerHTML='&#128161; <b>Commercial Rent GST:</b> If the landlord is GST-registered (turnover &gt; &#8377;20 lakh), they will charge 18% GST on rent. Individuals cannot claim ITC — GST becomes an additional cost.';
+    }
+  }
 
   if(!applicable){
     banner.className='status-banner not-applicable';
@@ -573,7 +707,27 @@ function update(){
     }
     banner.querySelector('.status-icon').textContent='✓';
     resultsCard.style.display='none';
-    breakdownCard.style.display='none';
+
+    // Show breakdown with GST even when no TDS
+    breakdownCard.style.display='';
+    var container=document.getElementById('breakdownList');
+    container.innerHTML='';
+    var items=[
+      {label:'Monthly Rent',value:'₹'+formatIndian(monthlyRent)},
+      {label:'TDS',value:'₹0 (Not applicable)'},
+      {label:'GST ('+gstRate+'%)',value:gstRate>0?'₹'+formatIndian(monthlyGst):'Exempt'},
+      {label:'Total Monthly Outflow',value:'₹'+formatIndian(monthlyRent+monthlyGst),bold:true},
+      {label:'Annual Rent',value:'₹'+formatIndian(monthlyRent*12)},
+      {label:'Annual GST',value:gstRate>0?'₹'+formatIndian(annualGst):'₹0'},
+      {label:'Total Annual Outflow',value:'₹'+formatIndian((monthlyRent+monthlyGst)*12),bold:true}
+    ];
+    items.forEach(function(it){
+      var row=document.createElement('div');
+      row.className='bd-row'+(it.bold?' total':'');
+      row.innerHTML='<span class="bd-label"'+(it.bold?' style="font-weight:800"':'')+'>'+it.label+'</span><span class="bd-value"'+(it.bold?' style="color:var(--accent)"':'')+'>'+it.value+'</span>';
+      container.appendChild(row);
+    });
+    document.getElementById('noteBox').style.display='none';
     return;
   }
 
@@ -598,16 +752,22 @@ function update(){
 
   document.getElementById('mainLabel').textContent=tenantType==='individual'?'Monthly TDS Deduction':'TDS per Payment';
 
-  // Breakdown
+  // Breakdown with GST
   var container=document.getElementById('breakdownList');
   container.innerHTML='';
+  var totalMonthly=monthlyRent+monthlyGst;
   var items=[
     {label:'Monthly Rent',value:'₹'+formatIndian(monthlyRent)},
     {label:'TDS Rate ('+section+')',value:tdsRate+'%'},
-    {label:'TDS Amount',value:'₹'+formatIndian(monthlyTds)},
-    {label:'Net Payment to Landlord',value:'₹'+formatIndian(payToLandlord),bold:true},
-    {label:'Annual Rent (12 months)',value:'₹'+formatIndian(monthlyRent*12)},
-    {label:'Annual TDS',value:'₹'+formatIndian(annualTds),bold:true}
+    {label:'TDS Deduction',value:'− ₹'+formatIndian(monthlyTds)},
+    {label:'GST ('+gstRate+'%)',value:gstRate>0?'+ ₹'+formatIndian(monthlyGst):'Exempt (0%)'},
+    {label:'Pay to Landlord',value:'₹'+formatIndian(payToLandlord+(gstRate>0&&propertyType==='commercial'?monthlyGst:0)),bold:true},
+    {label:gstRate>0&&propertyType==='residential'?'GST to Govt (RCM)':'TDS to Govt',value:gstRate>0&&propertyType==='residential'?'₹'+formatIndian(monthlyGst)+' + ₹'+formatIndian(monthlyTds):'₹'+formatIndian(monthlyTds)},
+    {label:'Total Monthly Outflow',value:'₹'+formatIndian(totalMonthly),bold:true},
+    {label:'Annual Rent',value:'₹'+formatIndian(monthlyRent*12)},
+    {label:'Annual TDS',value:'₹'+formatIndian(annualTds)},
+    {label:'Annual GST',value:gstRate>0?'₹'+formatIndian(annualGst):'₹0'},
+    {label:'Total Annual Outflow',value:'₹'+formatIndian(totalMonthly*12),bold:true}
   ];
   items.forEach(function(it){
     var row=document.createElement('div');
@@ -644,6 +804,80 @@ function update(){
 }
 
 update();
+
+// === Share/Download config ===
+window.sdConfig={toolName:'TDS & GST on Rent',toolIcon:'&#128181;',shareTitle:'TDS & GST Details',shareUrl:'https://soboflats.github.io/tools/tds.html',fileName:'tds-gst-on-rent'};
+
+window.buildCaptureContent=function(){
+  var monthlyRent=getMonthlyRent();
+  var tR=getTdsRate();var gR=getGstRate();
+  var applicable=isApplicable(monthlyRent);
+  var section=tenantType==='individual'?'194-IB':'194-I';
+  var mTds=applicable?Math.round(monthlyRent*tR/100):0;
+  var mGst=Math.round(monthlyRent*gR/100);
+  var aTds=mTds*12;var aGst=mGst*12;
+  var pay=monthlyRent-mTds;
+
+  var propLabel=propertyType==='residential'?'Residential':'Commercial';
+  var tenantLabel=tenantType==='individual'?'Individual/HUF':'Business';
+  var panLabel=panStatus==='available'?'PAN Available':'No PAN';
+  var subtitle=propLabel+' · '+tenantLabel+' · '+panLabel+' · ₹'+formatIndian(monthlyRent)+'/month';
+
+  var h='';
+  if(applicable){
+    h+='<div style="background:rgba(234,179,8,.1);border:1.5px solid rgba(234,179,8,.3);border-radius:12px;padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px">';
+    h+='<span style="font-size:22px">⚠</span><div><div style="font-size:13px;font-weight:800;color:#b45309">TDS Applicable @ '+tR+'%</div>';
+    h+='<div style="font-size:11px;color:#666;margin-top:2px">Section '+section+'</div></div></div>';
+  }else{
+    h+='<div style="background:rgba(34,197,94,.08);border:1.5px solid rgba(34,197,94,.25);border-radius:12px;padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px">';
+    h+='<span style="font-size:22px">✓</span><div><div style="font-size:13px;font-weight:800;color:#16a34a">No TDS Required</div>';
+    h+='<div style="font-size:11px;color:#666;margin-top:2px">Below threshold</div></div></div>';
+  }
+  if(applicable){
+    h+='<div style="font-size:10px;font-weight:700;color:#1a8a5a;letter-spacing:1px;text-transform:uppercase;margin:12px 0 6px">💲 TDS Calculation</div>';
+    h+='<div style="background:#1a8a5a;border-radius:12px;padding:12px;text-align:center;margin-bottom:8px">';
+    h+='<div style="font-size:11px;color:rgba(255,255,255,.8);font-weight:600">Monthly TDS Deduction</div>';
+    h+='<div style="font-size:22px;font-weight:800;color:#fff">₹'+formatIndian(mTds)+'</div>';
+    h+='<div style="font-size:11px;color:rgba(255,255,255,.7)">'+tR+'% of ₹'+formatIndian(monthlyRent)+'</div></div>';
+    h+='<div style="display:flex;gap:8px;margin-bottom:10px">';
+    h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Pay to Landlord</div><div style="font-size:16px;font-weight:800">₹'+formatIndian(pay)+'</div></div>';
+    h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Annual TDS</div><div style="font-size:16px;font-weight:800">₹'+formatIndian(aTds)+'</div></div></div>';
+  }
+  h+='<div style="font-size:10px;font-weight:700;color:#1a8a5a;letter-spacing:1px;text-transform:uppercase;margin:12px 0 6px">💰 GST on Rent</div>';
+  if(gR===0){
+    h+='<div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:12px;text-align:center;margin-bottom:8px">';
+    h+='<div style="font-size:11px;color:#666;font-weight:600">GST Status</div><div style="font-size:18px;font-weight:800;color:#16a34a">Exempt (0%)</div>';
+    h+='<div style="font-size:11px;color:#666">No GST on residential rent for individuals</div></div>';
+  }else{
+    h+='<div style="background:#1a8a5a;border-radius:12px;padding:12px;text-align:center;margin-bottom:8px">';
+    h+='<div style="font-size:11px;color:rgba(255,255,255,.8);font-weight:600">Monthly GST</div>';
+    h+='<div style="font-size:22px;font-weight:800;color:#fff">₹'+formatIndian(mGst)+'</div>';
+    h+='<div style="font-size:11px;color:rgba(255,255,255,.7)">'+gR+'% of ₹'+formatIndian(monthlyRent)+' ('+getGstMechanism()+')</div></div>';
+    h+='<div style="display:flex;gap:8px;margin-bottom:10px">';
+    h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">GST Rate</div><div style="font-size:16px;font-weight:800">'+gR+'%</div></div>';
+    h+='<div style="flex:1;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;color:#666;font-weight:600">Annual GST</div><div style="font-size:16px;font-weight:800">₹'+formatIndian(aGst)+'</div></div></div>';
+  }
+  h+='<div style="font-size:10px;font-weight:700;color:#1a8a5a;letter-spacing:1px;text-transform:uppercase;margin:12px 0 6px">Payment Breakdown</div>';
+  [{label:'Monthly Rent',value:'₹'+formatIndian(monthlyRent)},{label:'TDS ('+section+' @ '+tR+'%)',value:applicable?'− ₹'+formatIndian(mTds):'Not applicable'},{label:'GST ('+gR+'%)',value:gR>0?'+ ₹'+formatIndian(mGst):'Exempt'}].forEach(function(r){
+    h+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px"><span style="color:#666;font-weight:600">'+r.label+'</span><span style="font-weight:600;color:#333">'+r.value+'</span></div>';
+  });
+  var tot=monthlyRent+mGst;
+  h+='<div style="display:flex;justify-content:space-between;padding:10px 0 4px;border-top:2px solid #1a8a5a;margin-top:6px;font-size:13px"><span style="font-weight:800">Total Monthly Outflow</span><span style="font-weight:800;color:#1a8a5a">₹'+formatIndian(tot)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:11px"><span style="color:#666;font-weight:600">Annual TDS</span><span style="font-weight:600;color:#333">₹'+formatIndian(aTds)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:11px"><span style="color:#666;font-weight:600">Annual GST</span><span style="font-weight:600;color:#333">'+(gR>0?'₹'+formatIndian(aGst):'₹0')+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:8px 0 4px;border-top:2px solid #1a8a5a;margin-top:4px;font-size:13px"><span style="font-weight:800">Total Annual Outflow</span><span style="font-weight:800;color:#1a8a5a">₹'+formatIndian(tot*12)+'</span></div>';
+  if(applicable){
+    h+='<div style="font-size:10px;font-weight:700;color:#1a8a5a;letter-spacing:1px;text-transform:uppercase;margin:14px 0 8px">How to Deposit TDS</div>';
+    var steps=tenantType==='individual'?[{t:'Deduct TDS from Rent',d:'Deduct '+tR+'% before paying landlord'},{t:'File Form 26QC Online',d:'Due within 30 days from month-end'},{t:'Pay TDS via Challan',d:'Net banking or authorized bank'},{t:'Issue Form 16C',d:'Download from TRACES for landlord'}]:[{t:'Deduct TDS from Rent',d:'Deduct '+tR+'% before each payment'},{t:'File Form 26Q (Quarterly)',d:'TAN required. Due by quarter-end +31 days'},{t:'Pay TDS via Challan',d:'By 7th of following month'},{t:'Issue Form 16A',d:'Download from TRACES within 15 days'}];
+    steps.forEach(function(s,i){
+      h+='<div style="display:flex;gap:10px;padding:6px 0;'+(i<steps.length-1?'border-bottom:1px solid rgba(0,0,0,.05)':'')+'">';
+      h+='<div style="width:22px;height:22px;border-radius:50%;background:#1a8a5a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">'+(i+1)+'</div>';
+      h+='<div><div style="font-size:11px;font-weight:700">'+s.t+'</div><div style="font-size:10px;color:#666">'+s.d+'</div></div></div>';
+    });
+  }
+  return{subtitle:subtitle,body:h};
+};
+
 })();
 
 function toggleFaq(el){
@@ -654,5 +888,7 @@ function toggleFaq(el){
   if(!isOpen){el.classList.add('open');a.classList.add('open')}
 }
 </script>
+<script src="../shared/share-download.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 </body>
 </html>
