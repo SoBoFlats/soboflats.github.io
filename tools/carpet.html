@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carpet vs Built-up Area · Real Estate Tools · Oswal Properties</title>
+<meta name="description" content="Convert between RERA Carpet, Built-up and Super Built-up area. Know your actual usable area from builder quotes. Free calculator for Indian real estate.">
+<link rel="stylesheet" href="../shared/common.css">
+<link rel="stylesheet" href="../shared/nav.css">
+<link rel="stylesheet" href="../shared/share-download.css">
+<style>
+.tool-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);text-decoration:none;padding:12px 0 4px;font-weight:600}
+.tool-back:active{color:var(--accent)}
+.tool-title-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.tool-icon{font-size:28px}
+.tool-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.tool-subtitle{font-size:12px;color:var(--text2);margin-bottom:20px;line-height:1.5}
+
+.calc-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:18px;margin-bottom:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+[data-theme="light"] .calc-card{box-shadow:var(--card-shadow)}
+
+.input-group{margin-bottom:16px}
+.input-group:last-child{margin-bottom:0}
+.input-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:5px;letter-spacing:.3px}
+.input-label-icon{font-size:13px}
+
+.input-row{display:flex;align-items:center;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);overflow:hidden;transition:border-color .2s}
+.input-row:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.input-field{flex:1;padding:12px 14px;border:none;background:transparent;color:var(--text);font-size:15px;font-weight:600;font-family:inherit;outline:none;min-width:0}
+.input-field::placeholder{color:var(--text3);font-weight:400}
+.input-suffix{padding:0 14px 0 0;font-size:12px;font-weight:600;color:var(--text3);white-space:nowrap}
+
+.select-wrap{position:relative}
+.select-field{width:100%;padding:12px 36px 12px 14px;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:13px;font-weight:600;font-family:inherit;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border-color .2s}
+.select-field:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.select-arrow{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text3);pointer-events:none}
+
+.quick-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.quick-chip{padding:7px 12px;border-radius:20px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+[data-theme="light"] .quick-chip{background:rgba(255,255,255,.65)}
+.quick-chip:active,.quick-chip.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+
+.slider-row{display:flex;align-items:center;gap:10px}
+.slider-row input[type=range]{flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--input-border);border-radius:2px;outline:none}
+.slider-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--body-bg)}
+.slider-row input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--body-bg)}
+.slider-val{min-width:42px;text-align:right;font-size:14px;font-weight:700;color:var(--accent)}
+
+.results-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;letter-spacing:.3px;text-transform:uppercase}
+.result-block{padding:14px;border-radius:14px;margin-bottom:10px;border:1.5px solid var(--input-border);background:var(--input-bg);transition:all .2s}
+[data-theme="light"] .result-block{background:rgba(255,255,255,.5)}
+.result-block.highlight{border-color:var(--accent);background:var(--accent-bg)}
+.result-block-label{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:2px;display:flex;align-items:center;gap:5px}
+.result-block-label .tag{font-size:9px;padding:2px 6px;border-radius:8px;font-weight:700;letter-spacing:.3px}
+.tag-rera{background:rgba(26,138,90,.15);color:#1a8a5a}
+[data-theme="light"] .tag-rera{background:rgba(26,138,90,.1)}
+.tag-input{background:var(--accent-bg);color:var(--accent)}
+.result-block-value{font-size:20px;font-weight:800;color:var(--text)}
+.result-block.highlight .result-block-value{color:var(--accent)}
+.result-block-sub{font-size:11px;color:var(--text3);margin-top:2px}
+
+.result-bar{height:8px;border-radius:4px;margin-top:8px;overflow:hidden;display:flex;background:var(--input-border)}
+.bar-carpet{background:#1a8a5a;border-radius:4px 0 0 4px}
+.bar-walls{background:#e8a838}
+.bar-common{background:#d35f5f;border-radius:0 4px 4px 0}
+.bar-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.bar-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:var(--text2)}
+.bar-legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+.info-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;letter-spacing:.3px;text-transform:uppercase}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-item{padding:10px 12px;border-radius:12px;background:var(--input-bg);border:1px solid var(--input-border)}
+[data-theme="light"] .info-item{background:rgba(255,255,255,.5)}
+.info-item-label{font-size:11px;color:var(--text2);font-weight:600}
+.info-item-value{font-size:12px;font-weight:700;margin-top:2px}
+
+.faq-section{margin-top:20px}
+.faq-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;letter-spacing:.3px;text-transform:uppercase}
+.faq-item{margin-bottom:10px}
+.faq-q{font-size:13px;font-weight:700;padding:12px 14px;border-radius:12px;background:var(--input-bg);border:1px solid var(--input-border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .2s;gap:8px}
+[data-theme="light"] .faq-q{background:rgba(255,255,255,.65)}
+.faq-q:active{border-color:var(--accent)}
+.faq-chevron{font-size:14px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.faq-q.open .faq-chevron{transform:rotate(90deg);color:var(--accent)}
+.faq-a{font-size:12px;color:var(--text2);line-height:1.6;padding:0 14px;max-height:0;overflow:hidden;transition:max-height .4s,padding .3s}
+.faq-a.open{max-height:600px;padding:10px 14px 14px}
+.faq-a ul{margin:6px 0 0 16px;padding:0}
+.faq-a li{margin-bottom:4px}
+.faq-a p{margin-bottom:6px}
+
+.quick-links{margin-top:24px}
+.quick-links-title{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
+.quick-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick-link{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;border:1.5px solid var(--input-border);background:var(--glass);color:var(--text);text-decoration:none;transition:all .2s;backdrop-filter:blur(8px)}
+[data-theme="light"] .quick-link{background:var(--card);box-shadow:var(--card-shadow);border-color:var(--glass-border)}
+.quick-link:active{transform:scale(.97);border-color:var(--accent)}
+.quick-link-icon{font-size:18px;flex-shrink:0}
+.quick-link-text{font-size:11px;font-weight:700;line-height:1.3}
+.quick-link-sub{font-size:11px;color:var(--text2);font-weight:400}
+
+.tools-footer{text-align:center;padding:20px 0 40px;font-size:11px;color:var(--text3);line-height:1.6}
+.tools-footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <img src="../intro_oswal.jpeg" class="page-logo" onerror="this.style.display='none'" alt="">
+    <div class="page-header-text"><div class="page-title">Oswal Properties</div><div class="page-subtitle">Luxury &middot; Residential &middot; SoBo</div></div>
+  </div>
+
+  <a href="../BrokerTools.html" class="tool-back">&#8249; Real Estate Tools</a>
+
+  <div class="tool-title-row">
+    <span class="tool-icon">&#128207;</span>
+    <span class="tool-title">Carpet vs Built-up</span>
+  </div>
+  <div class="tool-subtitle">Convert between RERA Carpet Area, Built-up Area and Super Built-up (Saleable) Area. Enter any one value to calculate the other two.</div>
+
+  <!-- Input -->
+  <div class="calc-card">
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#128205;</span> I know my</div>
+      <div class="select-wrap">
+        <select class="select-field" id="areaType">
+          <option value="carpet">RERA Carpet Area</option>
+          <option value="buildup">Built-up Area</option>
+          <option value="sbu">Super Built-up (Saleable) Area</option>
+        </select>
+        <span class="select-arrow">&#9662;</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">Area</div>
+      <div class="input-row">
+        <input type="text" class="input-field" id="areaValue" value="1,000" inputmode="decimal">
+        <span class="input-suffix">sq ft</span>
+      </div>
+      <div class="quick-chips" id="areaChips">
+        <button class="quick-chip" data-val="500">500</button>
+        <button class="quick-chip" data-val="750">750</button>
+        <button class="quick-chip active" data-val="1000">1,000</button>
+        <button class="quick-chip" data-val="1200">1,200</button>
+        <button class="quick-chip" data-val="1500">1,500</button>
+        <button class="quick-chip" data-val="2000">2,000</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Factors -->
+  <div class="calc-card">
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#128295;</span> Wall Loading (Carpet &rarr; Built-up)</div>
+      <div class="slider-row">
+        <input type="range" id="wallSlider" min="5" max="30" value="15" step="1">
+        <span class="slider-val" id="wallVal">15%</span>
+      </div>
+      <div class="quick-chips" id="wallChips">
+        <button class="quick-chip" data-val="10">10%</button>
+        <button class="quick-chip" data-val="12">12%</button>
+        <button class="quick-chip active" data-val="15">15%</button>
+        <button class="quick-chip" data-val="18">18%</button>
+        <button class="quick-chip" data-val="20">20%</button>
+      </div>
+    </div>
+
+    <div class="input-group" style="margin-top:16px">
+      <div class="input-label"><span class="input-label-icon">&#127959;</span> Common Area Loading (Built-up &rarr; Super Built-up)</div>
+      <div class="slider-row">
+        <input type="range" id="commonSlider" min="10" max="55" value="30" step="1">
+        <span class="slider-val" id="commonVal">30%</span>
+      </div>
+      <div class="quick-chips" id="commonChips">
+        <button class="quick-chip" data-val="20">20%</button>
+        <button class="quick-chip" data-val="25">25%</button>
+        <button class="quick-chip active" data-val="30">30%</button>
+        <button class="quick-chip" data-val="35">35%</button>
+        <button class="quick-chip" data-val="40">40%</button>
+        <button class="quick-chip" data-val="45">45%</button>
+      </div>
+    </div>
+
+    <div class="input-group" style="margin-top:12px">
+      <div class="input-label"><span class="input-label-icon">&#127751;</span> Quick Presets</div>
+      <div class="quick-chips" id="presetChips">
+        <button class="quick-chip" data-wall="15" data-common="30">SoBo New</button>
+        <button class="quick-chip" data-wall="12" data-common="25">Suburban Mumbai</button>
+        <button class="quick-chip" data-wall="10" data-common="20">Affordable</button>
+        <button class="quick-chip" data-wall="18" data-common="35">Ultra Luxury</button>
+        <button class="quick-chip" data-wall="15" data-common="40">Commercial</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="calc-card">
+    <div class="results-title">Conversion Results</div>
+
+    <div class="result-block" id="resCarpet">
+      <div class="result-block-label">RERA Carpet Area <span class="tag tag-rera">RERA</span></div>
+      <div class="result-block-value" id="resCarpetVal">1,000 sq ft</div>
+      <div class="result-block-sub" id="resCarpetSub">Usable floor area within walls</div>
+    </div>
+
+    <div class="result-block" id="resBuildup">
+      <div class="result-block-label">Built-up Area</div>
+      <div class="result-block-value" id="resBuildupVal">1,150 sq ft</div>
+      <div class="result-block-sub" id="resBuildupSub">Carpet + walls + balcony</div>
+    </div>
+
+    <div class="result-block" id="resSbu">
+      <div class="result-block-label">Super Built-up Area</div>
+      <div class="result-block-value" id="resSbuVal">1,495 sq ft</div>
+      <div class="result-block-sub" id="resSbuSub">Built-up + common areas (saleable)</div>
+    </div>
+
+    <!-- Visual bar -->
+    <div class="result-bar" id="resultBar">
+      <div class="bar-carpet" id="barCarpet"></div>
+      <div class="bar-walls" id="barWalls"></div>
+      <div class="bar-common" id="barCommon"></div>
+    </div>
+    <div class="bar-legend">
+      <div class="bar-legend-item"><div class="bar-legend-dot" style="background:#1a8a5a"></div> Carpet</div>
+      <div class="bar-legend-item"><div class="bar-legend-dot" style="background:#e8a838"></div> Walls</div>
+      <div class="bar-legend-item"><div class="bar-legend-dot" style="background:#d35f5f"></div> Common</div>
+    </div>
+  </div>
+
+  <!-- Price Impact -->
+  <div class="calc-card">
+    <div class="results-title">Price Impact (optional)</div>
+    <div class="input-group">
+      <div class="input-label"><span class="input-label-icon">&#8377;</span> Rate per sq ft (Super Built-up)</div>
+      <div class="input-row">
+        <input type="text" class="input-field" id="priceInput" placeholder="e.g. 25,000" inputmode="decimal">
+        <span class="input-suffix">&#8377;/sq ft</span>
+      </div>
+      <div class="quick-chips" style="margin-top:8px">
+        <button class="quick-chip price-chip" data-val="15000">&#8377;15K</button>
+        <button class="quick-chip price-chip" data-val="25000">&#8377;25K</button>
+        <button class="quick-chip price-chip" data-val="40000">&#8377;40K</button>
+        <button class="quick-chip price-chip" data-val="60000">&#8377;60K</button>
+        <button class="quick-chip price-chip" data-val="100000">&#8377;1L</button>
+      </div>
+    </div>
+    <div id="priceResults" style="display:none;margin-top:14px">
+      <div class="result-block">
+        <div class="result-block-label">Total price (on Super Built-up)</div>
+        <div class="result-block-value" id="priceSbu" style="font-size:16px">—</div>
+      </div>
+      <div class="result-block">
+        <div class="result-block-label">Effective rate on Carpet Area</div>
+        <div class="result-block-value" id="priceCarpet" style="font-size:16px;color:var(--accent)">—</div>
+        <div class="result-block-sub" id="priceCarpetSub">What you actually pay per usable sq ft</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Common Loading Factors -->
+  <div class="calc-card">
+    <div class="info-title">Typical Loading Factors</div>
+    <div class="info-grid">
+      <div class="info-item"><div class="info-item-label">SoBo New Build</div><div class="info-item-value">30–35%</div></div>
+      <div class="info-item"><div class="info-item-label">Suburban Mumbai</div><div class="info-item-value">25–30%</div></div>
+      <div class="info-item"><div class="info-item-label">Affordable Housing</div><div class="info-item-value">18–22%</div></div>
+      <div class="info-item"><div class="info-item-label">Ultra Luxury</div><div class="info-item-value">35–45%</div></div>
+      <div class="info-item"><div class="info-item-label">Commercial Office</div><div class="info-item-value">35–40%</div></div>
+      <div class="info-item"><div class="info-item-label">Resale (Old Build)</div><div class="info-item-value">15–25%</div></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">Common Questions</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is RERA Carpet Area?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>RERA Carpet Area</b> is the net usable floor area within an apartment, as defined by the Real Estate Regulation Act (2016)</li>
+          <li><b>Includes</b>: area enclosed within walls, internal partition walls, kitchen, bedrooms, bathrooms</li>
+          <li><b>Excludes</b>: external walls, areas under service shafts, exclusive balcony or verandah, exclusive open terrace</li>
+          <li>This is the <b>standard across all states</b> — MahaRERA, UP-RERA, KRERA etc. all follow the same definition</li>
+          <li><b>All builders must now quote RERA Carpet Area</b> — it&rsquo;s the only legally comparable metric</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the difference between Carpet, Built-up and Super Built-up?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>RERA Carpet Area</b> &mdash; What you walk on. Net usable area inside the apartment. RERA standard.</li>
+          <li><b>Built-up Area</b> &mdash; Carpet + external wall thickness + balcony + verandah. Typically 10&ndash;20% more than carpet.</li>
+          <li><b>Super Built-up / Saleable Area</b> &mdash; Built-up + proportionate share of common areas (lobby, stairs, lift, gym, corridors). Typically 25&ndash;45% more than carpet.</li>
+        </ul>
+        <p><b>Key insight</b>: Two apartments with the same &ldquo;1,500 sq ft super built-up&rdquo; can have very different carpet areas depending on the loading factor. Always compare on carpet.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What was &ldquo;pre-RERA Carpet Area&rdquo;?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li>Before RERA, builders had no standardised carpet area definition</li>
+          <li>Some included <b>balconies, dry balconies, flower beds</b>, and even <b>half of enclosed verandahs</b> in &ldquo;carpet area&rdquo;</li>
+          <li>This made carpet areas look 5&ndash;10% larger than the actual usable space</li>
+          <li><b>Post-RERA</b>, the definition is uniform — excludes all of the above</li>
+          <li>If comparing old property documents with new RERA carpet, expect the old number to be slightly higher</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is &ldquo;loading&rdquo; in Mumbai real estate?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Loading</b> is the percentage difference between carpet area and super built-up area</li>
+          <li>It covers walls, balconies, lobbies, staircases, lifts, and all amenity areas</li>
+          <li><b>SoBo new buildings</b>: 30&ndash;35% loading is typical (premium lobbies, larger common areas)</li>
+          <li><b>Suburban buildings</b>: 25&ndash;30% loading</li>
+          <li><b>Ultra luxury</b>: Can go up to 40&ndash;45% (private lifts, grand lobbies, podium parking)</li>
+          <li><b>Tip</b>: A &ldquo;lower loading&rdquo; is better for the buyer — more carpet per rupee spent</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How to calculate effective price per carpet sq ft?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li>Most builders quote rate per <b>super built-up sq ft</b></li>
+          <li><b>Effective carpet rate</b> = (Rate per SBU sq ft &times; Super Built-up Area) &div; RERA Carpet Area</li>
+          <li>Example: &#8377;25,000/SBU sq ft at 35% loading &rarr; effective carpet rate = &#8377;33,750/carpet sq ft</li>
+          <li>Use the <b>Price Impact</b> section above to calculate this instantly</li>
+          <li><b>Always compare properties on carpet rate</b> — two buildings quoting &#8377;25K/sq ft can differ by &#8377;5,000+/carpet sq ft due to different loading</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is MahaRERA Carpet same as all-state RERA Carpet?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Yes.</b> RERA 2016 is a central act — the carpet area definition is the same nationwide</li>
+          <li>MahaRERA (Maharashtra), UP-RERA, KRERA (Karnataka), TNRERA (Tamil Nadu) etc. all follow the same section 2(k) definition</li>
+          <li>The only variation is in <b>how strictly each state enforces</b> the disclosure, not in the definition itself</li>
+          <li>This tool uses the uniform RERA definition for all calculations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="quick-links">
+    <div class="quick-links-title">Explore More</div>
+    <div class="quick-links-grid">
+      <a class="quick-link" href="../index.html">
+        <span class="quick-link-icon">&#127968;</span>
+        <div><div class="quick-link-text">Home</div><div class="quick-link-sub">Oswal Properties</div></div>
+      </a>
+      <a class="quick-link" href="../BrokerTools.html">
+        <span class="quick-link-icon">&#128736;</span>
+        <div><div class="quick-link-text">All Tools</div><div class="quick-link-sub">Real Estate Tools</div></div>
+      </a>
+      <a class="quick-link" href="./area.html">
+        <span class="quick-link-icon">&#128208;</span>
+        <div><div class="quick-link-text">Area Converter</div><div class="quick-link-sub">Sq ft, sq m, acres &amp; more</div></div>
+      </a>
+      <a class="quick-link" href="./emi.html">
+        <span class="quick-link-icon">&#8377;</span>
+        <div><div class="quick-link-text">EMI Calculator</div><div class="quick-link-sub">Home loan EMI &amp; schedule</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="tools-footer">
+    Loading factors are indicative. Actual values vary by builder and project. Always verify from RERA-registered carpet area.<br>
+    Powered by <a href="https://housieai.com" target="_blank" rel="noopener">HousieAi.com</a>
+  </div>
+</div>
+
+<script src="../shared/theme.js"></script>
+<script src="../shared/nav.js"></script>
+<script>
+(function(){
+
+var areaType=document.getElementById('areaType');
+var areaInput=document.getElementById('areaValue');
+var wallSlider=document.getElementById('wallSlider');
+var wallValEl=document.getElementById('wallVal');
+var commonSlider=document.getElementById('commonSlider');
+var commonValEl=document.getElementById('commonVal');
+var priceInput=document.getElementById('priceInput');
+
+function formatIndian(n){
+  n=Math.round(n);
+  if(n<0)return '-'+formatIndian(-n);
+  var s=n.toString();
+  if(s.length<=3)return s;
+  var last3=s.slice(-3);
+  var rest=s.slice(0,-3);
+  if(rest)rest=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',');
+  return rest?rest+','+last3:last3;
+}
+
+function liveFormatIndian(input){
+  var pos=input.selectionStart;
+  var oldVal=input.value;
+  var raw=oldVal.replace(/[^0-9.]/g,'');
+  if(!raw){input.value='';return}
+  var parts=raw.split('.');
+  var intPart=parts[0];
+  if(!intPart)intPart='0';
+  var formatted=formatIndian(parseInt(intPart));
+  if(parts.length>1)formatted+='.'+parts[1];
+  input.value=formatted;
+  var oldCommasBefore=oldVal.slice(0,pos).split(',').length-1;
+  var newCommasBefore=formatted.slice(0,pos).split(',').length-1;
+  var newPos=pos+(newCommasBefore-oldCommasBefore);
+  if(newPos<0)newPos=0;
+  if(newPos>formatted.length)newPos=formatted.length;
+  input.setSelectionRange(newPos,newPos);
+}
+
+function formatAmount(n){
+  if(n>=10000000)return '₹'+((n/10000000).toFixed(2).replace(/\.?0+$/,''))+' Cr';
+  if(n>=100000)return '₹'+((n/100000).toFixed(2).replace(/\.?0+$/,''))+' L';
+  return '₹'+formatIndian(n);
+}
+
+function parseVal(input){
+  return parseFloat(String(input.value).replace(/,/g,''))||0;
+}
+
+function calculate(){
+  var val=parseVal(areaInput);
+  var wallPct=parseInt(wallSlider.value);
+  var commonPct=parseInt(commonSlider.value);
+  var type=areaType.value;
+
+  var carpet,buildup,sbu;
+
+  if(type==='carpet'){
+    carpet=val;
+    buildup=carpet*(1+wallPct/100);
+    sbu=buildup*(1+commonPct/100);
+  }else if(type==='buildup'){
+    buildup=val;
+    carpet=buildup/(1+wallPct/100);
+    sbu=buildup*(1+commonPct/100);
+  }else{
+    sbu=val;
+    buildup=sbu/(1+commonPct/100);
+    carpet=buildup/(1+wallPct/100);
+  }
+
+  var totalLoading=((sbu/carpet-1)*100);
+
+  document.getElementById('resCarpetVal').textContent=formatIndian(carpet)+' sq ft';
+  document.getElementById('resBuildupVal').textContent=formatIndian(buildup)+' sq ft';
+  document.getElementById('resSbuVal').textContent=formatIndian(sbu)+' sq ft';
+
+  document.getElementById('resCarpetSub').textContent='Usable floor area within walls';
+  document.getElementById('resBuildupSub').textContent='Carpet + '+wallPct+'% walls & balcony';
+  document.getElementById('resSbuSub').textContent='Built-up + '+commonPct+'% common areas ('+totalLoading.toFixed(1)+'% total loading)';
+
+  document.getElementById('resCarpet').className='result-block'+(type!=='carpet'?' highlight':'');
+  document.getElementById('resBuildup').className='result-block'+(type!=='buildup'?' highlight':'');
+  document.getElementById('resSbu').className='result-block'+(type!=='sbu'?' highlight':'');
+
+  var inputTag=type==='carpet'?'resCarpet':type==='buildup'?'resBuildup':'resSbu';
+  var el=document.getElementById(inputTag);
+  var label=el.querySelector('.result-block-label');
+  if(!label.querySelector('.tag-input')){
+    var span=document.createElement('span');
+    span.className='tag tag-input';
+    span.textContent='INPUT';
+    label.appendChild(span);
+  }
+  ['resCarpet','resBuildup','resSbu'].forEach(function(id){
+    if(id!==inputTag){
+      var t=document.getElementById(id).querySelector('.tag-input');
+      if(t)t.remove();
+    }
+  });
+
+  var carpetPct=(carpet/sbu*100);
+  var wallsPct=((buildup-carpet)/sbu*100);
+  var commonPctBar=((sbu-buildup)/sbu*100);
+  document.getElementById('barCarpet').style.width=carpetPct+'%';
+  document.getElementById('barWalls').style.width=wallsPct+'%';
+  document.getElementById('barCommon').style.width=commonPctBar+'%';
+
+  var priceVal=parseVal(priceInput);
+  var priceDiv=document.getElementById('priceResults');
+  if(priceVal>0){
+    priceDiv.style.display='block';
+    var totalPrice=priceVal*sbu;
+    var carpetRate=totalPrice/carpet;
+    document.getElementById('priceSbu').textContent=formatAmount(totalPrice);
+    document.getElementById('priceCarpet').textContent=formatAmount(Math.round(carpetRate))+'/sq ft';
+    document.getElementById('priceCarpetSub').textContent='What you actually pay per usable sq ft ('+((carpetRate/priceVal-1)*100).toFixed(0)+'% higher than quoted rate)';
+  }else{
+    priceDiv.style.display='none';
+  }
+}
+
+wallSlider.addEventListener('input',function(){
+  wallValEl.textContent=this.value+'%';
+  syncChips('wallChips',this.value);
+  calculate();
+});
+commonSlider.addEventListener('input',function(){
+  commonValEl.textContent=this.value+'%';
+  syncChips('commonChips',this.value);
+  calculate();
+});
+
+areaType.addEventListener('change',calculate);
+areaInput.addEventListener('input',function(){
+  liveFormatIndian(this);
+  calculate();
+});
+priceInput.addEventListener('input',function(){
+  liveFormatIndian(this);
+  calculate();
+});
+
+function syncChips(containerId,val){
+  var v=String(val);
+  document.querySelectorAll('#'+containerId+' .quick-chip').forEach(function(c){
+    c.classList.toggle('active',c.getAttribute('data-val')===v);
+  });
+}
+
+document.querySelectorAll('#wallChips .quick-chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    wallSlider.value=this.getAttribute('data-val');
+    wallValEl.textContent=wallSlider.value+'%';
+    syncChips('wallChips',wallSlider.value);
+    calculate();
+  });
+});
+document.querySelectorAll('#commonChips .quick-chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    commonSlider.value=this.getAttribute('data-val');
+    commonValEl.textContent=commonSlider.value+'%';
+    syncChips('commonChips',commonSlider.value);
+    calculate();
+  });
+});
+
+document.querySelectorAll('#areaChips .quick-chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    areaInput.value=formatIndian(parseInt(this.getAttribute('data-val')));
+    document.querySelectorAll('#areaChips .quick-chip').forEach(function(c){c.classList.remove('active')});
+    this.classList.add('active');
+    calculate();
+  });
+});
+
+document.querySelectorAll('#presetChips .quick-chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    var w=this.getAttribute('data-wall');
+    var c=this.getAttribute('data-common');
+    wallSlider.value=w;
+    commonSlider.value=c;
+    wallValEl.textContent=w+'%';
+    commonValEl.textContent=c+'%';
+    syncChips('wallChips',w);
+    syncChips('commonChips',c);
+    document.querySelectorAll('#presetChips .quick-chip').forEach(function(p){p.classList.remove('active')});
+    this.classList.add('active');
+    calculate();
+  });
+});
+
+document.querySelectorAll('.price-chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    priceInput.value=formatIndian(parseInt(this.getAttribute('data-val')));
+    document.querySelectorAll('.price-chip').forEach(function(c){c.classList.remove('active')});
+    this.classList.add('active');
+    calculate();
+  });
+});
+
+calculate();
+
+window.sdConfig={toolName:'Carpet vs Built-up',toolIcon:'&#128207;',shareTitle:'Carpet vs Built-up Conversion',shareUrl:'https://soboflats.github.io/tools/carpet.html',fileName:'carpet-vs-buildup'};
+
+window.buildCaptureContent=function(){
+  var val=parseVal(areaInput);
+  if(val<=0)return null;
+
+  var wallPct=parseInt(wallSlider.value);
+  var commonPct=parseInt(commonSlider.value);
+  var type=areaType.value;
+  var carpet,buildup,sbu;
+
+  if(type==='carpet'){carpet=val;buildup=carpet*(1+wallPct/100);sbu=buildup*(1+commonPct/100)}
+  else if(type==='buildup'){buildup=val;carpet=buildup/(1+wallPct/100);sbu=buildup*(1+commonPct/100)}
+  else{sbu=val;buildup=sbu/(1+commonPct/100);carpet=buildup/(1+wallPct/100)}
+
+  var totalLoading=((sbu/carpet-1)*100).toFixed(1);
+  var typeName=type==='carpet'?'RERA Carpet':type==='buildup'?'Built-up':'Super Built-up';
+  var subtitle=formatIndian(val)+' sq ft '+typeName+' (Wall: '+wallPct+'%, Common: '+commonPct+'%)';
+
+  var h='';
+  h+='<div style="display:flex;gap:6px;margin-bottom:10px">';
+  h+='<div style="flex:1;background:#1a8a5a;border-radius:10px;padding:10px;text-align:center">';
+  h+='<div style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">RERA Carpet</div>';
+  h+='<div style="font-size:17px;font-weight:800;color:#fff">'+formatIndian(carpet)+'</div>';
+  h+='<div style="font-size:9px;color:rgba(255,255,255,.7)">sq ft</div></div>';
+  h+='<div style="flex:1;background:#e8a838;border-radius:10px;padding:10px;text-align:center">';
+  h+='<div style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">Built-up</div>';
+  h+='<div style="font-size:17px;font-weight:800;color:#fff">'+formatIndian(buildup)+'</div>';
+  h+='<div style="font-size:9px;color:rgba(255,255,255,.7)">sq ft</div></div>';
+  h+='<div style="flex:1;background:#d35f5f;border-radius:10px;padding:10px;text-align:center">';
+  h+='<div style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">Super Built-up</div>';
+  h+='<div style="font-size:17px;font-weight:800;color:#fff">'+formatIndian(sbu)+'</div>';
+  h+='<div style="font-size:9px;color:rgba(255,255,255,.7)">sq ft</div></div></div>';
+
+  h+='<div style="height:8px;border-radius:4px;display:flex;overflow:hidden;margin-bottom:8px">';
+  var cp=(carpet/sbu*100),wp=((buildup-carpet)/sbu*100),cmp=((sbu-buildup)/sbu*100);
+  h+='<div style="width:'+cp+'%;background:#1a8a5a"></div>';
+  h+='<div style="width:'+wp+'%;background:#e8a838"></div>';
+  h+='<div style="width:'+cmp+'%;background:#d35f5f"></div></div>';
+
+  h+='<div style="display:flex;gap:12px;font-size:9px;color:#666;font-weight:600;margin-bottom:10px">';
+  h+='<span>&#9632; Carpet '+cp.toFixed(0)+'%</span>';
+  h+='<span style="color:#e8a838">&#9632; Walls '+wp.toFixed(0)+'%</span>';
+  h+='<span style="color:#d35f5f">&#9632; Common '+cmp.toFixed(0)+'%</span></div>';
+
+  h+='<div style="font-size:10px;color:#666;border-top:1px solid rgba(0,0,0,.06);padding-top:8px">';
+  h+='Wall loading: '+wallPct+'% &middot; Common area loading: '+commonPct+'% &middot; Total: '+totalLoading+'%</div>';
+
+  var priceVal=parseVal(priceInput);
+  if(priceVal>0){
+    var total=priceVal*sbu;
+    var carpetRate=total/carpet;
+    h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,0,0,.06);font-size:10px">';
+    h+='<div style="color:#666;font-weight:600">Price Impact</div>';
+    h+='<div style="display:flex;justify-content:space-between;margin-top:4px">';
+    h+='<span style="color:#666">Total (on SBU)</span><span style="font-weight:700;color:#333">'+formatAmount(total)+'</span></div>';
+    h+='<div style="display:flex;justify-content:space-between;margin-top:2px">';
+    h+='<span style="color:#666">Effective carpet rate</span><span style="font-weight:700;color:#1a8a5a">'+formatAmount(Math.round(carpetRate))+'/sq ft</span></div></div>';
+  }
+
+  return{subtitle:subtitle,body:h};
+};
+
+})();
+
+function toggleFaq(el){
+  var a=el.nextElementSibling;
+  var isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(function(q){q.classList.remove('open')});
+  document.querySelectorAll('.faq-a').forEach(function(a){a.classList.remove('open')});
+  if(!isOpen){el.classList.add('open');a.classList.add('open')}
+}
+</script>
+<script src="../shared/share-download.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+</body>
+</html>

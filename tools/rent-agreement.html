@@ -255,6 +255,7 @@
         <button class="qv-chip active" data-val="50000">&#8377;50K</button>
         <button class="qv-chip" data-val="100000">&#8377;1L</button>
         <button class="qv-chip" data-val="200000">&#8377;2L</button>
+        <button class="qv-chip" data-val="300000">&#8377;3L</button>
       </div>
     </div>
 
@@ -269,17 +270,17 @@
       <div class="input-label" style="justify-content:space-between">
         <span><span class="input-label-icon">&#128176;</span> Refundable Deposit</span>
         <div class="dep-mode-toggle" id="depModeToggle">
-          <button class="dep-mode-btn" data-mode="months">&#215; Months</button>
-          <button class="dep-mode-btn active" data-mode="amount">&#8377; Amount</button>
+          <button class="dep-mode-btn active" data-mode="months">&#215; Months</button>
+          <button class="dep-mode-btn" data-mode="amount">&#8377; Amount</button>
         </div>
       </div>
-      <div id="depAmountWrap">
+      <div id="depAmountWrap" style="display:none">
         <div class="input-row">
           <span class="input-prefix">&#8377;</span>
           <input type="text" class="input-field" id="depositInput" value="1,50,000" inputmode="numeric" placeholder="1,50,000">
         </div>
       </div>
-      <div id="depMonthsWrap" style="display:none">
+      <div id="depMonthsWrap">
         <div class="input-row">
           <span class="input-prefix">&#215;</span>
           <input type="text" class="input-field" id="depositMonths" value="3" inputmode="numeric" placeholder="3">
@@ -457,6 +458,107 @@
     </div>
 
     <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How many days does it take to get the registered agreement?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li>Typically <b>7 working days</b> after all steps are completed</li>
+          <li><b>Step 1:</b> Draft agreement is prepared and approved by both parties</li>
+          <li><b>Step 2:</b> E-signing &amp; biometric verification of all parties</li>
+          <li><b>Step 3:</b> Payment of stamp duty, registration fee &amp; service charges</li>
+          <li>After these steps, the Sub-Registrar&rsquo;s office processes and returns the <b>registered document within 7 working days</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Which documents should I check while receiving the registered agreement?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Registered Agreement</b> &mdash; The main Leave &amp; License document with registration stamp &amp; number</li>
+          <li><b>Index 2</b> &mdash; Official record from the Sub-Registrar confirming registration details</li>
+          <li><b>Police Verification Copy</b> &mdash; Proof that tenant details have been submitted to local police</li>
+          <li><b>Challan Receipts</b> &mdash; Payment receipts for stamp duty &amp; registration fees</li>
+          <li>Ensure all details (names, dates, rent amount, tenure) match what was agreed upon</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Do I need to sign the registered agreement again and take a hard copy?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>No</b> &mdash; The online registered copy is the <b>original document</b></li>
+          <li>It is legally treated as an <b>original document</b> and is valid in all courts</li>
+          <li>No additional physical signatures or hard copies are required</li>
+          <li>You can download and print copies anytime from the <b>IGR Maharashtra portal</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is the online registered agreement valid for Wi-Fi, Gas &amp; other connections?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Yes</b> &mdash; The online registered agreement is a fully valid document</li>
+          <li>Accepted for <b>Wi-Fi / Broadband</b> connections (Jio, Airtel, etc.)</li>
+          <li>Accepted for <b>Piped Gas</b> connections (Mahanagar Gas, etc.)</li>
+          <li>Valid for <b>Electricity</b> name transfer, <b>Society NOC</b>, and all other utility connections</li>
+          <li>Also accepted for <b>Aadhaar address update</b> and bank KYC purposes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">If I cancel and reschedule the appointment, will I be charged?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li>If rescheduled <b>24 hours before</b> the actual appointment date &mdash; <b>no officer fees</b> will be charged</li>
+          <li>If rescheduled <b>within 24 hours</b> or on the day of appointment &mdash; <b>officer&rsquo;s fees will be applicable</b></li>
+          <li>This is because the officer has already blocked the slot and made travel arrangements</li>
+          <li><b>Tip:</b> Always reschedule at least a day in advance to avoid extra charges</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">If all parties couldn&rsquo;t come on the appointment day, will the officer charge again?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Yes</b> &mdash; The officer&rsquo;s fees will be charged again for an additional visit</li>
+          <li>It is treated as an <b>add-on visit</b> since the officer has to reschedule and travel again</li>
+          <li>The officer&rsquo;s time and schedule are <b>already committed</b> for the original appointment</li>
+          <li><b>Tip:</b> Coordinate with all signing parties in advance and confirm everyone&rsquo;s availability before booking the appointment</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I register a rent agreement without the landlord being present?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Yes</b> &mdash; through a registered <b>Power of Attorney (PoA)</b></li>
+          <li>The landlord can authorize someone to sign on their behalf via PoA</li>
+          <li>The PoA itself must be <b>notarized or registered</b> to be valid</li>
+          <li>Common when the landlord is an <b>NRI or lives in another city</b></li>
+          <li><b>Biometric verification</b> of the PoA holder is done instead of the landlord</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What happens if I don&rsquo;t register my rent agreement?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li>An unregistered agreement has <b>no legal standing</b> in Maharashtra courts</li>
+          <li>It cannot be used as evidence in case of a <b>dispute between landlord and tenant</b></li>
+          <li>The landlord can face a <b>penalty</b> for not registering the agreement</li>
+          <li>Tenant loses protection under the <b>Maharashtra Rent Control Act</b></li>
+          <li><b>Police verification</b> also requires a registered agreement as proof</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">What is police verification?<span class="faq-chevron">&#8250;</span></div>
       <div class="faq-a">
         <ul>
@@ -574,7 +676,7 @@ var COUNTRIES=[
   {name:'Other',charge:5000,zone:'intl'}
 ];
 
-var stateKey='maharashtra',cityType='mumbai',rentFreq='monthly',depMode='amount',selectedCountry='India',advancedOpen=false;
+var stateKey='maharashtra',cityType='mumbai',rentFreq='monthly',depMode='months',selectedCountry='India',advancedOpen=false;
 var enqType='';
 
 var tenureInput=document.getElementById('tenureInput'),tenureSlider=document.getElementById('tenureSlider');
@@ -789,11 +891,11 @@ function update(){
   if(dhc>0)items.push({label:'Document Handling Charge',value:dhc,note:'DHC'});
   if(police>0)items.push({label:'Police Verification',value:police,note:''});
 
-  items.push({isSub:true,subLabel:'Service Charges',subValue:service});
-  items.push({label:'Advocate / Typing / Drafting',value:service,note:'Service'});
-
   items.push({isSub:true,subLabel:'Registration Visit Charges',subValue:visitCharge});
   items.push({label:'Officer visits ('+visits+')',value:visitCharge,note:'₹'+formatIndian(perVisit)+'/visit'});
+
+  items.push({isSub:true,subLabel:'Service Charges',subValue:service});
+  items.push({label:'Advocate / Drafting / Payment Gateway',value:service,note:'Service'});
 
   items.forEach(function(it){var row=document.createElement('div');
     if(it.isSub){row.className='bd-row sub-total';row.innerHTML='<span class="bd-label">'+it.subLabel+'</span><span class="bd-value">₹'+formatIndian(it.subValue)+'</span>';}
@@ -878,8 +980,8 @@ window.buildCaptureContent=function(){
   h+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Registration Fee</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.regFee)+'</span></div>';
   if(b.dhc>0)h+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Document Handling</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.dhc)+'</span></div>';
   if(b.police>0)h+='<div style="display:flex;justify-content:space-between;padding:5px 0 5px 12px;font-size:11px;color:#666"><span>Police Verification</span><span style="font-weight:600;color:#333">₹'+formatIndian(b.police)+'</span></div>';
-  h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;margin-top:4px"><span style="color:#666;font-weight:600">Service Charges</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.service)+'</span></div>';
   h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;margin-top:4px"><span style="color:#666;font-weight:600">Visit Charges ('+b.visits+')</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.visitCharge)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;margin-top:4px"><span style="color:#666;font-weight:600">Service Charges</span><span style="font-weight:700;color:#1a8a5a">₹'+formatIndian(b.service)+'</span></div>';
   h+='<div style="display:flex;justify-content:space-between;padding:10px 0 4px;border-top:2px solid #1a8a5a;margin-top:8px;font-size:14px"><span style="font-weight:800">Total Agreement Cost</span><span style="font-weight:800;color:#1a8a5a">₹'+formatIndian(b.grandTotal)+'</span></div>';
   return{subtitle:subtitle,body:h};
 };

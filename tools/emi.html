@@ -94,6 +94,11 @@
 .tools-footer{text-align:center;padding:20px 0 40px;font-size:11px;color:var(--text3);line-height:1.6}
 .tools-footer a{color:var(--accent);text-decoration:none}
 
+.quick-val-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.qv-chip{padding:8px 14px;border-radius:20px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+[data-theme="light"] .qv-chip{background:rgba(255,255,255,.65)}
+.qv-chip.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+
 @media(min-width:600px){.results-grid{grid-template-columns:repeat(4,1fr)}.result-card.primary{grid-column:auto}}
 </style>
 </head>
@@ -127,6 +132,14 @@
         <span class="range-label right">&#8377;5Cr</span>
       </div>
       <div class="range-current" id="loanCurrent">50.00 Lakhs</div>
+      <div class="quick-val-chips" id="loanChips">
+        <button class="qv-chip" data-val="2500000">&#8377;25L</button>
+        <button class="qv-chip active" data-val="5000000">&#8377;50L</button>
+        <button class="qv-chip" data-val="10000000">&#8377;1Cr</button>
+        <button class="qv-chip" data-val="20000000">&#8377;2Cr</button>
+        <button class="qv-chip" data-val="30000000">&#8377;3Cr</button>
+        <button class="qv-chip" data-val="50000000">&#8377;5Cr</button>
+      </div>
     </div>
 
     <div class="input-group">
@@ -141,6 +154,14 @@
         <span class="range-label right">15%</span>
       </div>
       <div class="range-current" id="rateCurrent">8.5% p.a.</div>
+      <div class="quick-val-chips" id="rateChips">
+        <button class="qv-chip" data-val="7">7%</button>
+        <button class="qv-chip" data-val="8">8%</button>
+        <button class="qv-chip active" data-val="8.5">8.5%</button>
+        <button class="qv-chip" data-val="9">9%</button>
+        <button class="qv-chip" data-val="9.5">9.5%</button>
+        <button class="qv-chip" data-val="10">10%</button>
+      </div>
     </div>
 
     <div class="input-group">
@@ -155,6 +176,14 @@
         <span class="range-label right">30 yrs</span>
       </div>
       <div class="range-current" id="tenureCurrent">20 Years (240 months)</div>
+      <div class="quick-val-chips" id="tenureChips">
+        <button class="qv-chip" data-val="5">5 yrs</button>
+        <button class="qv-chip" data-val="10">10 yrs</button>
+        <button class="qv-chip" data-val="15">15 yrs</button>
+        <button class="qv-chip active" data-val="20">20 yrs</button>
+        <button class="qv-chip" data-val="25">25 yrs</button>
+        <button class="qv-chip" data-val="30">30 yrs</button>
+      </div>
     </div>
   </div>
 
@@ -487,7 +516,34 @@ tenureInput.addEventListener('input',function(){
 });
 tenureSlider.addEventListener('input',function(){
   tenureInput.value=this.value;
+  document.getElementById('tenureChips').querySelectorAll('.qv-chip').forEach(function(b){b.classList.toggle('active',b.dataset.val===tenureSlider.value)});
   update();
+});
+
+function clearChips(id){document.getElementById(id).querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')})}
+
+loanInput.addEventListener('input',function(){clearChips('loanChips')},true);
+loanSlider.addEventListener('input',function(){clearChips('loanChips')},true);
+rateInput.addEventListener('input',function(){clearChips('rateChips')},true);
+rateSlider.addEventListener('input',function(){clearChips('rateChips')},true);
+tenureInput.addEventListener('input',function(){clearChips('tenureChips')},true);
+
+document.getElementById('loanChips').addEventListener('click',function(e){
+  var btn=e.target.closest('.qv-chip');if(!btn)return;
+  this.querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');
+  var v=parseInt(btn.dataset.val);loanInput.value=formatIndian(v);if(v>=1000000&&v<=50000000)loanSlider.value=v;update();
+});
+
+document.getElementById('rateChips').addEventListener('click',function(e){
+  var btn=e.target.closest('.qv-chip');if(!btn)return;
+  this.querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');
+  var v=parseFloat(btn.dataset.val);rateInput.value=v.toFixed(1);if(v>=5&&v<=15)rateSlider.value=v;update();
+});
+
+document.getElementById('tenureChips').addEventListener('click',function(e){
+  var btn=e.target.closest('.qv-chip');if(!btn)return;
+  this.querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');
+  var v=parseInt(btn.dataset.val);tenureInput.value=v;if(v>=1&&v<=30)tenureSlider.value=v;update();
 });
 
 update();

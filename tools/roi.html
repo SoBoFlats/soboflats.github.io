@@ -149,6 +149,11 @@
 .tools-footer{text-align:center;padding:20px 0 40px;font-size:11px;color:var(--text3);line-height:1.6}
 .tools-footer a{color:var(--accent);text-decoration:none}
 
+.quick-val-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.qv-chip{padding:8px 14px;border-radius:20px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+[data-theme="light"] .qv-chip{background:rgba(255,255,255,.65)}
+.qv-chip.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+
 @media(min-width:600px){.results-grid{grid-template-columns:repeat(4,1fr)}.result-card.primary{grid-column:auto}}
 </style>
 </head>
@@ -193,6 +198,14 @@
         <span class="range-label right">&#8377;10Cr</span>
       </div>
       <div class="range-current" id="purchaseCurrent">50.00 Lakhs</div>
+      <div class="quick-val-chips" id="purchaseChips">
+        <button class="qv-chip" data-val="2500000">&#8377;25L</button>
+        <button class="qv-chip active" data-val="5000000">&#8377;50L</button>
+        <button class="qv-chip" data-val="10000000">&#8377;1Cr</button>
+        <button class="qv-chip" data-val="20000000">&#8377;2Cr</button>
+        <button class="qv-chip" data-val="50000000">&#8377;5Cr</button>
+        <button class="qv-chip" data-val="100000000">&#8377;10Cr</button>
+      </div>
       <div class="tip">Total amount paid including stamp duty, registration &amp; all charges</div>
     </div>
 
@@ -208,6 +221,14 @@
         <span class="range-label right">&#8377;20Cr</span>
       </div>
       <div class="range-current" id="currentCurrent">75.00 Lakhs</div>
+      <div class="quick-val-chips" id="currentChips">
+        <button class="qv-chip" data-val="5000000">&#8377;50L</button>
+        <button class="qv-chip active" data-val="7500000">&#8377;75L</button>
+        <button class="qv-chip" data-val="10000000">&#8377;1Cr</button>
+        <button class="qv-chip" data-val="20000000">&#8377;2Cr</button>
+        <button class="qv-chip" data-val="50000000">&#8377;5Cr</button>
+        <button class="qv-chip" data-val="100000000">&#8377;10Cr</button>
+      </div>
       <div class="tip">Market value today or expected value at sale. Check ready reckoner or recent sales nearby</div>
     </div>
 
@@ -223,6 +244,14 @@
         <span class="range-label right">30 yrs</span>
       </div>
       <div class="range-current" id="holdingCurrent">5 Years</div>
+      <div class="quick-val-chips" id="holdingChips">
+        <button class="qv-chip" data-val="3">3 yrs</button>
+        <button class="qv-chip active" data-val="5">5 yrs</button>
+        <button class="qv-chip" data-val="7">7 yrs</button>
+        <button class="qv-chip" data-val="10">10 yrs</button>
+        <button class="qv-chip" data-val="15">15 yrs</button>
+        <button class="qv-chip" data-val="20">20 yrs</button>
+      </div>
       <div class="tip">Longer holding periods typically show better returns due to compounding</div>
     </div>
   </div>
@@ -249,6 +278,14 @@
         <span class="range-label right" id="rentMaxLabel">&#8377;5L</span>
       </div>
       <div class="range-current" id="rentalCurrent">20,000/month</div>
+      <div class="quick-val-chips" id="rentalChips">
+        <button class="qv-chip" data-val="10000">&#8377;10K</button>
+        <button class="qv-chip active" data-val="20000">&#8377;20K</button>
+        <button class="qv-chip" data-val="50000">&#8377;50K</button>
+        <button class="qv-chip" data-val="100000">&#8377;1L</button>
+        <button class="qv-chip" data-val="200000">&#8377;2L</button>
+        <button class="qv-chip" data-val="300000">&#8377;3L</button>
+      </div>
       <div class="tip">Typical rental yield &mdash; <b>SoBo: 2-3%</b> | Suburbs: 3-4% | Commercial: 6-9% of property value annually</div>
     </div>
 
@@ -305,6 +342,14 @@
         <span class="range-label right">&#8377;10L</span>
       </div>
       <div class="range-current" id="expenseCurrent">48,000/year</div>
+      <div class="quick-val-chips" id="expenseChips">
+        <button class="qv-chip" data-val="24000">&#8377;24K</button>
+        <button class="qv-chip active" data-val="48000">&#8377;48K</button>
+        <button class="qv-chip" data-val="100000">&#8377;1L</button>
+        <button class="qv-chip" data-val="200000">&#8377;2L</button>
+        <button class="qv-chip" data-val="500000">&#8377;5L</button>
+        <button class="qv-chip" data-val="1000000">&#8377;10L</button>
+      </div>
       <div class="tip">Include society maintenance + property tax + insurance + repairs (~1% of value) + brokerage for finding tenants</div>
     </div>
 
@@ -915,21 +960,47 @@ function clearActivePreset(){
   document.querySelectorAll('.preset-chip').forEach(function(b){b.classList.remove('active')});
 }
 
-bindInput(purchaseInput,purchaseSlider,1000000,100000000);
-bindInput(currentInput,currentSlider,1000000,200000000);
-bindInput(rentalInput,rentalSlider,0,500000);
-bindInput(expenseInput,expenseSlider,0,1000000);
+function clearQvChips(id){document.getElementById(id).querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')})}
+
+function bindInputWithChips(input,slider,min,max,chipId){
+  input.addEventListener('input',function(){
+    liveFormatIndian(this);
+    var v=parseNum(this.value);
+    if(v>=min&&v<=max)slider.value=v;
+    else if(v>max)slider.value=max;
+    clearActivePreset();
+    if(chipId)clearQvChips(chipId);
+    update();
+  });
+  input.addEventListener('blur',function(){
+    var v=parseNum(this.value);
+    if(v)this.value=formatIndian(v);
+  });
+  slider.addEventListener('input',function(){
+    input.value=formatIndian(parseInt(this.value));
+    clearActivePreset();
+    if(chipId)clearQvChips(chipId);
+    update();
+  });
+}
+
+bindInputWithChips(purchaseInput,purchaseSlider,1000000,100000000,'purchaseChips');
+bindInputWithChips(currentInput,currentSlider,1000000,200000000,'currentChips');
+bindInputWithChips(rentalInput,rentalSlider,0,500000,'rentalChips');
+bindInputWithChips(expenseInput,expenseSlider,0,1000000,'expenseChips');
 bindInput(intCostInput,intSlider,0,5000000);
 
 holdingInput.addEventListener('input',function(){
   var v=parseInt(this.value);
   if(v>=1&&v<=30)holdingSlider.value=v;
   clearActivePreset();
+  clearQvChips('holdingChips');
   update();
 });
 holdingSlider.addEventListener('input',function(){
   holdingInput.value=this.value;
   clearActivePreset();
+  clearQvChips('holdingChips');
   update();
 });
 
@@ -952,6 +1023,23 @@ incrSlider.addEventListener('input',function(){
   incrPctInput.value=this.value;
   update();
 });
+
+function setupQvChips(chipId,input,slider,min,max,isInt){
+  document.getElementById(chipId).addEventListener('click',function(e){
+    var btn=e.target.closest('.qv-chip');if(!btn)return;
+    this.querySelectorAll('.qv-chip').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');
+    var v=isInt?parseInt(btn.dataset.val):parseFloat(btn.dataset.val);
+    input.value=isInt?formatIndian(v):v;
+    if(v>=min&&v<=max)slider.value=v;
+    clearActivePreset();update();
+  });
+}
+
+setupQvChips('purchaseChips',purchaseInput,purchaseSlider,1000000,100000000,true);
+setupQvChips('currentChips',currentInput,currentSlider,1000000,200000000,true);
+setupQvChips('holdingChips',holdingInput,holdingSlider,1,30,false);
+setupQvChips('rentalChips',rentalInput,rentalSlider,0,500000,true);
+setupQvChips('expenseChips',expenseInput,expenseSlider,0,1000000,true);
 
 update();
 
