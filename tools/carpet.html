@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Carpet vs Built-up Area · Real Estate Tools · Oswal Properties</title>
-<meta name="description" content="Convert between RERA Carpet, Built-up and Super Built-up area. Know your actual usable area from builder quotes. Free calculator for Indian real estate.">
+<meta name="description" content="Convert between Net Usable Carpet, RERA Carpet, Built-up and Super Built-up area. Know your actual usable area from builder quotes. Free calculator for Indian real estate.">
 <link rel="stylesheet" href="../shared/common.css">
 <link rel="stylesheet" href="../shared/nav.css">
 <link rel="stylesheet" href="../shared/share-download.css">
@@ -50,22 +50,32 @@
 .result-block{padding:14px;border-radius:14px;margin-bottom:10px;border:1.5px solid var(--input-border);background:var(--input-bg);transition:all .2s}
 [data-theme="light"] .result-block{background:rgba(255,255,255,.5)}
 .result-block.highlight{border-color:var(--accent);background:var(--accent-bg)}
-.result-block-label{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:2px;display:flex;align-items:center;gap:5px}
+.result-block-label{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:2px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .result-block-label .tag{font-size:9px;padding:2px 6px;border-radius:8px;font-weight:700;letter-spacing:.3px}
 .tag-rera{background:rgba(26,138,90,.15);color:#1a8a5a}
 [data-theme="light"] .tag-rera{background:rgba(26,138,90,.1)}
+.tag-usable{background:rgba(59,130,246,.12);color:#3b82f6}
+[data-theme="light"] .tag-usable{background:rgba(59,130,246,.08)}
 .tag-input{background:var(--accent-bg);color:var(--accent)}
 .result-block-value{font-size:20px;font-weight:800;color:var(--text)}
 .result-block.highlight .result-block-value{color:var(--accent)}
 .result-block-sub{font-size:11px;color:var(--text3);margin-top:2px}
 
 .result-bar{height:8px;border-radius:4px;margin-top:8px;overflow:hidden;display:flex;background:var(--input-border)}
-.bar-carpet{background:#1a8a5a;border-radius:4px 0 0 4px}
-.bar-walls{background:#e8a838}
+.bar-usable{background:#3b82f6;border-radius:4px 0 0 4px}
+.bar-intwall{background:#8b5cf6}
+.bar-extwall{background:#e8a838}
 .bar-common{background:#d35f5f;border-radius:0 4px 4px 0}
-.bar-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.bar-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .bar-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:var(--text2)}
 .bar-legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+.breakdown-table{width:100%;margin-top:12px;border-collapse:collapse;font-size:11px}
+.breakdown-table th{text-align:left;font-weight:700;color:var(--text2);padding:6px 8px;border-bottom:1.5px solid var(--border);font-size:10px;letter-spacing:.3px;text-transform:uppercase}
+.breakdown-table td{padding:6px 8px;border-bottom:1px solid var(--border)}
+.breakdown-table td:last-child{text-align:right;font-weight:700}
+.breakdown-table tr:last-child td{border-bottom:none}
+.breakdown-table .row-total{font-weight:700;color:var(--accent)}
 
 .info-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;letter-spacing:.3px;text-transform:uppercase}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -73,6 +83,9 @@
 [data-theme="light"] .info-item{background:rgba(255,255,255,.5)}
 .info-item-label{font-size:11px;color:var(--text2);font-weight:600}
 .info-item-value{font-size:12px;font-weight:700;margin-top:2px}
+
+.callout{padding:12px 14px;border-radius:12px;border-left:3px solid var(--accent);background:var(--accent-bg);margin:14px 0;font-size:12px;line-height:1.6}
+.callout b{color:var(--accent)}
 
 .faq-section{margin-top:20px}
 .faq-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;letter-spacing:.3px;text-transform:uppercase}
@@ -83,10 +96,13 @@
 .faq-chevron{font-size:14px;color:var(--text3);transition:transform .2s;flex-shrink:0}
 .faq-q.open .faq-chevron{transform:rotate(90deg);color:var(--accent)}
 .faq-a{font-size:12px;color:var(--text2);line-height:1.6;padding:0 14px;max-height:0;overflow:hidden;transition:max-height .4s,padding .3s}
-.faq-a.open{max-height:600px;padding:10px 14px 14px}
+.faq-a.open{max-height:800px;padding:10px 14px 14px}
 .faq-a ul{margin:6px 0 0 16px;padding:0}
 .faq-a li{margin-bottom:4px}
 .faq-a p{margin-bottom:6px}
+.faq-a table{width:100%;border-collapse:collapse;margin:8px 0;font-size:11px}
+.faq-a table th,.faq-a table td{padding:6px 8px;border:1px solid var(--border);text-align:left}
+.faq-a table th{background:var(--input-bg);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.3px}
 
 .quick-links{margin-top:24px}
 .quick-links-title{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
@@ -116,7 +132,7 @@
     <span class="tool-icon">&#128207;</span>
     <span class="tool-title">Carpet vs Built-up</span>
   </div>
-  <div class="tool-subtitle">Convert between RERA Carpet Area, Built-up Area and Super Built-up (Saleable) Area. Enter any one value to calculate the other two.</div>
+  <div class="tool-subtitle">Convert between Net Usable Carpet, RERA Carpet, Built-up and Super Built-up (Saleable) Area. Enter any one value to calculate all others.</div>
 
   <!-- Input -->
   <div class="calc-card">
@@ -124,7 +140,8 @@
       <div class="input-label"><span class="input-label-icon">&#128205;</span> I know my</div>
       <div class="select-wrap">
         <select class="select-field" id="areaType">
-          <option value="carpet">RERA Carpet Area</option>
+          <option value="usable">Net Usable Carpet Area</option>
+          <option value="carpet" selected>RERA Carpet Area</option>
           <option value="buildup">Built-up Area</option>
           <option value="sbu">Super Built-up (Saleable) Area</option>
         </select>
@@ -152,7 +169,20 @@
   <!-- Loading Factors -->
   <div class="calc-card">
     <div class="input-group">
-      <div class="input-label"><span class="input-label-icon">&#128295;</span> Wall Loading (Carpet &rarr; Built-up)</div>
+      <div class="input-label"><span class="input-label-icon">&#128295;</span> Internal Walls (RERA Carpet &rarr; Net Usable)</div>
+      <div class="slider-row">
+        <input type="range" id="intWallSlider" min="2" max="10" value="5" step="1">
+        <span class="slider-val" id="intWallVal">5%</span>
+      </div>
+      <div class="quick-chips" id="intWallChips">
+        <button class="quick-chip" data-val="3">3%</button>
+        <button class="quick-chip active" data-val="5">5% <small style="font-size:9px;opacity:.7">std</small></button>
+        <button class="quick-chip" data-val="7">7%</button>
+      </div>
+    </div>
+
+    <div class="input-group" style="margin-top:16px">
+      <div class="input-label"><span class="input-label-icon">&#127959;</span> Ext. Walls + Balcony (RERA Carpet &rarr; Built-up)</div>
       <div class="slider-row">
         <input type="range" id="wallSlider" min="5" max="30" value="15" step="1">
         <span class="slider-val" id="wallVal">15%</span>
@@ -167,7 +197,7 @@
     </div>
 
     <div class="input-group" style="margin-top:16px">
-      <div class="input-label"><span class="input-label-icon">&#127959;</span> Common Area Loading (Built-up &rarr; Super Built-up)</div>
+      <div class="input-label"><span class="input-label-icon">&#127970;</span> Common Area Loading (Built-up &rarr; Super Built-up)</div>
       <div class="slider-row">
         <input type="range" id="commonSlider" min="10" max="55" value="30" step="1">
         <span class="slider-val" id="commonVal">30%</span>
@@ -185,11 +215,11 @@
     <div class="input-group" style="margin-top:12px">
       <div class="input-label"><span class="input-label-icon">&#127751;</span> Quick Presets</div>
       <div class="quick-chips" id="presetChips">
-        <button class="quick-chip" data-wall="15" data-common="30">SoBo New</button>
-        <button class="quick-chip" data-wall="12" data-common="25">Suburban Mumbai</button>
-        <button class="quick-chip" data-wall="10" data-common="20">Affordable</button>
-        <button class="quick-chip" data-wall="18" data-common="35">Ultra Luxury</button>
-        <button class="quick-chip" data-wall="15" data-common="40">Commercial</button>
+        <button class="quick-chip" data-iw="5" data-wall="15" data-common="30">SoBo New</button>
+        <button class="quick-chip" data-iw="5" data-wall="12" data-common="25">Suburban Mumbai</button>
+        <button class="quick-chip" data-iw="4" data-wall="10" data-common="20">Affordable</button>
+        <button class="quick-chip" data-iw="5" data-wall="18" data-common="35">Ultra Luxury</button>
+        <button class="quick-chip" data-iw="5" data-wall="15" data-common="40">Commercial</button>
       </div>
     </div>
   </div>
@@ -198,35 +228,49 @@
   <div class="calc-card">
     <div class="results-title">Conversion Results</div>
 
+    <div class="result-block" id="resUsable">
+      <div class="result-block-label">Net Usable Carpet Area <span class="tag tag-usable">USABLE</span></div>
+      <div class="result-block-value" id="resUsableVal">950 sq ft</div>
+      <div class="result-block-sub" id="resUsableSub">What you actually walk on &mdash; excludes all walls</div>
+    </div>
+
     <div class="result-block" id="resCarpet">
       <div class="result-block-label">RERA Carpet Area <span class="tag tag-rera">RERA</span></div>
       <div class="result-block-value" id="resCarpetVal">1,000 sq ft</div>
-      <div class="result-block-sub" id="resCarpetSub">Usable floor area within walls</div>
+      <div class="result-block-sub" id="resCarpetSub">Usable + internal partition walls (RERA Sec 2(k))</div>
     </div>
 
     <div class="result-block" id="resBuildup">
       <div class="result-block-label">Built-up Area</div>
       <div class="result-block-value" id="resBuildupVal">1,150 sq ft</div>
-      <div class="result-block-sub" id="resBuildupSub">Carpet + walls + balcony</div>
+      <div class="result-block-sub" id="resBuildupSub">RERA Carpet + external walls + balcony</div>
     </div>
 
     <div class="result-block" id="resSbu">
-      <div class="result-block-label">Super Built-up Area</div>
+      <div class="result-block-label">Super Built-up (Saleable) Area</div>
       <div class="result-block-value" id="resSbuVal">1,495 sq ft</div>
-      <div class="result-block-sub" id="resSbuSub">Built-up + common areas (saleable)</div>
+      <div class="result-block-sub" id="resSbuSub">Built-up + share of common areas</div>
     </div>
 
     <!-- Visual bar -->
     <div class="result-bar" id="resultBar">
-      <div class="bar-carpet" id="barCarpet"></div>
-      <div class="bar-walls" id="barWalls"></div>
+      <div class="bar-usable" id="barUsable"></div>
+      <div class="bar-intwall" id="barIntWall"></div>
+      <div class="bar-extwall" id="barExtWall"></div>
       <div class="bar-common" id="barCommon"></div>
     </div>
     <div class="bar-legend">
-      <div class="bar-legend-item"><div class="bar-legend-dot" style="background:#1a8a5a"></div> Carpet</div>
-      <div class="bar-legend-item"><div class="bar-legend-dot" style="background:#e8a838"></div> Walls</div>
+      <div class="bar-legend-item"><div class="bar-legend-dot" style="background:#3b82f6"></div> Usable</div>
+      <div class="bar-legend-item"><div class="bar-legend-dot" style="background:#8b5cf6"></div> Int. Walls</div>
+      <div class="bar-legend-item"><div class="bar-legend-dot" style="background:#e8a838"></div> Ext. Walls</div>
       <div class="bar-legend-item"><div class="bar-legend-dot" style="background:#d35f5f"></div> Common</div>
     </div>
+
+    <!-- Breakdown table -->
+    <table class="breakdown-table" id="breakdownTable">
+      <thead><tr><th>Component</th><th>Sq ft</th></tr></thead>
+      <tbody id="breakdownBody"></tbody>
+    </table>
   </div>
 
   <!-- Price Impact -->
@@ -252,23 +296,39 @@
         <div class="result-block-value" id="priceSbu" style="font-size:16px">—</div>
       </div>
       <div class="result-block">
-        <div class="result-block-label">Effective rate on Carpet Area</div>
+        <div class="result-block-label">Effective rate on RERA Carpet</div>
         <div class="result-block-value" id="priceCarpet" style="font-size:16px;color:var(--accent)">—</div>
-        <div class="result-block-sub" id="priceCarpetSub">What you actually pay per usable sq ft</div>
+        <div class="result-block-sub" id="priceCarpetSub"></div>
       </div>
+      <div class="result-block">
+        <div class="result-block-label">Effective rate on Net Usable Area</div>
+        <div class="result-block-value" id="priceUsable" style="font-size:16px;color:#3b82f6">—</div>
+        <div class="result-block-sub" id="priceUsableSub">What you truly pay per sq ft you walk on</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to read this -->
+  <div class="calc-card">
+    <div class="info-title">How Area Builds Up</div>
+    <div class="callout">
+      <b>Net Usable</b> (what you walk on)<br>
+      &nbsp; + Internal partition walls = <b>RERA Carpet</b> (legal standard)<br>
+      &nbsp; + External walls + balcony + dry balcony = <b>Built-up</b><br>
+      &nbsp; + Lobby + stairs + lift + gym + corridors = <b>Super Built-up</b>
     </div>
   </div>
 
   <!-- Common Loading Factors -->
   <div class="calc-card">
-    <div class="info-title">Typical Loading Factors</div>
+    <div class="info-title">Typical Loading Factors (Carpet &rarr; SBU)</div>
     <div class="info-grid">
-      <div class="info-item"><div class="info-item-label">SoBo New Build</div><div class="info-item-value">30–35%</div></div>
-      <div class="info-item"><div class="info-item-label">Suburban Mumbai</div><div class="info-item-value">25–30%</div></div>
-      <div class="info-item"><div class="info-item-label">Affordable Housing</div><div class="info-item-value">18–22%</div></div>
-      <div class="info-item"><div class="info-item-label">Ultra Luxury</div><div class="info-item-value">35–45%</div></div>
-      <div class="info-item"><div class="info-item-label">Commercial Office</div><div class="info-item-value">35–40%</div></div>
-      <div class="info-item"><div class="info-item-label">Resale (Old Build)</div><div class="info-item-value">15–25%</div></div>
+      <div class="info-item"><div class="info-item-label">SoBo New Build</div><div class="info-item-value">30&ndash;35%</div></div>
+      <div class="info-item"><div class="info-item-label">Suburban Mumbai</div><div class="info-item-value">25&ndash;30%</div></div>
+      <div class="info-item"><div class="info-item-label">Affordable Housing</div><div class="info-item-value">18&ndash;22%</div></div>
+      <div class="info-item"><div class="info-item-label">Ultra Luxury</div><div class="info-item-value">35&ndash;45%</div></div>
+      <div class="info-item"><div class="info-item-label">Commercial Office</div><div class="info-item-value">35&ndash;40%</div></div>
+      <div class="info-item"><div class="info-item-label">Resale (Old Build)</div><div class="info-item-value">15&ndash;25%</div></div>
     </div>
   </div>
 
@@ -279,77 +339,132 @@
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">What is RERA Carpet Area?<span class="faq-chevron">&#8250;</span></div>
       <div class="faq-a">
+        <p>As per <b>RERA Section 2(k)</b>, carpet area is defined as:</p>
         <ul>
-          <li><b>RERA Carpet Area</b> is the net usable floor area within an apartment, as defined by the Real Estate Regulation Act (2016)</li>
-          <li><b>Includes</b>: area enclosed within walls, internal partition walls, kitchen, bedrooms, bathrooms</li>
-          <li><b>Excludes</b>: external walls, areas under service shafts, exclusive balcony or verandah, exclusive open terrace</li>
-          <li>This is the <b>standard across all states</b> — MahaRERA, UP-RERA, KRERA etc. all follow the same definition</li>
-          <li><b>All builders must now quote RERA Carpet Area</b> — it&rsquo;s the only legally comparable metric</li>
+          <li>The <b>net usable floor area</b> of an apartment</li>
+          <li><b>Includes</b>: area covered by <b>internal partition walls</b></li>
+          <li><b>Excludes</b>: external walls, service shafts, exclusive balcony/verandah, exclusive open terrace</li>
         </ul>
+        <p>This is the <b>legal standard all builders must quote</b>. RERA is a central act &mdash; the definition under Section 2(k) is the same across all states (Maharashtra, UP, Karnataka, Tamil Nadu, etc.).</p>
+        <p><b>Key point</b>: RERA Carpet includes the thickness of your internal walls (bedroom walls, bathroom walls, kitchen partition) &mdash; so it is <b>3&ndash;7% more</b> than the actual space you walk on.</p>
       </div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">What is the difference between Carpet, Built-up and Super Built-up?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-q" onclick="toggleFaq(this)">What is Net Usable Carpet Area?<span class="faq-chevron">&#8250;</span></div>
       <div class="faq-a">
         <ul>
-          <li><b>RERA Carpet Area</b> &mdash; What you walk on. Net usable area inside the apartment. RERA standard.</li>
-          <li><b>Built-up Area</b> &mdash; Carpet + external wall thickness + balcony + verandah. Typically 10&ndash;20% more than carpet.</li>
-          <li><b>Super Built-up / Saleable Area</b> &mdash; Built-up + proportionate share of common areas (lobby, stairs, lift, gym, corridors). Typically 25&ndash;45% more than carpet.</li>
+          <li><b>Net Usable Carpet</b> = the floor area where you can actually walk, place furniture, or lay a carpet</li>
+          <li>It is <b>RERA Carpet minus internal partition walls</b></li>
+          <li>Typically <b>3&ndash;7% less</b> than RERA Carpet (5% is standard in Mumbai)</li>
         </ul>
-        <p><b>Key insight</b>: Two apartments with the same &ldquo;1,500 sq ft super built-up&rdquo; can have very different carpet areas depending on the loading factor. Always compare on carpet.</p>
+        <p><b>Example</b>: If RERA Carpet = 1,000 sq ft, and internal walls occupy ~50 sq ft (5%), then Net Usable = 950 sq ft. That 950 sq ft is what you actually live in.</p>
+        <p><b>Why it matters</b>: When comparing two projects, checking usable carpet area gives a true apples-to-apples comparison. A builder with thicker walls or more partitions will have a larger gap between RERA carpet and usable carpet.</p>
       </div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">What was &ldquo;pre-RERA Carpet Area&rdquo;?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-q" onclick="toggleFaq(this)">What is the full breakdown from Usable to Super Built-up?<span class="faq-chevron">&#8250;</span></div>
       <div class="faq-a">
-        <ul>
-          <li>Before RERA, builders had no standardised carpet area definition</li>
-          <li>Some included <b>balconies, dry balconies, flower beds</b>, and even <b>half of enclosed verandahs</b> in &ldquo;carpet area&rdquo;</li>
-          <li>This made carpet areas look 5&ndash;10% larger than the actual usable space</li>
-          <li><b>Post-RERA</b>, the definition is uniform — excludes all of the above</li>
-          <li>If comparing old property documents with new RERA carpet, expect the old number to be slightly higher</li>
-        </ul>
+        <table>
+          <tr><th>Area Type</th><th>What it adds</th><th>Typical %</th></tr>
+          <tr><td><b>Net Usable Carpet</b></td><td>Floor you walk on</td><td>Base</td></tr>
+          <tr><td><b>RERA Carpet</b></td><td>+ Internal partition walls</td><td>+3&ndash;7%</td></tr>
+          <tr><td><b>Built-up</b></td><td>+ External walls + balcony + dry balcony + verandah</td><td>+10&ndash;20%</td></tr>
+          <tr><td><b>Super Built-up</b></td><td>+ Lobby, stairs, lift, gym, corridors, garden</td><td>+25&ndash;45%</td></tr>
+        </table>
+        <p><b>Total gap</b>: Super built-up can be <b>40&ndash;60% more</b> than what you actually walk on. For a 1,500 SBU flat with 45% total loading, your usable space is roughly 950&ndash;1,000 sq ft.</p>
       </div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">What is &ldquo;loading&rdquo; in Mumbai real estate?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-q" onclick="toggleFaq(this)">RERA Carpet vs old &ldquo;Carpet Area&rdquo; &mdash; how do they differ?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <p>Before RERA (pre-2017), there was <b>no standard definition</b> of carpet area. Builders often inflated it:</p>
+        <ul>
+          <li>Some included <b>dry balconies, flower beds, enclosed verandahs</b></li>
+          <li>Some included <b>half the external wall thickness</b></li>
+          <li>Result: old &ldquo;carpet area&rdquo; was <b>5&ndash;15% higher</b> than today&rsquo;s RERA carpet for the same flat</li>
+        </ul>
+        <p><b>Post-RERA</b>: The definition is strict and uniform. Only internal walls are included; everything else (balconies, verandahs, terraces, external walls, service shafts) is excluded.</p>
+        <p><b>Resale tip</b>: If you&rsquo;re comparing an old brochure (pre-RERA) with a new RERA certificate, the old number will look bigger. Don&rsquo;t be misled &mdash; ask for the RERA-registered carpet area.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is &ldquo;loading&rdquo; and why does it vary so much?<span class="faq-chevron">&#8250;</span></div>
       <div class="faq-a">
         <ul>
-          <li><b>Loading</b> is the percentage difference between carpet area and super built-up area</li>
-          <li>It covers walls, balconies, lobbies, staircases, lifts, and all amenity areas</li>
-          <li><b>SoBo new buildings</b>: 30&ndash;35% loading is typical (premium lobbies, larger common areas)</li>
-          <li><b>Suburban buildings</b>: 25&ndash;30% loading</li>
-          <li><b>Ultra luxury</b>: Can go up to 40&ndash;45% (private lifts, grand lobbies, podium parking)</li>
-          <li><b>Tip</b>: A &ldquo;lower loading&rdquo; is better for the buyer — more carpet per rupee spent</li>
+          <li><b>Loading</b> = the percentage by which super built-up exceeds carpet area</li>
+          <li>It covers external walls, balconies, and your share of <b>all common areas</b></li>
         </ul>
+        <p>Why it varies:</p>
+        <ul>
+          <li><b>SoBo premium towers</b> (30&ndash;35%): Grand double-height lobbies, concierge, multiple lifts, sky lounge</li>
+          <li><b>Suburban buildings</b> (25&ndash;30%): Standard lobby, 2 lifts, basic amenities</li>
+          <li><b>Ultra luxury</b> (35&ndash;45%): Private lifts, podium parking, club house, infinity pool, landscaped terraces</li>
+          <li><b>Affordable housing</b> (18&ndash;22%): Minimal common areas, staircase-only, basic design</li>
+          <li><b>Commercial</b> (35&ndash;40%): Large lobbies, fire corridors, service floors</li>
+        </ul>
+        <p><b>Buyer tip</b>: Lower loading = more carpet per rupee. But also check what amenities the loading pays for &mdash; a slightly higher loading with a great club house may be worth it.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">How to calculate effective price per carpet sq ft?<span class="faq-chevron">&#8250;</span></div>
       <div class="faq-a">
+        <p>Most builders quote rate per <b>super built-up sq ft</b>. The true cost of your usable space is much higher:</p>
         <ul>
-          <li>Most builders quote rate per <b>super built-up sq ft</b></li>
-          <li><b>Effective carpet rate</b> = (Rate per SBU sq ft &times; Super Built-up Area) &div; RERA Carpet Area</li>
-          <li>Example: &#8377;25,000/SBU sq ft at 35% loading &rarr; effective carpet rate = &#8377;33,750/carpet sq ft</li>
-          <li>Use the <b>Price Impact</b> section above to calculate this instantly</li>
-          <li><b>Always compare properties on carpet rate</b> — two buildings quoting &#8377;25K/sq ft can differ by &#8377;5,000+/carpet sq ft due to different loading</li>
+          <li><b>Effective RERA carpet rate</b> = (SBU rate &times; SBU area) &div; RERA Carpet Area</li>
+          <li><b>Effective usable rate</b> = (SBU rate &times; SBU area) &div; Net Usable Carpet Area</li>
+        </ul>
+        <p><b>Example</b>: &#8377;25,000/SBU sq ft &times; 1,500 SBU = &#8377;3.75 Cr total</p>
+        <ul>
+          <li>At 35% loading: RERA carpet = ~1,111 sq ft &rarr; &#8377;33,750/carpet sq ft</li>
+          <li>At 5% internal walls: Usable = ~1,056 sq ft &rarr; &#8377;35,511/usable sq ft</li>
+        </ul>
+        <p>That&rsquo;s <b>42% more</b> than the quoted rate! Use the <b>Price Impact</b> section above to calculate this instantly.</p>
+        <p><b>Pro tip</b>: When comparing two properties, calculate effective usable rate for both. The one with lower usable rate gives you more space per rupee.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is RERA Carpet Area the same across all states?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>Yes.</b> RERA 2016 is a <b>Central Act</b> &mdash; Section 2(k) defines carpet area identically for all states</li>
+          <li>State bodies (Maharashtra RERA, UP-RERA, Karnataka RERA, Tamil Nadu RERA, etc.) all follow the same definition</li>
+          <li>The only variation is in <b>enforcement strictness</b>, not in the definition itself</li>
+          <li>This tool uses the uniform RERA definition for all calculations</li>
         </ul>
       </div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Is MahaRERA Carpet same as all-state RERA Carpet?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-q" onclick="toggleFaq(this)">What are dry balcony and flower bed? Are they in RERA Carpet?<span class="faq-chevron">&#8250;</span></div>
       <div class="faq-a">
         <ul>
-          <li><b>Yes.</b> RERA 2016 is a central act — the carpet area definition is the same nationwide</li>
-          <li>MahaRERA (Maharashtra), UP-RERA, KRERA (Karnataka), TNRERA (Tamil Nadu) etc. all follow the same section 2(k) definition</li>
-          <li>The only variation is in <b>how strictly each state enforces</b> the disclosure, not in the definition itself</li>
-          <li>This tool uses the uniform RERA definition for all calculations</li>
+          <li><b>Dry balcony</b>: Small utility balcony (usually near kitchen) for washing machine, drying clothes. Typically 20&ndash;40 sq ft.</li>
+          <li><b>Flower bed</b>: Narrow open ledge outside windows, 5&ndash;15 sq ft. Not walkable, but builders used to count it.</li>
+          <li><b>RERA excludes both</b> from carpet area &mdash; they fall under &ldquo;exclusive balcony/verandah&rdquo;</li>
+          <li>They <b>are included in Built-up area</b></li>
+          <li><b>Old brochures</b> often included dry balcony in carpet area, inflating it by 3&ndash;5%</li>
+          <li><b>Enclosed balconies</b> (with glass/grill) are also excluded from RERA carpet, even though you can use the space. They get FSI concessions in building approvals.</li>
         </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What documents should I check for carpet area?<span class="faq-chevron">&#8250;</span></div>
+      <div class="faq-a">
+        <ul>
+          <li><b>RERA registration page</b>: Every registered project lists RERA carpet area for each unit type. Check your state&rsquo;s RERA website.</li>
+          <li><b>Agreement for Sale</b>: Must mention RERA carpet area since 2017. Compare this with what the salesperson quoted.</li>
+          <li><b>Sanctioned plan</b>: The architect&rsquo;s drawing approved by the municipal corporation. Shows exact room dimensions.</li>
+          <li><b>Carpet Area Statement</b>: Some builders provide a detailed statement showing how RERA carpet is calculated (room-by-room).</li>
+          <li><b>OC / CC</b>: Occupancy Certificate mentions total built-up. Cross-check with your agreement.</li>
+        </ul>
+        <p><b>Red flag</b>: If a builder refuses to share the RERA carpet area or says &ldquo;we only quote super built-up,&rdquo; it may indicate unfavourable loading.</p>
       </div>
     </div>
   </div>
@@ -370,9 +485,9 @@
         <span class="quick-link-icon">&#128208;</span>
         <div><div class="quick-link-text">Area Converter</div><div class="quick-link-sub">Sq ft, sq m, acres &amp; more</div></div>
       </a>
-      <a class="quick-link" href="./emi.html">
-        <span class="quick-link-icon">&#8377;</span>
-        <div><div class="quick-link-text">EMI Calculator</div><div class="quick-link-sub">Home loan EMI &amp; schedule</div></div>
+      <a class="quick-link" href="./stamp-duty.html">
+        <span class="quick-link-icon">&#128220;</span>
+        <div><div class="quick-link-text">Stamp Duty</div><div class="quick-link-sub">Stamp duty &amp; GST calculator</div></div>
       </a>
     </div>
   </div>
@@ -390,6 +505,8 @@
 
 var areaType=document.getElementById('areaType');
 var areaInput=document.getElementById('areaValue');
+var intWallSlider=document.getElementById('intWallSlider');
+var intWallValEl=document.getElementById('intWallVal');
 var wallSlider=document.getElementById('wallSlider');
 var wallValEl=document.getElementById('wallVal');
 var commonSlider=document.getElementById('commonSlider');
@@ -438,62 +555,91 @@ function parseVal(input){
 
 function calculate(){
   var val=parseVal(areaInput);
+  var iwPct=parseInt(intWallSlider.value);
   var wallPct=parseInt(wallSlider.value);
   var commonPct=parseInt(commonSlider.value);
   var type=areaType.value;
 
-  var carpet,buildup,sbu;
+  var usable,carpet,buildup,sbu;
 
-  if(type==='carpet'){
+  if(type==='usable'){
+    usable=val;
+    carpet=usable/(1-iwPct/100);
+    buildup=carpet*(1+wallPct/100);
+    sbu=buildup*(1+commonPct/100);
+  }else if(type==='carpet'){
     carpet=val;
+    usable=carpet*(1-iwPct/100);
     buildup=carpet*(1+wallPct/100);
     sbu=buildup*(1+commonPct/100);
   }else if(type==='buildup'){
     buildup=val;
     carpet=buildup/(1+wallPct/100);
+    usable=carpet*(1-iwPct/100);
     sbu=buildup*(1+commonPct/100);
   }else{
     sbu=val;
     buildup=sbu/(1+commonPct/100);
     carpet=buildup/(1+wallPct/100);
+    usable=carpet*(1-iwPct/100);
   }
 
+  var intWallArea=carpet-usable;
+  var extWallArea=buildup-carpet;
+  var commonArea=sbu-buildup;
   var totalLoading=((sbu/carpet-1)*100);
+  var totalFromUsable=((sbu/usable-1)*100);
 
+  document.getElementById('resUsableVal').textContent=formatIndian(usable)+' sq ft';
   document.getElementById('resCarpetVal').textContent=formatIndian(carpet)+' sq ft';
   document.getElementById('resBuildupVal').textContent=formatIndian(buildup)+' sq ft';
   document.getElementById('resSbuVal').textContent=formatIndian(sbu)+' sq ft';
 
-  document.getElementById('resCarpetSub').textContent='Usable floor area within walls';
-  document.getElementById('resBuildupSub').textContent='Carpet + '+wallPct+'% walls & balcony';
-  document.getElementById('resSbuSub').textContent='Built-up + '+commonPct+'% common areas ('+totalLoading.toFixed(1)+'% total loading)';
+  document.getElementById('resUsableSub').textContent='What you actually walk on — excludes all walls';
+  document.getElementById('resCarpetSub').textContent='Usable + '+iwPct+'% internal walls (RERA Sec 2(k))';
+  document.getElementById('resBuildupSub').textContent='RERA Carpet + '+wallPct+'% ext. walls & balcony';
+  document.getElementById('resSbuSub').textContent='Built-up + '+commonPct+'% common areas ('+totalLoading.toFixed(1)+'% total on carpet)';
 
-  document.getElementById('resCarpet').className='result-block'+(type!=='carpet'?' highlight':'');
-  document.getElementById('resBuildup').className='result-block'+(type!=='buildup'?' highlight':'');
-  document.getElementById('resSbu').className='result-block'+(type!=='sbu'?' highlight':'');
-
-  var inputTag=type==='carpet'?'resCarpet':type==='buildup'?'resBuildup':'resSbu';
-  var el=document.getElementById(inputTag);
-  var label=el.querySelector('.result-block-label');
-  if(!label.querySelector('.tag-input')){
-    var span=document.createElement('span');
-    span.className='tag tag-input';
-    span.textContent='INPUT';
-    label.appendChild(span);
-  }
-  ['resCarpet','resBuildup','resSbu'].forEach(function(id){
-    if(id!==inputTag){
-      var t=document.getElementById(id).querySelector('.tag-input');
-      if(t)t.remove();
-    }
+  var blocks=['resUsable','resCarpet','resBuildup','resSbu'];
+  var inputId=type==='usable'?'resUsable':type==='carpet'?'resCarpet':type==='buildup'?'resBuildup':'resSbu';
+  blocks.forEach(function(id){
+    var el=document.getElementById(id);
+    el.className='result-block'+(id!==inputId?' highlight':'');
+    var tag=el.querySelector('.tag-input');
+    if(id===inputId){
+      if(!tag){var s=document.createElement('span');s.className='tag tag-input';s.textContent='INPUT';el.querySelector('.result-block-label').appendChild(s)}
+    }else{if(tag)tag.remove()}
   });
 
-  var carpetPct=(carpet/sbu*100);
-  var wallsPct=((buildup-carpet)/sbu*100);
-  var commonPctBar=((sbu-buildup)/sbu*100);
-  document.getElementById('barCarpet').style.width=carpetPct+'%';
-  document.getElementById('barWalls').style.width=wallsPct+'%';
-  document.getElementById('barCommon').style.width=commonPctBar+'%';
+  var uPct=(usable/sbu*100);
+  var iwPctBar=(intWallArea/sbu*100);
+  var ewPctBar=(extWallArea/sbu*100);
+  var cmPctBar=(commonArea/sbu*100);
+  document.getElementById('barUsable').style.width=uPct+'%';
+  document.getElementById('barIntWall').style.width=iwPctBar+'%';
+  document.getElementById('barExtWall').style.width=ewPctBar+'%';
+  document.getElementById('barCommon').style.width=cmPctBar+'%';
+
+  var tbody=document.getElementById('breakdownBody');
+  tbody.innerHTML='';
+  var rows=[
+    ['Net Usable Carpet',usable,''],
+    ['+ Internal partition walls',intWallArea,'('+iwPct+'% of RERA carpet)'],
+    ['= RERA Carpet',carpet,'row-total'],
+    ['+ External walls + balcony',extWallArea,'('+wallPct+'% of RERA carpet)'],
+    ['= Built-up',buildup,'row-total'],
+    ['+ Common areas (lobby, lift, gym etc.)',commonArea,'('+commonPct+'% of built-up)'],
+    ['= Super Built-up (Saleable)',sbu,'row-total']
+  ];
+  rows.forEach(function(r){
+    var tr=document.createElement('tr');
+    var td1=document.createElement('td');td1.textContent=r[0];
+    var td2=document.createElement('td');td2.textContent=formatIndian(r[1])+' sq ft';
+    if(r[2]==='row-total'){tr.className='row-total';td1.style.fontWeight='700';td2.style.color='var(--accent)'}
+    else if(r[2]){var sm=document.createElement('small');sm.style.cssText='display:block;font-size:9px;color:var(--text3);font-weight:400';sm.textContent=r[2];td1.appendChild(sm)}
+    tr.appendChild(td1);tr.appendChild(td2);
+    tbody.appendChild(tr);
+  });
 
   var priceVal=parseVal(priceInput);
   var priceDiv=document.getElementById('priceResults');
@@ -501,14 +647,22 @@ function calculate(){
     priceDiv.style.display='block';
     var totalPrice=priceVal*sbu;
     var carpetRate=totalPrice/carpet;
+    var usableRate=totalPrice/usable;
     document.getElementById('priceSbu').textContent=formatAmount(totalPrice);
     document.getElementById('priceCarpet').textContent=formatAmount(Math.round(carpetRate))+'/sq ft';
-    document.getElementById('priceCarpetSub').textContent='What you actually pay per usable sq ft ('+((carpetRate/priceVal-1)*100).toFixed(0)+'% higher than quoted rate)';
+    document.getElementById('priceCarpetSub').textContent=((carpetRate/priceVal-1)*100).toFixed(0)+'% higher than quoted SBU rate';
+    document.getElementById('priceUsable').textContent=formatAmount(Math.round(usableRate))+'/sq ft';
+    document.getElementById('priceUsableSub').textContent='What you truly pay per sq ft you walk on ('+((usableRate/priceVal-1)*100).toFixed(0)+'% higher than quoted rate)';
   }else{
     priceDiv.style.display='none';
   }
 }
 
+intWallSlider.addEventListener('input',function(){
+  intWallValEl.textContent=this.value+'%';
+  syncChips('intWallChips',this.value);
+  calculate();
+});
 wallSlider.addEventListener('input',function(){
   wallValEl.textContent=this.value+'%';
   syncChips('wallChips',this.value);
@@ -537,6 +691,14 @@ function syncChips(containerId,val){
   });
 }
 
+document.querySelectorAll('#intWallChips .quick-chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    intWallSlider.value=this.getAttribute('data-val');
+    intWallValEl.textContent=intWallSlider.value+'%';
+    syncChips('intWallChips',intWallSlider.value);
+    calculate();
+  });
+});
 document.querySelectorAll('#wallChips .quick-chip').forEach(function(chip){
   chip.addEventListener('click',function(){
     wallSlider.value=this.getAttribute('data-val');
@@ -565,12 +727,16 @@ document.querySelectorAll('#areaChips .quick-chip').forEach(function(chip){
 
 document.querySelectorAll('#presetChips .quick-chip').forEach(function(chip){
   chip.addEventListener('click',function(){
+    var iw=this.getAttribute('data-iw');
     var w=this.getAttribute('data-wall');
     var c=this.getAttribute('data-common');
+    intWallSlider.value=iw;
     wallSlider.value=w;
     commonSlider.value=c;
+    intWallValEl.textContent=iw+'%';
     wallValEl.textContent=w+'%';
     commonValEl.textContent=c+'%';
+    syncChips('intWallChips',iw);
     syncChips('wallChips',w);
     syncChips('commonChips',c);
     document.querySelectorAll('#presetChips .quick-chip').forEach(function(p){p.classList.remove('active')});
@@ -596,58 +762,69 @@ window.buildCaptureContent=function(){
   var val=parseVal(areaInput);
   if(val<=0)return null;
 
+  var iwPct=parseInt(intWallSlider.value);
   var wallPct=parseInt(wallSlider.value);
   var commonPct=parseInt(commonSlider.value);
   var type=areaType.value;
-  var carpet,buildup,sbu;
+  var usable,carpet,buildup,sbu;
 
-  if(type==='carpet'){carpet=val;buildup=carpet*(1+wallPct/100);sbu=buildup*(1+commonPct/100)}
-  else if(type==='buildup'){buildup=val;carpet=buildup/(1+wallPct/100);sbu=buildup*(1+commonPct/100)}
-  else{sbu=val;buildup=sbu/(1+commonPct/100);carpet=buildup/(1+wallPct/100)}
+  if(type==='usable'){usable=val;carpet=usable/(1-iwPct/100);buildup=carpet*(1+wallPct/100);sbu=buildup*(1+commonPct/100)}
+  else if(type==='carpet'){carpet=val;usable=carpet*(1-iwPct/100);buildup=carpet*(1+wallPct/100);sbu=buildup*(1+commonPct/100)}
+  else if(type==='buildup'){buildup=val;carpet=buildup/(1+wallPct/100);usable=carpet*(1-iwPct/100);sbu=buildup*(1+commonPct/100)}
+  else{sbu=val;buildup=sbu/(1+commonPct/100);carpet=buildup/(1+wallPct/100);usable=carpet*(1-iwPct/100)}
 
-  var totalLoading=((sbu/carpet-1)*100).toFixed(1);
-  var typeName=type==='carpet'?'RERA Carpet':type==='buildup'?'Built-up':'Super Built-up';
-  var subtitle=formatIndian(val)+' sq ft '+typeName+' (Wall: '+wallPct+'%, Common: '+commonPct+'%)';
+  var totalLoading=((sbu/usable-1)*100).toFixed(1);
+  var typeName=type==='usable'?'Net Usable':type==='carpet'?'RERA Carpet':type==='buildup'?'Built-up':'Super Built-up';
+  var subtitle=formatIndian(val)+' sq ft '+typeName;
 
   var h='';
-  h+='<div style="display:flex;gap:6px;margin-bottom:10px">';
-  h+='<div style="flex:1;background:#1a8a5a;border-radius:10px;padding:10px;text-align:center">';
-  h+='<div style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">RERA Carpet</div>';
-  h+='<div style="font-size:17px;font-weight:800;color:#fff">'+formatIndian(carpet)+'</div>';
-  h+='<div style="font-size:9px;color:rgba(255,255,255,.7)">sq ft</div></div>';
-  h+='<div style="flex:1;background:#e8a838;border-radius:10px;padding:10px;text-align:center">';
-  h+='<div style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">Built-up</div>';
-  h+='<div style="font-size:17px;font-weight:800;color:#fff">'+formatIndian(buildup)+'</div>';
-  h+='<div style="font-size:9px;color:rgba(255,255,255,.7)">sq ft</div></div>';
-  h+='<div style="flex:1;background:#d35f5f;border-radius:10px;padding:10px;text-align:center">';
-  h+='<div style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">Super Built-up</div>';
-  h+='<div style="font-size:17px;font-weight:800;color:#fff">'+formatIndian(sbu)+'</div>';
-  h+='<div style="font-size:9px;color:rgba(255,255,255,.7)">sq ft</div></div></div>';
+  h+='<div style="display:flex;gap:4px;margin-bottom:10px">';
+  h+='<div style="flex:1;background:#3b82f6;border-radius:8px;padding:8px 4px;text-align:center">';
+  h+='<div style="font-size:8px;color:rgba(255,255,255,.85);font-weight:600">Net Usable</div>';
+  h+='<div style="font-size:15px;font-weight:800;color:#fff">'+formatIndian(usable)+'</div>';
+  h+='<div style="font-size:8px;color:rgba(255,255,255,.7)">sq ft</div></div>';
+  h+='<div style="flex:1;background:#1a8a5a;border-radius:8px;padding:8px 4px;text-align:center">';
+  h+='<div style="font-size:8px;color:rgba(255,255,255,.85);font-weight:600">RERA Carpet</div>';
+  h+='<div style="font-size:15px;font-weight:800;color:#fff">'+formatIndian(carpet)+'</div>';
+  h+='<div style="font-size:8px;color:rgba(255,255,255,.7)">sq ft</div></div>';
+  h+='<div style="flex:1;background:#e8a838;border-radius:8px;padding:8px 4px;text-align:center">';
+  h+='<div style="font-size:8px;color:rgba(255,255,255,.85);font-weight:600">Built-up</div>';
+  h+='<div style="font-size:15px;font-weight:800;color:#fff">'+formatIndian(buildup)+'</div>';
+  h+='<div style="font-size:8px;color:rgba(255,255,255,.7)">sq ft</div></div>';
+  h+='<div style="flex:1;background:#d35f5f;border-radius:8px;padding:8px 4px;text-align:center">';
+  h+='<div style="font-size:8px;color:rgba(255,255,255,.85);font-weight:600">Super BU</div>';
+  h+='<div style="font-size:15px;font-weight:800;color:#fff">'+formatIndian(sbu)+'</div>';
+  h+='<div style="font-size:8px;color:rgba(255,255,255,.7)">sq ft</div></div></div>';
 
-  h+='<div style="height:8px;border-radius:4px;display:flex;overflow:hidden;margin-bottom:8px">';
-  var cp=(carpet/sbu*100),wp=((buildup-carpet)/sbu*100),cmp=((sbu-buildup)/sbu*100);
-  h+='<div style="width:'+cp+'%;background:#1a8a5a"></div>';
-  h+='<div style="width:'+wp+'%;background:#e8a838"></div>';
+  h+='<div style="height:6px;border-radius:3px;display:flex;overflow:hidden;margin-bottom:6px">';
+  var up=(usable/sbu*100),iwp=((carpet-usable)/sbu*100),ewp=((buildup-carpet)/sbu*100),cmp=((sbu-buildup)/sbu*100);
+  h+='<div style="width:'+up+'%;background:#3b82f6"></div>';
+  h+='<div style="width:'+iwp+'%;background:#8b5cf6"></div>';
+  h+='<div style="width:'+ewp+'%;background:#e8a838"></div>';
   h+='<div style="width:'+cmp+'%;background:#d35f5f"></div></div>';
 
-  h+='<div style="display:flex;gap:12px;font-size:9px;color:#666;font-weight:600;margin-bottom:10px">';
-  h+='<span>&#9632; Carpet '+cp.toFixed(0)+'%</span>';
-  h+='<span style="color:#e8a838">&#9632; Walls '+wp.toFixed(0)+'%</span>';
-  h+='<span style="color:#d35f5f">&#9632; Common '+cmp.toFixed(0)+'%</span></div>';
+  h+='<div style="display:flex;gap:8px;font-size:8px;color:#666;font-weight:600;margin-bottom:8px;flex-wrap:wrap">';
+  h+='<span style="color:#3b82f6">■ Usable '+up.toFixed(0)+'%</span>';
+  h+='<span style="color:#8b5cf6">■ Int.Walls '+iwp.toFixed(0)+'%</span>';
+  h+='<span style="color:#e8a838">■ Ext.Walls '+ewp.toFixed(0)+'%</span>';
+  h+='<span style="color:#d35f5f">■ Common '+cmp.toFixed(0)+'%</span></div>';
 
-  h+='<div style="font-size:10px;color:#666;border-top:1px solid rgba(0,0,0,.06);padding-top:8px">';
-  h+='Wall loading: '+wallPct+'% &middot; Common area loading: '+commonPct+'% &middot; Total: '+totalLoading+'%</div>';
+  h+='<div style="font-size:9px;color:#666;border-top:1px solid rgba(0,0,0,.06);padding-top:6px">';
+  h+='Int. walls: '+iwPct+'% · Ext. walls: '+wallPct+'% · Common: '+commonPct+'% · Total from usable: '+totalLoading+'%</div>';
 
   var priceVal=parseVal(priceInput);
   if(priceVal>0){
     var total=priceVal*sbu;
     var carpetRate=total/carpet;
-    h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,0,0,.06);font-size:10px">';
-    h+='<div style="color:#666;font-weight:600">Price Impact</div>';
-    h+='<div style="display:flex;justify-content:space-between;margin-top:4px">';
-    h+='<span style="color:#666">Total (on SBU)</span><span style="font-weight:700;color:#333">'+formatAmount(total)+'</span></div>';
+    var usableRate=total/usable;
+    h+='<div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,.06);font-size:9px">';
+    h+='<div style="color:#666;font-weight:600">Price Impact (at ₹'+formatIndian(priceVal)+'/SBU sq ft)</div>';
+    h+='<div style="display:flex;justify-content:space-between;margin-top:3px">';
+    h+='<span style="color:#666">Total</span><span style="font-weight:700;color:#333">'+formatAmount(total)+'</span></div>';
     h+='<div style="display:flex;justify-content:space-between;margin-top:2px">';
-    h+='<span style="color:#666">Effective carpet rate</span><span style="font-weight:700;color:#1a8a5a">'+formatAmount(Math.round(carpetRate))+'/sq ft</span></div></div>';
+    h+='<span style="color:#666">RERA carpet rate</span><span style="font-weight:700;color:#1a8a5a">'+formatAmount(Math.round(carpetRate))+'/sq ft</span></div>';
+    h+='<div style="display:flex;justify-content:space-between;margin-top:2px">';
+    h+='<span style="color:#666">Usable rate</span><span style="font-weight:700;color:#3b82f6">'+formatAmount(Math.round(usableRate))+'/sq ft</span></div></div>';
   }
 
   return{subtitle:subtitle,body:h};
