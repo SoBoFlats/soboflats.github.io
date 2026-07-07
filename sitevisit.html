@@ -1002,8 +1002,10 @@ function submitSiteVisit(){
   var waMsg=buildWAMessage();
   var dateTimeCol=FD.dateDisplay+', '+FD.timeDisplay;
 
+  var whoSheetVal=FD.whoCol==='Direct Tenant'?'Tenant':FD.whoCol==='Direct Buyer'?'Buyer':'CP';
+
   var payload={
-    who: FD.whoCol,
+    who: whoSheetVal,
     name: FD.name,
     phone: FD.phone,
     interest_type: FD.interestType,
