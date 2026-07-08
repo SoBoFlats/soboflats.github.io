@@ -226,7 +226,7 @@
   <div class="hero" id="hero">
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
-      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 209</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">03-Jul-26</span>
+      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 209</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">08-Jul-26</span>
     </div>
     <div class="hero-title">Lodha Park, Adrina,<br>B <span class="hero-loc">&nbsp;·&nbsp;Worli</span></div>
     <div class="sub-tag-row">
@@ -311,18 +311,18 @@
 
 </div>
 </div>
-<div id="captureArea2" style="display:none;background:#0a1a17;max-width:430px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow:hidden;border-radius:16px">
+<div id="captureArea2" style="display:none;background:#0a1a17;max-width:480px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow:hidden;border-radius:16px">
   <div style="padding:10px 15px 9px;border-bottom:1px solid rgba(255,255,255,.07)">
     <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
       <span style="font-size:7.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 7px;border-radius:20px;color:#1a1000;background:rgba(255,217,60,.92)">For Rent</span>
       <span style="font-size:7.5px;font-weight:700;padding:3px 7px;border-radius:20px;color:#ffd966;background:rgba(255,217,102,.14);border:1px solid rgba(255,217,102,.35)">ID: 209</span>
-      <span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">03-Jul-26</span>
+      <span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">08-Jul-26</span>
     </div>
     <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.3px">Lodha Park, Adrina <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.42)">· Worli</span></div>
     <div style="font-size:11px;margin-top:4px;line-height:1.5"><span style="color:rgba(255,255,255,.58)">3.5 bhk</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.58)">1200 carpet</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:#ffd966;font-weight:600">HF</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.40)">Immediately Available</span></div>
     <div style="display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap"><span style="font-size:20px;font-weight:800;color:#fff;line-height:1">&#8377;3.5L</span></div>
   </div>
-  <div id="cap2Collage" style="display:flex;gap:2px;background:#0d2318;padding:4px;"></div>
+  <div id="cap2Collage" style="display:flex;flex-direction:column;gap:3px;background:#0d2318;padding:4px;"></div>
   <div id="cpFooter2" style="display:none;background:rgba(255,217,60,.92);border-top:2px solid rgba(200,165,0,.55);padding:8px 15px">
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div>
@@ -334,7 +334,7 @@
   </div>
 </div>
 
-<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Lodha Park, Adrina</div><iframe class="map-iframe" src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&location=19.0047256,72.8302417&heading=210&pitch=10&fov=80&source=outdoor" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+<div class="map-card" id="mapEmbedWrap"><div class="video-label">Live Exterior View &bull; Lodha Park, Adrina</div><iframe class="map-iframe" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB78qmdZpoBsyXG7TXuAAOQd9AmHme90OU&q=Lodha+Adrina,+Lodha+Park,+Senapati+Bapat+Marg,+Lower+Parel,+Mumbai,+Maharashtra+400013&zoom=17" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 
 <!-- Download Photos Modal -->
 <div id="dlModal" class="modal-overlay" onclick="if(event.target===this)closeModal('dlModal')">
@@ -430,6 +430,61 @@
   const PHOTO_ALBUMS = [{"name": "Flat Photos", "urls": ["https://lh3.googleusercontent.com/pw/AP1GczNkJ57HpsfmEOP-jymian8wgGD2ogpiiaPFLife8pu_xnlkOpmiHzv2JzvszRyygxENEnceJiSdRtz8JE5vAWQD6hlckGNINcZrKPtgYm-b0wfF8yb6=w1600"]}];
   const GPHOTO_LINKS = [{"name": "Flat Photos", "url": "https://photos.app.goo.gl/3BUnda4SffqbXNEGA"}];
   const CAPTURE_COLLAGE_DATA = [];
+  async function buildCardCollage(collageEl, photoUrls) {
+  collageEl.innerHTML = '';
+  if (!photoUrls || !photoUrls.length) {
+    collageEl.style.cssText += ';justify-content:center;align-items:center;min-height:200px;background:#fff';
+    const ph = document.createElement('div');
+    ph.style.cssText = 'text-align:center;color:#888;font-size:16px;font-weight:600;padding:40px 20px';
+    ph.textContent = '\ud83d\udcf7 Photos Coming Soon';
+    collageEl.appendChild(ph);
+    return;
+  }
+  const loaded = await Promise.all(photoUrls.map(src => new Promise(res => {
+    const img = new Image();
+    img.onload = () => res({ src, landscape: img.naturalWidth > img.naturalHeight });
+    img.onerror = () => res({ src, landscape: false });
+    img.src = src;
+  })));
+  const portraits = loaded.filter(x => !x.landscape);
+  const landscapes = loaded.filter(x => x.landscape);
+  const pCols = portraits.length > 15 ? 4 : 3;
+
+  const fullPortraitCount = Math.floor(portraits.length / pCols) * pCols;
+  const fullPortraits = portraits.slice(0, fullPortraitCount);
+  const leftoverPortraits = portraits.slice(fullPortraitCount);
+
+  const fullLandscapeCount = Math.floor(landscapes.length / 2) * 2;
+  const fullLandscapes = landscapes.slice(0, fullLandscapeCount);
+  const leftoverLandscapes = landscapes.slice(fullLandscapeCount);
+
+  const mkImg = (src, span) => {
+    const img = document.createElement('img');
+    img.style.cssText = `width:100%;height:auto;display:block;border-radius:6px;grid-column:span ${span}`;
+    img.src = src;
+    return img;
+  };
+
+  if (fullPortraits.length) {
+    const gridA = document.createElement('div');
+    gridA.style.cssText = `display:grid;grid-template-columns:repeat(${pCols},1fr);gap:3px`;
+    fullPortraits.forEach(({ src }) => gridA.appendChild(mkImg(src, 1)));
+    collageEl.appendChild(gridA);
+  }
+  if (fullLandscapes.length) {
+    const gridB = document.createElement('div');
+    gridB.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:3px';
+    fullLandscapes.forEach(({ src }) => gridB.appendChild(mkImg(src, 1)));
+    collageEl.appendChild(gridB);
+  }
+  if (leftoverPortraits.length || leftoverLandscapes.length) {
+    const gridC = document.createElement('div');
+    gridC.style.cssText = `display:grid;grid-template-columns:repeat(${pCols},1fr);grid-auto-flow:dense;gap:3px`;
+    leftoverPortraits.forEach(({ src }) => gridC.appendChild(mkImg(src, 1)));
+    leftoverLandscapes.forEach(({ src }) => gridC.appendChild(mkImg(src, Math.min(2, pCols))));
+    collageEl.appendChild(gridC);
+  }
+}
   let current = 0, allListings = [], activeBucket = '__all__';
 
   // Lightbox
@@ -689,27 +744,7 @@
     try {
       // Build photo collage or placeholder
       const collageEl = document.getElementById('cap2Collage');
-      collageEl.innerHTML = '';
-      if (CAPTURE_COLLAGE_DATA.length) {
-        const col1 = document.createElement('div');
-        const col2 = document.createElement('div');
-        col1.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px';
-        col2.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px';
-        CAPTURE_COLLAGE_DATA.forEach((src, i) => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.style.cssText = 'width:100%;display:block;border-radius:6px';
-          (i % 2 === 0 ? col1 : col2).appendChild(img);
-        });
-        collageEl.appendChild(col1);
-        collageEl.appendChild(col2);
-      } else {
-        collageEl.style.cssText += ';justify-content:center;align-items:center;min-height:200px;background:#fff';
-        const ph = document.createElement('div');
-        ph.style.cssText = 'text-align:center;color:#888;font-size:16px;font-weight:600;padding:40px 20px';
-        ph.textContent = '📷 Photos Coming Soon';
-        collageEl.appendChild(ph);
-      }
+      await buildCardCollage(collageEl, CAPTURE_COLLAGE_DATA);
 
       // Copy CP footer if active
       if (cpF && cpF.style.display !== 'none') {
@@ -721,9 +756,18 @@
 
       cap2.style.display = 'block';
       await new Promise(r => setTimeout(r, 300));
-      const canvas = await html2canvas(cap2, {
+      let canvas = await html2canvas(cap2, {
         allowTaint: false, useCORS: false, backgroundColor: '#0a1a17', scale: 2, logging: false,
       });
+      const SAFETY_CAP_H = 8500;
+      if (canvas.height > SAFETY_CAP_H) {
+        const scaleDown = SAFETY_CAP_H / canvas.height;
+        const small = document.createElement('canvas');
+        small.width = Math.round(canvas.width * scaleDown);
+        small.height = SAFETY_CAP_H;
+        small.getContext('2d').drawImage(canvas, 0, 0, small.width, small.height);
+        canvas = small;
+      }
       const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
 
       restoreAll();
