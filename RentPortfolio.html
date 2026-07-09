@@ -843,12 +843,7 @@
           if(resp.ok){
             const data=await resp.json();
             const raw=(data[String(window._lastCardSerial)]||{}).caption||'';
-            caption=raw.split('
-').filter(l=>!l.startsWith('💥 Download Photo:')).join('
-').replace(/
-{3,}/g,'
-
-').trim();
+            caption=raw.split('\n').filter(l=>!l.startsWith('💥 Download Photo:')).join('\n').replace(/\n{3,}/g,'\n\n').trim();
           }
         }catch(e){}
 
