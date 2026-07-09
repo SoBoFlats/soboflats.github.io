@@ -61,7 +61,12 @@
     [data-theme="light"] .sub-tag.gold{color:#1a1000;background:rgba(255,217,60,.90);border-color:rgba(200,165,0,.55)}
     .card{margin:0 12px 16px;border-radius:22px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
     [data-theme="light"] .card{box-shadow:var(--card-shadow)}
-    .price-block{padding:15px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--divider)}
+    .price-block{margin-top:14px;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+    [data-theme="light"] .price-block{box-shadow:var(--card-shadow)}
+    [data-theme="light"] .hero .price-block{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.22)!important}
+    [data-theme="light"] .hero .price-main{color:#fff!important}
+    [data-theme="light"] .hero .price-suffix,[data-theme="light"] .hero .price-deposit{color:rgba(255,255,255,.60)!important}
+    [data-theme="light"] .hero .avail-pill{color:rgba(255,255,255,.92)!important;background:rgba(255,255,255,.14)!important;border-color:rgba(255,255,255,.25)!important}
     .price-left{display:flex;flex-direction:column;gap:3px}
     .price-rent-row{display:flex;align-items:baseline;gap:4px}
     .price-deposit{font-size:11.5px;color:var(--text-muted);letter-spacing:.1px}
@@ -201,6 +206,19 @@
     .modal-dl-btn:active{background:rgba(72,199,142,.35)}
     .modal-cancel{width:100%;padding:11px;border-radius:16px;background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:13px;cursor:pointer;display:block}
     .modal-ask-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.75);text-align:center;margin-bottom:12px}
+    [data-theme="light"] .modal-sheet{background:#f5f1e8!important;border-top-color:rgba(0,0,0,.08)!important}
+    [data-theme="light"] .modal-handle{background:rgba(0,0,0,.15)!important}
+    [data-theme="light"] .modal-title{color:#1a1a1a!important}
+    [data-theme="light"] .modal-note{color:rgba(0,0,0,.45)!important}
+    [data-theme="light"] .modal-album-btn{border-color:rgba(0,0,0,.10)!important;background:rgba(0,0,0,.04)!important;color:#1a1a1a!important}
+    [data-theme="light"] .utype-btn{border-color:rgba(0,0,0,.12)!important;background:rgba(0,0,0,.04)!important;color:rgba(0,0,0,.55)!important}
+    [data-theme="light"] .cp-input{border-color:rgba(0,0,0,.12)!important;background:rgba(0,0,0,.04)!important;color:#1a1a1a!important}
+    [data-theme="light"] .modal-cancel{border-color:rgba(0,0,0,.10)!important;color:rgba(0,0,0,.45)!important}
+    [data-theme="light"] .modal-ask-label{color:rgba(0,0,0,.75)!important}
+    [data-theme="light"] #browseDrawer{background:#f5f1e8!important;border-top-color:rgba(0,0,0,.08)!important}
+    [data-theme="light"] #cpHint{color:rgba(0,0,0,.42)!important}
+    [data-theme="light"] .modal-dl-btn{background:rgba(26,138,90,.12)!important;border-color:rgba(26,138,90,.35)!important;color:#1a8a5a!important}
+    [data-theme="light"] .utype-btn.active{background:rgba(26,138,90,.12)!important;border-color:rgba(26,138,90,.35)!important;color:#1a8a5a!important}
     @media(min-width:600px){body{max-width:680px}.bg{max-width:680px}.sticky-bar{max-width:680px}.lightbox{max-width:680px}#browseDrawer{max-width:680px}.modal-overlay{max-width:680px}.enq-modal{max-width:680px}}
   </style>
   <link rel="stylesheet" href="./shared/nav.css">
@@ -226,7 +244,7 @@
   <div class="hero" id="hero">
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
-      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 249</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">08-Jul-26</span>
+      <span class="tag highlight" style="font-size:9px;letter-spacing:.4px">ID: 249</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">09-Jul-26</span>
     </div>
     <div class="hero-title">Nekjat Maratha Sadan <span class="hero-loc">&nbsp;·&nbsp;Lalbaug</span></div>
     <div class="sub-tag-row">
@@ -234,9 +252,7 @@
       <span class="sub-tag">275 carpet</span>
       <span class="sub-tag gold">Jain only</span>
     </div>
-  </div>
 
-  <div class="card">
     <div class="price-block">
       <div class="price-left">
         <div class="price-rent-row">
@@ -250,7 +266,9 @@
         
       </div>
     </div>
+  </div>
 
+  <div class="card">
     <div class="photo-wrap">
       <div class="photo-strip" id="photoStrip">
         <div class="album-sep">Flat Photos</div>
@@ -380,7 +398,7 @@
     <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
       <span style="font-size:7.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 7px;border-radius:20px;color:#1a1000;background:rgba(255,217,60,.92)">For Rent</span>
       <span style="font-size:7.5px;font-weight:700;padding:3px 7px;border-radius:20px;color:#ffd966;background:rgba(255,217,102,.14);border:1px solid rgba(255,217,102,.35)">ID: 249</span>
-      <span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">08-Jul-26</span>
+      <span style="font-size:7.5px;font-weight:600;padding:3px 7px;border-radius:20px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)">09-Jul-26</span>
     </div>
     <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.3px">Nekjat Maratha Sadan <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.42)">· Lalbaug</span></div>
     <div style="font-size:11px;margin-top:4px;line-height:1.5"><span style="color:rgba(255,255,255,.58)">1 bhk</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.58)">275 carpet</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:#ffd966;font-weight:600">Jain only</span> <span style="color:rgba(255,255,255,.22)">·</span> <span style="color:rgba(255,255,255,.40)">Immediately Available</span></div>
@@ -451,7 +469,7 @@
     <div class="modal-title">Share</div>
     <div class="utype-row" style="margin-bottom:10px">
       <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');doShareLink()">&#128257; Share Link</button>
-      <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');openSaveModal()">&#128444; Share Listing Photo</button>
+      <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');openSaveModal()">&#128444; Share Photos</button>
     </div>
     <button class="modal-cancel" onclick="closeModal('shareChoiceModal')">Cancel</button>
   </div>
@@ -466,7 +484,10 @@
 </div>
 
 <div id="dlToastOverlay" class="dl-toast-overlay" onclick="dismissDlToast()"></div>
-<div id="dlToast" class="dl-toast">Listing Downloaded.<br>While sharing on WhatsApp,<br>send in <b>HD quality</b><br><button class="dl-toast-ok" onclick="dismissDlToast()">OK</button></div>
+<div id="dlToast" class="dl-toast">Listing Downloaded.<br>While sharing on WhatsApp,<br>send in <b>HD quality</b>
+  <button class="dl-toast-share" id="dlToastShareBtn" onclick="shareCardOnWhatsapp()"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.37 0-4.567-.813-6.303-2.177l-.44-.36-3.259 1.093 1.093-3.259-.36-.44A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Share on WhatsApp</button>
+  <button class="dl-toast-ok" onclick="dismissDlToast()">OK</button>
+</div>
 <div class="float-btn-pair" id="floatBtnPair">
   <button id="enquiryFloatBtn" onclick="openEnquiry()" title="Enquire">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
@@ -833,6 +854,8 @@
         canvas = small;
       }
       const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      window._lastCardDataUrl = dataUrl;
+      window._lastCardFilename = 'flat-249-listing.jpg';
 
       restoreAll();
 
@@ -847,6 +870,38 @@
       restoreAll();
       alert('Screenshot failed. Try scrolling to the top first.');
     }
+  }
+
+  // ── Share the just-downloaded card on WhatsApp (with caption) ─────────────
+  async function shareCardOnWhatsapp() {
+    const btn = document.getElementById('dlToastShareBtn');
+    if (!window._lastCardDataUrl) { alert('Please download the card first.'); return; }
+    const origHtml = btn.innerHTML;
+    btn.innerHTML = '⏳ Preparing...';
+    try {
+      const blob = await (await fetch(window._lastCardDataUrl)).blob();
+      const file = new File([blob], window._lastCardFilename || 'listing.jpg', { type: 'image/jpeg' });
+
+      let caption = '';
+      try {
+        const resp = await fetch('cards/data.json');
+        if (resp.ok) {
+          const data = await resp.json();
+          const raw = (data[String(MY_SERIAL)] || {}).caption || '';
+          caption = raw.split('\n').filter(l => !l.startsWith('💥 Download Photo:')).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+        }
+      } catch(e) {}
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], text: caption });
+      } else {
+        if (caption) { try { await navigator.clipboard.writeText(caption); } catch(e) {} }
+        window.open('https://wa.me/?text=' + encodeURIComponent(caption), '_blank');
+      }
+    } catch(e) {
+      if (e.name !== 'AbortError') alert('Share failed. The image is already saved — you can attach it manually in WhatsApp.');
+    }
+    btn.innerHTML = origHtml;
   }
 
   // ── Enquiry ───────────────────────────────────────────────────────────────
