@@ -63,6 +63,10 @@
     [data-theme="light"] .card{box-shadow:var(--card-shadow)}
     .price-block{margin-top:14px;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
     [data-theme="light"] .price-block{box-shadow:var(--card-shadow)}
+    [data-theme="light"] .hero .price-block{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.22)!important}
+    [data-theme="light"] .hero .price-main{color:#fff!important}
+    [data-theme="light"] .hero .price-suffix,[data-theme="light"] .hero .price-deposit{color:rgba(255,255,255,.60)!important}
+    [data-theme="light"] .hero .avail-pill{color:rgba(255,255,255,.92)!important;background:rgba(255,255,255,.14)!important;border-color:rgba(255,255,255,.25)!important}
     .price-left{display:flex;flex-direction:column;gap:3px}
     .price-rent-row{display:flex;align-items:baseline;gap:4px}
     .price-deposit{font-size:11.5px;color:var(--text-muted);letter-spacing:.1px}
@@ -202,6 +206,19 @@
     .modal-dl-btn:active{background:rgba(72,199,142,.35)}
     .modal-cancel{width:100%;padding:11px;border-radius:16px;background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:13px;cursor:pointer;display:block}
     .modal-ask-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.75);text-align:center;margin-bottom:12px}
+    [data-theme="light"] .modal-sheet{background:#f5f1e8!important;border-top-color:rgba(0,0,0,.08)!important}
+    [data-theme="light"] .modal-handle{background:rgba(0,0,0,.15)!important}
+    [data-theme="light"] .modal-title{color:#1a1a1a!important}
+    [data-theme="light"] .modal-note{color:rgba(0,0,0,.45)!important}
+    [data-theme="light"] .modal-album-btn{border-color:rgba(0,0,0,.10)!important;background:rgba(0,0,0,.04)!important;color:#1a1a1a!important}
+    [data-theme="light"] .utype-btn{border-color:rgba(0,0,0,.12)!important;background:rgba(0,0,0,.04)!important;color:rgba(0,0,0,.55)!important}
+    [data-theme="light"] .cp-input{border-color:rgba(0,0,0,.12)!important;background:rgba(0,0,0,.04)!important;color:#1a1a1a!important}
+    [data-theme="light"] .modal-cancel{border-color:rgba(0,0,0,.10)!important;color:rgba(0,0,0,.45)!important}
+    [data-theme="light"] .modal-ask-label{color:rgba(0,0,0,.75)!important}
+    [data-theme="light"] #browseDrawer{background:#f5f1e8!important;border-top-color:rgba(0,0,0,.08)!important}
+    [data-theme="light"] #cpHint{color:rgba(0,0,0,.42)!important}
+    [data-theme="light"] .modal-dl-btn{background:rgba(26,138,90,.12)!important;border-color:rgba(26,138,90,.35)!important;color:#1a8a5a!important}
+    [data-theme="light"] .utype-btn.active{background:rgba(26,138,90,.12)!important;border-color:rgba(26,138,90,.35)!important;color:#1a8a5a!important}
     @media(min-width:600px){body{max-width:680px}.bg{max-width:680px}.sticky-bar{max-width:680px}.lightbox{max-width:680px}#browseDrawer{max-width:680px}.modal-overlay{max-width:680px}.enq-modal{max-width:680px}}
   </style>
   <link rel="stylesheet" href="./shared/nav.css">
@@ -227,7 +244,7 @@
   <div class="hero" id="hero">
     <div class="tag-row">
       <span class="tag highlight">For Rent</span>
-      <span class="tag gold" style="font-size:9px;letter-spacing:.4px">ID: 245</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">09-Jul-26</span>
+      <span class="tag highlight" style="font-size:9px;letter-spacing:.4px">ID: 245</span><span class="tag" style="font-size:9px;letter-spacing:.4px;color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)">09-Jul-26</span>
     </div>
     <div class="hero-title">Monte South, T1 <span class="hero-loc">&nbsp;·&nbsp;Byculla (W)</span></div>
     <div class="sub-tag-row">
@@ -498,7 +515,7 @@
     <div class="modal-title">Share</div>
     <div class="utype-row" style="margin-bottom:10px">
       <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');doShareLink()">&#128257; Share Link</button>
-      <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');openSaveModal()">&#128444; Share Listing Photo</button>
+      <button class="modal-dl-btn" style="margin:0" onclick="closeModal('shareChoiceModal');openSaveModal()">&#128444; Share Photos</button>
     </div>
     <button class="modal-cancel" onclick="closeModal('shareChoiceModal')">Cancel</button>
   </div>
